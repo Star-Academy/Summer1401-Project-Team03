@@ -1,0 +1,11 @@
+.container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: 5rem 1fr;
+    .navbar{
+        background-color: coral;
+    }
+    .content{
+        background-color: darkorchid;
+    }
+}
