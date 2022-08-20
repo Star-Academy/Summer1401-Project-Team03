@@ -7,7 +7,7 @@ import {Component} from '@angular/core';
 })
 export class AppComponent {
     public shrinkedNavbar: boolean = false;
-    public shrinkNavbar(): void {
+    public toggleShrink(): void {
         this.shrinkedNavbar = !this.shrinkedNavbar;
     }
 }
