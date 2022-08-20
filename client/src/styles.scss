@@ -7,6 +7,8 @@
 
     --border-radius-minimal: 0.3rem;
     --border-radius-primary: 0.5rem;
+
+    --font-family-primary: "Nunito", sans-serif;
 }
 
 *,
@@ -20,6 +22,7 @@
 
 html {
     font-size: 62.5%;
+    font-family: var(--font-family-primary);
 }
 
 input,
@@ -40,7 +43,7 @@ a {
 li {
     list-style-type: none;
 }
-svg{
+svg {
     width: 3rem;
     height: 3rem;
 }
