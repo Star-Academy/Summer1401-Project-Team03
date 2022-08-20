@@ -1,6 +1,6 @@
 <div class="container">
-    <div class="navbar">
-        <app-navbar></app-navbar>
+    <div class="navbar" (click)="shrinkNavbar()">
+        <app-navbar [isShrink]="shrinkedNavbar"></app-navbar>
     </div>
     <div class="content">
         <router-outlet></router-outlet>

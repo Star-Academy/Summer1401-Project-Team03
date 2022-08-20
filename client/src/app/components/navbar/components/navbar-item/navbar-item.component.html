@@ -2,5 +2,5 @@
     <svg>
         <use [attr.xlink:href]="'/assets/svgs/' + iconType + '.svg#' + iconType"></use>
     </svg>
-    <h4>{{ title }}</h4>
+    <h4 *ngIf="!isShrink">{{ title }}</h4>
 </li>
