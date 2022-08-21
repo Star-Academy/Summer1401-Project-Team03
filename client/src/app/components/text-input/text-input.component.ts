@@ -7,7 +7,6 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class TextInputComponent {
     @Input() public label: string = '';
-    @Input() public id: string = '';
     @Input() public type: string = '';
     @Input() public value: string = '';
     @Output() public valueChange = new EventEmitter<string>();

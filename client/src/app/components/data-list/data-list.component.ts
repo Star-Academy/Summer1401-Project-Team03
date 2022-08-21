@@ -8,7 +8,6 @@ import {DatalistOption} from 'src/app/models/DatalistOption.interface';
 })
 export class DataListComponent {
     @Input() public label: string = '';
-    @Input() public id: string = '';
     @Input() public options: DatalistOption[] = [];
 
     @Input() public value: string = '';
