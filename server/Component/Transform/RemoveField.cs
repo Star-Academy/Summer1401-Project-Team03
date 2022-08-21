@@ -1,13 +1,11 @@
 using System.Text;
-using Microsoft.AspNetCore.Http.Extensions;
 using server.Component;
-using SqlKata;
 
 namespace server.Transform;
 
 public class RemoveField : ITransformer
 {
-    public List<string> fieldsToRemove;
+    private List<string> fieldsToRemove;
     public List<string> Keys { get; set; }
     public string GetQuery()
     {
