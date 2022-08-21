@@ -1,34 +1,14 @@
 import {Component} from '@angular/core';
 import {pipelineItemData, PipelineItemModel} from '../../models/pipeline/pipeline-item.model';
 
-const pipelineItemData2: PipelineItemModel[] = [
-    {
-        name: 'covid',
-        createAt: new Date(),
-        id: 1,
-        modifiedAt: new Date(),
-    },
-];
-
 @Component({
     selector: 'app-pipeline-inventory',
     templateUrl: './pipeline-inventory.component.html',
     styleUrls: ['./pipeline-inventory.component.scss'],
 })
 export class PipelineInventoryComponent {
-    // public pipelineItem: PipelineItemModel[] = pipelineItemData2;
-    public pipelineItem: PipelineItemModel[] = [
-        {
-            name: 'covid',
-            createAt: new Date(),
-            id: 1,
-            modifiedAt: new Date(),
-        },
-    ];
-    public harchi = [2, 4, 5, 6];
-    // public constructor() {
-    // console.log(this.pipelineItem);
-    // }
+    public pipelineItem: PipelineItemModel[] = pipelineItemData;
+
     public convertDate(date: Date): string {
         return date.toLocaleString('en-Za', {
             year: 'numeric',
