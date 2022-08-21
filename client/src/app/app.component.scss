@@ -2,11 +2,11 @@
     display: grid;
     height: 100vh;
     grid-template-columns: auto 1fr;
-    .navbar{
+    .navbar {
         background-color: var(--color-purple-21);
         padding: 1rem;
     }
-    .content{
-        background-color: bisque;
+    .content {
+        background-color: hsl(0, 0, 90);
     }
 }

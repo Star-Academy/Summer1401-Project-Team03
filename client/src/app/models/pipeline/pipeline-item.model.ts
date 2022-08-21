@@ -12,4 +12,10 @@ export const pipelineItemData: PipelineItemModel[] = [
         id: 1,
         modifiedAt: new Date(),
     },
+    {
+        name: 'covid2',
+        createAt: new Date(),
+        id: 2,
+        modifiedAt: new Date(),
+    },
 ];
