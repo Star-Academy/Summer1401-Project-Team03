@@ -1,0 +1,19 @@
+dialog {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%);
+    border: none;
+    border-radius: var(--border-radius-minimal);
+    padding: 1rem;
+    box-shadow: 0 0.2rem 0.5rem 0 var(--shadow-gray);
+    min-inline-size: 20rem;
+
+    font-size: var(--font-size-primary);
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
