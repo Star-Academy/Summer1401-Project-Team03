@@ -1,1 +1,8 @@
-<h1>deploy works!</h1>
+<div class="container">
+    <div class="navbar" (click)="toggleShrink()">
+        <app-navbar [isShrink]="shrinkedNavbar"></app-navbar>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
