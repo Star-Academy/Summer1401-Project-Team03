@@ -7,5 +7,8 @@ import {ModalComponent} from './components/modal/modal.component';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    @ViewChild('mymodal') public modal!: ModalComponent;
+    public shrinkedNavbar: boolean = false;
+    public toggleShrink(): void {
+        this.shrinkedNavbar = !this.shrinkedNavbar;
+    }
 }
