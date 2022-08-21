@@ -1,0 +1,24 @@
+using Microsoft.AspNetCore.Http.Extensions;
+using server.Component;
+
+namespace server.Transform;
+
+public class FieldRename : ITransformer
+{
+    private string FieldToRename { get; set; }
+    private string NewNameOfField { get; set; }
+    
+    public List<string> Keys { get; set; }
+    
+    public string GetQuery()
+    {
+        var tableName = PreviousComponents[0].GetQuery();
+         
+        Keys.Insert(Keys.IndexOf(FieldToRename), NewNameOfField);
+        
+        return $"alter TABLE {tableName} RENAME {FieldToRename} TO {NewNameOfField};";
+        
+    }
+
+    public List<IComponent> PreviousComponents { get; set; }
+}
