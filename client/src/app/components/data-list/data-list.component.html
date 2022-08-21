@@ -1,0 +1,6 @@
+<label [for]="id">
+    {{ label }}
+    <select [id]="id" [ngModel]="value" (ngModelChange)="valueChange.emit($event)">
+        <option *ngFor="let option of options" [value]="option.value">{{ option.title }}</option>
+    </select>
+</label>
