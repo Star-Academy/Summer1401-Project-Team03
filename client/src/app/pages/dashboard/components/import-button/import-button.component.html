@@ -1,7 +1,5 @@
 <button type="button" (click)="modal.openModal()">open</button>
 <app-modal title="test" #importModal>
-    <form (submit)="handleSubmit()">
-        <input type="file" (change)="handleUpload($event)" />
-        <button type="submit">send</button>
-    </form>
+    <input type="file" (change)="handleUpload($event)" />
+    <button type="button" [disabled]="file" (click)="file && inventoryService.uploadDataSet(file)">send</button>
 </app-modal>

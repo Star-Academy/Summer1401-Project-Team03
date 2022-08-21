@@ -7,9 +7,13 @@ import {ApiService} from './api.service';
 export class InventoryService {
     public constructor(private apiService: ApiService) {}
 
-    public uploadDataSet(file: File): void {
-        const type = file.type;
+    public async uploadDataSet(file: File): Promise<void> {
+        const response = this.apiService.post('http://localhost:3000/', file, {
+            headers: {
+                'content-type': file.type,
+            },
+        });
     }
 
-    public downloadDataset(id: string): void {}
+    public async downloadDataset(id: string): Promise<void> {}
 }
