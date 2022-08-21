@@ -1,4 +1,5 @@
-﻿using DefaultNamespace;
+﻿using System.Net;
+using DefaultNamespace;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Extensions;
 using server.Extract;
@@ -11,12 +12,12 @@ public class FileTransferController : ControllerBase
 {
     private static int _fileID = 0;
     [HttpPost]
-    public async Task<IActionResult> Import(IFormFile file)
+   /* public async Task<IActionResult> Import(IFormFile file)
     {
         if (file.Length > 0)
         {
             increaseFileID(1);
-            var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + file.FileName + _fileID;
+            var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + file.FileName + "_" + _fileID;
             
             using (var stream = System.IO.File.Create(filePath))
             {
@@ -37,13 +38,16 @@ public class FileTransferController : ControllerBase
         }
 
         return BadRequest("The sent file is empty!");
-    }
+    }*/
 
-    // [HttpGet]
-    // public ActionResult<IFormFile> Export()
-    // {
-    //     
-    // }
+     [HttpGet]
+     public ActionResult<VirtualFileResult> Export(string fileName, int? fileID)
+     {
+         var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + fileName + "_" + fileID;
+         //return File(System.IO.File.Open(filePath, FileMode.Open));
+         
+         return File(filePath, "text/plain"); 
+     }
 
     private void increaseFileID(int increament)
     {
