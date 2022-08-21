@@ -4,9 +4,10 @@ import {PipelineInventoryComponent} from './pipeline-inventory.component';
 import {ConvertDateModule} from '../../pipes/convert-date/convert-date.module';
 import {SvgModule} from "../../components/svg/svg.module";
 import {SearchBoxModule} from "../../components/search-box/search-box.module";
+import {SearchFilterModule} from "../../pipes/search-filter/search-filter.module";
 
 @NgModule({
     declarations: [PipelineInventoryComponent],
-    imports: [CommonModule, ConvertDateModule, SvgModule, SearchBoxModule],
+    imports: [CommonModule, ConvertDateModule, SvgModule, SearchBoxModule, SearchFilterModule],
 })
 export class PipelineInventoryModule {}

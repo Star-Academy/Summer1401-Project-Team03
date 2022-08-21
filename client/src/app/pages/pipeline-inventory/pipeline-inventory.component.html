@@ -1,6 +1,6 @@
 <div class="inventory">
     <div class="inventory__header">
-        <app-search-box></app-search-box>
+        <app-search-box (searchPhraseChange)="searchPhrase = $event"></app-search-box>
     </div>
 
     <table class="inventory__table">
@@ -10,7 +10,7 @@
             <th>Modified At</th>
             <th></th>
         </tr>
-        <tr *ngFor="let item of pipelineItem">
+        <tr *ngFor="let item of pipelineItem | searchFilter: searchPhrase">
             <td>{{ item.name }}</td>
             <td>{{ item.createAt | convertDate }}</td>
             <td>{{ item.modifiedAt | convertDate }}</td>

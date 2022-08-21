@@ -5,11 +5,14 @@ import { SearchFilterPipe } from './search-filter.pipe';
 
 
 @NgModule({
-  declarations: [
-    SearchFilterPipe
-  ],
-  imports: [
-    CommonModule
-  ]
+    declarations: [
+        SearchFilterPipe
+    ],
+    exports: [
+        SearchFilterPipe
+    ],
+    imports: [
+        CommonModule
+    ]
 })
 export class SearchFilterModule { }

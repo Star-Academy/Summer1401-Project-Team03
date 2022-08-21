@@ -7,5 +7,6 @@ import {pipelineItemData, PipelineItemModel} from '../../models/pipeline/pipelin
     styleUrls: ['./pipeline-inventory.component.scss'],
 })
 export class PipelineInventoryComponent {
+    public searchPhrase: string = '';
     public pipelineItem: PipelineItemModel[] = pipelineItemData;
 }
