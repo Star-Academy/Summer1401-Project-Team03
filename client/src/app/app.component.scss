@@ -1,0 +1,12 @@
+.container {
+    display: grid;
+    height: 100vh;
+    grid-template-columns: auto 1fr;
+    .navbar{
+        background-color: var(--color-purple-21);
+        padding: 1rem;
+    }
+    .content{
+        background-color: bisque;
+    }
+}

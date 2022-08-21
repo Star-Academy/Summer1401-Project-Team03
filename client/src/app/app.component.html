@@ -1,3 +1,8 @@
-<h1>deploy works!</h1>
-<app-text-input [(value)]="value" label="test" id="test"></app-text-input>
-<div>{{ value }}</div>
+<div class="container">
+    <div class="navbar" (click)="toggleShrink()">
+        <app-navbar [isShrink]="shrinkedNavbar"></app-navbar>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

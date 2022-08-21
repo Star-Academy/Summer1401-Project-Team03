@@ -7,5 +7,8 @@ import {DatalistOption} from './models/DatalistOption.interface';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    public value: string = '';
+    public shrinkedNavbar: boolean = false;
+    public toggleShrink(): void {
+        this.shrinkedNavbar = !this.shrinkedNavbar;
+    }
 }
