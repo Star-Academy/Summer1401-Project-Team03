@@ -27,12 +27,15 @@
             background-color: var(--color-th-bg);
             border-radius: var(--border-radius-primary) var(--border-radius-primary) var(--border-radius-primary) 0;
         }
+
     }
 
     &__table {
         border-collapse: collapse;
-        border-radius: var(--border-radius-primary);
-        overflow: hidden;
+        //border-radius: var(--border-radius-primary);
+        //overflow: hidden;
+        // BUG SETTING MODAL
+
         tr{
             background-color: var(--color-hr-bg);
             border: 2px solid var(--color-hr-border);
@@ -52,6 +55,7 @@
         }
 
         td {
+            position: relative;
             color: var(--color-td-text);
 
             font-size: 1.6rem;
@@ -60,14 +64,16 @@
 
         td,
         th {
-            padding: 1rem 0.75rem;
+            padding: 2rem 0.75rem;
             text-transform: capitalize;
         }
 
         .item-setting{
             cursor: pointer;
+            height: 2rem;
 
         }
+
     }
 
 }
