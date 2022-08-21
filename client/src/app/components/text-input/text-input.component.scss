@@ -1,0 +1,14 @@
+label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-default);
+
+    font-size: var(--font-size-primary);
+
+    input {
+        padding: 0.5rem;
+
+        border: var(--border-default) var(--color-purple-46);
+        border-radius: var(--border-radius-minimum);
+    }
+}

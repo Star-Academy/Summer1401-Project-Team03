@@ -7,16 +7,5 @@ import {DatalistOption} from './models/DatalistOption.interface';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    public options: DatalistOption[] = [
-        {
-            title: 'salam',
-            value: 'hi',
-        },
-        {
-            title: 'khodafez',
-            value: 'bye',
-        },
-    ];
-
     public value: string = '';
 }

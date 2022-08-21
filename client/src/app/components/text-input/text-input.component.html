@@ -1,0 +1,4 @@
+<label [for]="id">
+    {{ label }}
+    <input [id]="id" [type]="type" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
+</label>
