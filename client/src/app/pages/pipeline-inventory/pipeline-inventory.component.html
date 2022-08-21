@@ -1,1 +1,36 @@
-<p>pipeline-inventory works!</p>
+<div class="wrapper">
+    <h3>harchi</h3>
+    <!--    <table>-->
+    <!--        <tr>-->
+    <!--            <th>Name</th>-->
+    <!--            <th>Created At</th>-->
+    <!--            <th>Modified At</th>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td>harhci</td>-->
+    <!--            <td>Created At</td>-->
+    <!--            <td>Modified At</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td>Name</td>-->
+    <!--            <td>Created At</td>-->
+    <!--            <td>Modified At</td>-->
+    <!--        </tr>-->
+    <!--    </table>-->
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Created At</th>
+            <th>Modified At</th>
+        </tr>
+        <ng-container *ngFor="let item of harchi">
+            <li>{{ item }}</li>
+        </ng-container>
+        <tr *ngFor="let item of pipelineItem">
+            <td>{{ item.name }}</td>
+            <td>{{ convertDate(item.modifiedAt) }}</td>
+            <td>{{ convertDate(item.createAt) }}</td>
+        </tr>
+    </table>
+</div>

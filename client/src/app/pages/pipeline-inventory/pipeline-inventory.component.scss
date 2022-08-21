@@ -1,0 +1,23 @@
+.wrapper {
+    width: 90%;
+    margin-inline: auto;
+    padding-top: 7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 1.7rem;
+
+    border: 1px solid red;
+
+
+    td,th{
+      padding: 1rem 0.75rem;
+      border: 1px solid blue;
+      text-transform: capitalize;
+    }
+}
+
