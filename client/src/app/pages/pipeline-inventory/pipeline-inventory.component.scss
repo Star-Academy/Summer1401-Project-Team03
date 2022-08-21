@@ -14,10 +14,19 @@
     padding-top: 7rem;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem;
 
     &__header{
-
+        display: flex;
+        gap: 4rem;
+        align-items: center;
+        app-svg{
+            cursor: pointer;
+            padding: 0.5rem;
+            height: auto;
+            background-color: var(--color-th-bg);
+            border-radius: var(--border-radius-primary) var(--border-radius-primary) var(--border-radius-primary) 0;
+        }
     }
 
     &__table {
