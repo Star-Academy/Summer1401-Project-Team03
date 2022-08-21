@@ -9,8 +9,8 @@
         </tr>
         <tr *ngFor="let item of pipelineItem">
             <td>{{ item.name }}</td>
-            <td>{{ convertDate(item.modifiedAt) }}</td>
-            <td>{{ convertDate(item.createAt) }}</td>
+            <td>{{ item.createAt | convertDate }}</td>
+            <td>{{ item.modifiedAt | convertDate }}</td>
         </tr>
     </table>
 </div>
