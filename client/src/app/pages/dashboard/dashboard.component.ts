@@ -1,5 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
-import {ModalComponent} from 'src/app/components/modal/modal.component';
+import {Component} from '@angular/core';
 
 @Component({
     selector: 'app-dashboard',

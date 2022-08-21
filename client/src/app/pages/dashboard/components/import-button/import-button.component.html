@@ -1,4 +1,5 @@
 <button (click)="modal.openModal()">open</button>
 <app-modal #mymodal title="test">
-    <input type="file" />
+    <input type="file" (change)="setFile($event)" />
+    <button>send</button>
 </app-modal>
