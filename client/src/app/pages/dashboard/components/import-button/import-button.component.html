@@ -1,0 +1,7 @@
+<button type="button" (click)="modal.openModal()">open</button>
+<app-modal title="test" #importModal>
+    <form (submit)="handleSubmit()">
+        <input type="file" (change)="handleUpload($event)" />
+        <button type="submit">send</button>
+    </form>
+</app-modal>

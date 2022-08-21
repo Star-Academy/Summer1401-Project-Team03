@@ -11,9 +11,17 @@ dialog {
 
     font-size: var(--font-size-primary);
 
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
     header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+
+        h1 {
+            font-size: 2rem;
+        }
     }
 }
