@@ -8,11 +8,10 @@ export class InventoryService {
     public constructor(private apiService: ApiService) {}
 
     public async uploadDataSet(file: File): Promise<void> {
-        const response = this.apiService.post('http://localhost:3000/', file, {
-            headers: {
-                'content-type': file.type,
-            },
-        });
+        const data = new FormData();
+        data.append('file', file);
+
+        const response = this.apiService.formPost('http://localhost:3000/', data);
     }
 
     public async downloadDataset(id: string): Promise<void> {}

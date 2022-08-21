@@ -4,3 +4,10 @@ export const POST_INIT = {
         'content-type': 'application/json',
     },
 };
+
+export const FORM_POST_INIT = {
+    method: 'post',
+    headers: {
+        'content-type': 'multipart/form-data',
+    },
+};
