@@ -1,16 +1,20 @@
 using System.Text;
 using server.Components;
 using server.Components.Transformers;
+using server.Pipelines;
 
 namespace server.Transform;
 
 public class RemoveField : Transformer
 {
     private List<string> fieldsToRemove;
-    public List<string> Keys { get; set; }
 
     public List<Component> PreviousComponents { get; set; }
 
+    public RemoveField(Pipeline pipeline) : base(pipeline)
+    {
+    }
+    
     public override string GetQuery()
     {
         var tableName = PreviousComponents[0].GetQuery();
@@ -23,4 +27,6 @@ public class RemoveField : Transformer
 
         return builder.ToString();
     }
+
+    
 }

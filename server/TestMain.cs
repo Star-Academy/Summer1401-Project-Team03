@@ -1,8 +1,9 @@
-﻿namespace System.Data.Common;
+﻿using server.Databases;
 using server.Components.Extractors;
 using server.Components.Loaders;
-using server.Databases;
-public class TestMain
+using server.Pipelines;
+
+public static class TestMain
 {
     private const string Host = "localhost";
     private const string Username = "postgres";
@@ -11,12 +12,12 @@ public class TestMain
 
     public static void Main(string[] args)
     {
-        var database = new PostgresDatabase(Host, Username, Database, Password);
-        var extractor = new CSVExtractor(database, "ez",
-            "C:\\Users\\Khosro\\Desktop\\StarAcademy\\Summer1401-Project-Team03\\server\\TestData\\input.csv");
+        Pipeline pipeline = new Pipeline(Host, Username, Database, Password);
+        var extractor = new CSVExtractor(pipeline,
+            @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\input.csv");
         var loader =
-            new CSVLoader(database, extractor,
-                "C:\\Users\\Khosro\\Desktop\\StarAcademy\\Summer1401-Project-Team03\\server\\TestData\\output.csv");
+            new CSVLoader(pipeline, extractor,
+                @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\output.csv");
         Console.WriteLine(loader.GetQuery());
     }
 }

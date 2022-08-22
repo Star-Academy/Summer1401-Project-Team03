@@ -1,24 +1,31 @@
 using server.Components;
 using server.Components.Transformers;
+using server.Pipelines;
 using SqlKata;
 using static server.Transform.ConvertToPostgreQuery;
 
 namespace server.Transform;
 
-public class Join : Transformer
+public class Join : Mutator
 {
+    
+    public Join(Pipeline pipeline) : base(pipeline)
+    {
+        
+    }
+
     private string firstTableProperty { get; set; }
     private string secondTableProperty { get; set; }
     private JoinType joinType { get; set; }
+    private string firstTableName { get; set; }
+    private string secondTableName { get; set; }
 
-    public List<string> Keys { get; set; }
 
     public List<Component> PreviousComponents { get; set; }
-
-    public override string GetQuery()
+    public override void Mutate()
     {
-        var firstTableName = PreviousComponents[0].GetQuery();
-        var secondTableName = PreviousComponents[1].GetQuery();
+        firstTableName = PreviousComponents[0].GetQuery();
+        secondTableName = PreviousComponents[1].GetQuery();
 
         var firstProperty = $"{firstTableName}.{firstTableProperty}";
         var secondProperty = $"{secondTableName}.{secondTableProperty}";
@@ -26,9 +33,25 @@ public class Join : Transformer
         var query = new Query(firstTableName);
         query = QueryByJoinType(query, secondTableName, firstProperty, secondProperty);
 
-        return getPostgresQuery(query);
+        Pipeline.Database.Execute(getPostgresQuery(query));
+        Pipeline.QueryBuilder.Copy(firstTableName, GetTable());
+        Pipeline.QueryBuilder.Drop(secondTableName);
+        Pipeline.QueryBuilder.Drop(firstTableName);
+
     }
 
+    public override string GetQuery()
+    {
+        Mutate();
+        
+        return GetTable();
+    }
+
+    public override string GetTable()
+    {
+        return $"({firstTableName}+{secondTableName})";
+    }
+    
     private Query QueryByJoinType(Query query,
         string secondTableName, string firstProperty, string secondProperty)
     {

@@ -17,6 +17,12 @@ public class PostgresQueryBuilder : IQueryBuilder
         query.Append(')');
         return query.ToString();
     }
+    
+    public string Copy(string tableToCopy, string newTableName)
+    {
+        return $"CREATE TABLE {tableToCopy} AS TABLE {newTableName};";
+    }
+
 
     public string Drop(string table)
     {
