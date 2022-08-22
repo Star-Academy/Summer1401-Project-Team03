@@ -2,7 +2,7 @@
 using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Databases;
-public class Main
+public class TestMain
 {
     private const string Host = "localhost";
     private const string Username = "postgres";
@@ -20,9 +20,3 @@ public class Main
         Console.WriteLine(loader.GetQuery());
     }
 }
-
-
-// var builder = WebApplication.CreateBuilder(args);
-// var app = builder.Build();
-//
-// app.MapGet("/", () => "Hello Worl
