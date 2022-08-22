@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SvgComponent} from './svg.component';
+import {ModalComponent} from './modal.component';
 
-describe('SvgComponent', () => {
-    let component: SvgComponent;
-    let fixture: ComponentFixture<SvgComponent>;
+describe('ModalComponent', () => {
+    let component: ModalComponent;
+    let fixture: ComponentFixture<ModalComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SvgComponent],
+            declarations: [ModalComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SvgComponent);
+        fixture = TestBed.createComponent(ModalComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

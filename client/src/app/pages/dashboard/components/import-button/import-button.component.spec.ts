@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SvgComponent} from './svg.component';
+import {ImportButtonComponent} from './import-button.component';
 
-describe('SvgComponent', () => {
-    let component: SvgComponent;
-    let fixture: ComponentFixture<SvgComponent>;
+describe('ImportButtonComponent', () => {
+    let component: ImportButtonComponent;
+    let fixture: ComponentFixture<ImportButtonComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SvgComponent],
+            declarations: [ImportButtonComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SvgComponent);
+        fixture = TestBed.createComponent(ImportButtonComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

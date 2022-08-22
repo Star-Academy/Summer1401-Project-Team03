@@ -1,0 +1,52 @@
+dialog {
+    box-shadow: 0 0.2rem 0.5rem 0 var(--color-shadow);
+
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+
+    min-inline-size: 30rem;
+    max-inline-size: 90vw;
+
+    padding: 1rem;
+
+    border: none;
+    border-radius: var(--border-radius-minimal);
+
+    transform: translate(-50%, -50%);
+
+    font-size: var(--font-size-primary);
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+
+        h1 {
+            flex-grow: 0;
+
+            overflow: hidden;
+
+            font-size: var(--font-size-big);
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        button {
+            font-size: inherit;
+            font-size: var(--font-size-big);
+
+            cursor: pointer;
+        }
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        padding-block-start: 2rem;
+    }
+}
