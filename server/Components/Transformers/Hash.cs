@@ -2,6 +2,7 @@ using System.Collections;
 using System.Text;
 using server.Components;
 using server.Components.Transformers;
+using server.Pipelines;
 using SqlKata;
 
 namespace server.Transform;
@@ -9,7 +10,6 @@ using System.Security.Cryptography;
 
 public class Hash : Transformer
 {
-    public List<string> Keys { get; set; }
     
     private string fieldToHash { get; set; }
     private bool ShouldCreateNewField { get; set; }
@@ -37,6 +37,9 @@ public class Hash : Transformer
     }
 
     public List<Component> PreviousComponents { get; set; }
+    public Hash(Pipeline pipeline) : base(pipeline)
+    {
+    }
     
     private IEnumerable<byte> GetHashArray(string str)
     {
@@ -52,6 +55,7 @@ public class Hash : Transformer
 
         return sb.ToString();
     }
+
 }
 
 

@@ -1,5 +1,6 @@
 using server.Components;
 using server.Components.Transformers;
+using server.Pipelines;
 using SqlKata;
 using static server.Transform.ConvertToPostgreQuery;
 
@@ -17,6 +18,9 @@ public class Filter : Transformer
 
     public List<Component> PreviousComponents { get; set; }
 
+    public Filter(Pipeline pipeline) : base(pipeline)
+    {
+    }
     public override string GetQuery()
     {
         var tableName = PreviousComponents[0].GetQuery();
@@ -50,4 +54,5 @@ public class Filter : Transformer
         Less,
         LessOrEqual
     }
+
 }
