@@ -1,9 +1,7 @@
-﻿using System.ComponentModel;
-
-namespace DefaultNamespace;
+﻿namespace DefaultNamespace;
 
 public enum FileTypes
 {
     json,
-    csv,
+    csv
 }
