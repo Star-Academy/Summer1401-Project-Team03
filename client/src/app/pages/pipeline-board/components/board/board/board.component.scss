@@ -18,10 +18,10 @@
     padding-block-end: calc(0.1 * var(--container-width));
     padding-inline-end: calc(0.1 * var(--container-width));
 
-    border: 1px solid hsl(0deg 0% 0%);
+    border: 1px solid var(--color-gray-0);
 
     .board {
-        @include grid-pattern(white, hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
+        @include grid-pattern(var(--color-gray-100), hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
 
         position: relative;
 
@@ -31,18 +31,35 @@
         .resizer {
             --size: calc(0.5 * var(--grid-size));
 
-            background-color: cornflowerblue;
+            background-color: var(--color-purple-46);
 
             position: absolute;
-            inset-block-start: calc(100% - var(--size) / 2);
-            inset-inline-start: calc(100% - var(--size) / 2);
 
             inline-size: var(--size);
             aspect-ratio: 1;
 
             border-radius: 50%;
 
-            cursor: se-resize;
+            &.xy {
+                inset-block-start: calc(100% - var(--size) / 2);
+                inset-inline-start: calc(100% - var(--size) / 2);
+
+                cursor: se-resize;
+            }
+
+            &.x {
+                inset-block-start: calc(50% - var(--size) / 2);
+                inset-inline-start: calc(100% - var(--size) / 2);
+
+                cursor: e-resize;
+            }
+
+            &.y {
+                inset-block-start: calc(100% - var(--size) / 2);
+                inset-inline-start: calc(50% - var(--size) / 2);
+
+                cursor: s-resize;
+            }
         }
     }
 }

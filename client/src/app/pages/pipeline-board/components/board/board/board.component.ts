@@ -14,8 +14,8 @@ export class BoardComponent {
 
     @Input() public gridSize: string = '20px';
 
-    public resizeClickHandler(): void {
-        this.boardHeight += 5;
-        this.boardWidth += 5;
+    public resizeClickHandler(dx: number, dy: number): void {
+        this.boardWidth += dx;
+        this.boardHeight += dy;
     }
 }
