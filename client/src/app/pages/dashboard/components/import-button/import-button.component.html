@@ -1,4 +1,4 @@
-<button (click)="modal.openModal()">open</button>
+<app-button (click)="modal.openModal()">open</app-button>
 <app-modal #mymodal title="import dataset">
     <div class="upload">
         <label>
@@ -7,5 +7,5 @@
         </label>
         <span>{{ file ? file.name : 'choose a file' }}</span>
     </div>
-    <button (click)="uploadFile()">send</button>
+    <app-button (click)="uploadFile()">send</app-button>
 </app-modal>

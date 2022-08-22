@@ -1,5 +1,5 @@
 dialog {
-    box-shadow: 0 0.2rem 0.5rem 0 var(--shadow-gray);
+    box-shadow: 0 0.2rem 0.5rem 0 var(--color-shadow);
 
     position: absolute;
     inset-block-start: 50%;
@@ -23,12 +23,12 @@ dialog {
         justify-content: space-between;
         gap: 2rem;
 
-        font-size: var(--font-size-primary);
-
         h1 {
             flex-grow: 0;
 
             overflow: hidden;
+
+            font-size: var(--font-size-big);
 
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -36,6 +36,9 @@ dialog {
 
         button {
             font-size: inherit;
+            font-size: var(--font-size-big);
+
+            cursor: pointer;
         }
     }
 
