@@ -4,7 +4,7 @@
     justify-content: center;
     gap: var(--gap-default);
 
-    background-color: var(--color-purple-21);
+    background-color: var(--color-purple-46);
     color: var(--color-purple-86);
     font-size: var(--font-size-primary);
     font-weight: 600;
@@ -17,7 +17,7 @@
 
     &:disabled {
         cursor: default;
-        background-color: var(--color-gray-76);
+        background-color: var(--color-gray-78);
         color: var(--color-gray-34);
     }
 
