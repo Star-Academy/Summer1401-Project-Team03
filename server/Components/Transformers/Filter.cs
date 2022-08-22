@@ -1,4 +1,3 @@
-using server.Component;
 using SqlKata;
 using static server.Transform.ConvertToPostgreQuery;
 
@@ -10,31 +9,20 @@ public class Filter : ITransformer
     private string fieldToFilterBy { get; set; }
 
     private Operation _operation { get; set; }
-    
+
     public List<string> Keys { get; set; }
-    
+
+
+    public List<IComponent> PreviousComponents { get; set; }
+
     public string GetQuery()
     {
         var tableName = PreviousComponents[0].GetQuery();
         var operatorString = GetOperatorString(_operation);
-        
-        var query = new Query(tableName).Where(fieldToFilterBy, operatorString ,value);
+
+        var query = new Query(tableName).Where(fieldToFilterBy, operatorString, value);
 
         return getPostgresQuery(query);
-    }
-    
-
-    public List<IComponent> PreviousComponents { get; set; }
-
-    private enum Operation
-    {
-        Equal,
-        NotEqual,
-        Greater,
-        GreaterOrEqual,
-        Less,
-        LessOrEqual,
-        
     }
 
     private string GetOperatorString(Operation operation)
@@ -51,4 +39,13 @@ public class Filter : ITransformer
         };
     }
 
+    private enum Operation
+    {
+        Equal,
+        NotEqual,
+        Greater,
+        GreaterOrEqual,
+        Less,
+        LessOrEqual
+    }
 }

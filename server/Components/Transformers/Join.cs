@@ -1,4 +1,3 @@
-using server.Component;
 using SqlKata;
 using static server.Transform.ConvertToPostgreQuery;
 
@@ -9,8 +8,11 @@ public class Join : ITransformer
     private string firstTableProperty { get; set; }
     private string secondTableProperty { get; set; }
     private JoinType joinType { get; set; }
-    
+
     public List<string> Keys { get; set; }
+
+    public List<IComponent> PreviousComponents { get; set; }
+
     public string GetQuery()
     {
         var firstTableName = PreviousComponents[0].GetQuery();
@@ -25,16 +27,6 @@ public class Join : ITransformer
         return getPostgresQuery(query);
     }
 
-    public List<IComponent> PreviousComponents { get; set; }
-    
-    private enum JoinType
-    {
-        Inner,
-        LeftOuter,
-        RightOuter,
-        FullOuter
-    }
-
     private Query QueryByJoinType(Query query,
         string secondTableName, string firstProperty, string secondProperty)
     {
@@ -47,5 +39,13 @@ public class Join : ITransformer
                 .Union(query.RightJoin(secondTableName, firstProperty, secondProperty)),
             _ => throw new ArgumentOutOfRangeException(nameof(joinType), joinType, null)
         };
+    }
+
+    private enum JoinType
+    {
+        Inner,
+        LeftOuter,
+        RightOuter,
+        FullOuter
     }
 }

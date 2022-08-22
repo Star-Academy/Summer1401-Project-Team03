@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text;
 using server.Component;
 using SqlKata;
@@ -18,15 +19,28 @@ public class Hash : ITransformer
 
         var query = new Query(PreviousComponents[0].GetQuery());
         
+        //TODO read table as data
+        dynamic data = query;
+
+        var hashValues = new List<string>();
+        
+        var a = ((IEnumerable) data).Cast<dynamic>();
+
+        foreach (var o in a)
+        {
+            var dynamicController = new DynamicObjectController(o);
+            hashValues.Add(GetHashString(dynamicController.GetDynamicMember(fieldToHash)));
+        }
+        
         throw new NotImplementedException();
     }
 
     public List<IComponent> PreviousComponents { get; set; }
     
-    private byte[] GetHashArray(string Str)
+    private IEnumerable<byte> GetHashArray(string str)
     {
         using (HashAlgorithm algorithm = SHA256.Create())
-            return algorithm.ComputeHash(Encoding.UTF8.GetBytes(Str));
+            return algorithm.ComputeHash(Encoding.UTF8.GetBytes(str));
     }
 
     private string GetHashString(object obj)

@@ -9,13 +9,13 @@ public class CSVLoader : Loader
         base(database, previousComponent, filePath)
     {
     }
-    
+
     public override string GetQuery()
     {
         Load();
         return "worked";
     }
-    
+
     public override void Load()
     {
         Database.Execute(Pipeline.QueryBuilder.ExportCSV(PreviousComponent.GetQuery(), FilePath)).Close();
