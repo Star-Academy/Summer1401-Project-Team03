@@ -1,9 +1,11 @@
+using server.Components;
+using server.Components.Transformers;
 using SqlKata;
 using static server.Transform.ConvertToPostgreQuery;
 
 namespace server.Transform;
 
-public class Filter : ITransformer
+public class Filter : Transformer
 {
     private object value { get; set; }
     private string fieldToFilterBy { get; set; }
@@ -13,9 +15,9 @@ public class Filter : ITransformer
     public List<string> Keys { get; set; }
 
 
-    public List<IComponent> PreviousComponents { get; set; }
+    public List<Component> PreviousComponents { get; set; }
 
-    public string GetQuery()
+    public override string GetQuery()
     {
         var tableName = PreviousComponents[0].GetQuery();
         var operatorString = GetOperatorString(_operation);

@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Text;
-using server.Component;
+using server.Components;
+using server.Components.Transformers;
 using SqlKata;
 
 namespace server.Transform;
 using System.Security.Cryptography;
 
-public class Hash : ITransformer
+public class Hash : Transformer
 {
     public List<string> Keys { get; set; }
     
@@ -14,7 +15,7 @@ public class Hash : ITransformer
     private bool ShouldCreateNewField { get; set; }
     private string newFieldName { get; set; }
     
-    public string GetQuery()
+    public override string GetQuery()
     {
 
         var query = new Query(PreviousComponents[0].GetQuery());
@@ -35,7 +36,7 @@ public class Hash : ITransformer
         throw new NotImplementedException();
     }
 
-    public List<IComponent> PreviousComponents { get; set; }
+    public List<Component> PreviousComponents { get; set; }
     
     private IEnumerable<byte> GetHashArray(string str)
     {
