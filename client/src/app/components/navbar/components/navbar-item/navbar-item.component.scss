@@ -1,25 +1,25 @@
 .wrapper {
-  background-color: var(--color-purple-46);
-  color: var(--color-purple-86);
+    background-color: var(--color-purple-46);
+    color: var(--color-purple-86);
 
-  display: flex;
-  align-content: center;
-  align-items: center;
-  gap: 0.75rem;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    gap: 0.75rem;
 
-  padding: 1rem;
+    padding: 1rem;
 
-  border-radius: var(--border-radius-primary);
+    border-radius: var(--border-radius-primary);
 
-  cursor: pointer;
+    cursor: pointer;
 
-  h4 {
-    font-size: 2rem;
-  }
-
-  &.shrink {
     h4 {
-      display: none;
+        font-size: 2rem;
     }
-  }
+
+    &.shrink {
+        h4 {
+            display: none;
+        }
+    }
 }

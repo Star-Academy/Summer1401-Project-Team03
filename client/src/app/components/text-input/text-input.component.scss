@@ -7,10 +7,11 @@ label {
     font-weight: 600;
 
     input {
+        background-color: var(--color-white-solid);
+
         padding: 0.5rem;
 
         border: var(--border-default) var(--color-purple-21);
         border-radius: var(--border-radius-minimal);
-        background-color: var(--color-white-solid);
     }
 }

@@ -1,19 +1,21 @@
 .button {
+    background-color: var(--color-purple-46);
+    color: var(--color-purple-86);
+    box-shadow: 0 0.2rem 0.5rem 0 var(--color-shadow);
+
     display: flex;
     align-items: center;
     justify-content: center;
     gap: var(--gap-default);
 
-    background-color: var(--color-purple-46);
-    color: var(--color-purple-86);
-    font-size: var(--font-size-primary);
-    font-weight: 600;
     padding: 0.5rem 1rem;
+
     border-radius: var(--border-radius-primary);
 
-    cursor: pointer;
+    font-size: var(--font-size-primary);
+    font-weight: 600;
 
-    box-shadow: 0 0.2rem 0.5rem 0 var(--color-shadow);
+    cursor: pointer;
 
     &.secondary {
         background-color: var(--color-green-60);
@@ -21,13 +23,15 @@
     }
 
     &:disabled {
-        cursor: default;
         background-color: var(--color-gray-78);
         color: var(--color-gray-34);
+
+        cursor: default;
     }
 
     &:active:not(:disabled) {
         box-shadow: inset 0 0.2rem 0.5rem 0 var(--color-shadow);
+
         transform: scale(0.98);
     }
 }
