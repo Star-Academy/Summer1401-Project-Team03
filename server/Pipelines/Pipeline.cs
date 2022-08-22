@@ -18,8 +18,6 @@ public class Pipeline
         IdToComponent = new Dictionary<int, Component>();
     }
 
-    public IDatabase Database { set; get; }
-
     public void AddComponent(Component component)
     {
     }
