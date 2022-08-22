@@ -15,6 +15,11 @@
 
     box-shadow: 0 0.2rem 0.5rem 0 var(--color-shadow);
 
+    &.secondary {
+        background-color: var(--color-green-60);
+        color: var(--color-white-solid);
+    }
+
     &:disabled {
         cursor: default;
         background-color: var(--color-gray-78);
