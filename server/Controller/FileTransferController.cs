@@ -1,4 +1,5 @@
-﻿using DefaultNamespace;
+﻿using System.Text.RegularExpressions;
+using DefaultNamespace;
 using Microsoft.AspNetCore.Mvc;
 using server.Components.Extractors;
 using server.Databases;
@@ -17,20 +18,22 @@ public class FileTransferController : ControllerBase
         if (file.Length > 0)
         {
             increaseFileID(1);
-            var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + file.FileName + "_" + _fileID;
+            var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + file.FileName ;
 
             using (var stream = System.IO.File.Create(filePath))
             {
                 await file.CopyToAsync(stream);
             }
 
-            switch (file.ContentType)
-            {
+            Regex filter = new("(csv|json/text)");
+
+            switch (filter.Match(file.ContentType).Value)
+            { 
                 case nameof(FileTypes.csv):
-                    new CSVExtractor(_database, filePath, file.FileName).Extract();
+                    new CSVExtractor(_database,file.FileName , filePath).GetQuery();
                     break;
                 case nameof(FileTypes.json):
-                    new JSONExtractor(_database, filePath, file.FileName).Extract();
+                    new JSONExtractor(_database, file.FileName, filePath).Extract();
                     break;
             }
 
