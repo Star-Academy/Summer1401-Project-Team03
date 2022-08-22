@@ -11,7 +11,7 @@ public class FileTransferController : ControllerBase
 {
     private static int _fileID = 0;
     [HttpPost]
-   /* public async Task<IActionResult> Import(IFormFile file)
+    public async Task<IActionResult> Import(IFormFile file)
     {
         if (file.Length > 0)
         {
@@ -37,16 +37,14 @@ public class FileTransferController : ControllerBase
         }
 
         return BadRequest("The sent file is empty!");
-    }*/
+    }
 
      [HttpGet]
-     public ActionResult<VirtualFileResult> Export(string fileName, int? fileID)
-     {
-         var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + fileName + "_" + fileID;
-         //return File(System.IO.File.Open(filePath, FileMode.Open));
-         
-         return File(filePath, "text/plain"); 
-     }
+   public IActionResult Export(string fileName, int fileID)
+   {
+       var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + fileName + "_" + fileID;
+       return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain"); 
+   }
 
     private void increaseFileID(int increament)
     {
