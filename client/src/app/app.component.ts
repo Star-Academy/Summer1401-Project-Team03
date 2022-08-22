@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {DatalistOption} from './models/DatalistOption.interface';
 
 @Component({
     selector: 'app-root',
