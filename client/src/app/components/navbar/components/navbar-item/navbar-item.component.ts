@@ -9,11 +9,12 @@ import {Router} from '@angular/router';
 export class NavbarItemComponent {
     @Input() public iconType: string = '';
     @Input() public title: string = '';
+    @Input() public url: string = '';
     @Input() public isShrink: boolean = false;
 
     public constructor(private router: Router) {}
 
     public async navigateUrl(): Promise<void> {
-        await this.router.navigate([`/${this.title}`]);
+        await this.router.navigate([`/${this.url}`]);
     }
 }

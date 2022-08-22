@@ -1,0 +1,39 @@
+<div class="dataset">
+    <div class="dataset__header">
+        <app-svg (click)="addItem()" iconType="plus"></app-svg>
+        <app-search-box (searchPhraseChange)="searchPhrase = $event"></app-search-box>
+    </div>
+
+    <table class="dataset__table">
+        <tr>
+            <th>Name</th>
+            <th>File Type</th>
+            <th>Size</th>
+            <th>Created At</th>
+            <th>Modified At</th>
+            <th></th>
+        </tr>
+        <tr *ngFor="let item of datasetItems | searchFilter: searchPhrase" (click)="navigateWithUrl(item.id)">
+            <td>{{ item.name }}</td>
+            <td class="uppercase">{{ item.fileType }}</td>
+            <td>{{ item.size }}</td>
+            <td>{{ item.createAt | convertDate }}</td>
+            <td>{{ item.modifiedAt | convertDate }}</td>
+            <td>
+                <app-svg
+                    (click)="openItemSettingModal(item.id); $event.stopPropagation()"
+                    class="item-setting"
+                    iconType="dots-vertical"
+                ></app-svg>
+                <ng-container *ngIf="item.openedSettingModal">
+                    <app-dataset-item-modal
+                        (deleteEmit)="deleteItem(item.id)"
+                        (renameEmit)="renameItem(item.id)"
+                        (downloadEmit)="downloadItem(item.id)"
+                        (click)="closeItemSettingModal(item.id); $event.stopPropagation()"
+                    ></app-dataset-item-modal>
+                </ng-container>
+            </td>
+        </tr>
+    </table>
+</div>

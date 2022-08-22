@@ -1,9 +1,7 @@
 .container {
     display: grid;
     grid-template-columns: auto 1fr;
-
     height: 100vh;
-
     .navbar {
         background-color: var(--color-purple-21);
 
@@ -11,6 +9,6 @@
     }
 
     .content {
-        background-color: hsl(33deg 100% 88%);
+        background-color: var(--color-content-bg);
     }
 }
