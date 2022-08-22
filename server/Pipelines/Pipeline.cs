@@ -1,4 +1,5 @@
-﻿using server.Components;
+﻿using System.Data.Common;
+using server.Components;
 using server.Databases;
 
 namespace server.Pipelines;
@@ -18,7 +19,13 @@ public class Pipeline
         IdToComponent = new Dictionary<int, Component>();
     }
 
+    public DbDataReader Execute(int id)
+    {
+        return Database.Execute(IdToComponent[id].GetQuery());
+    }
+
     public void AddComponent(Component component)
     {
+        IdToComponent[component.Id] = component;
     }
 }

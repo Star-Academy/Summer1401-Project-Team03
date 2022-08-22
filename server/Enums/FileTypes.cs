@@ -1,4 +1,4 @@
-﻿namespace DefaultNamespace;
+﻿namespace server.Enums;
 
 public enum FileTypes
 {

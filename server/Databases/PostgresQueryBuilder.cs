@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using server.Enums;
 
 namespace server.Databases;
 
@@ -17,10 +18,10 @@ public class PostgresQueryBuilder : IQueryBuilder
         query.Append(')');
         return query.ToString();
     }
-    
+
     public string Copy(string tableToCopy, string newTableName)
     {
-        return $"CREATE TABLE {tableToCopy} AS TABLE {newTableName};";
+        return $"CREATE TABLE {tableToCopy} AS TABLE {newTableName}";
     }
 
 
@@ -56,6 +57,35 @@ public class PostgresQueryBuilder : IQueryBuilder
 
         query.Append($" FROM ({table})");
         return query.ToString();
+    }
+
+    public string Select(List<string> keys, string table, string alias)
+    {
+        var query = new StringBuilder($"SELECT {keys[0]}");
+        for (var i = 1; i < keys.Count; i++)
+        {
+            query.Append($", {keys[i]}");
+        }
+
+        query.Append($" FROM ({table}) AS {alias}");
+        return query.ToString();
+    }
+
+    public string Where(string condition)
+    {
+        return $"WHERE {condition}";
+    }
+
+    public string Where(string key, Operator @operator, object value)
+    {
+        var valueString = value.ToString();
+        if (value is string)
+        {
+            valueString = $"'{valueString}'";
+        }
+
+        var condition = $"{key} {@operator.GetString()} {valueString}";
+        return Where(condition);
     }
 
     public string Join(string firstTable, string secondTable)

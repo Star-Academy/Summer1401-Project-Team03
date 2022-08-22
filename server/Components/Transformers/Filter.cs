@@ -3,56 +3,28 @@ using server.Components.Transformers;
 using server.Pipelines;
 using SqlKata;
 using static server.Transform.ConvertToPostgreQuery;
+using server.Enums;
 
-namespace server.Transform;
+namespace server.Components.Transformers;
 
 public class Filter : Transformer
 {
-    private object value { get; set; }
-    private string fieldToFilterBy { get; set; }
+    public string FieldToFilter { get; set; }
 
-    private Operation _operation { get; set; }
+    public Operator Operator { get; set; }
 
-    public List<string> Keys { get; set; }
+    public object Value { get; set; }
 
-
-    public List<Component> PreviousComponents { get; set; }
-
-    public Filter(Pipeline pipeline) : base(pipeline)
+    public Filter(Pipeline pipeline, string fieldToFilter, Operator @operator, object value) : base(pipeline)
     {
+        FieldToFilter = fieldToFilter;
+        Operator = @operator;
+        Value = value;
     }
+
     public override string GetQuery()
     {
-        var tableName = PreviousComponents[0].GetQuery();
-        var operatorString = GetOperatorString(_operation);
-
-        var query = new Query(tableName).Where(fieldToFilterBy, operatorString, value);
-
-        return getPostgresQuery(query);
+        return
+            $"{Pipeline.QueryBuilder.Select(new List<string>() {"*"}, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName())} {Pipeline.QueryBuilder.Where(FieldToFilter, Operator, Value)}";
     }
-
-    private string GetOperatorString(Operation operation)
-    {
-        return operation switch
-        {
-            Operation.Equal => "=",
-            Operation.NotEqual => "!=",
-            Operation.Greater => ">",
-            Operation.GreaterOrEqual => ">=",
-            Operation.Less => "<",
-            Operation.LessOrEqual => "<=",
-            _ => throw new ArgumentOutOfRangeException(nameof(operation), operation, null)
-        };
-    }
-
-    private enum Operation
-    {
-        Equal,
-        NotEqual,
-        Greater,
-        GreaterOrEqual,
-        Less,
-        LessOrEqual
-    }
-
 }
