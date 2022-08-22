@@ -1,8 +1,11 @@
 button {
-    padding: 0.5rem;
     background-color: var(--color-purple-46);
     color: var(--color-purple-86);
+
+    padding: 0.5rem;
+
     border-radius: var(--border-radius-primary);
+
     font-size: 1.7rem;
 }
 
@@ -10,18 +13,24 @@ button {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
     label {
         background-color: var(--color-green-60);
-        padding: 0.5rem 1rem;
-        border-radius: var(--border-radius-primary);
         color: var(--color-white-solid);
+
+        padding: 0.5rem 1rem;
+
+        border-radius: var(--border-radius-primary);
+
         input {
             display: none;
         }
     }
+
     span {
-        white-space: nowrap;
         overflow: hidden;
+
         text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }

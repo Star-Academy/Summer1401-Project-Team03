@@ -3,10 +3,10 @@
     --color-purple-46: hsl(263deg 45% 46%);
     --color-purple-21: hsl(263deg 46% 21%);
 
-    --color-green-60: hsl(115, 45%, 60%);
+    --color-green-60: hsl(115deg 45% 60%);
 
     --color-white-solid: hsl(0deg 0% 100%);
-    --shadow-gray: hsl(0, 0%, 55%);
+    --shadow-gray: hsl(0deg 0% 55%);
 
     --font-size-primary: 1.3rem;
 
@@ -26,8 +26,8 @@
 }
 
 html {
-    font-size: 62.5%;
     font-family: var(--font-family-primary);
+    font-size: 62.5%;
 }
 
 input,
@@ -48,6 +48,7 @@ a {
 li {
     list-style-type: none;
 }
+
 svg {
     width: 3rem;
     height: 3rem;
