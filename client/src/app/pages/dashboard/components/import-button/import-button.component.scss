@@ -5,3 +5,23 @@ button {
     border-radius: var(--border-radius-primary);
     font-size: 1.7rem;
 }
+
+.upload {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    label {
+        background-color: var(--color-green-60);
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius-primary);
+        color: var(--color-white-solid);
+        input {
+            display: none;
+        }
+    }
+    span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

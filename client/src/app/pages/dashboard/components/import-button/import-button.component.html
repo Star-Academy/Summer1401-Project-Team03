@@ -1,5 +1,11 @@
 <button (click)="modal.openModal()">open</button>
-<app-modal #mymodal title="test">
-    <input type="file" (change)="setFile($event)" />
+<app-modal #mymodal title="import dataset">
+    <div class="upload">
+        <label>
+            upload
+            <input type="file" (change)="setFile($event)" accept=".csv,.json" />
+        </label>
+        <span>{{ file ? file.name : 'choose a file' }}</span>
+    </div>
     <button (click)="uploadFile()">send</button>
 </app-modal>

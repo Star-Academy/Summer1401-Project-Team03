@@ -7,7 +7,8 @@ dialog {
     border-radius: var(--border-radius-minimal);
     padding: 1rem;
     box-shadow: 0 0.2rem 0.5rem 0 var(--shadow-gray);
-    min-inline-size: 20rem;
+    min-inline-size: 30rem;
+    max-inline-size: 90vw;
 
     font-size: var(--font-size-primary);
 
@@ -15,11 +16,24 @@ dialog {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        gap: 2rem;
 
         font-size: var(--font-size-primary);
+
+        h1 {
+            flex-grow: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        button {
+            font-size: inherit;
+        }
     }
 
     body {
+        padding-block-start: 2rem;
         display: flex;
         flex-direction: column;
         gap: 1rem;
