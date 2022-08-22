@@ -5,10 +5,11 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NavbarModule} from './components/navbar/navbar.module';
 import {DashboardModule} from './pages/dashboard/dashboard.module';
+import {PipelineBoardModule} from './pages/pipeline-board/pipeline-board.module';
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [BrowserModule, AppRoutingModule, DashboardModule, NavbarModule],
+    imports: [BrowserModule, AppRoutingModule, DashboardModule, NavbarModule, PipelineBoardModule],
     providers: [],
     bootstrap: [AppComponent],
 })
