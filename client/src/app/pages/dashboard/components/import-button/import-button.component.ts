@@ -21,10 +21,7 @@ export class ImportButtonComponent {
     }
 
     public async uploadFile(): Promise<void> {
-        if (!this.file) {
-            return;
-        }
-
-        await this.inventoryService.uploadDataSet(this.file);
+        if (this.file)
+            await this.inventoryService.uploadDataSet(this.file);
     }
 }
