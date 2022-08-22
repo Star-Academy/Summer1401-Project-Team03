@@ -1,15 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-item.model';
 
 @Component({
-  selector: 'app-dataset.svg-inventory',
-  templateUrl: './dataset-inventory.component.html',
-  styleUrls: ['./dataset-inventory.component.scss']
+    selector: 'app-dataset.svg-inventory',
+    templateUrl: './dataset-inventory.component.html',
+    styleUrls: ['./dataset-inventory.component.scss'],
 })
-export class DatasetInventoryComponent implements OnInit {
+export class DatasetInventoryComponent {
+    public searchPhrase: string = '';
+    public datasetItems: DatasetItemModel[] = datasetItemData;
 
-  constructor() { }
+    public openItemSettingModal(id: number): void {
+        const item = this.datasetItems.find((item) => item.id === id);
+        if (item) item.openedSettingModal = true;
+    }
 
-  ngOnInit(): void {
-  }
+    public closeItemSettingModal(id: number): void {
+        const item = this.datasetItems.find((item) => item.id === id);
+        if (item) item.openedSettingModal = false;
+    }
 
+    public addItem(): void {
+        console.log(`Added item`);
+        // Connect to inventory service
+    }
+
+    public renameItem(id: number): void {
+        console.log(`Renamed item ${id}`);
+        // Connect to inventory service
+    }
+
+    public downloadItem(id: number): void {
+        console.log(`Downloaded item ${id}`);
+        // Connect to inventory service
+    }
+
+    public deleteItem(id: number): void {
+        console.log(`Removed item ${id}`);
+        // Connect to inventory service
+    }
+
+    public navigateWithUrl(id: number): void {
+        console.log(`Navigate item ${id}`);
+        // Complete pipeline page
+    }
 }

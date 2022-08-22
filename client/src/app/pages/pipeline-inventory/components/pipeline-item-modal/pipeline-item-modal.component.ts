@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Output} from '@angular/core';
 
 @Component({
-    selector: 'app-item-modal',
-    templateUrl: './item-modal.component.html',
-    styleUrls: ['./item-modal.component.scss'],
+    selector: 'app-pipeline-item-modal',
+    templateUrl: './pipeline-item-modal.component.html',
+    styleUrls: ['./pipeline-item-modal.component.scss'],
 })
-export class ItemModalComponent {
+export class PipelineItemModalComponent {
     @Output() public renameEmit = new EventEmitter<void>();
     @Output() public deleteEmit = new EventEmitter<void>();
 }

@@ -22,11 +22,11 @@
                     iconType="dots-vertical"
                 ></app-svg>
                 <ng-container *ngIf="item.openedSettingModal">
-                    <app-item-modal
+                    <app-pipeline-item-modal
                         (deleteEmit)="deleteItem(item.id)"
                         (renameEmit)="renameItem(item.id)"
                         (click)="closeItemSettingModal(item.id); $event.stopPropagation()"
-                    ></app-item-modal>
+                    ></app-pipeline-item-modal>
                 </ng-container>
             </td>
         </tr>
