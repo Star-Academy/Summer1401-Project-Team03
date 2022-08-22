@@ -1,11 +1,12 @@
 ﻿using server.Databases;
+using server.Pipelines;
 
 namespace server.Components.Extractors;
 
 public class JSONExtractor : Extractor
 {
-    public JSONExtractor(IDatabase database, string tableName, string filePath) :
-        base(database, tableName, filePath)
+    public JSONExtractor(Pipeline pipeline, string filePath) :
+        base(pipeline, filePath)
     {
     }
 

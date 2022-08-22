@@ -1,19 +1,23 @@
 ﻿using server.Databases;
+using server.Pipelines;
 
 namespace server.Components.Extractors;
 
 public abstract class Extractor : Component
 {
-    public IDatabase Database { set; get; }
     public string TableName { set; get; }
     public string FilePath { set; get; }
 
-    public Extractor(IDatabase database, string tableName, string filePath) : base()
+    public Extractor(Pipeline pipeline, string filePath) : base(pipeline)
     {
-        Database = database;
-        TableName = tableName;
+        TableName = pipeline.TableManager.NewTableName();
         FilePath = filePath;
     }
-    
+
+    public override string GetTable()
+    {
+        return TableName;
+    }
+
     public abstract void Extract();
 }

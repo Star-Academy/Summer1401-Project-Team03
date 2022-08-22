@@ -5,12 +5,10 @@ namespace server.Databases;
 public class PostgresQueryBuilder : IQueryBuilder
 {
     private const string PrimaryKey = "__";
-    
-    public static PostgresQueryBuilder Instance = new PostgresQueryBuilder();
 
-    public string CreateTable(string tableName, List<string> keys)
+    public string CreateTable(string table, List<string> keys)
     {
-        var query = new StringBuilder($"CREATE TABLE {tableName} ( {PrimaryKey} SERIAL PRIMARY KEY");
+        var query = new StringBuilder($"CREATE TABLE {table} ( {PrimaryKey} SERIAL PRIMARY KEY");
         foreach (var key in keys)
         {
             query.Append($", {key} varchar(40)");
@@ -20,10 +18,15 @@ public class PostgresQueryBuilder : IQueryBuilder
         return query.ToString();
     }
 
-    public string ImportCSV(string tableName, List<string> keys, string filePath)
+    public string Drop(string table)
     {
-        var query = new StringBuilder($"COPY {tableName} ({keys[0]}");
-        for (int i = 1; i < keys.Count; i++)
+        return $"DROP TABLE IF EXISTS {table}";
+    }
+
+    public string ImportCSV(string table, List<string> keys, string filePath)
+    {
+        var query = new StringBuilder($"COPY {table} ({keys[0]}");
+        for (var i = 1; i < keys.Count; i++)
         {
             query.Append($", {keys[i]}");
         }
@@ -32,14 +35,21 @@ public class PostgresQueryBuilder : IQueryBuilder
         return query.ToString();
     }
 
-    public string ExportCSV(string query, string filePath)
+    public string ExportCSV(string table, string filePath)
     {
-        return $"COPY ({query}) TO '{filePath}' CSV HEADER";
+        return $"COPY ({table}) TO '{filePath}' CSV HEADER";
     }
 
-    public string Drop(string tableName)
+    public string Select(List<string> keys, string table)
     {
-        return $"DROP TABLE IF EXISTS {tableName}";
+        var query = new StringBuilder($"SELECT {keys[0]}");
+        for (var i = 1; i < keys.Count; i++)
+        {
+            query.Append($", {keys[i]}");
+        }
+
+        query.Append($" FROM ({table})");
+        return query.ToString();
     }
 
     public string Join(string firstTable, string secondTable)

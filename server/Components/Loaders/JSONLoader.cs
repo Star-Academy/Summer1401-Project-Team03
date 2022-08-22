@@ -1,11 +1,12 @@
 ﻿using server.Databases;
+using server.Pipelines;
 
 namespace server.Components.Loaders;
 
 public class JSONLoader : Loader
 {
-    public JSONLoader(IDatabase database, Component previousComponent, string filePath) :
-        base(database, previousComponent, filePath)
+    public JSONLoader(Pipeline pipeline, Component previousComponent, string filePath) :
+        base(pipeline, previousComponent, filePath)
     {
     }
 

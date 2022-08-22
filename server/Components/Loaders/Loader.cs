@@ -1,18 +1,22 @@
 ﻿using server.Databases;
+using server.Pipelines;
 
 namespace server.Components.Loaders;
 
 public abstract class Loader : Component
 {
-    public IDatabase Database { set; get; }
     public Component PreviousComponent { set; get; }
     public string FilePath { set; get; }
 
-    public Loader(IDatabase database, Component previousComponent, string filePath) : base()
+    public Loader(Pipeline pipeline, Component previousComponent, string filePath) : base(pipeline)
     {
-        Database = database;
         PreviousComponent = previousComponent;
         FilePath = filePath;
+    }
+
+    public override string GetTable()
+    {
+        return PreviousComponent.GetTable();
     }
 
     public abstract void Load();
