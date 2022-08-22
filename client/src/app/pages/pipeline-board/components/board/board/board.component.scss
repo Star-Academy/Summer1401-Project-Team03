@@ -1,0 +1,48 @@
+@mixin grid-pattern($bg-color, $border-color, $border-width, $grid-size) {
+    background-color: $bg-color;
+    background-image: linear-gradient($border-color $border-width, transparent $border-width),
+        linear-gradient(to right, $border-color $border-width, $bg-color $border-width);
+    background-size: $grid-size $grid-size;
+}
+
+.container {
+    --container-width: calc(var(--container-w) * var(--grid-size));
+    --container-height: calc(var(--container-h) * var(--grid-size));
+
+    overflow: scroll;
+
+    block-size: var(--container-height);
+    inline-size: var(--container-width);
+
+    margin: 5rem;
+    padding-block-end: calc(0.1 * var(--container-width));
+    padding-inline-end: calc(0.1 * var(--container-width));
+
+    border: 1px solid hsl(0deg 0% 0%);
+
+    .board {
+        @include grid-pattern(white, hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
+
+        position: relative;
+
+        block-size: calc(var(--board-h) * var(--grid-size));
+        inline-size: calc(var(--board-w) * var(--grid-size));
+
+        .resizer {
+            --size: calc(0.5 * var(--grid-size));
+
+            background-color: cornflowerblue;
+
+            position: absolute;
+            inset-block-start: calc(100% - var(--size) / 2);
+            inset-inline-start: calc(100% - var(--size) / 2);
+
+            inline-size: var(--size);
+            aspect-ratio: 1;
+
+            border-radius: 50%;
+
+            cursor: se-resize;
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<div
+    class="container"
+    [style]="{
+        '--board-w': boardWidth,
+        '--board-h': boardHeight,
+        '--container-w': containerWidth,
+        '--container-h': containerHeight,
+        '--grid-size': gridSize
+    }"
+>
+    <div class="board">
+        <div class="resizer" (click)="resizeClickHandler()"></div>
+    </div>
+</div>
