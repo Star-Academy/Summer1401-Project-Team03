@@ -2,7 +2,7 @@ label {
     --slider-length: 1.5rem;
     display: flex;
     align-items: center;
-    gap: var(--gap-default);
+    gap: 1rem;
 
     font-size: var(--font-size-primary);
 
@@ -39,7 +39,7 @@ label {
             block-size: var(--slider-length);
 
             background-color: var(--color-white-solid);
-            box-shadow: 0 0 0.3rem 0 var(--color-gray);
+            box-shadow: 0 0 0.3rem 0 var(--color-shadow);
             border-radius: 999rem;
 
             inset-inline-start: 0;

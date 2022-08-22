@@ -4,11 +4,13 @@ label {
     gap: var(--gap-default);
 
     font-size: var(--font-size-primary);
+    font-weight: 600;
 
     input {
         padding: 0.5rem;
 
         border: var(--border-default) var(--color-purple-46);
-        border-radius: var(--border-radius-minimum);
+        border-radius: var(--border-radius-minimal);
+        background-color: var(--color-white-solid);
     }
 }

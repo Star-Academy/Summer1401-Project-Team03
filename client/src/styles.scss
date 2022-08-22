@@ -3,7 +3,10 @@
     --color-purple-46: hsl(263deg 45% 46%);
     --color-purple-21: hsl(263deg 46% 21%);
 
-    --color-gray: rgb(193, 192, 195);
+    --color-shadow: hsla(0, 0%, 0%, 0.318);
+
+    --color-gray-76: hsl(260, 2%, 76%);
+    --color-gray-34: hsl(0, 0%, 34%);
 
     --color-white-solid: hsl(0deg 100% 100%);
 
@@ -15,7 +18,7 @@
     --border-radius-minimal: 0.3rem;
     --border-radius-primary: 0.5rem;
 
-    --gap-default: 1rem;
+    --gap-default: 0.5rem;
     --font-family-primary: "Nunito", sans-serif;
 }
 
