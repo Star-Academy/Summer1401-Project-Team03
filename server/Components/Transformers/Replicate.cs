@@ -19,15 +19,16 @@ public class Replicate : Mutator
     public List<Component> PreviousComponents { get; set; }
     public override void Mutate()
     {
-        Pipeline.QueryBuilder.Copy(PreviousComponents[0].GetTable(), previousTableName);
-        throw new NotImplementedException();
+        Pipeline.QueryBuilder.Copy(previousTableName, GetTable());
+        
     }
 
     public override string GetQuery()
     {
         previousTableName = PreviousComponents[0].GetTable();
         counter = counter == _branches ? 1 : counter + 1;
-        return PreviousComponents[0].GetQuery();
+        Mutate();
+        return GetTable();
     }
     
     public override string GetTable()

@@ -34,7 +34,7 @@ public class Join : Mutator
         query = QueryByJoinType(query, secondTableName, firstProperty, secondProperty);
 
         Pipeline.Database.Execute(getPostgresQuery(query));
-        Pipeline.QueryBuilder.Copy(firstTableName, $"({firstTableName}+{secondTableName})");
+        Pipeline.QueryBuilder.Copy(firstTableName, GetTable());
         Pipeline.QueryBuilder.Drop(secondTableName);
         Pipeline.QueryBuilder.Drop(firstTableName);
 
@@ -44,7 +44,7 @@ public class Join : Mutator
     {
         Mutate();
         
-        return $"({firstTableName}+{secondTableName})";
+        return GetTable();
     }
 
     public override string GetTable()
