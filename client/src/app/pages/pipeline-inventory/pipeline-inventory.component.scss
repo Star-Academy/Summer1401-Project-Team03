@@ -8,26 +8,24 @@
 
     --color-td-text: hsl(0, 0%, 20%);
 
-
     width: 90%;
     margin-inline: auto;
-    padding-top: 7rem;
+    padding-block-start: 7rem;
     display: flex;
     flex-direction: column;
     gap: 3rem;
 
-    &__header{
+    &__header {
         display: flex;
         gap: 4rem;
         align-items: center;
-        app-svg{
+        app-svg {
             cursor: pointer;
             padding: 0.5rem;
             height: auto;
             background-color: var(--color-th-bg);
             border-radius: var(--border-radius-primary) var(--border-radius-primary) var(--border-radius-primary) 0;
         }
-
     }
 
     &__table {
@@ -36,15 +34,14 @@
         //overflow: hidden;
         // BUG SETTING MODAL
 
-        tr{
+        tr {
             background-color: var(--color-hr-bg);
             border: 2px solid var(--color-hr-border);
-            &:hover{
+            &:hover {
                 background-color: var(--color-hr-bg-hover);
-
             }
         }
-        tr:first-child{
+        tr:first-child {
             background-color: var(--color-th-bg);
         }
 
@@ -68,13 +65,9 @@
             text-transform: capitalize;
         }
 
-        .item-setting{
+        .item-setting {
             cursor: pointer;
             height: 2rem;
-
         }
-
     }
-
 }
-
