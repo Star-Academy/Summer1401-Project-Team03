@@ -1,0 +1,54 @@
+using server.Components;
+using server.Components.Transformers;
+using server.Pipelines;
+
+namespace server.Transform;
+
+public class FieldRenamer : Transformer
+{
+    public FieldRenamer(Pipeline pipeline, List<string> fieldsToRename, List<string> newNames) : base(pipeline)
+    {
+        FieldsToRename = fieldsToRename;
+        NewNames = newNames;
+    }
+
+    private List<string> FieldsToRename { get; set; }
+    private List<string> NewNames { get; set; }
+
+    public override string GetQuery()
+    {
+        var selectList = CreateModifiedListForStringsInMap((x, y) => $"{x} AS {y}");
+        
+        return Pipeline.QueryBuilder.Select(selectList, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName());
+    }
+
+    public override List<string> GetKeys()
+    {
+        return CreateModifiedListForStringsInMap((x, y) => y);
+    }
+
+    private Dictionary<string, string> GetNameMap()
+    {
+        var oldNewNameMap = new Dictionary<string, string>();
+        
+        for (var i = 0; i < NewNames.Count; i++)
+        {
+            oldNewNameMap.Add(FieldsToRename[i], NewNames[i]);
+        }
+
+        return oldNewNameMap;
+    }
+
+    private List<string> CreateModifiedListForStringsInMap(Func<string, string, string> func)
+    {
+        var modifiedList = new List<string>();
+        var map = GetNameMap();
+
+        foreach (var key in PreviousComponents[0].GetKeys())
+        {
+            modifiedList.Add(map.TryGetValue(key, out var newKey) ? func.Invoke(key, newKey) : key);
+        }
+        
+        return modifiedList;
+    }
+}
