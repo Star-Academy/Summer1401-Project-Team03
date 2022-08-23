@@ -1,14 +1,12 @@
-using server.Components;
-using server.Components.Transformers;
 using server.Pipelines;
 using SqlKata;
-using static server.Transform.ConvertToPostgreQuery;
+using static server.Components.Transformers.ConvertToPostgreQuery;
 
-namespace server.Transform;
+namespace server.Components.Transformers;
 
 public class Join : Mutator
 {
-    public Join(Pipeline pipeline) : base(pipeline)
+    public Join(Pipeline pipeline, Position position) : base(pipeline, position)
     {
     }
 

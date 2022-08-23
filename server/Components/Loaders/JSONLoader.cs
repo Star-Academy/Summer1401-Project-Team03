@@ -4,8 +4,8 @@ namespace server.Components.Loaders;
 
 public class JSONLoader : Loader
 {
-    public JSONLoader(Pipeline pipeline, Component previousComponent, string filePath) :
-        base(pipeline, previousComponent, filePath)
+    public JSONLoader(Pipeline pipeline, Position position, string filePath) :
+        base(pipeline, position, filePath)
     {
     }
 

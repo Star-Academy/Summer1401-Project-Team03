@@ -1,17 +1,15 @@
-using server.Components;
-using server.Components.Transformers;
 using server.Pipelines;
 
-namespace server.Transform;
+namespace server.Components.Transformers;
 
 public class Replicate : Mutator
 {
     private readonly int _branches = 2;
-    
-    public Replicate(Pipeline pipeline) : base(pipeline)
+
+    public Replicate(Pipeline pipeline, Position position) : base(pipeline, position)
     {
     }
-    
+
     public override string GetQuery()
     {
         TableName = Pipeline.TableManager.NewTableName();

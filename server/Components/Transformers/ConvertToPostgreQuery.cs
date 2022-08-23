@@ -1,7 +1,7 @@
 using SqlKata;
 using SqlKata.Compilers;
 
-namespace server.Transform;
+namespace server.Components.Transformers;
 
 public class ConvertToPostgreQuery
 {

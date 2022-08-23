@@ -4,19 +4,19 @@ namespace server.Components.Loaders;
 
 public class CSVLoader : Loader
 {
-    public CSVLoader(Pipeline pipeline, Component previousComponent, string filePath) :
-        base(pipeline, previousComponent, filePath)
+    public CSVLoader(Pipeline pipeline, Position position, string filePath) :
+        base(pipeline, position, filePath)
     {
     }
 
     public override string GetQuery()
     {
         Load();
-        return PreviousComponent.GetQuery();
+        return PreviousComponents[0].GetQuery();
     }
 
     public override void Load()
     {
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.ExportCSV(PreviousComponent.GetQuery(), FilePath)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.ExportCSV(PreviousComponents[0].GetQuery(), FilePath)).Close();
     }
 }

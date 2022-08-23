@@ -5,7 +5,8 @@ namespace server.Components.Transformers;
 
 public class Filter : Transformer
 {
-    public Filter(Pipeline pipeline, string fieldToFilter, Operator @operator, object value) : base(pipeline)
+    public Filter(Pipeline pipeline, Position position, string fieldToFilter, Operator @operator, object value) :
+        base(pipeline, position)
     {
         FieldToFilter = fieldToFilter;
         Operator = @operator;

@@ -1,6 +1,3 @@
-﻿using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Mvc;
-using server.Components.Extractors;
 ﻿using Microsoft.AspNetCore.Mvc;
 using server.Databases;
 
