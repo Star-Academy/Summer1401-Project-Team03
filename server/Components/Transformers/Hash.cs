@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Security.Cryptography;
 using System.Text;
-using server.Components;
-using server.Components.Transformers;
 using server.Pipelines;
 using SqlKata;
 
-namespace server.Transform;
+namespace server.Components.Transformers;
 
 public class Hash : Transformer
 {

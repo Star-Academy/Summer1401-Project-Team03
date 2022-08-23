@@ -1,8 +1,6 @@
-using server.Components;
-using server.Components.Transformers;
 using server.Pipelines;
 
-namespace server.Transform;
+namespace server.Components.Transformers;
 
 public class Replicate : Mutator
 {
