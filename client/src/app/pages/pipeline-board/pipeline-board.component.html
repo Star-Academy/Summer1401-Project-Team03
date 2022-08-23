@@ -1,8 +1,12 @@
 <div class="wrapper">
     <app-pipeline-node
+        [id]="pipelineNodeData.id"
         (staticClick)="clickNodeElement(pipelineNodeData.id)"
         draggabilly
         [options]="draggabillyOptions"
         [pipelineNodeData]="pipelineNodeData"
+        (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
+        ngDraggable
+        [position]="pipelineNodeData.position"
     ></app-pipeline-node>
 </div>
