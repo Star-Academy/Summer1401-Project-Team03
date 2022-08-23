@@ -1,51 +1,48 @@
-using System.Collections;
 using System.Data.Common;
 using System.Security.Cryptography;
 using System.Text;
 using server.Pipelines;
-using SqlKata;
 
 namespace server.Components.Transformers;
 
 public class Hash : Mutator
 {
-    public Hash(Pipeline pipeline, Position position, string fieldToHash, bool shouldCreateNewField, string newFieldName) : base(pipeline, position)
+    public Hash(Pipeline pipeline, Position position, string fieldToHash, bool shouldCreateNewField,
+        string newFieldName) : base(pipeline, position)
     {
         FieldToHash = fieldToHash;
         NewFieldName = newFieldName;
         ShouldCreateNewField = shouldCreateNewField;
-
     }
 
-    private string FieldToHash { get; set; }
-    private bool ShouldCreateNewField { get; set; }
-    private string NewFieldName { get; set; }
+    private string FieldToHash { get; }
+    private bool ShouldCreateNewField { get; }
+    private string NewFieldName { get; }
 
     public override void Mutate()
     {
-        
         var previousTableName = PreviousComponents[0].GetQuery();
         Pipeline.QueryBuilder.Copy(TableName, previousTableName);
     }
-    
+
     public override string GetQuery()
     {
         TableName = Pipeline.TableManager.NewTableName();
-        
+
         return Pipeline.QueryBuilder.SelectTable(TableName);
     }
 
     private List<string> GetHashedValueOfColumnn(string previousTableName)
     {
         var tempName = Pipeline.TableManager.NewTableName();
-        var query = Pipeline.QueryBuilder.Select(new List<string> {FieldToHash}, previousTableName,
+        var query = Pipeline.QueryBuilder.Select(new List<string> { FieldToHash }, previousTableName,
             tempName);
 
         var reader = Pipeline.Database.Execute(query);
         var hashedValues = CreateListOfStringsFromReader(reader, 0)
-                                    .Select(GetHashString).ToList();
+            .Select(GetHashString).ToList();
         reader.Close();
-        
+
         return hashedValues;
     }
 
@@ -78,7 +75,6 @@ public class Hash : Mutator
 
         if (!reader.HasRows) return strings;
         while (reader.Read())
-        {
             try
             {
                 strings.Add(reader.GetString(ordinal));
@@ -87,7 +83,6 @@ public class Hash : Mutator
             {
                 strings.Add("0");
             }
-        }
 
         return strings;
     }

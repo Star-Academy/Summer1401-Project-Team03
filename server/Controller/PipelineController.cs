@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
 using server.Components.Loaders;
+using server.Components.Transformers;
+using server.Enums;
 using server.file;
 using server.Pipelines;
 
@@ -32,12 +34,23 @@ public class PipelineController : ControllerBase
     public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, int x, int y,
         [FromBody] Dictionary<string, string> dictionary)
     {
-        // var filter = new Filter(idToPipeline[pipelineID], dictionary["field"], dictionary["operator"].GetOperator(), dictionary["value"]);
-        // filter.PreviousComponents.Add(idToPipeline[pipelineID].IdToComponent[previousComponentId]);
-        // idToPipeline[pipelineID].IdToComponent[nextComponentId].PreviousComponents.Add(filter);
-        // idToPipeline[pipelineID].AddComponent(filter);
-        // return Ok(filter.Id);
-        throw new NotImplementedException();
+        try
+        {
+            var pipeline = idToPipeline[pipelineID];
+        
+            var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
+                dictionary["operator"].GetOperator(), dictionary["value"]);
+        
+            filter.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
+            pipeline.IdToComponent[nextComponentId].PreviousComponents.Add(filter);
+            pipeline.AddComponent(filter);
+            
+            return Ok(filter.Id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPost]
