@@ -6,7 +6,7 @@ public interface IQueryBuilder
 {
     public string CreateTable(string table, List<string> keys);
 
-    public string Copy(string tableToCopy, string newTableName);
+    public string Copy(string newTableName, string table);
 
     public string ImportCSV(string table, List<string> keys, string filePath);
 
@@ -17,6 +17,8 @@ public interface IQueryBuilder
     public string Select(List<string> keys, string table);
 
     public string Select(List<string> keys, string table, string alias);
+
+    public string SelectTable(string tableName);
 
     public string Where(string condition);
 

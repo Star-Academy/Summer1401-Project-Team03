@@ -16,9 +16,9 @@ public class PostgresQueryBuilder : IQueryBuilder
         return query.ToString();
     }
 
-    public string Copy(string tableToCopy, string newTableName)
+    public string Copy(string newTableName, string table)
     {
-        return $"CREATE TABLE {tableToCopy} AS TABLE {newTableName}";
+        return $"CREATE TABLE {newTableName} AS ({table})";
     }
 
 
@@ -57,6 +57,11 @@ public class PostgresQueryBuilder : IQueryBuilder
 
         query.Append($" FROM ({table}) AS {alias}");
         return query.ToString();
+    }
+
+    public string SelectTable(string tableName)
+    {
+        return $"TABLE {tableName}";
     }
 
     public string Where(string condition)

@@ -14,7 +14,7 @@ public class CSVExtractor : Extractor
     public override string GetQuery()
     {
         Extract();
-        return $"SELECT * FROM {TableName}";
+        return Pipeline.QueryBuilder.SelectTable(TableName);
     }
 
     public override List<string> GetKeys()

@@ -6,7 +6,6 @@ public abstract class Mutator : Transformer
 {
     public Mutator(Pipeline pipeline) : base(pipeline)
     {
-        TableName = Pipeline.TableManager.NewTableName();
     }
 
     public string TableName { set; get; }
