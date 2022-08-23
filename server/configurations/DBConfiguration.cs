@@ -1,17 +1,9 @@
 ﻿namespace server.configurations;
 
-public record DBConfiguration
+public record DBConfiguration(string Host, string Username, string Database, string Password)
 {
-    public DBConfiguration(string host, string username, string database, string password)
-    {
-        Host = host;
-        Username = username;
-        Database = database;
-        Password = password;
-    }
-
-    public string Host { get; set; }
-    public string Username { get; set; }
-    public string Database { get; set; }
-    public string Password { get; set; }
+    public string Host { get; set; } = Host;
+    public string Username { get; set; } = Username;
+    public string Database { get; set; } = Database;
+    public string Password { get; set; } = Password;
 }
