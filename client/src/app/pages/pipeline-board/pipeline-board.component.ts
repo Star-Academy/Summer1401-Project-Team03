@@ -57,8 +57,6 @@ export class PipelineBoardComponent implements AfterViewInit {
         const leaderLineInit = (): void => {
             const nodeComponentLength = this.pipelineNodeDatas.length;
             this.pipelineNodeDatas.forEach((node, index, nodeArray) => {
-                console.log(index);
-                console.log(nodeComponentLength);
                 if (index === nodeComponentLength - 1) return;
                 this.applyLeaderLineBetweenTwoElement(node.id, nodeArray[index + 1].id);
             });
@@ -71,9 +69,15 @@ export class PipelineBoardComponent implements AfterViewInit {
         console.log(`Clicked on ${id}`);
     }
 
+    public setToUpperLayer(elementId: string): void {
+        const component = this.getElementRef(elementId);
+        component.style.zIndex = '100';
+    }
+
     public savePositionNodeElement(elementId: string): void {
         const component = this.getElementRef(elementId);
         const newPosition = {x: component?.offsetLeft, y: component?.offsetTop};
+        component.style.zIndex = '10';
         console.log(`${elementId}: X:${newPosition.x}|Y:${newPosition.y}`);
         //   TODO Connect to Service
     }

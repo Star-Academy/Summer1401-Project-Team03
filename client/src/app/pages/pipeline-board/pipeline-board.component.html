@@ -6,6 +6,7 @@
             draggabilly
             [options]="draggabillyOptions"
             [pipelineNodeData]="pipelineNodeData"
+            (dragStart)="setToUpperLayer(pipelineNodeData.id)"
             (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
             (dragMove)="updateLeaderLine(pipelineNodeData.id)"
             ngDraggable

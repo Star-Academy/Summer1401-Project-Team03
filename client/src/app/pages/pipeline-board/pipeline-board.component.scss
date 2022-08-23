@@ -4,14 +4,6 @@
     position: relative;
     app-pipeline-node {
         position: absolute;
+        z-index: 10;
     }
-}
-.item{
-    position: absolute;
-    background-color: red;
-    padding: 3rem;
-}
-.item2{
-    bottom: 0;
-    right: 0;
 }
