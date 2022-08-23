@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics.Metrics;
 using a;
 using Microsoft.AspNetCore.Mvc;
+using server.Components;
 using server.Components.Extractors;
+using server.Components.Loaders;
 using server.Components.Transformers;
 using server.Enums;
 using server.Pipelines;
@@ -42,14 +44,26 @@ public class PipelineController : ControllerBase
     //
 
     [HttpPost]
-    public void AddSource(int piplelineID, string fileName, int fileID, string fileType)
+    public IActionResult AddSource(int pipelineID, string fileName, int fileID, string fileType, double x, double y)
     {
-        var extractor = new CSVExtractor(idToPipeline[piplelineID], Directory.GetCurrentDirectory() + $"")
+        var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x,y),
+            Environment.CurrentDirectory + "\\resources\\exports\\" + fileName + "_" + fileID + "." + fileType );
+        
+        idToPipeline[pipelineID].AddComponent(extractor);
+
+        return Ok(extractor.Id);
     }
 
     [HttpPost]
-    public void AddDestination()
+    public IActionResult AddDestination(int pipelineId, string fileName, int fileId, string fileType, double x, double y, int previousComponentId)
     {
+        var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y),
+            Environment.CurrentDirectory + "\\resources\\imports\\" + fileName + "_" + fileId + "." + fileType);
         
+        loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
+        
+        idToPipeline[pipelineId].AddComponent(loader);
+
+        return Ok(loader.Id);
     }
 }
