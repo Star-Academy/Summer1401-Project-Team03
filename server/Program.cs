@@ -31,6 +31,7 @@ using server.Components.Loaders;
 using server.Components.Transformers;
 using server.Enums;
 using server.Pipelines;
+using server.Transform;
 
 public static class Program
 {
@@ -40,22 +41,26 @@ public static class Program
         var pipeline = new Pipeline(dbConfiguration.Host, dbConfiguration.Username, dbConfiguration.Database,
             dbConfiguration.Password);
         var extractor = new CSVExtractor(pipeline,
-            @"E:\input.csv");
+            @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\input.csv");
 
+        var replicate = new Replicate(pipeline);
+        
         var filter1 = new Filter(pipeline, "location", Operator.Equal, "Iran");
         var filter2 = new Filter(pipeline, "date", Operator.Equal, "2022-08-12");
 
-        var loader = new CSVLoader(pipeline, filter2,
-            @"E:\output.csv");
+        var loader1 = new CSVLoader(pipeline, filter1,
+            @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\output1.csv");
+        var loader2 = new CSVLoader(pipeline, filter2,
+            @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\output2csv");
 
-        filter1.PreviousComponents.Add(extractor);
-        filter2.PreviousComponents.Add(filter1);
+        replicate.PreviousComponents.Add(extractor);
+        filter1.PreviousComponents.Add(replicate);
+        filter2.PreviousComponents.Add(replicate);
+        
+        pipeline.AddComponent(loader1);
+        pipeline.AddComponent(loader2);
 
-        pipeline.AddComponent(extractor);
-        pipeline.AddComponent(filter1);
-        pipeline.AddComponent(filter2);
-        pipeline.AddComponent(loader);
-
-        pipeline.Execute(3);
+        pipeline.Execute(4).Close();
+        pipeline.Execute(5).Close();
     }
 }
