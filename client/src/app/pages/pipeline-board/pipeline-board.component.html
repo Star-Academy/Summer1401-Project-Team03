@@ -1,5 +1,8 @@
 <div class="wrapper">
-    <!--    <app-pipeline-node></app-pipeline-node>-->
-
-    <div class="pipeline-node-item" draggabilly [options]="draggabillyOptions">harchi</div>
+    <app-pipeline-node
+        (staticClick)="clickNodeElement(pipelineNodeData.id)"
+        draggabilly
+        [options]="draggabillyOptions"
+        [pipelineNodeData]="pipelineNodeData"
+    ></app-pipeline-node>
 </div>
