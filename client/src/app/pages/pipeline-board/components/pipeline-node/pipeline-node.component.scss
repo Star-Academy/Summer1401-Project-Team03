@@ -13,16 +13,23 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
     app-svg{
         color: var(--color-purple-46);
     }
-    .label {
-        font-size: 2.5rem;
-        text-align: center;
-        width: 100%;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+    .desc{
+        .label {
+            font-size: 2.5rem;
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        p{
+            text-align: center;
+            font-size: var(--font-size-primary);
+        }
     }
+
 }

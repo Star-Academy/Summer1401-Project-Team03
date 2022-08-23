@@ -1,20 +1,19 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {PipelineNodeModel} from '../../models/pipeline-node.model';
+import {PROCESS} from '../../data/Processes.data';
 
 const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '2',
-        label: 'filter',
-        type: 'filter',
-        iconType: 'filter',
+        title: 'first filter',
+        processesInfoType: PROCESS.FILTER,
         position: {x: 100, y: 100},
     },
     {
         id: '4',
-        label: 'filter2',
-        type: 'filter',
-        iconType: 'filter',
+        title: 'second filter',
+        processesInfoType: PROCESS.FILTER,
         position: {x: 300, y: 700},
     },
 ];
