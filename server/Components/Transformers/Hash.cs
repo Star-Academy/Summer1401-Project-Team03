@@ -10,7 +10,7 @@ namespace server.Transform;
 
 public class Hash : Transformer
 {
-    public Hash(Pipeline pipeline) : base(pipeline)
+    public Hash(Pipeline pipeline, Position position) : base(pipeline, position)
     {
     }
 

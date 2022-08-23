@@ -4,12 +4,9 @@ namespace server.Components.Transformers;
 
 public abstract class Transformer : Component
 {
-    public Transformer(Pipeline pipeline) : base(pipeline)
+    public Transformer(Pipeline pipeline, Position position) : base(pipeline, position)
     {
-        PreviousComponents = new List<Component>();
     }
-
-    public List<Component> PreviousComponents { set; get; }
 
     public override string GetTable()
     {

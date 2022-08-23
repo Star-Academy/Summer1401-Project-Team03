@@ -4,7 +4,7 @@ namespace server.Components.Transformers;
 
 public abstract class Mutator : Transformer
 {
-    public Mutator(Pipeline pipeline) : base(pipeline)
+    public Mutator(Pipeline pipeline, Position position) : base(pipeline, position)
     {
     }
 

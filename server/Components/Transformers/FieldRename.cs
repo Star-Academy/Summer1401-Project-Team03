@@ -6,7 +6,7 @@ namespace server.Transform;
 
 public class FieldRename : Transformer
 {
-    public FieldRename(Pipeline pipeline) : base(pipeline)
+    public FieldRename(Pipeline pipeline, Position position) : base(pipeline, position)
     {
     }
 

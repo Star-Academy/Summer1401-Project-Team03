@@ -8,7 +8,7 @@ namespace server.Transform;
 
 public class Join : Mutator
 {
-    public Join(Pipeline pipeline) : base(pipeline)
+    public Join(Pipeline pipeline, Position position) : base(pipeline, position)
     {
     }
 

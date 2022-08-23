@@ -4,7 +4,7 @@ namespace server.Components.Extractors;
 
 public abstract class Extractor : Component
 {
-    public Extractor(Pipeline pipeline, string filePath) : base(pipeline)
+    public Extractor(Pipeline pipeline, Position position, string filePath) : base(pipeline, position)
     {
         TableName = pipeline.TableManager.NewTableName();
         FilePath = filePath;

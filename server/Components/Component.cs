@@ -6,15 +6,23 @@ public abstract class Component
 {
     private static int _counter;
 
-    public Component(Pipeline pipeline)
+    public Component(Pipeline pipeline, Position position)
     {
         Id = _counter;
         Pipeline = pipeline;
+        PreviousComponents = new List<Component>();
+        NextComponents = new List<Component>();
+        Position = position;
         _counter++;
     }
 
-    public int Id { get; }
+    public List<Component> NextComponents { set; get; }
 
+    public Position Position { set; get; }
+
+    public List<Component> PreviousComponents { set; get; }
+
+    public int Id { get; }
     public Pipeline Pipeline { set; get; }
 
     public abstract string GetQuery();
