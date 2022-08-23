@@ -14,7 +14,7 @@ export const PROCESS: ProcessInfo = {
         icon: '',
         items: [],
     },
-    FIELD_REMOVAL: {
+    FIELD_REMOVE: {
         title: 'remove field',
         icon: 'fieldRemove',
         items: [],
