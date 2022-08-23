@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {PipelineNodeModel} from '../../models/pipeline-node.model';
 import {PROCESS} from '../../data/Processes.data';
@@ -37,7 +37,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     templateUrl: './pipeline-board.component.html',
     styleUrls: ['./pipeline-board.component.scss'],
 })
-export class PipelineBoardComponent implements AfterViewInit {
+export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-86)',
@@ -109,5 +109,10 @@ export class PipelineBoardComponent implements AfterViewInit {
         const secondElement = this.getElementRef(secondElementId);
         const newLeaderLine = new LeaderLine(firstElement, secondElement, this.leaderLineOptions);
         this.leaderLineLinks.push({id: firstElementId, leaderLineObj: newLeaderLine});
+    }
+
+    public ngOnDestroy(): void {
+        this.leaderLineLinks.forEach((ln) => ln.leaderLineObj.remove());
+        this.leaderLineLinks = [];
     }
 }
