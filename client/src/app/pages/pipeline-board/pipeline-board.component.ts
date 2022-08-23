@@ -27,6 +27,13 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
 export class PipelineBoardComponent implements AfterViewInit {
     @ViewChild('item1', {static: true}) item1: any;
     @ViewChild('item2', {static: true}) item2: any;
+    public leaderLineOptions: object = {
+        color: 'var(--color-purple-86)',
+        outlineColor: 'var(--color-purple-46)',
+        outline: true,
+        endPlugOutline: true,
+        endPlugSize: 0.8,
+    };
     public constructor(private elRef: ElementRef) {}
     public pipelineNodeDatas: PipelineNodeModel[] = pipelineNodeDatasDefault;
     public draggabillyOptions: NgxDraggabillyOptions = {
@@ -36,7 +43,7 @@ export class PipelineBoardComponent implements AfterViewInit {
 
     public ngAfterViewInit(): void {
         const nodeComponents = this.elRef.nativeElement.querySelectorAll('app-pipeline-node');
-        this.leaderLine1And2 = new LeaderLine(nodeComponents[0], nodeComponents[1]);
+        this.leaderLine1And2 = new LeaderLine(nodeComponents[0], nodeComponents[1], this.leaderLineOptions);
     }
 
     // Node Element
