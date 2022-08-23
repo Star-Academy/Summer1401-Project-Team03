@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {TextItem} from 'src/app/models/FormItems.interface';
 
 @Component({
     selector: 'app-text-input',
@@ -6,8 +7,11 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
     styleUrls: ['./text-input.component.scss'],
 })
 export class TextInputComponent {
-    @Input() public label: string = '';
-    @Input() public type: string = 'text';
-    @Input() public value: string = '';
+    @Input() public data: TextItem = {
+        label: '',
+        value: '',
+        type: 'text',
+    };
+
     @Output() public valueChange = new EventEmitter<string>();
 }
