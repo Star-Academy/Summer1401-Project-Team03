@@ -10,10 +10,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string CreateTable(string table, List<string> keys)
     {
         var query = new StringBuilder($"CREATE TABLE {table} ( {PrimaryKey} SERIAL PRIMARY KEY");
-        foreach (var key in keys)
-        {
-            query.Append($", {key} varchar(40)");
-        }
+        foreach (var key in keys) query.Append($", {key} varchar(40)");
 
         query.Append(')');
         return query.ToString();
@@ -33,10 +30,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string ImportCSV(string table, List<string> keys, string filePath)
     {
         var query = new StringBuilder($"COPY {table} ({keys[0]}");
-        for (var i = 1; i < keys.Count; i++)
-        {
-            query.Append($", {keys[i]}");
-        }
+        for (var i = 1; i < keys.Count; i++) query.Append($", {keys[i]}");
 
         query.Append($") FROM '{filePath}' CSV HEADER");
         return query.ToString();
@@ -50,10 +44,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string Select(List<string> keys, string table)
     {
         var query = new StringBuilder($"SELECT {keys[0]}");
-        for (var i = 1; i < keys.Count; i++)
-        {
-            query.Append($", {keys[i]}");
-        }
+        for (var i = 1; i < keys.Count; i++) query.Append($", {keys[i]}");
 
         query.Append($" FROM ({table})");
         return query.ToString();
@@ -62,10 +53,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string Select(List<string> keys, string table, string alias)
     {
         var query = new StringBuilder($"SELECT {keys[0]}");
-        for (var i = 1; i < keys.Count; i++)
-        {
-            query.Append($", {keys[i]}");
-        }
+        for (var i = 1; i < keys.Count; i++) query.Append($", {keys[i]}");
 
         query.Append($" FROM ({table}) AS {alias}");
         return query.ToString();
@@ -79,10 +67,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string Where(string key, Operator @operator, object value)
     {
         var valueString = value.ToString();
-        if (value is string)
-        {
-            valueString = $"'{valueString}'";
-        }
+        if (value is string) valueString = $"'{valueString}'";
 
         var condition = $"{key} {@operator.GetString()} {valueString}";
         return Where(condition);

@@ -24,3 +24,35 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// using server.Components.Extractors;
+// using server.Components.Loaders;
+// using server.Components.Transformers;
+// using server.Enums;
+// using server.Pipelines;
+
+// public static class Program
+// {
+//     public static void Main(string[] args)
+//     {
+//         var pipeline = new Pipeline("localhost", "postgres", "ETL", "alibnz5001");
+//         var extractor = new CSVExtractor(pipeline,
+//             @"E:\input.csv");
+//
+//         var filter1 = new Filter(pipeline, "location", Operator.Equal, "Iran");
+//         var filter2 = new Filter(pipeline, "date", Operator.Equal, "2022-08-12");
+//
+//         var loader = new CSVLoader(pipeline, filter2,
+//             @"E:\output.csv");
+//         
+//         filter1.PreviousComponents.Add(extractor);
+//         filter2.PreviousComponents.Add(filter1);
+//         
+//         pipeline.AddComponent(extractor);
+//         pipeline.AddComponent(filter1);
+//         pipeline.AddComponent(filter2);
+//         pipeline.AddComponent(loader);
+//
+//         pipeline.Execute(3);
+//     }
+// }

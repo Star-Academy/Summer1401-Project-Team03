@@ -5,14 +5,14 @@ namespace server.Transform;
 
 public class DynamicObjectController
 {
-    private object _obj;
+    private readonly object _obj;
 
     public DynamicObjectController(object obj)
     {
         _obj = obj;
     }
-    
-    
+
+
 //https://stackoverflow.com/questions/5306018/how-to-call-dynamicobject-trygetmember-directly/7108263#7108263
     public object GetDynamicMember(string memberName)
     {

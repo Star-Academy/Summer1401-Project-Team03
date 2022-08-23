@@ -6,21 +6,20 @@ namespace server.Transform;
 
 public class Replicate : Mutator
 {
+    private readonly int _branches = 2;
+
+    private int counter;
+    private string previousTableName;
 
     public Replicate(Pipeline pipeline) : base(pipeline)
     {
-        
     }
-    
-    private int counter;
-    private int _branches = 2;
-    private string previousTableName;
 
     public List<Component> PreviousComponents { get; set; }
+
     public override void Mutate()
     {
         Pipeline.QueryBuilder.Copy(previousTableName, GetTable());
-        
     }
 
     public override string GetQuery()
@@ -30,11 +29,9 @@ public class Replicate : Mutator
         Mutate();
         return GetTable();
     }
-    
+
     public override string GetTable()
     {
         return $"{previousTableName}{counter}";
     }
-
-    
 }
