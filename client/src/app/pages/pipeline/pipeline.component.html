@@ -19,7 +19,7 @@
             <app-svg iconType="bottombar"></app-svg>
         </button>
     </div>
-    <div class="side-bar" *ngIf="sideBarShown"></div>
-    <div class="bottom-bar" *ngIf="bottomBarShown"></div>
+    <div class="side-bar" [ngClass]="{hidden: !sideBarShown}"></div>
+    <div class="bottom-bar" [ngClass]="{hidden: !bottomBarShown}"></div>
     <app-board></app-board>
 </div>
