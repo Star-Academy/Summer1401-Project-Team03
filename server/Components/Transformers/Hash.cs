@@ -26,7 +26,7 @@ public class Hash : Transformer
 
         var hashValues = new List<string>();
 
-        var a = ((IEnumerable) data).Cast<dynamic>();
+        var a = ((IEnumerable)data).Cast<dynamic>();
 
         foreach (var o in a)
         {

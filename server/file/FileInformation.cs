@@ -11,9 +11,9 @@ public class FileInformation
         this.createTime = createTime;
     }
 
-    public string name { get;  }
+    public string name { get; }
     public string id { get; }
     public string type { get; }
-    public string category { get;  }
+    public string category { get; }
     public string createTime { get; }
 }

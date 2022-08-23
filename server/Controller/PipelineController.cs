@@ -1,4 +1,5 @@
-﻿using a;
+﻿using System.Data.Common;
+using a;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
@@ -20,8 +21,7 @@ public class PipelineController : ControllerBase
     {
         var dbConfiguration = DBConfigLoader.Load();
         //TODO consider id
-        var pipeline = new Pipeline(dbConfiguration.Host, dbConfiguration.Username, dbConfiguration.Database,
-            dbConfiguration.Password);
+        var pipeline = new Pipeline(pipelineName, dbConfiguration);
 
         _counter++;
         idToPipeline[_counter] = pipeline;
@@ -39,9 +39,6 @@ public class PipelineController : ControllerBase
         // return Ok(filter.Id);
         throw new NotImplementedException();
     }
-
-    // get data set
-    //
 
     [HttpPost]
     public IActionResult AddSource(int pipelineID, string fileName, int fileID, string fileType, double x, double y)
@@ -66,5 +63,19 @@ public class PipelineController : ControllerBase
         idToPipeline[pipelineId].AddComponent(loader);
 
         return Ok(loader.Id);
+    }
+
+    [HttpGet]
+    public void Run(int pipelineID)
+    {
+        var pipeline = idToPipeline[pipelineID];
+        pipeline.Execute();
+    }
+
+    [HttpGet]
+    public ActionResult<DbDataReader> RunUpTo(int pipelineID, int componentID)
+    {
+        var pipeline = idToPipeline[pipelineID];
+        return Ok(pipeline.Execute(componentID));
     }
 }

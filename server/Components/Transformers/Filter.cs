@@ -22,6 +22,6 @@ public class Filter : Transformer
     public override string GetQuery()
     {
         return
-            $"{Pipeline.QueryBuilder.Select(new List<string> {"*"}, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName())} {Pipeline.QueryBuilder.Where(FieldToFilter, Operator, Value)}";
+            $"{Pipeline.QueryBuilder.Select(new List<string> { "*" }, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName())} {Pipeline.QueryBuilder.Where(FieldToFilter, Operator, Value)}";
     }
 }

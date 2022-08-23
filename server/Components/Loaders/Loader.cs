@@ -7,6 +7,7 @@ public abstract class Loader : Component
     public Loader(Pipeline pipeline, Position position, string filePath) : base(pipeline, position)
     {
         FilePath = filePath;
+        pipeline.DestinationIDs.Add(Id);
     }
 
     public string FilePath { set; get; }
