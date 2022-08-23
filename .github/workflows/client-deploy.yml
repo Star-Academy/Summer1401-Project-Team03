@@ -21,7 +21,7 @@ jobs:
                   node-version: '16.x'
 
             - name: Install Dependencies
-              run: npm ci --cwd /Summer1401-Project-Team03/Summer1401-Project-Team03/client
+              run: npm ci --cwd Summer1401-Project-Team03/client
 
             - name: ESLint
               run: npm run eslint:check
