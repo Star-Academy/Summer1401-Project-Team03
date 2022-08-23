@@ -1,20 +1,25 @@
 ﻿using System.Data.Common;
 using server.Components;
+using server.configurations;
 using server.Databases;
 
 namespace server.Pipelines;
 
 public class Pipeline
 {
+    public HashSet<int> DestinationIDs;
     public Dictionary<int, Component> IdToComponent;
 
-    public Pipeline(string host, string username, string database, string password)
+    public Pipeline(string name, DBConfiguration dbConfiguration)
     {
-        Database = new PostgresDatabase(host, username, database, password);
+        Name = name;
+        Database = new PostgresDatabase(dbConfiguration);
         QueryBuilder = new PostgresQueryBuilder();
         TableManager = new TableManager();
         IdToComponent = new Dictionary<int, Component>();
     }
+
+    public string Name { get; set; }
 
     public IDatabase Database { set; get; }
     public IQueryBuilder QueryBuilder { set; get; }
@@ -23,6 +28,11 @@ public class Pipeline
     public DbDataReader Execute(int id)
     {
         return Database.Execute(IdToComponent[id].GetQuery());
+    }
+
+    public void Execute()
+    {
+        foreach (var destination in DestinationIDs) Database.Execute(IdToComponent[destination].GetQuery());
     }
 
     public void AddComponent(Component component)

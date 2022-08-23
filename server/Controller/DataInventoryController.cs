@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc;
 using server.Databases;
+using server.file;
 
 namespace server.Controller;
 
@@ -16,7 +18,15 @@ public class DataInventoryController : ControllerBase
         if (file.Length > 0)
         {
             increaseFileID(1);
-            var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + file.FileName;
+            var regex = new Regex("(.*)\\.(csv|json)");
+
+
+            var match = regex.Match(file.FileName);
+
+            var fileName = match.Groups[1].Value;
+            var format = match.Groups[2].Value;
+
+            var filePath = FilePathGenerator.Path(fileName, format, _fileID, "imports");
 
             using (var stream = System.IO.File.Create(filePath))
             {
@@ -30,10 +40,41 @@ public class DataInventoryController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Export(string fileName, int fileID)
+    public IActionResult Export(string fileName, string fileType, int fileID)
     {
-        var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + fileName + "_" + fileID;
+        var filePath = FilePathGenerator.Path(fileName, fileType, fileID, "exports");
         return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
+    }
+
+    [HttpGet]
+    public ActionResult<List<FileInformation>> GetAllFiles()
+    {
+        var informations = new List<FileInformation>();
+        extractInformation(informations, "imports");
+        extractInformation(informations, "exports");
+
+        return Ok(informations);
+    }
+
+    private void extractInformation(List<FileInformation> informations, string category)
+    {
+        var directory = new DirectoryInfo(@"resources\" + category);
+        var files = directory.GetFiles("*");
+
+        foreach (var file in files)
+        {
+            var fullName = file.Name;
+            var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
+
+            var match = regex.Match(fullName);
+
+            var name = match.Groups[1].Value;
+            var id = match.Groups[2].Value;
+            var type = match.Groups[3].Value;
+
+            var information = new FileInformation(name, id, type, category, file.CreationTime.ToString());
+            informations.Add(information);
+        }
     }
 
     private void increaseFileID(int increament)

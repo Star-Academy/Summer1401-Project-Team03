@@ -1,5 +1,10 @@
-﻿using a;
+﻿using System.Data.Common;
+using a;
 using Microsoft.AspNetCore.Mvc;
+using server.Components;
+using server.Components.Extractors;
+using server.Components.Loaders;
+using server.file;
 using server.Pipelines;
 
 namespace server.Controller;
@@ -8,19 +13,69 @@ namespace server.Controller;
 [Route("[controller]/[Action]")]
 public class PipelineController : ControllerBase
 {
+    private int _counter;
+    private Dictionary<int, Pipeline> idToPipeline;
+
     [HttpPost]
-    public IActionResult Create(int id)
+    public IActionResult Create(string pipelineName)
     {
         var dbConfiguration = DBConfigLoader.Load();
         //TODO consider id
-        var pipeline = new Pipeline(dbConfiguration.Host, dbConfiguration.Username, dbConfiguration.Database,
-            dbConfiguration.Password);
-        return Ok();
+        var pipeline = new Pipeline(pipelineName, dbConfiguration);
+
+        _counter++;
+        idToPipeline[_counter] = pipeline;
+        return Ok(_counter);
     }
 
     [HttpPost]
-    public void AddComponent(int pipelineID, int componentID, [FromBody] Dictionary<string, string> dictionary)
+    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, int x, int y,
+        [FromBody] Dictionary<string, string> dictionary)
     {
-        Console.WriteLine(dictionary);
+        // var filter = new Filter(idToPipeline[pipelineID], dictionary["field"], dictionary["operator"].GetOperator(), dictionary["value"]);
+        // filter.PreviousComponents.Add(idToPipeline[pipelineID].IdToComponent[previousComponentId]);
+        // idToPipeline[pipelineID].IdToComponent[nextComponentId].PreviousComponents.Add(filter);
+        // idToPipeline[pipelineID].AddComponent(filter);
+        // return Ok(filter.Id);
+        throw new NotImplementedException();
+    }
+
+    [HttpPost]
+    public IActionResult AddSource(int pipelineID, string fileName, int fileID, string fileType, double x, double y)
+    {
+        var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x, y),
+            FilePathGenerator.Path(fileName, fileType, fileID, "imports"));
+
+        idToPipeline[pipelineID].AddComponent(extractor);
+
+        return Ok(extractor.Id);
+    }
+
+    [HttpPost]
+    public IActionResult AddDestination(int pipelineId, string fileName, int fileId, string fileType, double x,
+        double y, int previousComponentId)
+    {
+        var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y),
+            FilePathGenerator.Path(fileName, fileType, fileId, "exports"));
+
+        loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
+
+        idToPipeline[pipelineId].AddComponent(loader);
+
+        return Ok(loader.Id);
+    }
+
+    [HttpGet]
+    public void Run(int pipelineID)
+    {
+        var pipeline = idToPipeline[pipelineID];
+        pipeline.Execute();
+    }
+
+    [HttpGet]
+    public ActionResult<DbDataReader> RunUpTo(int pipelineID, int componentID)
+    {
+        var pipeline = idToPipeline[pipelineID];
+        return Ok(pipeline.Execute(componentID));
     }
 }
