@@ -5,9 +5,12 @@ import {PipelineNodeComponent} from './components/pipeline-node/pipeline-node.co
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
 import {SvgModule} from '../../components/svg/svg.module';
 import {AngularDraggableModule} from 'angular2-draggable';
+import {ProcessListComponent} from './components/process-list/process-list.component';
+import {ModalModule} from 'src/app/components/modal/modal.module';
+import {ButtonModule} from 'src/app/components/button/button.module';
 
 @NgModule({
-    declarations: [PipelineBoardComponent, PipelineNodeComponent],
-    imports: [CommonModule, NgxDraggabillyModule, SvgModule, AngularDraggableModule],
+    declarations: [PipelineBoardComponent, PipelineNodeComponent, ProcessListComponent],
+    imports: [CommonModule, NgxDraggabillyModule, SvgModule, AngularDraggableModule, ModalModule, ButtonModule],
 })
 export class PipelineBoardModule {}

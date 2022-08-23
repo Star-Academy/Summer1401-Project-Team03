@@ -6,7 +6,7 @@ export interface ProcessSchema {
     items: any[];
 }
 
-type ProcessInfo = {
+export type ProcessInfo = {
     [key in ProcessType]: ProcessSchema;
 };
 
