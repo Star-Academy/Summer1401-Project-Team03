@@ -1,8 +1,6 @@
 <div class="inventory">
     <div class="inventory__header">
-        <app-button (click)="addItem()">
-            <app-svg iconType="plus"></app-svg>
-        </app-button>
+        <app-pipeline-add-button></app-pipeline-add-button>
         <app-search-box (searchPhraseChange)="searchPhrase = $event"></app-search-box>
     </div>
 

@@ -9,18 +9,11 @@ import {InventoryService} from 'src/app/services/inventory.service';
 })
 export class PipelineAddButtonComponent {
     @ViewChild('pipelineAdd') public modal!: ModalComponent;
-    public file: File | null = null;
+    public pipelineName: string = '';
 
-    public constructor(private inventoryService: InventoryService) {}
+    public createPipeline(): void {}
 
-    public setFile(event: Event): void {
-        const files = (event.target as HTMLInputElement).files;
-        if (files && files.length) {
-            this.file = files[0];
-        }
-    }
-
-    public async uploadFile(): Promise<void> {
-        if (this.file) await this.inventoryService.uploadDataSet(this.file);
+    public clearName(): void {
+        this.pipelineName = '';
     }
 }
