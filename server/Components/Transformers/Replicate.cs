@@ -21,6 +21,8 @@ public class Replicate : Mutator
 
     public override void Mutate()
     {
-        Pipeline.QueryBuilder.Copy(PreviousComponents[0].GetQuery(), TableName);
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(TableName)).Close();
+        var query = Pipeline.QueryBuilder.Copy(TableName, PreviousComponents[0].GetQuery());
+        Pipeline.Database.Execute(query).Close();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using a;
+using Microsoft.AspNetCore.Mvc;
 using server.Pipelines;
 
 namespace server.Controller;
@@ -8,8 +9,18 @@ namespace server.Controller;
 public class PipelineController : ControllerBase
 {
     [HttpPost]
-    public void Create(int id)
+    public IActionResult Create(int id)
     {
-        // var pipeline = new Pipeline();
+        var dbConfiguration = DBConfigLoader.Load();
+        //TODO consider id
+        var pipeline = new Pipeline(dbConfiguration.Host, dbConfiguration.Username, dbConfiguration.Database,
+            dbConfiguration.Password);
+        return Ok();
+    }
+
+    [HttpPost]
+    public void AddComponent(int pipelineID, int componentID, [FromBody] Dictionary<string, string> dictionary)
+    {
+        Console.WriteLine(dictionary);
     }
 }
