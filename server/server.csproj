@@ -16,9 +16,4 @@
         <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="resources\exports" />
-        <Folder Include="resources\imports" />
-    </ItemGroup>
-
 </Project>
