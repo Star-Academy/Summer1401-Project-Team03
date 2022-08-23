@@ -1,5 +1,4 @@
-﻿using server.Databases;
-using server.Pipelines;
+﻿using server.Pipelines;
 
 namespace server.Components.Extractors;
 
@@ -11,6 +10,11 @@ public class JSONExtractor : Extractor
     }
 
     public override string GetQuery()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override List<string> GetKeys()
     {
         throw new NotImplementedException();
     }

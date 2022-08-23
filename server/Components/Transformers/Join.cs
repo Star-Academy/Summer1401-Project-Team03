@@ -8,10 +8,8 @@ namespace server.Transform;
 
 public class Join : Mutator
 {
-    
     public Join(Pipeline pipeline) : base(pipeline)
     {
-        
     }
 
     private string firstTableProperty { get; set; }
@@ -22,6 +20,7 @@ public class Join : Mutator
 
 
     public List<Component> PreviousComponents { get; set; }
+
     public override void Mutate()
     {
         firstTableName = PreviousComponents[0].GetQuery();
@@ -37,13 +36,12 @@ public class Join : Mutator
         Pipeline.QueryBuilder.Copy(firstTableName, GetTable());
         Pipeline.QueryBuilder.Drop(secondTableName);
         Pipeline.QueryBuilder.Drop(firstTableName);
-
     }
 
     public override string GetQuery()
     {
         Mutate();
-        
+
         return GetTable();
     }
 
@@ -51,7 +49,7 @@ public class Join : Mutator
     {
         return $"({firstTableName}+{secondTableName})";
     }
-    
+
     private Query QueryByJoinType(Query query,
         string secondTableName, string firstProperty, string secondProperty)
     {

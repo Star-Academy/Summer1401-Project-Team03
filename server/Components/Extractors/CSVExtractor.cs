@@ -1,10 +1,11 @@
-﻿using server.Databases;
-using server.Pipelines;
+﻿using server.Pipelines;
 
 namespace server.Components.Extractors;
 
 public class CSVExtractor : Extractor
 {
+    private List<string> _keys;
+
     public CSVExtractor(Pipeline pipeline, string filePath) :
         base(pipeline, filePath)
     {
@@ -14,6 +15,11 @@ public class CSVExtractor : Extractor
     {
         Extract();
         return $"SELECT * FROM {TableName}";
+    }
+
+    public override List<string> GetKeys()
+    {
+        return new StreamReader(FilePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
     }
 
     public override void Extract()

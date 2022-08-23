@@ -4,10 +4,7 @@ namespace server.Components;
 
 public abstract class Component
 {
-    private static int _counter = 0;
-    public int Id { get; }
-
-    public Pipeline Pipeline { set; get; }
+    private static int _counter;
 
     public Component(Pipeline pipeline)
     {
@@ -16,7 +13,13 @@ public abstract class Component
         _counter++;
     }
 
+    public int Id { get; }
+
+    public Pipeline Pipeline { set; get; }
+
     public abstract string GetQuery();
 
     public abstract string GetTable();
+
+    public abstract List<string> GetKeys();
 }

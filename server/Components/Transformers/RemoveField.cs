@@ -9,12 +9,12 @@ public class RemoveField : Transformer
 {
     private List<string> fieldsToRemove;
 
-    public List<Component> PreviousComponents { get; set; }
-
     public RemoveField(Pipeline pipeline) : base(pipeline)
     {
     }
-    
+
+    public List<Component> PreviousComponents { get; set; }
+
     public override string GetQuery()
     {
         var tableName = PreviousComponents[0].GetQuery();
@@ -27,6 +27,4 @@ public class RemoveField : Transformer
 
         return builder.ToString();
     }
-
-    
 }

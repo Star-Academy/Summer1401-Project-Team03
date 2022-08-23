@@ -2,7 +2,7 @@
 
 public class TableManager
 {
-    private static int _counter = 0;
+    private static int _counter;
 
     public string NewTableName()
     {
