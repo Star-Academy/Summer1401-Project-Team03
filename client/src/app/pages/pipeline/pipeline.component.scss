@@ -1,0 +1,43 @@
+.container {
+    display: grid;
+    grid-template-areas:
+        "topbar topbar"
+        "board sidebar"
+        "bottom bottom";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+
+    block-size: 100%;
+    inline-size: 100%;
+
+    .top-bar {
+        grid-area: topbar;
+
+        background-color: red;
+
+        block-size: 5rem;
+    }
+
+    .side-bar {
+        grid-area: sidebar;
+
+        background-color: green;
+
+        inline-size: 25rem;
+    }
+
+    .bottom-bar {
+        grid-area: bottom;
+
+        background-color: blue;
+
+        min-block-size: 20rem;
+        resize: vertical;
+    }
+
+    app-board {
+        grid-area: board;
+
+        background-color: violet;
+    }
+}

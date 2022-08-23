@@ -5,4 +5,7 @@ import {Component} from '@angular/core';
     templateUrl: './pipeline.component.html',
     styleUrls: ['./pipeline.component.scss'],
 })
-export class PipelineComponent {}
+export class PipelineComponent {
+    public sideBarShown: boolean = true;
+    public bottomBarShown: boolean = true;
+}
