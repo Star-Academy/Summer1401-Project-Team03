@@ -58,14 +58,14 @@ public class DataInventoryController : ControllerBase
         return Ok(informations);
     }
 
-    public void extractInformation(List<FileInformation> informations, string category)
+    private void extractInformation(List<FileInformation> informations, string category)
     {
         var directory = new DirectoryInfo(@"resources\" + category);
         var files = directory.GetFiles("*");
 
         foreach (var file in files)
         {
-            var fullName = file.FullName;
+            var fullName = file.Name;
             var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
 
             var match = regex.Match(fullName);
