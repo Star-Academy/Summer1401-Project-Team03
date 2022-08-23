@@ -25,8 +25,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     styleUrls: ['./pipeline-board.component.scss'],
 })
 export class PipelineBoardComponent implements AfterViewInit {
-    @ViewChild('item1', {static: true}) item1: any;
-    @ViewChild('item2', {static: true}) item2: any;
+    private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-86)',
         outlineColor: 'var(--color-purple-46)',
@@ -52,10 +51,18 @@ export class PipelineBoardComponent implements AfterViewInit {
     }
 
     public savePositionNodeElement(elementId: string): void {
-        const mainContainer = this.elRef.nativeElement;
-        const nodeComponent = mainContainer.querySelector(`app-pipeline-node[id="${elementId}"]`);
-        const newPosition = {x: nodeComponent.offsetLeft, y: nodeComponent.offsetTop};
+        const component = this.getElementRef(elementId);
+        const newPosition = {x: component?.offsetLeft, y: component?.offsetTop};
         console.log(`${elementId}: X:${newPosition.x}|Y:${newPosition.y}`);
         //   TODO Connect to Service
+    }
+
+    // LeaderLine
+    public updateLeaderLine(): void {
+        this.leaderLine1And2.position();
+    }
+    private getElementRef(id: string): HTMLElement {
+        const nodeComponent = this.mainContainer.querySelector(`app-pipeline-node[id="${id}"]`);
+        return nodeComponent;
     }
 }
