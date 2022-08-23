@@ -13,7 +13,7 @@ type ProcessInfo = {
 export const PROCESS: ProcessInfo = {
     JOIN: {
         title: 'join',
-        icon: '',
+        icon: 'join',
         items: [],
     },
     FIELD_REMOVE: {
