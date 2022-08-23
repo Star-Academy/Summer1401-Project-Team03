@@ -6,6 +6,7 @@ using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Components.Transformers;
 using server.Enums;
+using server.file;
 using server.Pipelines;
 
 namespace server.Controller;
@@ -47,7 +48,7 @@ public class PipelineController : ControllerBase
     public IActionResult AddSource(int pipelineID, string fileName, int fileID, string fileType, double x, double y)
     {
         var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x,y),
-            Environment.CurrentDirectory + "\\resources\\exports\\" + fileName + "_" + fileID + "." + fileType );
+            FilePathGenerator.Path(fileName,fileType,fileID, "imports") );
         
         idToPipeline[pipelineID].AddComponent(extractor);
 
@@ -58,7 +59,7 @@ public class PipelineController : ControllerBase
     public IActionResult AddDestination(int pipelineId, string fileName, int fileId, string fileType, double x, double y, int previousComponentId)
     {
         var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y),
-            Environment.CurrentDirectory + "\\resources\\imports\\" + fileName + "_" + fileId + "." + fileType);
+            FilePathGenerator.Path(fileName,fileType,fileId, "exports"));
         
         loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
         

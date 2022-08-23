@@ -26,8 +26,7 @@ public class DataInventoryController : ControllerBase
             var fileName = match.Groups[1].Value;
             var format = match.Groups[2].Value;
 
-            var filePath = Environment.CurrentDirectory + "\\resources\\imports\\" + fileName + "_" + _fileID + "." +
-                           format;
+            var filePath = FilePathGenerator.Path(fileName,format,_fileID, "imports");
 
             using (var stream = System.IO.File.Create(filePath))
             {
@@ -43,8 +42,7 @@ public class DataInventoryController : ControllerBase
     [HttpGet]
     public IActionResult Export(string fileName, string fileType, int fileID)
     {
-        var filePath = Environment.CurrentDirectory + "\\resources\\exports\\" + fileName + "_" + fileID + "." +
-                       fileType;
+        var filePath = FilePathGenerator.Path(fileName,fileType,fileID, "exports");
         return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
     }
 
