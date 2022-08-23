@@ -1,0 +1,46 @@
+table {
+    color: var(--color-purple-21);
+
+    min-block-size: 100%;
+    min-inline-size: 100%;
+
+    border-collapse: collapse;
+
+    th {
+        text-align: start;
+
+        h2 {
+            font-size: 1.65rem;
+        }
+
+        h4 {
+            color: var(--color-purple-55);
+
+            font-size: 1rem;
+
+            white-space: nowrap;
+
+            :nth-child(2) {
+                font-style: italic;
+            }
+        }
+    }
+
+    tbody tr {
+        &:hover {
+            background-color: var(--color-purple-90);
+        }
+    }
+
+    tbody tr td {
+        font-family: monospace;
+        font-size: 1.5rem;
+    }
+
+    th,
+    tbody tr td {
+        padding: 0.75rem 1rem;
+
+        border: 1px solid var(--color-purple-46);
+    }
+}

@@ -1,0 +1,18 @@
+<table>
+    <thead>
+        <tr>
+            <th *ngFor="let col of columns">
+                <h2>{{ col.title }}</h2>
+                <h4>
+                    <span>{{ col.type }} </span>
+                    <span>({{ col.rawType }})</span>
+                </h4>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let row of rows">
+            <td *ngFor="let cell of row">{{ cell || '' }}</td>
+        </tr>
+    </tbody>
+</table>

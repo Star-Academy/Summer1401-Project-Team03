@@ -6,6 +6,7 @@ import {NavbarModule} from './components/navbar/navbar.module';
 import {PipelineInventoryModule} from './pages/pipeline-inventory/pipeline-inventory.module';
 import {DatasetInventoryModule} from './pages/dataset-inventory/dataset-inventory.module';
 import {PipelineModule} from './pages/pipeline/pipeline.module';
+import {DataTableModule} from './components/data-table/data-table.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -16,6 +17,7 @@ import {PipelineModule} from './pages/pipeline/pipeline.module';
         PipelineInventoryModule,
         DatasetInventoryModule,
         PipelineModule,
+        DataTableModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
