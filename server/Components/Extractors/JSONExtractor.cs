@@ -4,8 +4,8 @@ namespace server.Components.Extractors;
 
 public class JSONExtractor : Extractor
 {
-    public JSONExtractor(Pipeline pipeline, string filePath) :
-        base(pipeline, filePath)
+    public JSONExtractor(Pipeline pipeline, Position position, string filePath) :
+        base(pipeline, position, filePath)
     {
     }
 

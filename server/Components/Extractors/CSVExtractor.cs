@@ -4,10 +4,8 @@ namespace server.Components.Extractors;
 
 public class CSVExtractor : Extractor
 {
-    private List<string> _keys;
-
-    public CSVExtractor(Pipeline pipeline, string filePath) :
-        base(pipeline, filePath)
+    public CSVExtractor(Pipeline pipeline, Position position, string filePath) :
+        base(pipeline, position, filePath)
     {
     }
 

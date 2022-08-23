@@ -4,23 +4,21 @@ namespace server.Components.Loaders;
 
 public abstract class Loader : Component
 {
-    public Loader(Pipeline pipeline, Component previousComponent, string filePath) : base(pipeline)
+    public Loader(Pipeline pipeline, Position position, string filePath) : base(pipeline, position)
     {
-        PreviousComponent = previousComponent;
         FilePath = filePath;
     }
 
-    public Component PreviousComponent { set; get; }
     public string FilePath { set; get; }
 
     public override string GetTable()
     {
-        return PreviousComponent.GetTable();
+        return PreviousComponents[0].GetTable();
     }
 
     public override List<string> GetKeys()
     {
-        return PreviousComponent.GetKeys();
+        return PreviousComponents[0].GetKeys();
     }
 
     public abstract void Load();
