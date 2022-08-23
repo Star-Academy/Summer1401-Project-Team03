@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc;
 using server.Databases;
+using server.Enums;
 
 namespace server.Controller;
 
@@ -16,7 +18,15 @@ public class DataInventoryController : ControllerBase
         if (file.Length > 0)
         {
             increaseFileID(1);
-            var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + file.FileName;
+            Regex regex = new Regex("(.*)\\.(csv|json)");
+
+         
+            var match = regex.Match(file.FileName);
+            
+            var fileName = match.Groups[1].Value;
+            var format = match.Groups[2].Value;
+                
+            var filePath = Environment.CurrentDirectory + "\\resources\\imports\\" + fileName + "_" + _fileID + "." + format;
 
             using (var stream = System.IO.File.Create(filePath))
             {
@@ -30,9 +40,9 @@ public class DataInventoryController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult Export(string fileName, int fileID)
+    public IActionResult Export(string fileName, string fileType, int fileID)
     {
-        var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + fileName + "_" + fileID;
+        var filePath = Environment.CurrentDirectory + "\\resources\\exports\\" + fileName + "_" + fileID + "." + fileType;
         return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
     }
 
