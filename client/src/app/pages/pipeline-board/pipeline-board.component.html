@@ -7,7 +7,7 @@
             [options]="draggabillyOptions"
             [pipelineNodeData]="pipelineNodeData"
             (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
-            (dragMove)="updateLeaderLine()"
+            (dragMove)="updateLeaderLine(pipelineNodeData.id)"
             ngDraggable
             [position]="pipelineNodeData.position"
         ></app-pipeline-node>

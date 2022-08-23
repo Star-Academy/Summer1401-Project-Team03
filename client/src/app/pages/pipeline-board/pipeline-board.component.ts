@@ -17,6 +17,18 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
         processesInfoType: PROCESS.FILTER,
         position: {x: 300, y: 700},
     },
+    {
+        id: '5',
+        title: 'third filter',
+        processesInfoType: PROCESS.FILTER,
+        position: {x: 800, y: 500},
+    },
+    {
+        id: '6',
+        title: 'forth filter',
+        processesInfoType: PROCESS.FILTER,
+        position: {x: 1000, y: 300},
+    },
 ];
 
 @Component({
@@ -38,11 +50,19 @@ export class PipelineBoardComponent implements AfterViewInit {
     public draggabillyOptions: NgxDraggabillyOptions = {
         containment: true,
     };
-    public leaderLine1And2: any;
+    public leaderLineLinks: any[] = [];
 
     public ngAfterViewInit(): void {
-        const nodeComponents = this.elRef.nativeElement.querySelectorAll('app-pipeline-node');
-        this.leaderLine1And2 = new LeaderLine(nodeComponents[0], nodeComponents[1], this.leaderLineOptions);
+        const leaderLineInit = (): void => {
+            const nodeComponentLength = this.pipelineNodeDatas.length;
+            this.pipelineNodeDatas.forEach((node, index, nodeArray) => {
+                console.log(index);
+                console.log(nodeComponentLength);
+                if (index === nodeComponentLength - 1) return;
+                this.applyLeaderLineBetweenTwoElement(node.id, nodeArray[index + 1].id);
+            });
+        };
+        leaderLineInit();
     }
 
     // Node Element
@@ -58,11 +78,21 @@ export class PipelineBoardComponent implements AfterViewInit {
     }
 
     // LeaderLine
-    public updateLeaderLine(): void {
-        this.leaderLine1And2.position();
+    public updateLeaderLine(id: string): void {
+        const currentLeaderLineIndex = this.leaderLineLinks.findIndex((ln) => ln.id == id);
+        console.log(currentLeaderLineIndex, id);
+        console.log(this.leaderLineLinks);
+        this.leaderLineLinks[currentLeaderLineIndex].leaderLineObj.position();
+        this.leaderLineLinks[currentLeaderLineIndex - 1].leaderLineObj.position();
     }
     private getElementRef(id: string): HTMLElement {
         const nodeComponent = this.mainContainer.querySelector(`app-pipeline-node[id="${id}"]`);
         return nodeComponent;
+    }
+    private applyLeaderLineBetweenTwoElement(firstElementId: string, secondElementId: string): void {
+        const firstElement = this.getElementRef(firstElementId);
+        const secondElement = this.getElementRef(secondElementId);
+        const newLeaderLine = new LeaderLine(firstElement, secondElement, this.leaderLineOptions);
+        this.leaderLineLinks.push({id: firstElementId, leaderLineObj: newLeaderLine});
     }
 }
