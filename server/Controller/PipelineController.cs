@@ -1,11 +1,8 @@
-﻿using System.Diagnostics.Metrics;
-using a;
+﻿using a;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
 using server.Components.Loaders;
-using server.Components.Transformers;
-using server.Enums;
 using server.file;
 using server.Pipelines;
 
@@ -15,8 +12,9 @@ namespace server.Controller;
 [Route("[controller]/[Action]")]
 public class PipelineController : ControllerBase
 {
-    private Dictionary<int, Pipeline> idToPipeline;
     private int _counter;
+    private Dictionary<int, Pipeline> idToPipeline;
+
     [HttpPost]
     public IActionResult Create(string pipelineName)
     {
@@ -31,7 +29,8 @@ public class PipelineController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, int x, int y,[FromBody] Dictionary<string, string> dictionary)
+    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, int x, int y,
+        [FromBody] Dictionary<string, string> dictionary)
     {
         // var filter = new Filter(idToPipeline[pipelineID], dictionary["field"], dictionary["operator"].GetOperator(), dictionary["value"]);
         // filter.PreviousComponents.Add(idToPipeline[pipelineID].IdToComponent[previousComponentId]);
@@ -40,29 +39,30 @@ public class PipelineController : ControllerBase
         // return Ok(filter.Id);
         throw new NotImplementedException();
     }
-    
+
     // get data set
     //
 
     [HttpPost]
     public IActionResult AddSource(int pipelineID, string fileName, int fileID, string fileType, double x, double y)
     {
-        var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x,y),
-            FilePathGenerator.Path(fileName,fileType,fileID, "imports") );
-        
+        var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x, y),
+            FilePathGenerator.Path(fileName, fileType, fileID, "imports"));
+
         idToPipeline[pipelineID].AddComponent(extractor);
 
         return Ok(extractor.Id);
     }
 
     [HttpPost]
-    public IActionResult AddDestination(int pipelineId, string fileName, int fileId, string fileType, double x, double y, int previousComponentId)
+    public IActionResult AddDestination(int pipelineId, string fileName, int fileId, string fileType, double x,
+        double y, int previousComponentId)
     {
         var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y),
-            FilePathGenerator.Path(fileName,fileType,fileId, "exports"));
-        
+            FilePathGenerator.Path(fileName, fileType, fileId, "exports"));
+
         loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
-        
+
         idToPipeline[pipelineId].AddComponent(loader);
 
         return Ok(loader.Id);
