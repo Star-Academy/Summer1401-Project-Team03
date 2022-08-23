@@ -18,6 +18,8 @@ public interface IQueryBuilder
 
     public string Select(List<string> keys, string table, string alias);
 
+    public string SelectTable(string tableName);
+
     public string Where(string condition);
 
     public string Where(string key, Operator @operator, object value);

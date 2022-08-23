@@ -59,6 +59,11 @@ public class PostgresQueryBuilder : IQueryBuilder
         return query.ToString();
     }
 
+    public string SelectTable(string tableName)
+    {
+        return $"TABLE {tableName}";
+    }
+
     public string Where(string condition)
     {
         return $"WHERE {condition}";
