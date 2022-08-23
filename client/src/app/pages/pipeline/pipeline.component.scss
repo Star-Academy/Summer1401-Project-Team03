@@ -1,7 +1,7 @@
 .container {
     display: grid;
     grid-template-areas:
-        "topbar topbar"
+        "topbar sidebar"
         "board sidebar"
         "bottom bottom";
     grid-template-columns: 1fr auto;
@@ -13,15 +13,58 @@
     .top-bar {
         grid-area: topbar;
 
-        background-color: red;
+        background-color: var(--color-purple-86);
+        box-shadow: 0 0.1rem 1rem 0 rgb(0 0 0 / 30%);
+
+        z-index: 15;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
 
         block-size: 5rem;
+
+        padding-inline: 1rem;
+
+        .toggle-button {
+            background-color: var(--color-purple-75);
+            fill: var(--color-purple-55);
+
+            block-size: 60%;
+            aspect-ratio: 1;
+
+            padding: 0.75rem;
+
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            app-svg {
+                block-size: 100%;
+                inline-size: 100%;
+            }
+
+            &.true {
+                background-color: var(--color-purple-21);
+                fill: var(--color-gray-100);
+            }
+        }
+
+        #sidebar {
+            margin-inline-start: auto;
+        }
+
+        app-run-button {
+            margin-inline: auto;
+        }
     }
 
     .side-bar {
         grid-area: sidebar;
 
-        background-color: green;
+        background-color: var(--color-purple-86);
+        box-shadow: -0.1rem 0 1rem 0 rgb(0 0 0 / 30%);
 
         inline-size: 25rem;
     }
@@ -29,7 +72,8 @@
     .bottom-bar {
         grid-area: bottom;
 
-        background-color: blue;
+        background-color: var(--color-purple-86);
+        box-shadow: 0 -0.1rem 1rem 0 rgb(0 0 0 / 30%);
 
         min-block-size: 20rem;
         resize: vertical;
@@ -38,6 +82,13 @@
     app-board {
         grid-area: board;
 
-        background-color: violet;
+        background-color: var(--color-purple-75);
+
+        z-index: 10;
+    }
+
+    .side-bar,
+    .bottom-bar {
+        z-index: 20;
     }
 }
