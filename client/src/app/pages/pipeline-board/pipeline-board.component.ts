@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {PipelineNodeModel} from '../../models/pipeline-node.model';
 import {PROCESS} from '../../data/Processes.data';

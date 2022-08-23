@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {PipelineNodeModel} from '../../../../models/pipeline-node.model';
 
 @Component({
@@ -7,5 +7,5 @@ import {PipelineNodeModel} from '../../../../models/pipeline-node.model';
     styleUrls: ['./pipeline-node.component.scss'],
 })
 export class PipelineNodeComponent {
-    @Input() pipelineNodeData!: PipelineNodeModel;
+    @Input() public pipelineNodeData!: PipelineNodeModel;
 }

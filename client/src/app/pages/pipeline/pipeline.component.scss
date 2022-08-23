@@ -1,0 +1,110 @@
+.container {
+    display: grid;
+    grid-template-areas:
+        "topbar topbar"
+        "board sidebar"
+        "bottom sidebar";
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+
+    block-size: 100%;
+    inline-size: 100%;
+
+    .top-bar {
+        grid-area: topbar;
+
+        background-color: var(--color-purple-46);
+        color: var(--color-white-solid);
+        box-shadow: 0 0.1rem 1rem 0 rgb(0 0 0 / 30%);
+
+        z-index: 15;
+
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
+        align-items: center;
+        justify-items: center;
+        gap: 1rem;
+
+        block-size: 5rem;
+
+        padding-inline: 1rem;
+
+        * {
+            grid-row: 1;
+        }
+
+        h1 {
+            grid-column: 1;
+        }
+
+        app-run-button {
+            grid-column: 1 / span 4;
+        }
+
+        #sidebar {
+            grid-column: 3;
+        }
+
+        #bottombar {
+            grid-column: 4;
+        }
+
+        .toggle-button {
+            background-color: var(--color-purple-75);
+            fill: var(--color-purple-55);
+
+            block-size: 60%;
+            aspect-ratio: 1;
+
+            padding: 0.75rem;
+
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            app-svg {
+                block-size: 100%;
+                inline-size: 100%;
+            }
+
+            &.true {
+                background-color: var(--color-purple-21);
+                fill: var(--color-white-solid);
+            }
+        }
+    }
+
+    .side-bar {
+        grid-area: sidebar;
+
+        background-color: var(--color-gray-90);
+        box-shadow: -0.1rem 0 1rem 0 rgb(0 0 0 / 30%);
+
+        z-index: 20;
+
+        inline-size: 25rem;
+    }
+
+    .bottom-bar {
+        grid-area: bottom;
+
+        background-color: var(--color-gray-78);
+        box-shadow: 0 -0.1rem 1rem 0 rgb(0 0 0 / 30%);
+
+        z-index: 10;
+
+        min-block-size: 20rem;
+    }
+
+    app-board {
+        grid-area: board;
+
+        background-color: var(--color-purple-75);
+
+        z-index: 10;
+    }
+
+    .hidden {
+        display: none;
+    }
+}
