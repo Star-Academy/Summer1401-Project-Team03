@@ -15,4 +15,6 @@ export class InventoryService {
     }
 
     public async downloadDataset(id: string): Promise<void> {}
+
+    public async deleteDataset(id: string): Promise<void> {}
 }
