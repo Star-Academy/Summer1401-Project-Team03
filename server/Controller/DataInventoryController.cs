@@ -8,7 +8,7 @@ namespace server.Controller;
 
 [ApiController]
 [Route("[controller]/[Action]")]
-public class FileTransferController : ControllerBase
+public class DataInventoryController : ControllerBase
 {
     private static int _fileID;
     private PostgresDatabase _database;
