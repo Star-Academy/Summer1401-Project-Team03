@@ -1,0 +1,11 @@
+<div class="input-box" (click)="input.focus()">
+    <app-svg iconType="magnifier"></app-svg>
+
+    <input
+        #input
+        type="search"
+        [(ngModel)]="searchPhrase"
+        (ngModelChange)="searchPhraseChange.emit($event)"
+        placeholder="search..."
+    />
+</div>

@@ -1,0 +1,44 @@
+button {
+    background-color: var(--color-purple-46);
+    color: var(--color-purple-86);
+
+    padding: 0.5rem;
+
+    border-radius: var(--border-radius-primary);
+
+    font-size: 1.7rem;
+}
+
+app-svg {
+    cursor: pointer;
+    padding: 0.5rem;
+    height: auto;
+    background-color: var(--color-purple-86);
+    border-radius: var(--border-radius-primary) var(--border-radius-primary) var(--border-radius-primary) 0;
+}
+
+.upload {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    label {
+        background-color: var(--color-green-60);
+        color: var(--color-white-solid);
+
+        padding: 0.5rem 1rem;
+
+        border-radius: var(--border-radius-primary);
+
+        input {
+            display: none;
+        }
+    }
+
+    span {
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
