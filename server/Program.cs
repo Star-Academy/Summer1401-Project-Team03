@@ -25,27 +25,34 @@ app.MapControllers();
 
 app.Run();
 
-// Test -------------------------
-
 // using server.Components.Extractors;
 // using server.Components.Loaders;
+// using server.Components.Transformers;
+// using server.Enums;
 // using server.Pipelines;
-//
+
 // public static class Program
 // {
-//     private const string Host = "localhost";
-//     private const string Username = "postgres";
-//     private const string Database = "postgres";
-//     private const string Password = "Khosro1381";
-//
 //     public static void Main(string[] args)
 //     {
-//         var pipeline = new Pipeline(Host, Username, Database, Password);
+//         var pipeline = new Pipeline("localhost", "postgres", "ETL", "alibnz5001");
 //         var extractor = new CSVExtractor(pipeline,
-//             @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\input.csv");
-//         var loader =
-//             new CSVLoader(pipeline, extractor,
-//                 @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\output.csv");
-//         Console.WriteLine(loader.GetQuery());
+//             @"E:\input.csv");
+//
+//         var filter1 = new Filter(pipeline, "location", Operator.Equal, "Iran");
+//         var filter2 = new Filter(pipeline, "date", Operator.Equal, "2022-08-12");
+//
+//         var loader = new CSVLoader(pipeline, filter2,
+//             @"E:\output.csv");
+//         
+//         filter1.PreviousComponents.Add(extractor);
+//         filter2.PreviousComponents.Add(filter1);
+//         
+//         pipeline.AddComponent(extractor);
+//         pipeline.AddComponent(filter1);
+//         pipeline.AddComponent(filter2);
+//         pipeline.AddComponent(loader);
+//
+//         pipeline.Execute(3);
 //     }
 // }

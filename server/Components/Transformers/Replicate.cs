@@ -15,8 +15,6 @@ public class Replicate : Mutator
     {
     }
 
-    public List<Component> PreviousComponents { get; set; }
-
     public override void Mutate()
     {
         Pipeline.QueryBuilder.Copy(previousTableName, GetTable());

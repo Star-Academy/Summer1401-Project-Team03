@@ -13,8 +13,6 @@ public class RemoveField : Transformer
     {
     }
 
-    public List<Component> PreviousComponents { get; set; }
-
     public override string GetQuery()
     {
         var tableName = PreviousComponents[0].GetQuery();

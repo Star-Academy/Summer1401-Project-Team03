@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Mvc;
 using server.Components.Extractors;
+﻿using Microsoft.AspNetCore.Mvc;
 using server.Databases;
 
 namespace server.Controller;
@@ -25,18 +26,6 @@ public class FileTransferController : ControllerBase
                 await file.CopyToAsync(stream);
             }
 
-            Regex filter = new("(csv|json/text)");
-
-            switch (filter.Match(file.ContentType).Value)
-            {
-                case nameof(FileTypes.csv):
-                    new CSVExtractor(_database, file.FileName, filePath).GetQuery();
-                    break;
-                case nameof(FileTypes.json):
-                    new JSONExtractor(_database, file.FileName, filePath).Extract();
-                    break;
-            }
-
             return Ok();
         }
 
@@ -49,7 +38,6 @@ public class FileTransferController : ControllerBase
         var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + fileName + "_" + fileID;
         return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
     }
-
 
     private void increaseFileID(int increament)
     {
