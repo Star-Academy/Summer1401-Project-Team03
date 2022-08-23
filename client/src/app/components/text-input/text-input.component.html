@@ -1,4 +1,4 @@
 <label>
-    {{ label }}
-    <input [type]="type" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
+    {{ data.label }}
+    <input [type]="data.type" [ngModel]="data.value" (ngModelChange)="valueChange.emit($event)" />
 </label>

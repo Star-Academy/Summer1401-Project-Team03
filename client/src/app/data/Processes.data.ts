@@ -1,0 +1,74 @@
+import {ProcessType} from '../enums/ProcessType.enum';
+
+type ProcessInfo = {
+    [key in ProcessType]: {
+        title: string;
+        icon: string;
+        items: any[];
+    };
+};
+
+export const PROCESS: ProcessInfo = {
+    JOIN: {
+        title: 'join',
+        icon: '',
+        items: [],
+    },
+    FIELD_REMOVAL: {
+        title: 'remove field',
+        icon: 'fieldRemove',
+        items: [],
+    },
+    FIELD_RENAME: {
+        title: 'rename field',
+        icon: 'fieldRename',
+        items: [],
+    },
+    FILTER: {
+        title: 'filter',
+        icon: 'filter',
+        items: [
+            {
+                type: 'TEXT_INPUT',
+                label: 'field',
+                value: '',
+            },
+            {
+                type: 'SELECT',
+                options: [
+                    {
+                        value: '==',
+                        title: '==',
+                    },
+                    {
+                        value: '!=',
+                        title: '!=',
+                    },
+                    {
+                        value: '>',
+                        title: '>',
+                    },
+                    {
+                        value: '<',
+                        title: '<',
+                    },
+                    {
+                        value: '>=',
+                        title: '>=',
+                    },
+                    {
+                        value: '<=',
+                        title: '<=',
+                    },
+                ],
+                label: 'condition',
+                value: '',
+            },
+            {
+                type: 'TEXT_INPUT',
+                label: 'value',
+                value: '',
+            },
+        ],
+    },
+};
