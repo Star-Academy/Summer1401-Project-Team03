@@ -18,9 +18,6 @@ public class Join : Mutator
     private string firstTableName { get; set; }
     private string secondTableName { get; set; }
 
-
-    public List<Component> PreviousComponents { get; set; }
-
     public override void Mutate()
     {
         firstTableName = PreviousComponents[0].GetQuery();

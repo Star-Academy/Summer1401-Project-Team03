@@ -13,9 +13,6 @@ public class FieldRename : Transformer
     private string FieldToRename { get; set; }
     private string NewNameOfField { get; set; }
 
-
-    public List<Component> PreviousComponents { get; set; }
-
     public override string GetQuery()
     {
         var tableName = PreviousComponents[0].GetQuery();

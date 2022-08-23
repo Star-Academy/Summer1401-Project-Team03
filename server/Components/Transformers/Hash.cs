@@ -18,7 +18,6 @@ public class Hash : Transformer
     private bool ShouldCreateNewField { get; set; }
     private string newFieldName { get; set; }
 
-    public List<Component> PreviousComponents { get; set; }
 
     public override string GetQuery()
     {
