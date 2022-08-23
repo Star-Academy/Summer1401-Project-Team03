@@ -1,0 +1,5 @@
+<app-progress-button
+    [loading]="runStep !== RunStep.NOT_STARTED"
+    [text]="text"
+    (click)="runClickHandler()"
+></app-progress-button>

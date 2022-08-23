@@ -4,9 +4,10 @@ import {PipelineComponent} from './pipeline.component';
 import {BoardComponent} from './components/board/board.component';
 import {SvgModule} from '../../components/svg/svg.module';
 import {RunButtonComponent} from './components/run-button/run-button.component';
+import {ProgressButtonModule} from '../../components/progress-button/progress-button.module';
 
 @NgModule({
     declarations: [PipelineComponent, BoardComponent, RunButtonComponent],
-    imports: [CommonModule, SvgModule],
+    imports: [CommonModule, SvgModule, ProgressButtonModule],
 })
 export class PipelineModule {}

@@ -18,14 +18,35 @@
 
         z-index: 15;
 
-        display: flex;
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
         align-items: center;
-        justify-content: space-between;
+        justify-items: center;
         gap: 1rem;
 
         block-size: 5rem;
 
         padding-inline: 1rem;
+
+        * {
+            grid-row: 1;
+        }
+
+        h1 {
+            grid-column: 1;
+        }
+
+        app-run-button {
+            grid-column: 1 / span 4;
+        }
+
+        #sidebar {
+            grid-column: 3;
+        }
+
+        #bottombar {
+            grid-column: 4;
+        }
 
         .toggle-button {
             background-color: var(--color-purple-75);
@@ -49,14 +70,6 @@
                 background-color: var(--color-purple-21);
                 fill: var(--color-gray-100);
             }
-        }
-
-        #sidebar {
-            margin-inline-start: auto;
-        }
-
-        app-run-button {
-            margin-inline: auto;
         }
     }
 
