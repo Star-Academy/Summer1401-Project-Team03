@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {PipelineNodeModel} from '../../models/pipeline-node.model';
 import {PROCESS} from '../../data/Processes.data';
+import {pipelineItemData} from '../../models/pipeline/pipeline-item.model';
 declare var LeaderLine: any;
 
 const pipelineNodeDatasDefault: PipelineNodeModel[] = [
@@ -78,12 +79,22 @@ export class PipelineBoardComponent implements AfterViewInit {
     }
 
     // LeaderLine
-    public updateLeaderLine(id: string): void {
+    public updateLeaderLine(id: string): void | boolean {
+        // The last one
+        if (this.pipelineNodeDatas[this.pipelineNodeDatas.length - 1].id === id) {
+            this.leaderLineLinks[this.leaderLineLinks.length - 1].leaderLineObj.position();
+            return false;
+        }
+
         const currentLeaderLineIndex = this.leaderLineLinks.findIndex((ln) => ln.id == id);
-        console.log(currentLeaderLineIndex, id);
-        console.log(this.leaderLineLinks);
         this.leaderLineLinks[currentLeaderLineIndex].leaderLineObj.position();
-        this.leaderLineLinks[currentLeaderLineIndex - 1].leaderLineObj.position();
+
+        // The first one
+        if (this.leaderLineLinks[currentLeaderLineIndex - 1]) {
+            this.leaderLineLinks[currentLeaderLineIndex - 1].leaderLineObj.position();
+        }
+
+        return true;
     }
     private getElementRef(id: string): HTMLElement {
         const nodeComponent = this.mainContainer.querySelector(`app-pipeline-node[id="${id}"]`);
