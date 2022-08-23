@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ProgressButtonComponent} from './progress-button.component';
+import {LoadingButtonComponent} from './loading-button.component';
 import {ButtonModule} from '../button/button.module';
 
 @NgModule({
-    declarations: [ProgressButtonComponent],
-    exports: [ProgressButtonComponent],
+    declarations: [LoadingButtonComponent],
+    exports: [LoadingButtonComponent],
     imports: [CommonModule, ButtonModule],
 })
-export class ProgressButtonModule {}
+export class LoadingButtonModule {}
