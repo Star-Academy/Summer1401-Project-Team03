@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64" width="64px" height="64px">
-<g id="surface103807738">
-<path style=" stroke:none;fill-rule:nonzero;fill:rgb(41.176471%,25.490198%,66.666669%);fill-opacity:1;" d="M 10 10 L 10 22 L 22 22 L 22 10 Z M 26 14 L 26 18 L 54 18 L 54 14 Z M 10 26 L 10 38 L 22 38 L 22 26 Z M 26 30 L 26 34 L 54 34 L 54 30 Z M 10 42 L 10 54 L 22 54 L 22 42 Z M 14 46 L 18 46 L 18 50 L 14 50 Z M 26 46 L 26 50 L 54 50 L 54 46 Z M 26 46 "/>
+<svg id="fieldRename" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 50 50">
+<g id="surface106633118">
+<path style=" stroke:none;fill-rule:nonzero;fill:currentColor;fill-opacity:1;" d="M 7.8125 7.8125 L 7.8125 17.1875 L 17.1875 17.1875 L 17.1875 7.8125 Z M 20.3125 10.9375 L 20.3125 14.0625 L 42.1875 14.0625 L 42.1875 10.9375 Z M 7.8125 20.3125 L 7.8125 29.6875 L 17.1875 29.6875 L 17.1875 20.3125 Z M 20.3125 23.4375 L 20.3125 26.5625 L 42.1875 26.5625 L 42.1875 23.4375 Z M 7.8125 32.8125 L 7.8125 42.1875 L 17.1875 42.1875 L 17.1875 32.8125 Z M 10.9375 35.9375 L 14.0625 35.9375 L 14.0625 39.0625 L 10.9375 39.0625 Z M 20.3125 35.9375 L 20.3125 39.0625 L 42.1875 39.0625 L 42.1875 35.9375 Z M 20.3125 35.9375 "/>
 </g>
 </svg>
