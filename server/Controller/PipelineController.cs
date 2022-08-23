@@ -9,7 +9,7 @@ namespace server.Controller;
 public class PipelineController : ControllerBase
 {
     [HttpPost]
-    public IActionResult Create(int id)
+    public IActionResult Create(string name)
     {
         var dbConfiguration = DBConfigLoader.Load();
         //TODO consider id
