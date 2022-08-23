@@ -36,12 +36,7 @@ export class PipelineBoardComponent implements AfterViewInit {
 
     public ngAfterViewInit(): void {
         const nodeComponents = this.elRef.nativeElement.querySelectorAll('app-pipeline-node');
-
-        console.log(LeaderLine);
-        console.log(this.item1);
-        console.log(this.item2);
-        console.log(nodeComponents);
-        this.leaderLine1And2 = new LeaderLine(this.item1.nativeElement, this.item2.nativeElement);
+        this.leaderLine1And2 = new LeaderLine(nodeComponents[0], nodeComponents[1]);
     }
 
     // Node Element
