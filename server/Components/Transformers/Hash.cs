@@ -15,9 +15,9 @@ public class Hash : Mutator
         ShouldCreateNewField = shouldCreateNewField;
     }
 
-    private string FieldToHash { get; set; }
-    private bool ShouldCreateNewField { get; set; }
-    private string NewFieldName { get; set; }
+    private string FieldToHash { get; }
+    private bool ShouldCreateNewField { get; }
+    private string NewFieldName { get; }
 
     public override void Mutate()
     {
@@ -26,7 +26,6 @@ public class Hash : Mutator
         Pipeline.Database.Execute(query).Close();
 
         Pipeline.Database.Execute(Pipeline.QueryBuilder.AddColumn(TableName, NewFieldName)).Close();
-
     }
 
     public override string GetQuery()

@@ -19,7 +19,7 @@ public class DataInventoryController : ControllerBase
         {
             increaseFileID(1);
             var regex = new Regex("(.*)\\.(csv|json)");
-            
+
             var match = regex.Match(file.FileName);
 
             var fileName = match.Groups[1].Value;

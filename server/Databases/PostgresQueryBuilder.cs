@@ -78,6 +78,11 @@ public class PostgresQueryBuilder : IQueryBuilder
         return Where(condition);
     }
 
+    public string AddColumn(string table, string columnToAdd)
+    {
+        return $"ALTER TABLE {table} ADD COLUMN {columnToAdd} VARCHAR";
+    }
+
     public string Join(string firstTable, string secondTable)
     {
         throw new NotImplementedException();
@@ -86,10 +91,5 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string Insert(List<string> values)
     {
         throw new NotImplementedException();
-    }
-
-    public string AddColumn(string table, string columnToAdd)
-    {
-        return $"ALTER TABLE {table} ADD COLUMN {columnToAdd} VARCHAR";
     }
 }

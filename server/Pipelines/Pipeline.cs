@@ -15,9 +15,9 @@ public class Pipeline
         Name = name;
         Database = new PostgresDatabase(dbConfiguration);
         QueryBuilder = new PostgresQueryBuilder();
-        TableManager = new ();
-        IdToComponent = new ();
-        DestinationIDs = new();
+        TableManager = new TableManager();
+        IdToComponent = new Dictionary<int, Component>();
+        DestinationIDs = new HashSet<int>();
     }
 
     public string Name { get; set; }

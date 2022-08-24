@@ -13,7 +13,7 @@ public static class FileSearcher
             .Where(x => regex.Match(x).Groups[2].Value == fileID.ToString());
         var name = file.Select(x => regex.Match(x).Groups[1].Value).ElementAt(0);
         var type = file.Select(x => regex.Match(x).Groups[3].Value).ElementAt(0);
-        
+
         return FilePathGenerator.Path(name, type, fileID, category);
     }
 }
