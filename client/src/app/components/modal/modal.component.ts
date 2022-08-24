@@ -10,7 +10,7 @@ export class ModalComponent {
 
     @Input() public title: string = '';
 
-    @Output() public modalClosed = new EventEmitter();
+    @Output() public cancelled = new EventEmitter();
 
     public openModal(): void {
         const host = this.modal.nativeElement as HTMLDialogElement;
@@ -20,6 +20,11 @@ export class ModalComponent {
     public closeModal(): void {
         const host = this.modal.nativeElement as HTMLDialogElement;
         host.close();
-        this.modalClosed.emit();
+    }
+
+    public cancelModal(): void {
+        const host = this.modal.nativeElement as HTMLDialogElement;
+        host.close();
+        this.cancelled.emit();
     }
 }
