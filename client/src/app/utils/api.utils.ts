@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://localhost:5017';
+export const BASE_URL = 'https://localhost:7017';
 
 const INVENTORY_SERVICE = BASE_URL + '/DataInventory';
 export const INVENTORY_IMPORT = INVENTORY_SERVICE + '/Import';
