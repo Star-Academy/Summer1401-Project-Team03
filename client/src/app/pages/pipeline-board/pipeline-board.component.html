@@ -10,7 +10,6 @@
                 (dragStart)="setToUpperLayer(pipelineNodeData.id)"
                 (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
                 (dragMove)="updateLeaderLine(pipelineNodeData.id)"
-                [preventDefaultEvent]="true"
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (closeButtonEmit)="removeNodeComponent(pipelineNodeData.id)"

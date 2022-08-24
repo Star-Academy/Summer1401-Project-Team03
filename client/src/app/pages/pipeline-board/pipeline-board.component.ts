@@ -60,13 +60,15 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         endPlugSize: 0.8,
     };
 
-    public constructor(private elRef: ElementRef) {}
-
-    public pipelineNodeDatas: PipelineNodeModel[] = pipelineNodeDatasDefault;
     public draggabillyOptions: NgxDraggabillyOptions = {
         containment: true,
+        grid: [20,20]
     };
+
+    public pipelineNodeDatas: PipelineNodeModel[] = pipelineNodeDatasDefault;
     public leaderLineLinks: any[] = [];
+
+    public constructor(private elRef: ElementRef) {}
 
     public ngAfterViewInit(): void {
         const leaderLineInit = (): void => {
