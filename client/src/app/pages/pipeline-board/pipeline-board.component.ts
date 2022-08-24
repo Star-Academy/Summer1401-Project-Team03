@@ -3,7 +3,9 @@ import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {PipelineNodeModel} from '../../models/pipeline-node.model';
 import {PROCESS} from '../../data/Processes.data';
+import {PipelineComponent} from '../pipeline/pipeline.component';
 declare var LeaderLine: any;
+declare var AnimEvent: any;
 
 const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
@@ -62,11 +64,12 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
     public draggabillyOptions: NgxDraggabillyOptions = {
         containment: true,
-        grid: [20,20]
+        grid: [20, 20],
     };
 
     public pipelineNodeDatas: PipelineNodeModel[] = pipelineNodeDatasDefault;
     public leaderLineLinks: any[] = [];
+    public animEventObj!: any;
 
     public constructor(private elRef: ElementRef) {}
 
@@ -78,7 +81,24 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
                 this.applyLeaderLineBetweenTwoElement(node.id, nodeArray[index + 1].id);
             });
         };
+        const leaderLineListeners = (): void => {
+            this.animEventObj = AnimEvent.add(() => {
+                this.leaderLineLinks.forEach((ln) => ln.leaderLineObj.position());
+            });
+
+            function detectResize(leaderLineLinks: any): void {
+                leaderLineLinks.forEach((ln: any) => ln.leaderLineObj.position());
+            }
+
+            const appBoardEl = this.elRef.nativeElement.querySelector('app-board > .container');
+            const pipelineContainerEl = this.elRef.nativeElement.parentElement;
+
+            new ResizeObserver(detectResize.bind(this, this.leaderLineLinks)).observe(pipelineContainerEl);
+            appBoardEl.addEventListener('scroll', this.animEventObj);
+        };
+
         leaderLineInit();
+        leaderLineListeners();
     }
 
     // Node Element

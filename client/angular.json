@@ -28,7 +28,7 @@
                         "inlineStyleLanguage": "scss",
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": ["src/styles.scss"],
-                        "scripts": ["node_modules/leader-line/leader-line.min.js"]
+                        "scripts": ["node_modules/leader-line/leader-line.min.js","node_modules/anim-event/anim-event.min.js"]
                     },
                     "configurations": {
                         "production": {
