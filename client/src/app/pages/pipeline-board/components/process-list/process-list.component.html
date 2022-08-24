@@ -1,7 +1,12 @@
 <app-button (click)="modal.openModal()">add process</app-button>
 <app-modal #ProcessAdd title="add processor">
     <div class="list__wrapper">
-        <button class="list__button" *ngFor="let process of processes | keyvalue" (click)="addProcess(process.key)">
+        <button
+            class="list__button"
+            *ngFor="let process of processes | keyvalue"
+            (click)="addProcess(process.key)"
+            [title]="process.value.title"
+        >
             <app-svg [iconType]="process.value.icon"></app-svg>
             {{ process.value.title }}
         </button>
