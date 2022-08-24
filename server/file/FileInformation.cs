@@ -6,18 +6,18 @@ public class FileInformation
 {
     public FileInformation(string name, string id, string type, string category, string createTime)
     {
-        this.id = id;
-        this.type = type;
-        this.name = name;
-        this.category = category;
-        this.createTime = createTime;
+        ID = id;
+        Type = type;
+        Name = name;
+        Category = category;
+        CreateTime = createTime;
     }
 
-    public string name { get; }
-    public string id { get; }
-    public string type { get; }
-    public string category { get; }
-    public string createTime { get; }
+    public string Name { get; }
+    public string ID { get; }
+    public string Type { get; }
+    public string Category { get; }
+    public string CreateTime { get; }
 
     public static void ExtractInformation(List<FileInformation> informations, string category)
     {

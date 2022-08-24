@@ -53,7 +53,7 @@ public class DataInventoryController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<FileInformation>> GetAllFiles()
+    public ActionResult<List<FileInformation>> GetFilesInformation()
     {
         try
         {

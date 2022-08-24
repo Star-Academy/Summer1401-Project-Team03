@@ -118,4 +118,10 @@ public class PipelineController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [HttpGet]
+    public void GetPipelinesInformation()
+    {
+        
+    }
 }
