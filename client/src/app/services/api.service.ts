@@ -9,7 +9,18 @@ export class ApiService {
 
     private async fetchData<T>(url: string, init: Partial<RequestInit> = {}): Promise<T | null> {
         let response = await fetch(url, init);
-        let data = await response.json();
+
+        let data = null;
+
+        try {
+            data = await response.json();
+        } catch {
+            if (response.ok) {
+                data = true;
+            } else {
+                data = false;
+            }
+        }
 
         if (response.ok) {
             return data as T;
