@@ -69,13 +69,18 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"WHERE {condition}";
     }
 
-    public string Where(string key, Operator @operator, object value)
+    public string Where(string key, string @operator, object value)
     {
         var valueString = value.ToString();
         if (value is string) valueString = $"'{valueString}'";
 
-        var condition = $"{key} {@operator.GetString()} {valueString}";
+        var condition = $"{key} {@operator} {valueString}";
         return Where(condition);
+    }
+
+    public string AlterType(string key, string type)
+    {
+        return $"ALTER COLUMN {key} TYPE {type} USING ({key}::{type})";
     }
 
     public string Join(string firstTable, string secondTable)

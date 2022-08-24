@@ -22,5 +22,5 @@ public interface IQueryBuilder
 
     public string Where(string condition);
 
-    public string Where(string key, Operator @operator, object value);
+    public string Where(string key, string @operator, object value);
 }

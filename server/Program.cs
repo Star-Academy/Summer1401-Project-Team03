@@ -26,6 +26,7 @@
 // app.Run();
 
 using a;
+using server.Components;
 using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Components.Transformers;
@@ -38,7 +39,7 @@ public static class Program
         var dbConfiguration = DBConfigLoader.Load();
         var pipeline = new Pipeline(dbConfiguration.Host, dbConfiguration.Username, dbConfiguration.Database,
             dbConfiguration.Password);
-        var extractor = new CSVExtractor(pipeline,
+        var extractor = new CSVExtractor(pipeline, new Position(1,1),
             @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\input.csv");
 
         // var filter1 = new Filter(pipeline, "location", Operator.Equal, "Iran");
@@ -46,12 +47,13 @@ public static class Program
         // var filter2 = new Filter(pipeline, "date", Operator.Equal, "2022-08-12");
         // filter2.PreviousComponents.Add(filter1);
 
-        var selector = new FieldSelector(pipeline, new List<string> {"iso_code", "location"});
+        var selector = new FieldSelector(pipeline, new Position(1,1), new List<string> {"iso_code", "location"});
         selector.PreviousComponents.Add(extractor);
 
-        var loader = new CSVLoader(pipeline, selector,
+        var loader = new CSVLoader(pipeline, new Position(1,1),
             @"C:\Users\Khosro\Desktop\StarAcademy\Summer1401-Project-Team03\server\TestData\output.csv");
-
+        loader.PreviousComponents.Add(selector);
+        
         pipeline.AddComponent(loader);
 
         pipeline.Execute(2);
