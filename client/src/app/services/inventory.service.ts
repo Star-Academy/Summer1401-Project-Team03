@@ -14,14 +14,11 @@ export class InventoryService {
     public async uploadDataSet(file: File): Promise<boolean> {
         const data = new FormData();
         data.append('file', file);
+        data.append('type', file.name.endsWith('csv') ? 'text/csv' : 'application/json');
 
-        const response = await this.apiService.formPost<boolean>(INVENTORY_IMPORT, file);
+        const response = await this.apiService.formPost<boolean>(INVENTORY_IMPORT, data);
 
-        if (response) {
-            return true;
-        }
-
-        return false;
+        return !!response;
     }
 
     public async deleteDataset(id: string): Promise<void> {}
