@@ -3,7 +3,6 @@ import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {PipelineNodeModel} from '../../models/pipeline-node.model';
 import {PROCESS} from '../../data/Processes.data';
-import {PipelineComponent} from '../pipeline/pipeline.component';
 declare var LeaderLine: any;
 declare var AnimEvent: any;
 
@@ -13,6 +12,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
         title: 'first filter',
         processesInfoType: PROCESS.FILTER,
         position: {x: 100, y: 100},
+        openedSettingModal: false,
     },
 
     {
@@ -20,30 +20,35 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
         title: 'third filter',
         processesInfoType: PROCESS.FILTER,
         position: {x: 100, y: 300},
+        openedSettingModal: false,
     },
     {
         id: '4',
         title: 'forth filter',
         processesInfoType: PROCESS.FILTER,
         position: {x: 400, y: 300},
+        openedSettingModal: false,
     },
     {
         id: '5',
         title: 'fifth filter',
         processesInfoType: PROCESS.FILTER,
         position: {x: 400, y: 100},
+        openedSettingModal: false,
     },
     {
         id: '6',
         title: 'sixth filter',
         processesInfoType: PROCESS.FILTER,
         position: {x: 700, y: 300},
+        openedSettingModal: false,
     },
     {
         id: '7',
         title: 'seventh filter',
         processesInfoType: PROCESS.FILTER,
         position: {x: 700, y: 100},
+        openedSettingModal: false,
     },
 ];
 

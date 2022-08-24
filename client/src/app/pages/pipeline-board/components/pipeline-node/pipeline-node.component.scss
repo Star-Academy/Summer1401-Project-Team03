@@ -10,9 +10,10 @@
     justify-content: center;
     gap: 1.5rem;
 
-    width: 20rem;
+    width: 15rem;
+    height: 10rem;
 
-    padding: 1rem;
+    padding: 1rem 1.6rem;
 
     border: 3px solid var(--color-purple-21);
     border-radius: var(--border-radius-primary);
@@ -21,19 +22,19 @@
 
     text-transform: capitalize;
 
-    cursor: pointer;
-
     app-svg {
         color: var(--color-purple-46);
+        height: 2rem;
     }
 
     .desc {
+        width: 100%;
         .label {
             overflow: hidden;
 
             width: 100%;
 
-            font-size: 2.5rem;
+            font-size: 2rem;
 
             text-align: center;
             text-overflow: ellipsis;
@@ -42,22 +43,36 @@
 
         p {
             font-size: var(--font-size-primary);
-
+            font-size: 1.25rem;
             text-align: center;
         }
     }
-    .close-button{
-        position: absolute;
-        top: 0;
-        right: 0.5rem;
-        font-size: 1.5rem;
-    }
-    .modal{
 
-        &__container{
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
+
+    .setting{
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.2rem;
+        .item-setting {
+            cursor: pointer;
+            height: 1.5rem;
+            width: 1.5rem;
         }
     }
+
+    //.close-button{
+    //    position: absolute;
+    //    top: 0;
+    //    right: 0.5rem;
+    //    font-size: 1.5rem;
+    //}
+    //.modal{
+    //
+    //    &__container{
+    //        display: flex;
+    //        justify-content: center;
+    //        gap: 1rem;
+    //    }
+    //}
 }

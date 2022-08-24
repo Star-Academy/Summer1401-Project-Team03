@@ -6,13 +6,28 @@
 
     <app-svg [iconType]="pipelineNodeData.processesInfoType.icon"></app-svg>
 
-    <div class="close-button" (click)="modal.openModal()">
-        <i class="fa-solid fa-xmark"></i>
+    <div class="setting">
+        <app-svg
+            (click)="toggleShowItemSettingModal(); $event.stopPropagation()"
+            class="item-setting"
+            iconType="dots-vertical"
+        ></app-svg>
+        <ng-container *ngIf="pipelineNodeData.openedSettingModal">
+            <app-setting-item-modal
+                (deleteEmit)="deleteItem(pipelineNodeData.id)"
+                (renameEmit)="renameItem(pipelineNodeData.id)"
+                (downloadEmit)="downloadItem(pipelineNodeData.id)"
+            ></app-setting-item-modal>
+        </ng-container>
     </div>
-    <app-modal #mymodal title="remove node" class="modal">
-        <div class="modal__container">
-            <app-button (click)="closeButtonEmit.emit()">Remove</app-button>
-            <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>
-        </div>
-    </app-modal>
+
+<!--    <div class="close-button" (click)="modal.openModal()">-->
+<!--        <i class="fa-solid fa-xmark"></i>-->
+<!--    </div>-->
+<!--    <app-modal #mymodal title="remove node" class="modal">-->
+<!--        <div class="modal__container">-->
+<!--            <app-button (click)="closeButtonEmit.emit()">Remove</app-button>-->
+<!--            <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>-->
+<!--        </div>-->
+<!--    </app-modal>-->
 </div>
