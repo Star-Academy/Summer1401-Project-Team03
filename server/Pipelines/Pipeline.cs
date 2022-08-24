@@ -7,7 +7,7 @@ namespace server.Pipelines;
 
 public class Pipeline
 {
-    public HashSet<int> DestinationIDs = new ();
+    public HashSet<int> DestinationIDs;
     public Dictionary<int, Component> IdToComponent;
 
     public Pipeline(string name, DBConfiguration dbConfiguration)
@@ -17,6 +17,7 @@ public class Pipeline
         QueryBuilder = new PostgresQueryBuilder();
         TableManager = new TableManager();
         IdToComponent = new Dictionary<int, Component>();
+        DestinationIDs = new HashSet<int>();
     }
 
     public string Name { get; set; }

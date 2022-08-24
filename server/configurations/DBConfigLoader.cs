@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using server.configurations;
 
-namespace a;
+namespace DBConfig;
 
 public static class DBConfigLoader
 {
