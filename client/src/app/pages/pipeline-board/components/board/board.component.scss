@@ -21,7 +21,7 @@
     border: 1px solid var(--color-gray-0);
 
     .board {
-        @include grid-pattern(var(--color-gray-100), hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
+        @include grid-pattern(var(--color-white-solid), hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
 
         position: relative;
 

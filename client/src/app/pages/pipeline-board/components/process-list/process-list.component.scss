@@ -6,13 +6,16 @@
     }
 
     &__button {
+        background-color: var(--color-white-solid);
+
         display: flex;
         align-items: center;
         gap: 1rem;
+
         padding: 0.5rem;
-        background-color: var(--color-gray-100);
-        border-radius: var(--border-radius-minimal);
+
         border: 0.2rem solid var(--color-gray-78);
+        border-radius: var(--border-radius-minimal);
 
         &:hover {
             background-color: var(--color-gray-78);

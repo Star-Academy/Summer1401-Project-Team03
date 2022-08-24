@@ -1,34 +1,47 @@
 .wrapper {
-    font-weight: 600;
-    width: 20rem;
-    border-radius: var(--border-radius-primary);
-    border: 3px solid var(--color-purple-21);
-    color: var(--color-purple-21);
     background-color: var(--color-purple-86);
+    color: var(--color-purple-21);
 
-    text-transform: capitalize;
-    cursor: pointer;
-    padding: 1rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     gap: 1.5rem;
+
+    width: 20rem;
+
+    padding: 1rem;
+
+    border: 3px solid var(--color-purple-21);
+    border-radius: var(--border-radius-primary);
+
+    font-weight: 600;
+
+    text-transform: capitalize;
+
+    cursor: pointer;
+
     app-svg{
         color: var(--color-purple-46);
     }
+
     .desc{
         .label {
-            font-size: 2.5rem;
-            text-align: center;
-            width: 100%;
             overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-        p{
+
+            width: 100%;
+
+            font-size: 2.5rem;
+
             text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        p{
             font-size: var(--font-size-primary);
+
+            text-align: center;
         }
     }
 
