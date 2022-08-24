@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {PipelineNodeModel} from '../../../../models/pipeline-node.model';
+import {ModalComponent} from '../../../../components/modal/modal.component';
 
 @Component({
     selector: 'app-pipeline-node',
@@ -8,4 +9,6 @@ import {PipelineNodeModel} from '../../../../models/pipeline-node.model';
 })
 export class PipelineNodeComponent {
     @Input() public pipelineNodeData!: PipelineNodeModel;
+    @Output() public closeButtonEmit = new EventEmitter<void>();
+    @ViewChild('mymodal') public modal!: ModalComponent;
 }

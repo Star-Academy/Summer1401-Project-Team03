@@ -5,4 +5,14 @@
     </div>
 
     <app-svg [iconType]="pipelineNodeData.processesInfoType.icon"></app-svg>
+
+    <div class="close-button" (click)="modal.openModal()">
+        <i class="fa-solid fa-xmark"></i>
+    </div>
+    <app-modal #mymodal title="remove node" class="modal">
+        <div class="modal__container">
+            <app-button (click)="closeButtonEmit.emit()">Remove</app-button>
+            <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>
+        </div>
+    </app-modal>
 </div>
