@@ -1,5 +1,5 @@
-<div class="wrapper">
-    <app-board2>
+<app-board>
+    <div class="wrapper">
         <ng-container *ngFor="let pipelineNodeData of pipelineNodeDatas">
             <app-pipeline-node
                 [id]="pipelineNodeData.id"
@@ -14,5 +14,5 @@
                 [position]="pipelineNodeData.position"
             ></app-pipeline-node>
         </ng-container>
-    </app-board2>
-</div>
+    </div>
+</app-board>

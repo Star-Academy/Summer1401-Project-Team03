@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {PipelineNodeModel} from '../../models/pipeline-node.model';
 import {PROCESS} from '../../data/Processes.data';
-import {pipelineItemData} from '../../models/pipeline/pipeline-item.model';
 declare var LeaderLine: any;
 
 const pipelineNodeDatasDefault: PipelineNodeModel[] = [
@@ -46,7 +46,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         endPlugOutline: true,
         endPlugSize: 0.8,
     };
+
     public constructor(private elRef: ElementRef) {}
+
     public pipelineNodeDatas: PipelineNodeModel[] = pipelineNodeDatasDefault;
     public draggabillyOptions: NgxDraggabillyOptions = {
         containment: true,
@@ -100,10 +102,12 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
         return true;
     }
+
     private getElementRef(id: string): HTMLElement {
         const nodeComponent = this.mainContainer.querySelector(`app-pipeline-node[id="${id}"]`);
         return nodeComponent;
     }
+
     private applyLeaderLineBetweenTwoElement(firstElementId: string, secondElementId: string): void {
         const firstElement = this.getElementRef(firstElementId);
         const secondElement = this.getElementRef(secondElementId);

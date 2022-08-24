@@ -10,5 +10,8 @@ import {BoardComponent} from './components/board/board.component';
 @NgModule({
     declarations: [PipelineBoardComponent, PipelineNodeComponent, BoardComponent],
     imports: [CommonModule, NgxDraggabillyModule, SvgModule, AngularDraggableModule],
+    exports: [
+        PipelineBoardComponent
+    ]
 })
 export class PipelineBoardModule {}
