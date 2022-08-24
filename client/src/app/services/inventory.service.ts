@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core';
 import {INVENTORY_IMPORT} from '../utils/api.utils';
 import {ApiService} from './api.service';
+import {DatasetItemModel} from 'src/app/models/dataset/dataset-item.model';
 
 @Injectable({
     providedIn: 'root',
 })
 export class InventoryService {
+    public dataset: DatasetItemModel[] = [];
+
     public constructor(private apiService: ApiService) {}
 
     public async uploadDataSet(file: File): Promise<boolean> {
@@ -20,8 +23,6 @@ export class InventoryService {
 
         return false;
     }
-
-    public async downloadDataset(id: string): Promise<void> {}
 
     public async deleteDataset(id: string): Promise<void> {}
 }
