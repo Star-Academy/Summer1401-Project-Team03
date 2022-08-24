@@ -41,6 +41,15 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"COPY ({table}) TO '{filePath}' CSV HEADER";
     }
 
+    public string ImportJson(string table, List<string> keys, string filePath)
+    {
+        throw new NotImplementedException();
+    }
+    public string ExportJson(string table, string filePath)
+    {
+        return $"COPY (SELECT row_to_json({table}) from {table} ) TO '{filePath}'";
+    }
+
     public string Select(List<string> keys, string table)
     {
         var query = new StringBuilder($"SELECT {keys[0]}");
