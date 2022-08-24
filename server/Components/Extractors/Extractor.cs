@@ -26,7 +26,7 @@ public abstract class Extractor : Component
         
         var next = map[nextId];
         
-        NextComponents[0] = next;
-        next.PreviousComponents[0] = this;
+        NextComponents.Add(next);
+        next.PreviousComponents = new List<Component> {this};
     }
 }

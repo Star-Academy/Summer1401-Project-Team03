@@ -25,11 +25,11 @@ public abstract class Transformer : Component
         var previous = map[previousId];
         var next = map[nextId];
         
-        PreviousComponents[0] = previous;
-        NextComponents[0] = next;
-        
-        previous.NextComponents[0] = this;
-        next.PreviousComponents[0] = this;
+        PreviousComponents.Add(previous);
+        NextComponents.Add(next);
+
+        previous.NextComponents = new List<Component> {this};
+        next.PreviousComponents = new List<Component> {this};
 
     }
 }

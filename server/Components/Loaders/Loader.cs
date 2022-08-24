@@ -30,8 +30,8 @@ public abstract class Loader : Component
         var map = Pipeline.IdToComponent;
         var previous = map[previousId];
         
-        PreviousComponents[0] = previous;
-
-        previous.NextComponents[0] = this;
+        PreviousComponents.Add(previous);
+        
+        previous.NextComponents = new List<Component> {this};
     }
 }
