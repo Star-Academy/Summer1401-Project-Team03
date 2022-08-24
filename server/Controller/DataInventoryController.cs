@@ -56,31 +56,17 @@ public class DataInventoryController : ControllerBase
     [HttpGet]
     public ActionResult<List<FileInformation>> GetAllFiles()
     {
-        var informations = new List<FileInformation>();
-        extractInformation(informations, "imports");
-        extractInformation(informations, "exports");
-
-        return Ok(informations);
-    }
-
-    private void extractInformation(List<FileInformation> informations, string category)
-    {
-        var directory = new DirectoryInfo(@"resources\" + category);
-        var files = directory.GetFiles("*");
-
-        foreach (var file in files)
+        try
         {
-            var fullName = file.Name;
-            var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
+            var informations = new List<FileInformation>();
+            FileInformation.ExtractInformation(informations, "imports");
+            FileInformation.ExtractInformation(informations, "exports");
 
-            var match = regex.Match(fullName);
-
-            var name = match.Groups[1].Value;
-            var id = match.Groups[2].Value;
-            var type = match.Groups[3].Value;
-
-            var information = new FileInformation(name, id, type, category, file.CreationTime.ToString());
-            informations.Add(information);
+            return Ok(informations);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
         }
     }
 
