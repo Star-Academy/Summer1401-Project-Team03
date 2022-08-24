@@ -12,7 +12,7 @@
                 (dragMove)="updateLeaderLine(pipelineNodeData.id)"
                 ngDraggable
                 [position]="pipelineNodeData.position"
-                (closeButtonEmit)="removeNodeComponent(pipelineNodeData.id)"
+                (removeNodeEmit)="removeNodeComponent(pipelineNodeData.id)"
             ></app-pipeline-node>
         </ng-container>
     </div>

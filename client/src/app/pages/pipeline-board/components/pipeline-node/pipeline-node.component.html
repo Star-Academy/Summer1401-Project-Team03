@@ -14,20 +14,17 @@
         ></app-svg>
         <ng-container *ngIf="pipelineNodeData.openedSettingModal">
             <app-setting-item-modal
-                (deleteEmit)="deleteItem(pipelineNodeData.id)"
-                (renameEmit)="renameItem(pipelineNodeData.id)"
-                (downloadEmit)="downloadItem(pipelineNodeData.id)"
+                (newNodeEmit)="newNode(pipelineNodeData.id)"
+                (configNodeEmit)="configNode(pipelineNodeData.id)"
+                (deleteNodeEmit)="modal.openModal()"
             ></app-setting-item-modal>
         </ng-container>
     </div>
 
-<!--    <div class="close-button" (click)="modal.openModal()">-->
-<!--        <i class="fa-solid fa-xmark"></i>-->
-<!--    </div>-->
-<!--    <app-modal #mymodal title="remove node" class="modal">-->
-<!--        <div class="modal__container">-->
-<!--            <app-button (click)="closeButtonEmit.emit()">Remove</app-button>-->
-<!--            <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>-->
-<!--        </div>-->
-<!--    </app-modal>-->
+    <app-modal #mymodal title="remove node" class="modal">
+        <div class="modal__container">
+            <app-button (click)="removeNodeEmit.emit(); deleteNode(pipelineNodeData.id)">Remove</app-button>
+            <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>
+        </div>
+    </app-modal>
 </div>

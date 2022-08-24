@@ -9,7 +9,7 @@ import {ModalComponent} from '../../../../components/modal/modal.component';
 })
 export class PipelineNodeComponent {
     @Input() public pipelineNodeData!: PipelineNodeModel;
-    @Output() public closeButtonEmit = new EventEmitter<void>();
+    @Output() public removeNodeEmit = new EventEmitter<void>();
     @Output() public renameEmit = new EventEmitter<void>();
     @Output() public downloadEmit = new EventEmitter<void>();
     @Output() public deleteEmit = new EventEmitter<void>();
@@ -20,9 +20,18 @@ export class PipelineNodeComponent {
         this.pipelineNodeData.openedSettingModal = !this.pipelineNodeData.openedSettingModal;
     }
 
-    public deleteItem(id: string): void {}
+    public newNode(id: string): void {
+        console.log(`add new node after ${id}`);
+        // Connect to service
+    }
 
-    public renameItem(id: string): void {}
+    public configNode(id: string): void {
+        console.log(`configure node ${id}`);
+        // Connect to service
+    }
 
-    public downloadItem(id: string): void {}
+    public deleteNode(id: string): void {
+        console.log(`delete node ${id}`);
+        // Connect to service
+    }
 }

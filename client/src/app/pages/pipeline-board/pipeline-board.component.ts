@@ -112,6 +112,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     public removeNodeComponent(id: string): void | boolean {
+        console.log('salaaaam');
         const removeAllNodeAffect = (id: string): boolean | void => {
             // Remove node-element from node-list
             this.pipelineNodeDatas.splice(currentNodeComponentIndex, 1);
