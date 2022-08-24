@@ -88,8 +88,4 @@ public class PostgresQueryBuilder : IQueryBuilder
         throw new NotImplementedException();
     }
 
-    public string AddColumn(string table, string columnToAdd)
-    {
-        return $"ALTER TABLE {table} ADD COLUMN {columnToAdd} VARCHAR";
-    }
 }

@@ -24,5 +24,4 @@ public interface IQueryBuilder
 
     public string Where(string key, Operator @operator, object value);
 
-    public string AddColumn(string table, string columnToAdd);
 }
