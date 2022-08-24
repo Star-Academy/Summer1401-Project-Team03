@@ -31,20 +31,20 @@ public class PipelineController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, int x, int y,
+    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x, double y,
         [FromBody] Dictionary<string, string> dictionary)
     {
         try
         {
             var pipeline = idToPipeline[pipelineID];
-        
+
             var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
                 dictionary["operator"].GetOperator(), dictionary["value"]);
-        
+
             filter.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
             pipeline.IdToComponent[nextComponentId].PreviousComponents.Add(filter);
             pipeline.AddComponent(filter);
-            
+
             return Ok(filter.Id);
         }
         catch (Exception e)
@@ -54,10 +54,10 @@ public class PipelineController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddSource(int pipelineID, string fileName, int fileID, string fileType, double x, double y)
+    public IActionResult AddSource(int pipelineID, int fileID, double x, double y)
     {
-        var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x, y),
-            FilePathGenerator.Path(fileName, fileType, fileID, "imports"));
+        var filePath = FileSearcher.Search(fileID, "imports");
+        var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x, y), filePath);
 
         idToPipeline[pipelineID].AddComponent(extractor);
 
@@ -65,11 +65,10 @@ public class PipelineController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddDestination(int pipelineId, string fileName, int fileId, string fileType, double x,
-        double y, int previousComponentId)
+    public IActionResult AddDestination(int pipelineId, int fileID, double x, double y, int previousComponentId)
     {
-        var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y),
-            FilePathGenerator.Path(fileName, fileType, fileId, "exports"));
+        var filePath = FileSearcher.Search(fileID, "exports");
+        var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y), filePath);
 
         loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
 

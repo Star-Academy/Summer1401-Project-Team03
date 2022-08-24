@@ -42,28 +42,15 @@ public class DataInventoryController : ControllerBase
     [HttpGet]
     public IActionResult Export(int fileID)
     {
-        var directory = new DirectoryInfo(@"resources\" + "exports");
-        var files = directory.GetFiles("*");
-        
-        foreach (var file in files)
+        try
         {
-            var fullName = file.Name;
-            var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
-
-            var match = regex.Match(fullName);
-
-            var name = match.Groups[1].Value;
-            var id = match.Groups[2].Value;
-            var type = match.Groups[3].Value;
-
-            if (id == fileID.ToString())
-            {
-                var filePath = FilePathGenerator.Path(name, type, fileID, "exports");
-                return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
-            }
+            var filePath = FileSearcher.Search(fileID, "exports");
+            return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
         }
-
-        return NotFound("file not found");
+        catch (Exception e)
+        {
+            return BadRequest("file not found!");
+        }
     }
 
     [HttpGet]
