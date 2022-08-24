@@ -57,6 +57,7 @@ public class PipelineController : ControllerBase
             pipeline.IdToComponent[nextComponentId].PreviousComponents.Add(filter);
 
             pipeline.AddComponent(filter);
+            filter.connectToAdjacentComponents(previousComponentId, nextComponentId);
 
             return Ok(filter.Id);
         }
