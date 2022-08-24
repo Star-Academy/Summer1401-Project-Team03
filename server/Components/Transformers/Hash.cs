@@ -15,20 +15,24 @@ public class Hash : Mutator
         ShouldCreateNewField = shouldCreateNewField;
     }
 
-    private string FieldToHash { get; }
-    private bool ShouldCreateNewField { get; }
-    private string NewFieldName { get; }
+    private string FieldToHash { get; set; }
+    private bool ShouldCreateNewField { get; set; }
+    private string NewFieldName { get; set; }
 
     public override void Mutate()
     {
-        var previousTableName = PreviousComponents[0].GetQuery();
-        Pipeline.QueryBuilder.Copy(TableName, previousTableName);
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(TableName)).Close();
+        var query = Pipeline.QueryBuilder.Copy(TableName, PreviousComponents[0].GetQuery());
+        Pipeline.Database.Execute(query).Close();
+
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.AddColumn(TableName, NewFieldName)).Close();
+
     }
 
     public override string GetQuery()
     {
         TableName = Pipeline.TableManager.NewTableName();
-
+        Mutate();
         return Pipeline.QueryBuilder.SelectTable(TableName);
     }
 
