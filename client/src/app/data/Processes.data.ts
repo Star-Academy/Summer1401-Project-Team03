@@ -6,14 +6,14 @@ export interface ProcessSchema {
     items: any[];
 }
 
-type ProcessInfo = {
+export type ProcessInfo = {
     [key in ProcessType]: ProcessSchema;
 };
 
 export const PROCESS: ProcessInfo = {
     JOIN: {
         title: 'join',
-        icon: '',
+        icon: 'join',
         items: [],
     },
     FIELD_REMOVE: {

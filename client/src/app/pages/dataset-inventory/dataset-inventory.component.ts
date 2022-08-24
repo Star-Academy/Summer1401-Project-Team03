@@ -20,11 +20,6 @@ export class DatasetInventoryComponent {
         if (item) item.openedSettingModal = false;
     }
 
-    public addItem(): void {
-        console.log(`Added item`);
-        // Connect to inventory service
-    }
-
     public renameItem(id: number): void {
         console.log(`Renamed item ${id}`);
         // Connect to inventory service
