@@ -103,12 +103,13 @@ public class PipelineController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<DbDataReader> RunUpTo(int pipelineID, int componentID)
+    public IActionResult RunUpTo(int pipelineID, int componentID)
     {
         try
         {
             var pipeline = idToPipeline[pipelineID];
-            return Ok(pipeline.Execute(componentID));
+            pipeline.Execute(componentID).Close();
+            return Ok();
         }
         catch (Exception e)
         {

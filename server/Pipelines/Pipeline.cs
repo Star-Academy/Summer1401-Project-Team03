@@ -33,7 +33,7 @@ public class Pipeline
 
     public void Execute()
     {
-        foreach (var destination in DestinationIDs) Database.Execute(IdToComponent[destination].GetQuery());
+        foreach (var destination in DestinationIDs) Database.Execute(IdToComponent[destination].GetQuery()).Close();
     }
 
     public void AddComponent(Component component)
