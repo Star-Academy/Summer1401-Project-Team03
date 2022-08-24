@@ -1,11 +1,13 @@
 import {ProcessType} from '../enums/ProcessType.enum';
 
+export interface ProcessSchema {
+    title: string;
+    icon: string;
+    items: any[];
+}
+
 type ProcessInfo = {
-    [key in ProcessType]: {
-        title: string;
-        icon: string;
-        items: any[];
-    };
+    [key in ProcessType]: ProcessSchema;
 };
 
 export const PROCESS: ProcessInfo = {
