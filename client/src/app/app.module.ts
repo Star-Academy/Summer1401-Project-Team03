@@ -3,24 +3,20 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NavbarModule} from './components/navbar/navbar.module';
-
-import {BoardComponent} from './pages/pipeline-board/components/board/board.component';
-
 import {PipelineInventoryModule} from './pages/pipeline-inventory/pipeline-inventory.module';
 import {DatasetInventoryModule} from './pages/dataset-inventory/dataset-inventory.module';
-import {PipelineBoardModule} from './pages/pipeline-board/pipeline-board.module';
+import {PipelineModule} from './pages/pipeline/pipeline.module';
 
 @NgModule({
-    declarations: [AppComponent, BoardComponent],
+    declarations: [AppComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
         NavbarModule,
         PipelineInventoryModule,
         DatasetInventoryModule,
-        PipelineBoardModule,
+        PipelineModule,
     ],
-
     providers: [],
     bootstrap: [AppComponent],
 })

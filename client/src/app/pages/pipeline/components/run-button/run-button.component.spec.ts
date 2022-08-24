@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {PipelineBoardComponent} from './pipeline-board.component';
+import {RunButtonComponent} from './run-button.component';
 
-describe('PipelineBoardComponent', () => {
-    let component: PipelineBoardComponent;
-    let fixture: ComponentFixture<PipelineBoardComponent>;
+describe('RunButtonComponent', () => {
+    let component: RunButtonComponent;
+    let fixture: ComponentFixture<RunButtonComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [PipelineBoardComponent],
+            declarations: [RunButtonComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(PipelineBoardComponent);
+        fixture = TestBed.createComponent(RunButtonComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

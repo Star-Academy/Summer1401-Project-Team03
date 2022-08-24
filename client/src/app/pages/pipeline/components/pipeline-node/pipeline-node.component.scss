@@ -21,11 +21,11 @@
 
     cursor: pointer;
 
-    app-svg{
+    app-svg {
         color: var(--color-purple-46);
     }
 
-    .desc{
+    .desc {
         .label {
             overflow: hidden;
 
@@ -38,11 +38,10 @@
             white-space: nowrap;
         }
 
-        p{
+        p {
             font-size: var(--font-size-primary);
 
             text-align: center;
         }
     }
-
 }
