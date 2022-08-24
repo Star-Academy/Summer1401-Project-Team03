@@ -13,6 +13,7 @@
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (removeNodeEmit)="removeNodeComponent(pipelineNodeData.id)"
+                (addNodeEmit)="addNodeComponent($event, pipelineNodeData.id)"
             ></app-pipeline-node>
         </ng-container>
     </div>
