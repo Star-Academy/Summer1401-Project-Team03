@@ -1,22 +1,3 @@
-button {
-    background-color: var(--color-purple-46);
-    color: var(--color-purple-86);
-
-    padding: 0.5rem;
-
-    border-radius: var(--border-radius-primary);
-
-    font-size: 1.7rem;
-}
-
-app-svg {
-    cursor: pointer;
-    padding: 0.5rem;
-    height: auto;
-    background-color: var(--color-purple-86);
-    border-radius: var(--border-radius-primary) var(--border-radius-primary) var(--border-radius-primary) 0;
-}
-
 .upload {
     display: flex;
     align-items: center;

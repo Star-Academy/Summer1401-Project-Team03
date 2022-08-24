@@ -2,13 +2,28 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PipelineInventoryComponent} from './pipeline-inventory.component';
 import {ConvertDateModule} from '../../pipes/convert-date/convert-date.module';
-import {SvgModule} from "../../components/svg/svg.module";
-import {SearchBoxModule} from "../../components/search-box/search-box.module";
-import {SearchFilterModule} from "../../pipes/search-filter/search-filter.module";
-import { PipelineItemModalComponent } from './components/pipeline-item-modal/pipeline-item-modal.component';
+import {SvgModule} from '../../components/svg/svg.module';
+import {SearchBoxModule} from '../../components/search-box/search-box.module';
+import {SearchFilterModule} from '../../pipes/search-filter/search-filter.module';
+import {PipelineItemModalComponent} from './components/pipeline-item-modal/pipeline-item-modal.component';
+import {ButtonModule} from 'src/app/components/button/button.module';
+import {PipelineAddButtonComponent} from './components/pipeline-add-button/pipeline-add-button.component';
+import {ModalModule} from 'src/app/components/modal/modal.module';
+import {TextInputModule} from 'src/app/components/text-input/text-input.module';
+import {DataListModule} from 'src/app/components/data-list/data-list.module';
 
 @NgModule({
-    declarations: [PipelineInventoryComponent, PipelineItemModalComponent],
-    imports: [CommonModule, ConvertDateModule, SvgModule, SearchBoxModule, SearchFilterModule],
+    declarations: [PipelineInventoryComponent, PipelineItemModalComponent, PipelineAddButtonComponent],
+    imports: [
+        CommonModule,
+        ConvertDateModule,
+        SvgModule,
+        SearchBoxModule,
+        SearchFilterModule,
+        ButtonModule,
+        TextInputModule,
+        DataListModule,
+        ModalModule,
+    ],
 })
 export class PipelineInventoryModule {}

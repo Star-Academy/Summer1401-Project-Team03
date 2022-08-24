@@ -20,6 +20,7 @@ import {ModalModule} from '../../components/modal/modal.module';
         ConvertDateModule,
         ButtonModule,
         ModalModule,
+        ButtonModule,
     ],
 })
 export class DatasetInventoryModule {}

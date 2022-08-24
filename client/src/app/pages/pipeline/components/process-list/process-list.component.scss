@@ -1,0 +1,29 @@
+.list {
+    &__wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 20rem);
+        gap: 2rem;
+    }
+
+    &__button {
+        background-color: var(--color-white-solid);
+
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+
+        padding: 0.5rem;
+
+        border-radius: var(--border-radius-minimal);
+
+        font-size: var(--font-size-primary);
+
+        app-svg {
+            color: var(--color-purple-21);
+        }
+
+        &:hover {
+            background-color: var(--color-gray-78);
+        }
+    }
+}
