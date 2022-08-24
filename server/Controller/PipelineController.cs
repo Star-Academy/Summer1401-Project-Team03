@@ -1,5 +1,5 @@
 ﻿using System.Data.Common;
-using a;
+using DBConfig;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
