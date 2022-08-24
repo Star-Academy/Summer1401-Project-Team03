@@ -1,5 +1,6 @@
 .modal {
-    --color-modal-bg: hsl(263deg 46% 75%);
+    --color-modal-bg: var(--color-white-solid);
+    --color-modal-hover: var(--color-gray-78);
     --color-modal-border: var(--color-purple-21);
     background-color: var(--color-modal-bg);
 
@@ -10,11 +11,8 @@
 
     display: flex;
     flex-direction: column;
-    gap: 2rem;
 
     width: auto;
-
-    padding: 1.5rem 2rem;
 
     border: 1px solid var(--color-modal-border);
     border-radius: var(--border-radius-primary) 0 var(--border-radius-primary) var(--border-radius-primary);
@@ -24,13 +22,18 @@
 
         display: flex;
         align-items: center;
-        gap: 1.5rem;
+
+        padding: 1rem 2rem;
 
         cursor: pointer;
 
         app-svg {
             width: 1.5rem;
             height: 1.5rem;
+        }
+
+        &:hover {
+            background-color: var(--color-modal-hover);
         }
     }
 }
