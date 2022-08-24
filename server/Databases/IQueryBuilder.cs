@@ -12,6 +12,9 @@ public interface IQueryBuilder
 
     public string ExportCSV(string table, string filePath);
 
+    public string ImportJson(string table, List<string> keys, string filePath);
+
+    public string ExportJson(string table, string filePath);
     public string Drop(string table);
 
     public string Select(List<string> keys, string table);

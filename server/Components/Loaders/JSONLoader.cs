@@ -11,11 +11,12 @@ public class JSONLoader : Loader
 
     public override string GetQuery()
     {
-        throw new NotImplementedException();
+        Load();
+        return PreviousComponents[0].GetQuery();
     }
 
     public override void Load()
     {
-        throw new NotImplementedException();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.ExportJson(PreviousComponents[0].GetQuery(), FilePath)).Close();
     }
 }

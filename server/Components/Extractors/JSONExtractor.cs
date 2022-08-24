@@ -1,4 +1,5 @@
-﻿using server.Pipelines;
+﻿using Newtonsoft.Json.Linq;
+using server.Pipelines;
 
 namespace server.Components.Extractors;
 
@@ -11,7 +12,8 @@ public class JSONExtractor : Extractor
 
     public override string GetQuery()
     {
-        throw new NotImplementedException();
+        Extract();
+        return Pipeline.QueryBuilder.SelectTable(TableName);
     }
 
     public override List<string> GetKeys()
@@ -21,6 +23,9 @@ public class JSONExtractor : Extractor
 
     public override void Extract()
     {
-        throw new NotImplementedException();
+        var keys = GetKeys();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(TableName)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(TableName, keys)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportJson(TableName, keys, FilePath)).Close();
     }
 }
