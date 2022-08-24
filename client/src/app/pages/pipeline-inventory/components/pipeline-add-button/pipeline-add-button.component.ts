@@ -8,7 +8,7 @@ import {InventoryService} from 'src/app/services/inventory.service';
     styleUrls: ['./pipeline-add-button.component.scss'],
 })
 export class PipelineAddButtonComponent {
-    @ViewChild('pipelineAdd') public modal!: ModalComponent;
+    @ViewChild('PipelineAdd') public modal!: ModalComponent;
     public pipelineName: string = '';
 
     public createPipeline(): void {}

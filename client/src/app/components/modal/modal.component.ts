@@ -6,7 +6,7 @@ import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@an
     styleUrls: ['./modal.component.scss'],
 })
 export class ModalComponent {
-    @ViewChild('modal') private modal!: ElementRef;
+    @ViewChild('Modal') private modal!: ElementRef;
 
     @Input() public title: string = '';
 

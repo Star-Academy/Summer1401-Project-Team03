@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
-import {PROCESS, ProcessSchema} from 'src/app/data/Processes.data';
+import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
+import {ProcessType} from 'src/app/enums/ProcessType.enum';
 
 @Component({
     selector: 'app-process-list',
@@ -8,6 +9,9 @@ import {PROCESS, ProcessSchema} from 'src/app/data/Processes.data';
     styleUrls: ['./process-list.component.scss'],
 })
 export class ProcessListComponent {
-    @ViewChild('processAdd') public modal!: ModalComponent;
-    public processes: ProcessSchema[] = Object.values(PROCESS);
+    @ViewChild('ProcessAdd') public modal!: ModalComponent;
+
+    public processes: ProcessInfo = PROCESS;
+
+    public addProcess(type: string): void {}
 }

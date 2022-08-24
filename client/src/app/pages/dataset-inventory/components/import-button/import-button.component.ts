@@ -8,7 +8,7 @@ import {InventoryService} from 'src/app/services/inventory.service';
     styleUrls: ['./import-button.component.scss'],
 })
 export class ImportButtonComponent {
-    @ViewChild('datasetImport') public modal!: ModalComponent;
+    @ViewChild('DatasetImport') public modal!: ModalComponent;
     public file: File | null = null;
 
     public constructor(private inventoryService: InventoryService) {}
