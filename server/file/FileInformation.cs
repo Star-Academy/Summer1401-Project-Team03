@@ -18,7 +18,7 @@ public class FileInformation
     public string type { get; }
     public string category { get; }
     public string createTime { get; }
-    
+
     public static void ExtractInformation(List<FileInformation> informations, string category)
     {
         var directory = new DirectoryInfo(@"resources\" + category);

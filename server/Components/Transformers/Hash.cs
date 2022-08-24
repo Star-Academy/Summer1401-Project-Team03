@@ -1,11 +1,8 @@
-using System.Data.Common;
-using System.Security.Cryptography;
-using System.Text;
 using server.Pipelines;
 
 namespace server.Components.Transformers;
 
-public class Hash : Mutator
+public class Hash : Transformer
 {
     public Hash(Pipeline pipeline, Position position, string fieldToHash, bool shouldCreateNewField,
         string newFieldName) : base(pipeline, position)
@@ -15,79 +12,35 @@ public class Hash : Mutator
         ShouldCreateNewField = shouldCreateNewField;
     }
 
+    private const string HashFunction = "h_int";
     private string FieldToHash { get; set; }
     private bool ShouldCreateNewField { get; set; }
     private string NewFieldName { get; set; }
-
-    public override void Mutate()
-    {
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(TableName)).Close();
-        var query = Pipeline.QueryBuilder.Copy(TableName, PreviousComponents[0].GetQuery());
-        Pipeline.Database.Execute(query).Close();
-
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.AddColumn(TableName, NewFieldName)).Close();
-
-    }
+    
 
     public override string GetQuery()
     {
-        TableName = Pipeline.TableManager.NewTableName();
-        Mutate();
-        return Pipeline.QueryBuilder.SelectTable(TableName);
+        var newFieldSelectCommand = $"{HashFunction}({FieldToHash}) AS {NewFieldName}";
+        var keys = GetKeys();
+        keys[keys.IndexOf(NewFieldName)] = newFieldSelectCommand;
+
+        return Pipeline.QueryBuilder.Select(keys, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName());
     }
 
-    private List<string> GetHashedValueOfColumnn(string previousTableName)
+    public override List<string> GetKeys()
     {
-        var tempName = Pipeline.TableManager.NewTableName();
-        var query = Pipeline.QueryBuilder.Select(new List<string> { FieldToHash }, previousTableName,
-            tempName);
+        var keys = PreviousComponents[0].GetKeys();
 
-        var reader = Pipeline.Database.Execute(query);
-        var hashedValues = CreateListOfStringsFromReader(reader, 0)
-            .Select(GetHashString).ToList();
-        reader.Close();
+        if (ShouldCreateNewField)
+        {
+            keys.Add(NewFieldName);
+        }
+        else
+        {
+            keys[keys.IndexOf(FieldToHash)] = NewFieldName;
+        }
 
-        return hashedValues;
-    }
-
-    private IEnumerable<byte> GetHashArray(string str)
-    {
-        using HashAlgorithm algorithm = SHA256.Create();
-        return algorithm.ComputeHash(Encoding.UTF8.GetBytes(str));
-    }
-
-    private string GetHashString(object obj)
-    {
-        var sb = new StringBuilder();
-        foreach (var b in GetHashArray(obj.ToString()))
-            sb.Append(b.ToString("X2"));
-
-        return sb.ToString();
-    }
-
-    private string SqlHash()
-    {
-        return @"create function h_int(text) returns int as $$
-        select ('x'||substr(md5($1),1,8))::bit(32)::int;
-            $$ language sql";
-    }
-
-
-    public IEnumerable<string> CreateListOfStringsFromReader(DbDataReader reader, int ordinal)
-    {
-        var strings = new List<string>();
-
-        if (!reader.HasRows) return strings;
-        while (reader.Read())
-            try
-            {
-                strings.Add(reader.GetString(ordinal));
-            }
-            catch (InvalidCastException)
-            {
-                strings.Add("0");
-            }
-
-        return strings;
+        return keys;
+        
     }
 }

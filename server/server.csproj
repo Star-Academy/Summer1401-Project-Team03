@@ -7,13 +7,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Json.Net" Version="1.0.33" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1" />
-        <PackageReference Include="Npgsql" Version="6.0.6" />
-        <PackageReference Include="SqlKata" Version="2.3.7" />
-        <PackageReference Include="SqlKata.Execution" Version="2.3.7" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
+        <PackageReference Include="Json.Net" Version="1.0.33"/>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.2-beta1"/>
+        <PackageReference Include="Npgsql" Version="6.0.6"/>
+        <PackageReference Include="SqlKata" Version="2.3.7"/>
+        <PackageReference Include="SqlKata.Execution" Version="2.3.7"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0"/>
     </ItemGroup>
 
 </Project>

@@ -1,5 +1,5 @@
 ﻿using System.Data.Common;
-using a;
+using DBConfig;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
@@ -16,10 +16,10 @@ namespace server.Controller;
 public class PipelineController : ControllerBase
 {
     private static int _counter;
-    private static Dictionary<int, Pipeline> idToPipeline = new ();
-    
+    private static readonly Dictionary<int, Pipeline> idToPipeline = new();
+
     [HttpPost]
-    public IActionResult Create(string pipelineName)
+    public IActionResult Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
     {
         try
         {
@@ -28,8 +28,13 @@ public class PipelineController : ControllerBase
 
             _counter++;
             idToPipeline[_counter] = pipeline;
+
+            AddSource(pipeline, sourceFileID, 0, 0);
+            AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 0);
+
             return Ok(_counter);
         }
+
         catch (Exception e)
         {
             return BadRequest(e.Message);
@@ -37,7 +42,8 @@ public class PipelineController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int? nextComponentId, double x, double y,
+    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x,
+        double y,
         [FromBody] Dictionary<string, string> dictionary)
     {
         try
@@ -48,9 +54,8 @@ public class PipelineController : ControllerBase
                 dictionary["operator"].GetOperator(), dictionary["value"]);
 
             filter.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
-            
-            //TODO pipeline.IdToComponent[nextComponentId].PreviousComponents.Add(filter);
-            
+            pipeline.IdToComponent[nextComponentId].PreviousComponents.Add(filter);
+
             pipeline.AddComponent(filter);
 
             return Ok(filter.Id);
@@ -61,45 +66,27 @@ public class PipelineController : ControllerBase
         }
     }
 
-    [HttpPost]
-    public IActionResult AddSource(int pipelineID, int fileID, double x, double y)
+    private void AddSource(Pipeline pipeline, int fileID, double x, double y)
     {
-        try
-        {
-            var filePath = FileSearcher.Search(fileID, "imports");
-            var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x, y), filePath);
+        var filePath = FileSearcher.Search(fileID, "imports");
+        var extractor = new CSVExtractor(pipeline, new Position(x, y), filePath);
 
-            idToPipeline[pipelineID].AddComponent(extractor);
-
-            return Ok(extractor.Id);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        pipeline.AddComponent(extractor);
     }
 
-    [HttpPost]
-    public IActionResult AddDestination(int pipelineId, string fileName, string format, double x, double y, int previousComponentId)
+
+    private void AddDestination(Pipeline pipeline, string fileName, string format, double x, double y,
+        int previousComponentId)
     {
-        try
-        {
-            DataInventoryController.increaseFileID(1);
-            var fileID = DataInventoryController.fileID;
-            var filePath = FilePathGenerator.Path(fileName, format, fileID, "exports");
-            
-            var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y), filePath);
+        DataInventoryController.increaseFileID(1);
+        var fileID = DataInventoryController.fileID;
+        var filePath = FilePathGenerator.Path(fileName, format, fileID, "exports");
 
-            loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
+        var loader = new CSVLoader(pipeline, new Position(x, y), filePath);
 
-            idToPipeline[pipelineId].AddComponent(loader);
+        loader.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
 
-            return Ok(loader.Id);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
+        pipeline.AddComponent(loader);
     }
 
     [HttpGet]
