@@ -13,7 +13,10 @@
             <th>Modified At</th>
             <th></th>
         </tr>
-        <tr *ngFor="let item of datasetItems | searchFilter: searchPhrase" (click)="navigateWithUrl(item.id)">
+        <tr
+            *ngFor="let item of inventoryService.dataset | searchFilter: searchPhrase"
+            (click)="navigateWithUrl(item.id)"
+        >
             <td>{{ item.name }}</td>
             <td class="uppercase">{{ item.fileType }}</td>
             <td>{{ item.size }}</td>

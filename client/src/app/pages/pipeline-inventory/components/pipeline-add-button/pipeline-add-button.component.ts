@@ -1,8 +1,10 @@
 import {Component, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {AVAILABLE_FILE_TYPES} from 'src/app/data/AvailableFileTypes.data';
 import {NewPipeline} from 'src/app/models/NewPipeline.interface';
 import {InventoryService} from 'src/app/services/inventory.service';
+import {PipelineService} from 'src/app/services/pipeline.service';
 
 @Component({
     selector: 'app-pipeline-add-button',
@@ -23,7 +25,14 @@ export class PipelineAddButtonComponent {
 
     public formData: NewPipeline = this.initialForm;
 
-    public createPipeline(): void {}
+    public constructor(private pipelineService: PipelineService, private router: Router) {}
+
+    public async createPipeline(): Promise<void> {
+        const response = this.pipelineService.createPipeline(this.formData);
+        if (response) {
+            this.router.navigateByUrl(`/pipeline/${response}`);
+        }
+    }
 
     public clearForm(): void {
         this.formData = this.initialForm;

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {InventoryService} from 'src/app/services/inventory.service';
 import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-item.model';
 
 @Component({
@@ -8,15 +9,16 @@ import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-it
 })
 export class DatasetInventoryComponent {
     public searchPhrase: string = '';
-    public datasetItems: DatasetItemModel[] = datasetItemData;
+
+    public constructor(public inventoryService: InventoryService) {}
 
     public openItemSettingModal(id: number): void {
-        const item = this.datasetItems.find((item) => item.id === id);
+        const item = this.inventoryService.dataset.find((item) => item.id === id);
         if (item) item.openedSettingModal = true;
     }
 
     public closeItemSettingModal(id: number): void {
-        const item = this.datasetItems.find((item) => item.id === id);
+        const item = this.inventoryService.dataset.find((item) => item.id === id);
         if (item) item.openedSettingModal = false;
     }
 
