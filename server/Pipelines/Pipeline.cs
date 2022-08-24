@@ -7,7 +7,7 @@ namespace server.Pipelines;
 
 public class Pipeline
 {
-    public HashSet<int> DestinationIDs;
+    public HashSet<int> DestinationIDs = new ();
     public Dictionary<int, Component> IdToComponent;
 
     public Pipeline(string name, DBConfiguration dbConfiguration)
