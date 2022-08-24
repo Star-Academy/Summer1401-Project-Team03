@@ -10,6 +10,7 @@ import {ButtonModule} from 'src/app/components/button/button.module';
 import {PipelineAddButtonComponent} from './components/pipeline-add-button/pipeline-add-button.component';
 import {ModalModule} from 'src/app/components/modal/modal.module';
 import {TextInputModule} from 'src/app/components/text-input/text-input.module';
+import {DataListModule} from 'src/app/components/data-list/data-list.module';
 
 @NgModule({
     declarations: [PipelineInventoryComponent, PipelineItemModalComponent, PipelineAddButtonComponent],
@@ -21,6 +22,7 @@ import {TextInputModule} from 'src/app/components/text-input/text-input.module';
         SearchFilterModule,
         ButtonModule,
         TextInputModule,
+        DataListModule,
         ModalModule,
     ],
 })
