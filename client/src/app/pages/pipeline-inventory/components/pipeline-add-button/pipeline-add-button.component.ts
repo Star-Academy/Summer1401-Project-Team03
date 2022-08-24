@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {AVAILABLE_FILE_TYPES} from 'src/app/data/AvailableFileTypes.data';
+import {NewPipeline} from 'src/app/models/NewPipeline.interface';
 import {InventoryService} from 'src/app/services/inventory.service';
 
 @Component({
@@ -11,7 +12,7 @@ import {InventoryService} from 'src/app/services/inventory.service';
 export class PipelineAddButtonComponent {
     @ViewChild('PipelineAdd') public modal!: ModalComponent;
 
-    public initialForm = {
+    public initialForm: NewPipeline = {
         pipelineName: '',
         sourceId: '',
         destinationName: '',
@@ -20,7 +21,7 @@ export class PipelineAddButtonComponent {
 
     public fileTypes = AVAILABLE_FILE_TYPES;
 
-    public formData = this.initialForm;
+    public formData: NewPipeline = this.initialForm;
 
     public createPipeline(): void {}
 

@@ -11,14 +11,23 @@ export class InventoryService {
 
     public constructor(private apiService: ApiService) {}
 
-    public async uploadDataSet(file: File): Promise<boolean> {
+    public async uploadDataSet(file: File): Promise<void> {
         const data = new FormData();
         data.append('file', file);
-        data.append('type', file.name.endsWith('csv') ? 'text/csv' : 'application/json');
 
-        const response = await this.apiService.formPost<boolean>(INVENTORY_IMPORT, data);
+        const response = await this.apiService.formPost<string>(INVENTORY_IMPORT, data);
 
-        return !!response;
+        if (response) {
+            this.dataset.push({
+                id: parseInt(response),
+                name: file.name,
+                fileType: file.type,
+                size: file.size.toString(),
+                createAt: new Date(),
+                modifiedAt: new Date(),
+                openedSettingModal: false,
+            });
+        }
     }
 
     public async deleteDataset(id: string): Promise<void> {}
