@@ -9,7 +9,7 @@ namespace server.Controller;
 [Route("[controller]/[Action]")]
 public class DataInventoryController : ControllerBase
 {
-    private static int _fileID;
+    public static int fileID;
     private PostgresDatabase _database;
 
     [HttpPost]
@@ -19,14 +19,13 @@ public class DataInventoryController : ControllerBase
         {
             increaseFileID(1);
             var regex = new Regex("(.*)\\.(csv|json)");
-
-
+            
             var match = regex.Match(file.FileName);
 
             var fileName = match.Groups[1].Value;
             var format = match.Groups[2].Value;
 
-            var filePath = FilePathGenerator.Path(fileName, format, _fileID, "imports");
+            var filePath = FilePathGenerator.Path(fileName, format, fileID, "imports");
 
             using (var stream = System.IO.File.Create(filePath))
             {
@@ -70,8 +69,8 @@ public class DataInventoryController : ControllerBase
         }
     }
 
-    private void increaseFileID(int increament)
+    public static void increaseFileID(int increament)
     {
-        _fileID += increament;
+        fileID += increament;
     }
 }

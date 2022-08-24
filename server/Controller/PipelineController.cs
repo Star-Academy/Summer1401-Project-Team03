@@ -15,9 +15,9 @@ namespace server.Controller;
 [Route("[controller]/[Action]")]
 public class PipelineController : ControllerBase
 {
-    private int _counter;
-    private Dictionary<int, Pipeline> idToPipeline;
-
+    private static int _counter;
+    private static Dictionary<int, Pipeline> idToPipeline = new ();
+    
     [HttpPost]
     public IActionResult Create(string pipelineName)
     {
@@ -37,7 +37,7 @@ public class PipelineController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x, double y,
+    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int? nextComponentId, double x, double y,
         [FromBody] Dictionary<string, string> dictionary)
     {
         try
@@ -48,7 +48,9 @@ public class PipelineController : ControllerBase
                 dictionary["operator"].GetOperator(), dictionary["value"]);
 
             filter.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
-            pipeline.IdToComponent[nextComponentId].PreviousComponents.Add(filter);
+            
+            //TODO pipeline.IdToComponent[nextComponentId].PreviousComponents.Add(filter);
+            
             pipeline.AddComponent(filter);
 
             return Ok(filter.Id);
@@ -78,11 +80,14 @@ public class PipelineController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult AddDestination(int pipelineId, int fileID, double x, double y, int previousComponentId)
+    public IActionResult AddDestination(int pipelineId, string fileName, string format, double x, double y, int previousComponentId)
     {
         try
         {
-            var filePath = FileSearcher.Search(fileID, "exports");
+            DataInventoryController.increaseFileID(1);
+            var fileID = DataInventoryController.fileID;
+            var filePath = FilePathGenerator.Path(fileName, format, fileID, "exports");
+            
             var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y), filePath);
 
             loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
@@ -95,7 +100,6 @@ public class PipelineController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-
     }
 
     [HttpGet]
