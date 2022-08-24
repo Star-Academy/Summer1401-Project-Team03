@@ -12,11 +12,10 @@ import {ModalModule} from 'src/app/components/modal/modal.module';
 
 import {PipelineNodeComponent} from './components/pipeline-node/pipeline-node.component';
 import {PipelineBoardComponent} from './components/pipeline-board/pipeline-board.component';
-
-import {BoardComponent} from './components/board/board.component';
-import {NgxDraggabillyModule} from 'ngx-draggabilly';
-import {AngularDraggableModule} from 'angular2-draggable';
 import {SettingItemModalComponent} from './components/setting-item-modal/setting-item-modal.component';
+import {BoardComponent} from './components/board/board.component';
+import {AngularDraggableModule} from 'angular2-draggable';
+import {NgxDraggabillyModule} from 'ngx-draggabilly';
 
 @NgModule({
     declarations: [
@@ -28,6 +27,7 @@ import {SettingItemModalComponent} from './components/setting-item-modal/setting
         SettingItemModalComponent,
         BoardComponent,
     ],
+
     imports: [
         CommonModule,
         SvgModule,
