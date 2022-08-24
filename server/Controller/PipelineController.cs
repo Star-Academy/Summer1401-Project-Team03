@@ -21,13 +21,19 @@ public class PipelineController : ControllerBase
     [HttpPost]
     public IActionResult Create(string pipelineName)
     {
-        var dbConfiguration = DBConfigLoader.Load();
-        //TODO consider id
-        var pipeline = new Pipeline(pipelineName, dbConfiguration);
+        try
+        {
+            var dbConfiguration = DBConfigLoader.Load();
+            var pipeline = new Pipeline(pipelineName, dbConfiguration);
 
-        _counter++;
-        idToPipeline[_counter] = pipeline;
-        return Ok(_counter);
+            _counter++;
+            idToPipeline[_counter] = pipeline;
+            return Ok(_counter);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPost]
@@ -56,38 +62,68 @@ public class PipelineController : ControllerBase
     [HttpPost]
     public IActionResult AddSource(int pipelineID, int fileID, double x, double y)
     {
-        var filePath = FileSearcher.Search(fileID, "imports");
-        var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x, y), filePath);
+        try
+        {
+            var filePath = FileSearcher.Search(fileID, "imports");
+            var extractor = new CSVExtractor(idToPipeline[pipelineID], new Position(x, y), filePath);
 
-        idToPipeline[pipelineID].AddComponent(extractor);
+            idToPipeline[pipelineID].AddComponent(extractor);
 
-        return Ok(extractor.Id);
+            return Ok(extractor.Id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPost]
     public IActionResult AddDestination(int pipelineId, int fileID, double x, double y, int previousComponentId)
     {
-        var filePath = FileSearcher.Search(fileID, "exports");
-        var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y), filePath);
+        try
+        {
+            var filePath = FileSearcher.Search(fileID, "exports");
+            var loader = new CSVLoader(idToPipeline[pipelineId], new Position(x, y), filePath);
 
-        loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
+            loader.PreviousComponents.Add(idToPipeline[pipelineId].IdToComponent[previousComponentId]);
 
-        idToPipeline[pipelineId].AddComponent(loader);
+            idToPipeline[pipelineId].AddComponent(loader);
 
-        return Ok(loader.Id);
+            return Ok(loader.Id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+
     }
 
     [HttpGet]
-    public void Run(int pipelineID)
+    public IActionResult Run(int pipelineID)
     {
-        var pipeline = idToPipeline[pipelineID];
-        pipeline.Execute();
+        try
+        {
+            var pipeline = idToPipeline[pipelineID];
+            pipeline.Execute();
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpGet]
     public ActionResult<DbDataReader> RunUpTo(int pipelineID, int componentID)
     {
-        var pipeline = idToPipeline[pipelineID];
-        return Ok(pipeline.Execute(componentID));
+        try
+        {
+            var pipeline = idToPipeline[pipelineID];
+            return Ok(pipeline.Execute(componentID));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }
