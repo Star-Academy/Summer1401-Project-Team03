@@ -31,9 +31,8 @@ dialog {
             font-size: var(--font-size-big);
 
             text-overflow: ellipsis;
-            white-space: nowrap;
-
             text-transform: capitalize;
+            white-space: nowrap;
         }
 
         button {
