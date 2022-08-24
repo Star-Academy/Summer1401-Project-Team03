@@ -13,5 +13,7 @@ export class ProcessListComponent {
 
     public processes: ProcessInfo = PROCESS;
 
-    public addProcess(type: string): void {}
+    public addProcess(type: string): void {
+        this.modal.closeModal();
+    }
 }
