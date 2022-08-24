@@ -20,7 +20,7 @@ public abstract class Extractor : Component
 
     public abstract void Extract();
 
-    public override void connectToAdjacentComponents(int previousId, int nextId)
+    public override void ConnectToAdjacentComponents(int previousId, int nextId)
     {
         var map = Pipeline.IdToComponent;
         

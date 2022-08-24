@@ -52,18 +52,15 @@ public class PipelineController : ControllerBase
 
             var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
                 dictionary["operator"].GetOperator(), dictionary["value"]);
-
-            filter.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
-            pipeline.IdToComponent[nextComponentId].PreviousComponents.Add(filter);
-
+            
             pipeline.AddComponent(filter);
-            filter.connectToAdjacentComponents(previousComponentId, nextComponentId);
+            filter.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
 
             return Ok(filter.Id);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            return BadRequest(e);
         }
     }
 

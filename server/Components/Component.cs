@@ -31,5 +31,5 @@ public abstract class Component
 
     public abstract List<string> GetKeys();
 
-    public abstract void connectToAdjacentComponents(int previousId, int nextId);
+    public abstract void ConnectToAdjacentComponents(int previousId, int nextId);
 }

@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Databases;
 using server.file;
@@ -52,6 +53,7 @@ public class DataInventoryController : ControllerBase
         }
     }
 
+    [EnableCors("AnotherPolicy")]
     [HttpGet]
     public ActionResult<List<FileInformation>> GetFilesInformation()
     {

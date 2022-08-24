@@ -24,7 +24,7 @@ public abstract class Loader : Component
 
     public abstract void Load();
 
-    public override void connectToAdjacentComponents(int previousId, int nextId)
+    public override void ConnectToAdjacentComponents(int previousId, int nextId)
     {
         
         var map = Pipeline.IdToComponent;
