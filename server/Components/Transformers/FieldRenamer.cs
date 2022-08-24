@@ -11,8 +11,8 @@ public class FieldRenamer : Transformer
         NewNames = newNames;
     }
 
-    private List<string> FieldsToRename { set; get; }
-    private List<string> NewNames { set; get; }
+    private List<string> FieldsToRename { get; }
+    private List<string> NewNames { get; }
 
     public override string GetQuery()
     {

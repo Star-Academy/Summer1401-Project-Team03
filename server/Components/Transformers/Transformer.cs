@@ -17,4 +17,19 @@ public abstract class Transformer : Component
     {
         return PreviousComponents[0].GetKeys();
     }
+
+    public override void ConnectToAdjacentComponents(int previousId, int nextId)
+    {
+        var map = Pipeline.IdToComponent;
+        
+        var previous = map[previousId];
+        var next = map[nextId];
+        
+        PreviousComponents.Add(previous);
+        NextComponents.Add(next);
+
+        previous.NextComponents = new List<Component> {this};
+        next.PreviousComponents = new List<Component> {this};
+
+    }
 }

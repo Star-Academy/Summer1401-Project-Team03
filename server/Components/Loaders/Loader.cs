@@ -7,6 +7,7 @@ public abstract class Loader : Component
     public Loader(Pipeline pipeline, Position position, string filePath) : base(pipeline, position)
     {
         FilePath = filePath;
+        pipeline.DestinationIDs.Add(Id);
     }
 
     public string FilePath { set; get; }
@@ -22,4 +23,15 @@ public abstract class Loader : Component
     }
 
     public abstract void Load();
+
+    public override void ConnectToAdjacentComponents(int previousId, int nextId)
+    {
+        
+        var map = Pipeline.IdToComponent;
+        var previous = map[previousId];
+        
+        PreviousComponents.Add(previous);
+        
+        previous.NextComponents = new List<Component> {this};
+    }
 }

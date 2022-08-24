@@ -17,7 +17,7 @@ public class DynamicObjectController
     public object GetDynamicMember(string memberName)
     {
         var binder = Binder.GetMember(CSharpBinderFlags.None, memberName, _obj.GetType(),
-            new[] {CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null)});
+            new[] { CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, null) });
         var callsite = CallSite<Func<CallSite, object, object>>.Create(binder);
         return callsite.Target(callsite, _obj);
     }

@@ -1,5 +1,6 @@
 ﻿using System.Data.Common;
 using Npgsql;
+using server.configurations;
 
 namespace server.Databases;
 
@@ -7,9 +8,10 @@ public class PostgresDatabase : IDatabase
 {
     private readonly NpgsqlConnection _connection;
 
-    public PostgresDatabase(string host, string username, string database, string password)
+    public PostgresDatabase(DBConfiguration dbConfiguration)
     {
-        var connectionString = $"Host={host};Database={database};Username={username};Password={password}";
+        var connectionString =
+            $"Host={dbConfiguration.Host};Database={dbConfiguration.Database};Username={dbConfiguration.Username};Password={dbConfiguration.Password}";
         _connection = new NpgsqlConnection(connectionString);
         _connection.Open();
     }

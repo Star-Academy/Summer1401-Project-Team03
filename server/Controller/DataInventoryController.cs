@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using server.Databases;
+using server.file;
 
 namespace server.Controller;
 
@@ -7,7 +10,7 @@ namespace server.Controller;
 [Route("[controller]/[Action]")]
 public class DataInventoryController : ControllerBase
 {
-    private static int _fileID;
+    public static int fileID;
     private PostgresDatabase _database;
 
     [HttpPost]
@@ -16,28 +19,60 @@ public class DataInventoryController : ControllerBase
         if (file.Length > 0)
         {
             increaseFileID(1);
-            var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + file.FileName;
+            var regex = new Regex("(.*)\\.(csv|json)");
+
+            var match = regex.Match(file.FileName);
+
+            var fileName = match.Groups[1].Value;
+            var format = match.Groups[2].Value;
+
+            var filePath = FilePathGenerator.Path(fileName, format, fileID, "imports");
 
             using (var stream = System.IO.File.Create(filePath))
             {
                 await file.CopyToAsync(stream);
             }
 
-            return Ok();
+            return Ok(fileID);
         }
 
         return BadRequest("The sent file is empty!");
     }
 
     [HttpGet]
-    public IActionResult Export(string fileName, int fileID)
+    public IActionResult Export(int fileID)
     {
-        var filePath = Environment.CurrentDirectory + "\\resources" + "\\" + fileName + "_" + fileID;
-        return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
+        try
+        {
+            var filePath = FileSearcher.Search(fileID, "exports");
+            return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
+        }
+        catch (Exception e)
+        {
+            return BadRequest("file not found!");
+        }
     }
 
-    private void increaseFileID(int increament)
+    [EnableCors("AnotherPolicy")]
+    [HttpGet]
+    public ActionResult<List<FileInformation>> GetFilesInformation()
     {
-        _fileID += increament;
+        try
+        {
+            var informations = new List<FileInformation>();
+            FileInformation.ExtractInformation(informations, "imports");
+            FileInformation.ExtractInformation(informations, "exports");
+
+            return Ok(informations);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    public static void increaseFileID(int increament)
+    {
+        fileID += increament;
     }
 }

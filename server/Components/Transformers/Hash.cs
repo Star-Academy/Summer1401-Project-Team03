@@ -1,56 +1,46 @@
-using System.Collections;
-using System.Security.Cryptography;
-using System.Text;
 using server.Pipelines;
-using SqlKata;
 
 namespace server.Components.Transformers;
 
 public class Hash : Transformer
 {
-    public Hash(Pipeline pipeline, Position position) : base(pipeline, position)
+    public Hash(Pipeline pipeline, Position position, string fieldToHash, bool shouldCreateNewField,
+        string newFieldName) : base(pipeline, position)
     {
+        FieldToHash = fieldToHash;
+        NewFieldName = newFieldName;
+        ShouldCreateNewField = shouldCreateNewField;
     }
 
-    private string fieldToHash { get; set; }
+    private const string HashFunction = "h_int";
+    private string FieldToHash { get; set; }
     private bool ShouldCreateNewField { get; set; }
-    private string newFieldName { get; set; }
-
+    private string NewFieldName { get; set; }
+    
 
     public override string GetQuery()
     {
-        var query = new Query(PreviousComponents[0].GetQuery());
+        var newFieldSelectCommand = $"{HashFunction}({FieldToHash}) AS {NewFieldName}";
+        var keys = GetKeys();
+        keys[keys.IndexOf(NewFieldName)] = newFieldSelectCommand;
 
-        //TODO read table as data
-        dynamic data = query;
-
-        var hashValues = new List<string>();
-
-        var a = ((IEnumerable) data).Cast<dynamic>();
-
-        foreach (var o in a)
-        {
-            var dynamicController = new DynamicObjectController(o);
-            hashValues.Add(GetHashString(dynamicController.GetDynamicMember(fieldToHash)));
-        }
-
-        throw new NotImplementedException();
+        return Pipeline.QueryBuilder.Select(keys, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName());
     }
 
-    private IEnumerable<byte> GetHashArray(string str)
+    public override List<string> GetKeys()
     {
-        using (HashAlgorithm algorithm = SHA256.Create())
+        var keys = PreviousComponents[0].GetKeys();
+
+        if (ShouldCreateNewField)
         {
-            return algorithm.ComputeHash(Encoding.UTF8.GetBytes(str));
+            keys.Add(NewFieldName);
         }
-    }
+        else
+        {
+            keys[keys.IndexOf(FieldToHash)] = NewFieldName;
+        }
 
-    private string GetHashString(object obj)
-    {
-        var sb = new StringBuilder();
-        foreach (var b in GetHashArray(obj.ToString()))
-            sb.Append(b.ToString("X2"));
-
-        return sb.ToString();
+        return keys;
+        
     }
 }

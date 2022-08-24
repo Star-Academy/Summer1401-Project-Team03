@@ -30,4 +30,6 @@ public abstract class Component
     public abstract string GetTable();
 
     public abstract List<string> GetKeys();
+
+    public abstract void ConnectToAdjacentComponents(int previousId, int nextId);
 }
