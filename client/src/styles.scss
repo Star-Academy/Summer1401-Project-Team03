@@ -1,19 +1,22 @@
 :root {
     --color-purple-86: hsl(263deg 44% 86%);
+    --color-purple-75: hsl(263deg 44% 75%);
+    --color-purple-55: hsl(263deg 44% 55%);
     --color-purple-46: hsl(263deg 45% 46%);
     --color-purple-21: hsl(263deg 46% 21%);
-    --color-content-bg: hsl(0, 0%, 90%);
+    --color-content-bg: hsl(0deg 0% 90%);
 
     --color-green-60: hsl(115deg 45% 60%);
 
     --color-shadow: hsl(0deg 0% 0% / 31.8%);
 
     --color-gray-100: hsl(0deg 0% 100%);
+    --color-gray-90: hsl(0deg 0% 90%);
     --color-gray-78: hsl(260deg 2% 78%);
     --color-gray-34: hsl(0deg 0% 34%);
     --color-gray-0: hsl(0deg 0% 0%);
 
-    --color-white-solid: hsl(0deg 100% 100%);
+    --color-white-solid: var(--color-gray-100);
 
     --font-size-primary: 1.5rem;
     --font-size-big: 2rem;
@@ -61,14 +64,16 @@ li {
 }
 
 svg {
+    max-width: 3rem;
     height: 100%;
     max-height: 3rem;
-    max-width: 3rem;
 }
+
 app-svg {
-    height: 3rem;
     display: grid;
     place-items: center;
+
+    height: 3rem;
 }
 
 .uppercase {
