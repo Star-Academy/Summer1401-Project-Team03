@@ -33,7 +33,7 @@ public class DataInventoryController : ControllerBase
                 await file.CopyToAsync(stream);
             }
 
-            return Ok();
+            return Ok(fileID);
         }
 
         return BadRequest("The sent file is empty!");
