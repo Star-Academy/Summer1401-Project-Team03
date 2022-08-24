@@ -1,4 +1,4 @@
-.dataset{
+.dataset {
     --color-hr-border: var(--color-purple-46);
     --color-hr-bg: hsl(263deg 46% 93%);
     --color-hr-bg-hover: hsl(263deg 46% 87%);
@@ -6,68 +6,83 @@
     --color-th-text: var(--color-purple-21);
     --color-th-bg: hsl(263deg 46% 70%);
 
-    --color-td-text: hsl(0, 0%, 20%);
-
-    width: 90%;
-    margin-inline: auto;
-    padding-block-start: 7rem;
+    --color-td-text: hsl(0deg 0% 20%);
     display: flex;
     flex-direction: column;
     gap: 3rem;
 
+    width: 90%;
+
+    margin-inline: auto;
+    padding-block-start: 7rem;
+
     &__header {
         display: flex;
-        gap: 4rem;
         align-items: center;
+        gap: 4rem;
+
         app-svg {
-            cursor: pointer;
-            padding: 0.5rem;
-            height: auto;
             background-color: var(--color-th-bg);
+
+            height: auto;
+
+            padding: 0.5rem;
+
             border-radius: var(--border-radius-primary) var(--border-radius-primary) var(--border-radius-primary) 0;
+
+            cursor: pointer;
         }
     }
 
     &__table {
         border-collapse: collapse;
-        //border-radius: var(--border-radius-primary);
-        //overflow: hidden;
+
+        // border-radius: var(--border-radius-primary);
+        // overflow: hidden;
         // BUG SETTING MODAL
 
         tr {
             background-color: var(--color-hr-bg);
+
             border: 2px solid var(--color-hr-border);
+
             &:hover {
                 background-color: var(--color-hr-bg-hover);
             }
         }
+
         tr:first-child {
             background-color: var(--color-th-bg);
         }
 
         th {
             color: var(--color-th-text);
-            font-weight: 700;
+
             font-size: 2rem;
+            font-weight: 700;
         }
 
         td {
-            position: relative;
             color: var(--color-td-text);
 
+            position: relative;
+
             font-size: 1.6rem;
+
             text-align: center;
         }
 
         td,
         th {
             padding: 2rem 0.75rem;
+
             text-transform: capitalize;
         }
 
         .item-setting {
-            cursor: pointer;
             height: 2rem;
+
+            cursor: pointer;
         }
     }
 }
