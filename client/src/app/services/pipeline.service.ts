@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {NewPipeline} from '../models/NewPipeline.interface';
-import { PipelineItemModel } from '../models/pipeline/pipeline-item.model';
-import {PIPELINE_CREATE} from '../utils/api.utils';
+import {PipelineItemModel} from '../models/pipeline/pipeline-item.model';
+import {PIPELINE_ALL, PIPELINE_CREATE} from '../utils/api.utils';
 import {ApiService} from './api.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PipelineService {
-
     public pipelines: PipelineItemModel[] = [];
     public constructor(private apiService: ApiService) {}
 
@@ -21,9 +20,19 @@ export class PipelineService {
         return response ?? '';
     }
 
-    public async deletePipeline(id: string): Promise<void> {}
+    public async getAllPiplelines(): Promise<void> {
+        const response = await this.apiService.get<PipelineItemModel[]>(PIPELINE_ALL);
+
+        if (response) {
+            this.pipelines = response;
+        }
+    }
+
+    public async deletePipeline(id: string): Promise<void> {
+        // TODO: add functionality
+    }
 
     public async getPipeline(id: string): Promise<void> {
-        const response = await this.apiService.get<
+        // TODO: add functionality
     }
 }

@@ -8,7 +8,7 @@ export const INVENTORY_ALL = INVENTORY_SERVICE + '/GetFilesInformation';
 const PIPELINE_SERVICE = BASE_URL + '/Pipeline';
 export const PIPELINE_CREATE = PIPELINE_SERVICE + '/Create';
 export const PIPELINE_TRANSFORMER = PIPELINE_SERVICE + '/AddTransformer';
-export const PIPELINE_INFO = PIPELINE_SERVICE + '/getPipelinesInformation';
+export const PIPELINE_ALL = PIPELINE_SERVICE + '/getPipelinesInformation';
 
 export const POST_INIT = {
     method: 'post',
