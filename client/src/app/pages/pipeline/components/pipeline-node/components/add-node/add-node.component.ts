@@ -4,6 +4,7 @@ import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
 import {PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 
 let counter = 10;
+const ADDITIONAL_LEFT = 220;
 
 @Component({
     selector: 'app-add-node',
@@ -16,7 +17,7 @@ export class addNodeComponent {
     @ViewChild('ProcessAdd') public modal!: ModalComponent;
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
     @Input() public nodeData!: PipelineNodeModel;
-    public nodeTitle!: string;
+    public nodeTitle: string = 'new node';
 
     public openModal(): void {
         this.modal.openModal();
@@ -27,7 +28,7 @@ export class addNodeComponent {
         this.nodeData.openedSettingModal = false;
 
         const title = this.nodeTitle;
-        const newPosition = {x: position.x + 200, y: position.y};
+        const newPosition = {x: position.x + ADDITIONAL_LEFT, y: position.y};
 
         const newNodeComponent: PipelineNodeModel = {
             id: counter.toString(),
