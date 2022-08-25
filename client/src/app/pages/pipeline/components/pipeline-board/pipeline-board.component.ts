@@ -138,12 +138,17 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     public addItemToLeaderLine(insertPlace: number, item: object): void {
         this.leaderLineLinks.splice(insertPlace, 0, item);
     }
+    public removeLine(index: number): void {
+        this.leaderLineLinks[index].leaderLineObj.remove();
+    }
     public addItemToNodeList(insertPlace: number, item: PipelineNodeModel): void {
         this.pipelineNodeDatas.splice(insertPlace, 0, item);
     }
+
     public connectLeaderLineBetweenTwoElementById(
         firstElementId: string,
         secondElementId: string,
+        elementIdToInsert: string = '',
         insertPlace = 0,
         isPush = false
     ): void | boolean {
@@ -155,22 +160,24 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         if (isPush) {
             this.leaderLineLinks.push(newLeaderLineObj);
         }
-
-        this.addItemToLeaderLine(insertPlace, newLeaderLineObj);
+        const insertPlaceLeaderLine = this.getLeaderIndexById(elementIdToInsert);
+        this.addItemToLeaderLine(insertPlaceLeaderLine, newLeaderLineObj);
     }
 
     public removeNodeComponent(id: string): void | boolean {
+        const currentNodeComponentIndex = this.getNodeIndexById(id);
+        const beforeNodeId = this.getNodeIdByIndex(currentNodeComponentIndex - 1);
+        const afterNodeId = this.getNodeIdByIndex(currentNodeComponentIndex + 1);
+
         const removeAllNodeAffect = (id: string): boolean | void => {
             // Remove node-element from node-list
-            this.pipelineNodeDatas.splice(currentNodeComponentIndex, 1);
+            this.removeItemFromNodeList(currentNodeComponentIndex);
 
-            // Remove connection line
-            // const currentLeaderLineIndex = this.leaderLineLinks.findIndex((ln) => ln.id == id);
+            // Remove Line and connection line
             const currentLeaderLineIndex = this.getLeaderIndexById(id);
-            this.leaderLineLinks[currentLeaderLineIndex].leaderLineObj.remove();
-            // TODO leaderlineLinks removeer
-            this.leaderLineLinks[currentLeaderLineIndex - 1].leaderLineObj.remove();
-            this.leaderLineLinks.splice(currentLeaderLineIndex - 1, 2);
+            this.removeLine(currentLeaderLineIndex);
+            this.removeLine(currentLeaderLineIndex - 1);
+            this.removeItemFromLeaderLine(currentLeaderLineIndex - 1, 2);
 
             // Remove component from board
             const component = this.getElementRef(id);
@@ -180,14 +187,8 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         // The first or last Node that we don't want remove
         if (this.isFirstNodeById(id) || this.isLastNodeById(id)) return true;
 
-        const currentNodeComponentIndex = this.getNodeIndexById(id);
-
         // Create new connection
-        this.applyLeaderLineBetweenTwoElement(
-            this.pipelineNodeDatas[currentNodeComponentIndex - 1].id,
-            this.pipelineNodeDatas[currentNodeComponentIndex + 1].id,
-            true
-        );
+        this.connectLeaderLineBetweenTwoElementById(beforeNodeId, afterNodeId, beforeNodeId);
 
         // Remove old connection
         removeAllNodeAffect(id);
@@ -273,6 +274,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
     private getNodeIndexById(id: string): number {
         return this.pipelineNodeDatas.findIndex((node) => node.id == id);
+    }
+    private getNodeIdByIndex(index: number): string {
+        return this.pipelineNodeDatas[index].id;
     }
 
     private applyLeaderLineBetweenTwoElement(
