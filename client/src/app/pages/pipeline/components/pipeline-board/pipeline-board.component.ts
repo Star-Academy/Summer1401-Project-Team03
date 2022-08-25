@@ -225,9 +225,17 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     public savePositionNodeElement(elementId: string): void {
+        const elementIndex = this.getNodeIndexById(elementId);
+
         const component = this.getElementRef(elementId);
-        const newPosition = {x: component?.offsetLeft, y: component?.offsetTop};
         component.style.zIndex = '10';
+
+        const newPosition = {x: component?.offsetLeft, y: component?.offsetTop};
+
+        // Update element position
+        this.pipelineNodeDatas[elementIndex].position.x = newPosition.x;
+        this.pipelineNodeDatas[elementIndex].position.y = newPosition.y;
+
         console.log(`${elementId}: X:${newPosition.x}|Y:${newPosition.y}`);
         //   TODO Connect to Service
     }

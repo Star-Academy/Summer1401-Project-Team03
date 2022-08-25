@@ -14,7 +14,7 @@
         ></app-svg>
         <ng-container *ngIf="pipelineNodeData.openedSettingModal">
             <app-setting-item-modal
-                (newNodeEmit)="newNode(pipelineNodeData.id)"
+                (newNodeEmit)="newNode(pipelineNodeData.position)"
                 (configNodeEmit)="configNode(pipelineNodeData.id)"
                 (deleteNodeEmit)="modal.openModal()"
             ></app-setting-item-modal>

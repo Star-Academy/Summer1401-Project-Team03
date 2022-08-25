@@ -22,19 +22,15 @@ export class PipelineNodeComponent {
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
     @ViewChild('mymodal') public modal!: ModalComponent;
 
-    private mainContainer = this.elRef.nativeElement;
-
-    public constructor(private elRef: ElementRef) {}
-
     public toggleShowItemSettingModal(): void {
         this.pipelineNodeData.openedSettingModal = !this.pipelineNodeData.openedSettingModal;
     }
 
-    public newNode(id: string): void {
+    public newNode(position: {x: number; y: number}): void {
         this.pipelineNodeData.openedSettingModal = false;
-        const {x, y} = this.getPosition(id);
-        // const newPosition = {x: x + 200, y};
-        const newPosition = {x, y};
+
+        const newPosition = {x: position.x + 200, y: position.y};
+
         const newNodeComponent: PipelineNodeModel = {
             ...DUMMY_PIPELINE_NODE,
             position: newPosition,
@@ -43,7 +39,7 @@ export class PipelineNodeComponent {
         counter++; // temporary
         this.addNodeEmit.emit(newNodeComponent);
 
-        console.log(`add new node after ${id}`);
+        console.log(`add new node with ${newNodeComponent.id} id`);
         // TODO Connect to service
     }
 
@@ -57,20 +53,5 @@ export class PipelineNodeComponent {
         this.pipelineNodeData.openedSettingModal = false;
         console.log(`delete node ${id}`);
         // TODO Connect to service
-    }
-
-    private getElementRef(id: string): HTMLElement {
-        const nodeComponent = this.mainContainer.parentElement.querySelector(`app-pipeline-node[id="${id}"]`);
-        return nodeComponent;
-    }
-
-    private getPosition(id: string): {x: number; y: number} {
-        const component = this.getElementRef(id);
-
-        // TODO , dont work offsetLeft
-        // console.log(component);
-        // const position = {x: component?.offsetLeft, y: component?.offsetTop};
-        const position = {x: 0, y: 0};
-        return position;
     }
 }
