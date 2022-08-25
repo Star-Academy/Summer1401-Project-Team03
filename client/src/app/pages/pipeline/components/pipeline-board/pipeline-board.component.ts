@@ -156,12 +156,23 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.pipelineNodeDatas.splice(currentNodeComponentIndex + 1, 0, item);
         this.changeDetectorRef.detectChanges();
 
-        this.applyLeaderLineBetweenTwoElement(this.pipelineNodeDatas[currentNodeComponentIndex].id, item.id);
+        this.applyLeaderLineBetweenTwoElement(
+            this.pipelineNodeDatas[currentNodeComponentIndex].id,
+            item.id,
+            false,
+            true
+        );
 
         const currentLeaderLineIndex = this.leaderLineLinks.findIndex((ln) => ln.id == backNodeId);
         this.leaderLineLinks[currentLeaderLineIndex].leaderLineObj.remove();
         this.leaderLineLinks.splice(currentLeaderLineIndex, 1);
-        this.applyLeaderLineBetweenTwoElement(item.id, this.pipelineNodeDatas[currentNodeComponentIndex + 2].id);
+        this.applyLeaderLineBetweenTwoElement(
+            item.id,
+            this.pipelineNodeDatas[currentNodeComponentIndex + 2].id,
+            false,
+            false,
+            true
+        );
 
         console.log('after:');
         console.log(this.leaderLineLinks);
@@ -209,24 +220,46 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         firstElementId: string,
         secondElementId: string,
         removeMode = false,
-        addMode = false
+        addMode = false,
+        secondPlace = false
     ): void | boolean {
         const firstElement = this.getElementRef(firstElementId);
         const secondElement = this.getElementRef(secondElementId);
 
         const newLeaderLine = new LeaderLine(firstElement, secondElement, this.leaderLineOptions);
-        if (!removeMode && !addMode) {
-            this.leaderLineLinks.push({id: firstElementId, leaderLineObj: newLeaderLine});
+        if (!removeMode && !addMode && !secondPlace) {
+            this.leaderLineLinks.push({
+                id: firstElementId,
+                leaderLineObj: newLeaderLine,
+                interact: {first: firstElementId, second: secondElementId},
+            });
             return false;
         }
         if (removeMode) {
             const insertPlace = this.leaderLineLinks.findIndex((ln) => ln.id === firstElementId);
-            this.leaderLineLinks.splice(insertPlace, 0, {id: firstElementId, leaderLineObj: newLeaderLine});
+            this.leaderLineLinks.splice(insertPlace, 0, {
+                id: firstElementId,
+                leaderLineObj: newLeaderLine,
+                interact: {first: firstElementId, second: secondElementId},
+            });
             return false;
         }
         if (addMode) {
             const insertPlace = this.leaderLineLinks.findIndex((ln) => ln.id === firstElementId);
-            this.leaderLineLinks.splice(insertPlace, 0, {id: firstElementId, leaderLineObj: newLeaderLine});
+            this.leaderLineLinks.splice(insertPlace + 1, 0, {
+                id: firstElementId,
+                leaderLineObj: newLeaderLine,
+                interact: {first: firstElementId, second: secondElementId},
+            });
+            return false;
+        }
+        if (secondPlace) {
+            const insertPlace = this.leaderLineLinks.findIndex((ln) => ln.id === secondElementId);
+            this.leaderLineLinks.splice(insertPlace, 0, {
+                id: firstElementId,
+                leaderLineObj: newLeaderLine,
+                interact: {first: firstElementId, second: secondElementId},
+            });
             return false;
         }
     }
