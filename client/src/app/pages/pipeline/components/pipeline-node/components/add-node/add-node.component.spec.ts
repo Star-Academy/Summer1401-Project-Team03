@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ProcessListComponent} from './process-list.component';
+import {addNodeComponent} from './add-node.component';
 
 describe('ProcessListComponent', () => {
-    let component: ProcessListComponent;
-    let fixture: ComponentFixture<ProcessListComponent>;
+    let component: addNodeComponent;
+    let fixture: ComponentFixture<addNodeComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ProcessListComponent],
+            declarations: [addNodeComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProcessListComponent);
+        fixture = TestBed.createComponent(addNodeComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
