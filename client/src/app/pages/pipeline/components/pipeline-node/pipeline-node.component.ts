@@ -1,8 +1,5 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {PipelineNodeModel} from '../../../../models/pipeline-node.model';
-import {PROCESS} from '../../../../data/Processes.data';
-import {ModalComponent} from '../../../../components/modal/modal.component';
-
 
 @Component({
     selector: 'app-pipeline-node',

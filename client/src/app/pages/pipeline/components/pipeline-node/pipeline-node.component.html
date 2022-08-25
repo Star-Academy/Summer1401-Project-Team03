@@ -8,8 +8,8 @@
 
     <div class="setting">
         <app-svg
+            class="setting__icon"
             (click)="toggleShowItemSettingModal(); $event.stopPropagation()"
-            class="item-setting"
             iconType="dots-vertical"
         ></app-svg>
         <ng-container *ngIf="pipelineNodeData.openedSettingModal">
