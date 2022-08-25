@@ -120,6 +120,6 @@ public class PipelineController : ControllerBase
     [HttpGet]
     public void GetPipelinesInformation()
     {
-        
+        PipelineInformation.ExtractInformation(idToPipeline);
     }
 }

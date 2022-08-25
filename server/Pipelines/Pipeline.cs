@@ -9,7 +9,6 @@ public class Pipeline
 {
     public HashSet<int> DestinationIDs;
     public Dictionary<int, Component> IdToComponent;
-
     public Pipeline(string name, DBConfiguration dbConfiguration)
     {
         Name = name;
