@@ -1,4 +1,5 @@
 <app-modal #ProcessAdd title="add processor">
+    <app-text-input label="name" value="new node" (valueChange)="nodeTitle = $event"></app-text-input>
     <div class="list__wrapper">
         <button
             class="list__button"

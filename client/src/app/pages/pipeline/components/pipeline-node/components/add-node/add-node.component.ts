@@ -16,6 +16,7 @@ export class addNodeComponent {
     @ViewChild('ProcessAdd') public modal!: ModalComponent;
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
     @Input() public nodeData!: PipelineNodeModel;
+    public nodeTitle!: string;
 
     public openModal(): void {
         this.modal.openModal();
@@ -25,7 +26,7 @@ export class addNodeComponent {
         this.modal.closeModal();
         this.nodeData.openedSettingModal = false;
 
-        const title = 'new node';
+        const title = this.nodeTitle;
         const newPosition = {x: position.x + 200, y: position.y};
 
         const newNodeComponent: PipelineNodeModel = {

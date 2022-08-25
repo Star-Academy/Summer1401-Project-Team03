@@ -16,7 +16,8 @@ import {SettingItemModalComponent} from './components/pipeline-node/components/s
 import {BoardComponent} from './components/board/board.component';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
-import { RemoveNodeComponent } from './components/pipeline-node/components/remove-node/remove-node.component';
+import {RemoveNodeComponent} from './components/pipeline-node/components/remove-node/remove-node.component';
+import {TextInputModule} from '../../components/text-input/text-input.module';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import { RemoveNodeComponent } from './components/pipeline-node/components/remov
         ModalModule,
         NgxDraggabillyModule,
         AngularDraggableModule,
+        TextInputModule,
     ],
 })
 export class PipelineModule {}
