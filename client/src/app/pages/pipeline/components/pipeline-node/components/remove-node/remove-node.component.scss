@@ -1,0 +1,8 @@
+.modal{
+  position: absolute;
+  &__container{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+}
