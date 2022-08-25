@@ -22,10 +22,16 @@
     </div>
 
     <app-remove-node
+        class="absolute"
         #removeNode
         [nodeData]="pipelineNodeData"
         (removeNodeEmit)="removeNodeEmit.emit()"
     ></app-remove-node>
 
-    <app-add-node #addNode [nodeData]="pipelineNodeData" (addNodeEmit)="addNodeEmit.emit($event)"></app-add-node>
+    <app-add-node
+        class="absolute"
+        #addNode
+        [nodeData]="pipelineNodeData"
+        (addNodeEmit)="addNodeEmit.emit($event)"
+    ></app-add-node>
 </div>
