@@ -159,9 +159,10 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         const newLeaderLineObj = {id: firstElementId, leaderLineObj: newLeaderLine};
         if (isPush) {
             this.leaderLineLinks.push(newLeaderLineObj);
+            return true;
         }
         const insertPlaceLeaderLine = this.getLeaderIndexById(elementIdToInsert);
-        this.addItemToLeaderLine(insertPlaceLeaderLine, newLeaderLineObj);
+        this.addItemToLeaderLine(insertPlaceLeaderLine + insertPlace, newLeaderLineObj);
     }
 
     public removeNodeComponent(id: string): void | boolean {
@@ -194,41 +195,30 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         removeAllNodeAffect(id);
     }
 
-    public addNodeComponent(item: PipelineNodeModel, backNodeId: string): void {
-        console.log('before:');
-        console.log(this.leaderLineLinks);
-        console.log(this.pipelineNodeDatas);
+    public addNodeComponent(item: PipelineNodeModel, beforeNodeId: string): void {
+        const beforeNodeIndex = this.getNodeIndexById(beforeNodeId);
+        const beforeLeaderLineIndex = this.getLeaderIndexById(beforeNodeId);
 
-        const currentNodeComponentIndex = this.getNodeIndexById(backNodeId);
-        this.pipelineNodeDatas.splice(currentNodeComponentIndex + 1, 0, item);
+        const afterNodeId = this.getNodeIdByIndex(beforeNodeIndex + 1);
+        const currentNodeId = item.id;
+
+        // Insert to Item to nodeList
+        this.addItemToNodeList(beforeNodeIndex + 1, item);
         this.changeDetectorRef.detectChanges();
 
-        this.applyLeaderLineBetweenTwoElement(
-            this.pipelineNodeDatas[currentNodeComponentIndex].id,
-            item.id,
-            false,
-            true
-        );
+        // Create new connection first part
+        this.connectLeaderLineBetweenTwoElementById(beforeNodeId, currentNodeId, beforeNodeId, 1);
 
-        const currentLeaderLineIndex = this.getLeaderIndexById(backNodeId);
-        this.leaderLineLinks[currentLeaderLineIndex].leaderLineObj.remove();
-        this.leaderLineLinks.splice(currentLeaderLineIndex, 1);
+        // Remove line and connection between before and after new node;
+        this.removeLine(beforeLeaderLineIndex);
+        this.removeItemFromLeaderLine(beforeLeaderLineIndex);
 
-        if (this.isLastLeaderById(backNodeId)) {
-            this.applyLeaderLineBetweenTwoElement(item.id, this.pipelineNodeDatas[currentNodeComponentIndex + 2].id);
+        // Check if the last node use push method
+        if (this.isLastLeaderById(beforeNodeId)) {
+            this.connectLeaderLineBetweenTwoElementById(currentNodeId, afterNodeId, '', 0, true);
         } else {
-            this.applyLeaderLineBetweenTwoElement(
-                item.id,
-                this.pipelineNodeDatas[currentNodeComponentIndex + 2].id,
-                false,
-                false,
-                true
-            );
+            this.connectLeaderLineBetweenTwoElementById(currentNodeId, afterNodeId, afterNodeId);
         }
-
-        console.log('after:');
-        console.log(this.leaderLineLinks);
-        console.log(this.pipelineNodeDatas);
     }
 
     public setToUpperLayer(elementId: string): void {
