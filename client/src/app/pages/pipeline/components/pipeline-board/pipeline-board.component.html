@@ -15,6 +15,24 @@
                 (removeNodeEmit)="removeNodeComponent(pipelineNodeData.id)"
                 (addNodeEmit)="addNodeComponent($event, pipelineNodeData.id)"
             ></app-pipeline-node>
+            <ng-container *ngIf="pipelineNodeData.pipelines.length > 0">
+                <ng-container *ngFor="let nodeData of pipelineNodeData.pipelines">
+                    <app-pipeline-node
+                        [id]="nodeData.id"
+                        (staticClick)="clickNodeElement(nodeData.id)"
+                        draggabilly
+                        [options]="draggabillyOptions"
+                        [pipelineNodeData]="nodeData"
+                        (dragStart)="setToUpperLayer(nodeData.id)"
+                        (dragEnd)="savePositionNodeElement(nodeData.id)"
+                        (dragMove)="updateLeaderLine(nodeData.id)"
+                        ngDraggable
+                        [position]="nodeData.position"
+                        (removeNodeEmit)="removeNodeComponent(nodeData.id)"
+                        (addNodeEmit)="addNodeComponent($event, nodeData.id)"
+                    ></app-pipeline-node>
+                </ng-container>
+            </ng-container>
         </ng-container>
     </div>
 </app-board>

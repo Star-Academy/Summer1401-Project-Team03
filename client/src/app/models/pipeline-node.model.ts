@@ -7,6 +7,7 @@ export interface PipelineNodeModel {
     position: {x: number; y: number};
     leaderLines: LeaderLinesModel[];
     openedSettingModal: boolean;
+    pipelines: PipelineNodeModel[];
 }
 
 export interface LeaderLinesModel {

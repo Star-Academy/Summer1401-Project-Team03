@@ -37,6 +37,7 @@ export class addNodeComponent {
             position: newPosition,
             openedSettingModal: false,
             leaderLines: [],
+            pipelines: [],
         };
         counter++; // temporary
         this.addNodeEmit.emit(newNodeComponent);
