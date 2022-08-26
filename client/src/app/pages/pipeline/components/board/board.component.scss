@@ -20,6 +20,8 @@
         block-size: calc(var(--board-h) * var(--grid-size));
         inline-size: calc(var(--board-w) * var(--grid-size));
 
+        zoom: var(--zoom);
+
         .resizer {
             --size: calc(0.5 * var(--grid-size));
 
@@ -64,5 +66,9 @@
             width: 10rem;
             height: 10rem;
         }
+    }
+
+    &:focus-visible {
+        outline: none;
     }
 }

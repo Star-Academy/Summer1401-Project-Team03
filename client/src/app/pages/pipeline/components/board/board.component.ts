@@ -11,8 +11,15 @@ export class BoardComponent {
 
     @Input() public gridSize: string = '20px';
 
+    public zoom: number = 1;
+
     public resizeClickHandler(dx: number, dy: number): void {
         this.boardWidth += dx;
         this.boardHeight += dy;
+    }
+
+    public onKeyUp(event: KeyboardEvent): void {
+        if (event.code === 'Equal') this.zoom += 0.25;
+        else if (event.code === 'Minus') this.zoom -= 0.25;
     }
 }

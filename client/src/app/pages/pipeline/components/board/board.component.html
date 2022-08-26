@@ -3,8 +3,11 @@
     [style]="{
         '--board-w': boardWidth,
         '--board-h': boardHeight,
-        '--grid-size': gridSize
+        '--grid-size': gridSize,
+        '--zoom': zoom
     }"
+    tabindex="0"
+    (keyup)="onKeyUp($event)"
 >
     <div class="board">
         <div class="resizer xy" (click)="resizeClickHandler(2, 2)"></div>
