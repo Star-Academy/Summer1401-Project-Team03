@@ -5,7 +5,7 @@ import {PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 
 let counter = 10;
 const ADDITIONAL_LEFT = 220;
-
+const ADDITIONAL_BOTTOM = 140;
 @Component({
     selector: 'app-add-node',
     templateUrl: './add-node.component.html',
@@ -23,22 +23,37 @@ export class addNodeComponent {
         this.modal.openModal();
     }
 
-    public addNodeHandle(position: {x: number; y: number}, type: ProcessSchema): void {
+    public addNodeHandle(perviousPipeline: PipelineNodeModel, type: ProcessSchema): void {
         this.modal.closeModal();
         this.nodeData.openedSettingModal = false;
 
         const title = this.nodeTitle;
-        const newPosition = {x: position.x + ADDITIONAL_LEFT, y: position.y};
-
+        let newPosition;
+        let newPipelines: PipelineNodeModel[] = [];
+        let isReplicate = false;
+        if (type.title === 'replicate') {
+            newPosition = {x: perviousPipeline.position.x, y: perviousPipeline.position.y + ADDITIONAL_BOTTOM};
+            newPipelines = [
+                {
+                    ...perviousPipeline,
+                    id: '1001',
+                    position: {x: perviousPipeline.position.x + ADDITIONAL_LEFT, y: perviousPipeline.position.y},
+                },
+            ];
+            console.log('replicate!!');
+            isReplicate = true;
+        } else {
+            newPosition = {x: perviousPipeline.position.x + ADDITIONAL_LEFT, y: perviousPipeline.position.y};
+        }
         const newNodeComponent: PipelineNodeModel = {
             id: counter.toString(),
             title,
             processesInfoType: type,
-            position: newPosition,
             openedSettingModal: false,
+            position: newPosition,
+            pipelines: newPipelines,
+            isReplicate,
             leaderLines: [],
-            pipelines: [],
-            isReplicate: false,
         };
         counter++; // temporary
         this.addNodeEmit.emit(newNodeComponent);

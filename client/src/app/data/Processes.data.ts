@@ -16,6 +16,11 @@ export const PROCESS: ProcessInfo = {
         icon: 'join',
         items: [],
     },
+    REPLICATE: {
+        title: 'replicate',
+        icon: 'join',
+        items: [],
+    },
     FIELD_REMOVE: {
         title: 'remove field',
         icon: 'fieldRemove',
