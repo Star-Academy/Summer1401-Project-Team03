@@ -102,7 +102,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         grid: [20, 20],
     };
 
-    public pipelineNodeDatas: PipelineNodeModel[] = pipelineNodeDatasDefault;
+    public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));
     public leaderLineLinks: any[] = [];
     public animEventObj!: any;
 
@@ -313,7 +313,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.leaderLineLinks.forEach((ln) => ln.leaderLineObj.remove());
-        this.leaderLineLinks = [];
+        const leaderLines = this.flatArrayToLeaderlineList(this.pipelineNodeDatas);
+        console.log(leaderLines);
+        console.log(this.pipelineNodeDatas);
+        leaderLines.forEach((ln) => ln.leaderLineObj.remove());
     }
 }
