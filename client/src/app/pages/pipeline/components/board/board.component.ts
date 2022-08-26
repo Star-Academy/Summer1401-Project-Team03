@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {KeyboardCode} from '../../../../enums/keyboard-code.enum';
 
 @Component({
     selector: 'app-board',
@@ -20,15 +21,19 @@ export class BoardComponent {
     }
 
     public onKeyUp(event: KeyboardEvent): void {
+        console.log(event.code);
         switch (event.code) {
-            case 'Equal':
+            case KeyboardCode.EQUAL:
+            case KeyboardCode.NUMPAD_ADD:
                 this.zoom += 0.25;
                 break;
-            case 'Minus':
+            case KeyboardCode.MINUS:
+            case KeyboardCode.NUMPAD_SUBTRACT:
                 this.zoom -= 0.25;
                 this.zoom = Math.max(this.zoom, 0);
                 break;
-            case 'Digit0':
+            case KeyboardCode.DIGIT_0:
+            case KeyboardCode.NUMPAD_0:
                 this.zoom = 1;
                 break;
             default:
