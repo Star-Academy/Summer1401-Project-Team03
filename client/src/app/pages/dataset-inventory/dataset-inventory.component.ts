@@ -7,10 +7,14 @@ import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-it
     templateUrl: './dataset-inventory.component.html',
     styleUrls: ['./dataset-inventory.component.scss'],
 })
-export class DatasetInventoryComponent {
+export class DatasetInventoryComponent implements OnInit {
     public searchPhrase: string = '';
 
     public constructor(public inventoryService: InventoryService) {}
+
+    public async ngOnInit(): Promise<void> {
+        await this.inventoryService.getAllDataset();
+    }
 
     public openItemSettingModal(id: number): void {
         const item = this.inventoryService.dataset.find((item) => item.id === id);
