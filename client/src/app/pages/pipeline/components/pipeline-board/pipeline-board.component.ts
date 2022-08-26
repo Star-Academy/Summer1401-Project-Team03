@@ -264,22 +264,21 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     public updateLeaderLine(id: string, nodes: PipelineNodeModel[]): void | boolean {
         const currentIndexNode = this.getNodeIndexById(id, nodes);
         // The last one
-        if (this.isLastNodeById(id)) {
-            this.updateLeaderLineByIndex2(this.getNodeIdByIndex(currentIndexNode - 1, nodes));
-            return false;
-        }
+        // if (this.isLastNodeById(id)) {
+        //     this.updateLeaderLineByIndex2(this.getNodeIdByIndex(currentIndexNode - 1, nodes));
+        //     return false;
+        // }
 
         this.updateLeaderLineByIndex2(id);
 
         // It's not The first one
-        if (!this.isFirstNodeById(id)) {
-            this.updateLeaderLineByIndex2(this.getNodeIdByIndex(currentIndexNode - 1, nodes));
-        }
+        // if (!this.isFirstNodeById(id)) {
+        //     this.updateLeaderLineByIndex2(this.getNodeIdByIndex(currentIndexNode - 1, nodes));
+        // }
     }
 
     private flatArrayToLeaderlineList(nodes: PipelineNodeModel[]): LeaderLinesModel[] {
         const leaderLines: LeaderLinesModel[] = [];
-        console.log(nodes);
         nodes.forEach((node) => {
             leaderLines.push(...node.leaderLines);
             leaderLines.push(...this.flatArrayToLeaderlineList(node.pipelines));
@@ -288,13 +287,15 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     private updateLeaderLineByIndex2(id: string): void {
-        // this.pipelineNodeDatas[index].leaderLines.forEach((line) => line.leaderLineObj.position());
         const pipelines = this.flatArrayToLeaderlineList(this.pipelineNodeDatas);
-        // this.pipelineNodeDatas[index].leaderLines[0].leaderLineObj.position();
-        pipelines.forEach((pipeline) => {
-            if (pipeline.id === id) {
-                pipeline.leaderLineObj.position();
-            }
+        const pipelineIndex = pipelines.map((pipeline, idx) => (pipeline.id === id ? idx : '')).filter(String);
+        const pipelineWithIndex = pipelines.map((pipeline, idx) => (pipeline.withId === id ? idx : '')).filter(String);
+
+        pipelineIndex.forEach((idx) => {
+            pipelines[+idx].leaderLineObj.position();
+        });
+        pipelineWithIndex.forEach((idx) => {
+            pipelines[+idx].leaderLineObj.position();
         });
     }
 
