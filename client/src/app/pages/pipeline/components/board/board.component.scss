@@ -68,6 +68,28 @@
         }
     }
 
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        p {
+            color: var(--color-gray-30);
+
+            padding: 0.5rem;
+
+            font-family: monospace;
+            font-size: 2rem;
+            font-weight: bold;
+
+            transition: opacity 200ms ease-in-out;
+
+            &.hidden {
+                opacity: 0;
+            }
+        }
+    }
+
     &:focus-visible {
         outline: none;
     }

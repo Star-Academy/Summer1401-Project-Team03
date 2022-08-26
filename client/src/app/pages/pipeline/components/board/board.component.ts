@@ -12,6 +12,7 @@ export class BoardComponent {
     @Input() public gridSize: string = '20px';
 
     public zoom: number = 1;
+    public zoomChangeCount: number = 0;
 
     public resizeClickHandler(dx: number, dy: number): void {
         this.boardWidth += dx;
@@ -19,7 +20,21 @@ export class BoardComponent {
     }
 
     public onKeyUp(event: KeyboardEvent): void {
-        if (event.code === 'Equal') this.zoom += 0.25;
-        else if (event.code === 'Minus') this.zoom -= 0.25;
+        switch (event.code) {
+            case 'Equal':
+                this.zoom += 0.25;
+                break;
+            case 'Minus':
+                this.zoom -= 0.25;
+                this.zoom = Math.max(this.zoom, 0);
+                break;
+            case 'Digit0':
+                this.zoom = 1;
+                break;
+            default:
+                return;
+        }
+        this.zoomChangeCount++;
+        setTimeout(() => this.zoomChangeCount--, 500);
     }
 }
