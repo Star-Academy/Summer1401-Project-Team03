@@ -38,6 +38,7 @@ export class addNodeComponent {
             openedSettingModal: false,
             leaderLines: [],
             pipelines: [],
+            isReplicate: false,
         };
         counter++; // temporary
         this.addNodeEmit.emit(newNodeComponent);

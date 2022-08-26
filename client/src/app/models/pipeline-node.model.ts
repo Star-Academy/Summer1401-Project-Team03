@@ -8,6 +8,7 @@ export interface PipelineNodeModel {
     leaderLines: LeaderLinesModel[];
     openedSettingModal: boolean;
     pipelines: PipelineNodeModel[];
+    isReplicate: boolean;
 }
 
 export interface LeaderLinesModel {

@@ -16,6 +16,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
         openedSettingModal: false,
         leaderLines: [],
         pipelines: [],
+        isReplicate: false,
     },
 
     {
@@ -26,6 +27,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
         openedSettingModal: false,
         leaderLines: [],
         pipelines: [],
+        isReplicate: false,
     },
     {
         id: '4',
@@ -34,6 +36,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
         position: {x: 400, y: 300},
         openedSettingModal: false,
         leaderLines: [],
+        isReplicate: true,
         pipelines: [
             {
                 id: '7',
@@ -43,6 +46,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
                 openedSettingModal: false,
                 leaderLines: [],
                 pipelines: [],
+                isReplicate: false,
             },
             {
                 id: '6',
@@ -52,6 +56,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
                 openedSettingModal: false,
                 leaderLines: [],
                 pipelines: [],
+                isReplicate: false,
             },
         ],
     },
@@ -63,6 +68,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
         openedSettingModal: false,
         leaderLines: [],
         pipelines: [],
+        isReplicate: false,
     },
 ];
 
@@ -93,13 +99,17 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     public constructor(private elRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) {}
 
     public ngAfterViewInit(): void {
-        const leaderLineInit = (): void => {
-            const nodeComponentLength = this.pipelineNodeDatas.length;
-            this.pipelineNodeDatas.forEach((node, index, nodeArray) => {
+        const leaderLineInit = (nodes: PipelineNodeModel[]): void => {
+            const nodeComponentLength = nodes.length;
+            nodes.forEach((node, index, nodeArray) => {
+                if (node.isReplicate) {
+                    this.connectLeaderLineBetweenTwoElementById(node.id, node.pipelines[0].id, nodes);
+                }
                 if (index === nodeComponentLength - 1) return;
-                this.connectLeaderLineBetweenTwoElementById(node.id, nodeArray[index + 1].id);
-                if (node.pipelines.length > 0)
-                    this.connectLeaderLineBetweenTwoElementById(node.id, node.pipelines[0].id, true);
+                this.connectLeaderLineBetweenTwoElementById(node.id, nodeArray[index + 1].id, nodes);
+                if (node.pipelines.length > 0) {
+                    leaderLineInit(node.pipelines);
+                }
             });
         };
 
@@ -119,7 +129,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
             appBoardEl.addEventListener('scroll', this.animEventObj);
         };
 
-        leaderLineInit();
+        leaderLineInit(this.pipelineNodeDatas);
         leaderLineListeners();
     }
 
@@ -136,31 +146,19 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         if (this.pipelineNodeDatas[this.pipelineNodeDatas.length - 1].id === id) return true;
         return false;
     }
-    private isLastLeaderById(id: string): boolean {
-        if (this.leaderLineLinks[this.leaderLineLinks.length - 1].id === id) return true;
-        return false;
-    }
 
-    private addItemToLeaderLine(insertPlace: number, item: object): void {
-        this.leaderLineLinks.splice(insertPlace, 0, item);
-    }
     private addItemToNodeList(insertPlace: number, item: PipelineNodeModel): void {
         this.pipelineNodeDatas.splice(insertPlace, 0, item);
     }
-    private removeItemFromLeaderLine(index: number, count = 1): void {
-        this.leaderLineLinks.splice(index, count);
-    }
+
     private removeItemFromNodeList(index: number, count = 1): void {
         this.pipelineNodeDatas.splice(index, count);
-    }
-    private removeLine(index: number): void {
-        this.leaderLineLinks[index].leaderLineObj.remove();
     }
 
     private connectLeaderLineBetweenTwoElementById(
         firstElementId: string,
         secondElementId: string,
-        replicated = false
+        nodes: PipelineNodeModel[]
     ): void | boolean {
         const firstElement = this.getElementRef(firstElementId);
         const secondElement = this.getElementRef(secondElementId);
@@ -172,41 +170,27 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
             withId: secondElementId,
         };
 
-        console.log(firstElementId, secondElementId);
-
-        if (replicated) {
-            console.log('before');
-            console.log(this.pipelineNodeDatas[this.getNodeIndexById(firstElementId)]);
-            this.pipelineNodeDatas[this.getNodeIndexById(firstElementId)].pipelines[0].leaderLines.push(
-                newLeaderLineObj
-            );
-            return true;
-        }
-
-        this.pipelineNodeDatas[this.getNodeIndexById(firstElementId)].leaderLines.push(newLeaderLineObj);
-        // this.leaderLineLinks.push(newLeaderLineObj);
-        console.log(this.pipelineNodeDatas);
-        // const insertPlaceLeaderLine = this.getLeaderIndexById(elementIdToInsert);
-        // this.addItemToLeaderLine(insertPlaceLeaderLine + insertPlace, newLeaderLineObj);
+        nodes[this.getNodeIndexById(firstElementId, nodes)].leaderLines.push(newLeaderLineObj);
     }
 
     public removeConnectionBetweenTwoNode(beforeId: string, afterId: string): void {
-        const beforeIndex = this.getNodeIndexById(beforeId);
+        const beforeIndex = this.getNodeIndexById(beforeId, this.pipelineNodeDatas);
 
         const leaderlineIndex = this.getLeaderLineIndexById(beforeId, afterId);
         const nodeObj = this.pipelineNodeDatas[beforeIndex];
         nodeObj.leaderLines[leaderlineIndex].leaderLineObj.remove();
         nodeObj.leaderLines.splice(leaderlineIndex, 1);
     }
+
     public getLeaderLineIndexById(nodeId: string, leaderlineId: string): number {
-        const currentNodeIndex = this.getNodeIndexById(nodeId);
+        const currentNodeIndex = this.getNodeIndexById(nodeId, this.pipelineNodeDatas);
         return this.pipelineNodeDatas[currentNodeIndex].leaderLines.findIndex((line) => line.withId === leaderlineId);
     }
 
     public addNodeComponent(item: PipelineNodeModel, beforeNodeId: string): void | boolean {
         if (this.isLastNodeById(beforeNodeId)) return true;
-        const beforeNodeIndex = this.getNodeIndexById(beforeNodeId);
-        const afterNodeId = this.getNodeIdByIndex(beforeNodeIndex + 1);
+        const beforeNodeIndex = this.getNodeIndexById(beforeNodeId, this.pipelineNodeDatas);
+        const afterNodeId = this.getNodeIdByIndex(beforeNodeIndex + 1, this.pipelineNodeDatas);
         const currentNodeId = item.id;
 
         // Insert to Item to nodeList
@@ -214,45 +198,18 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.changeDetectorRef.detectChanges();
 
         this.removeConnectionBetweenTwoNode(beforeNodeId, afterNodeId);
-        this.connectLeaderLineBetweenTwoElementById(beforeNodeId, currentNodeId);
-        this.connectLeaderLineBetweenTwoElementById(currentNodeId, afterNodeId);
-        // const beforeLeaderLineIndex = this.getLeaderIndexById(beforeNodeId);
-        // const beforeNodeIndex = this.getNodeIndexById(beforeNodeId);
-        //
-        // const afterNodeId = this.getNodeIdByIndex(beforeNodeIndex + 1);
-        // const currentNodeId = item.id;
-        //
-        // // Insert to Item to nodeList
-        // this.addItemToNodeList(beforeNodeIndex + 1, item);
-        // this.changeDetectorRef.detectChanges();
-        //
-        // // Create new connection first part
-        // this.connectLeaderLineBetweenTwoElementById(beforeNodeId, currentNodeId, beforeNodeId, 1);
-        //
-        // // Remove line and connection between before and after new node;
-        // this.removeLine(beforeLeaderLineIndex);
-        // this.removeItemFromLeaderLine(beforeLeaderLineIndex);
-        //
-        // // Check if the last node use push method
-        // if (this.isLastLeaderById(beforeNodeId)) {
-        //     this.connectLeaderLineBetweenTwoElementById(currentNodeId, afterNodeId, '', 0, true);
-        // } else {
-        //     this.connectLeaderLineBetweenTwoElementById(currentNodeId, afterNodeId, afterNodeId);
-        // }
+        this.connectLeaderLineBetweenTwoElementById(beforeNodeId, currentNodeId, this.pipelineNodeDatas);
+        this.connectLeaderLineBetweenTwoElementById(currentNodeId, afterNodeId, this.pipelineNodeDatas);
     }
 
     public removeNodeComponent(id: string): void | boolean {
-        const currentNodeComponentIndex = this.getNodeIndexById(id);
-        const beforeNodeId = this.getNodeIdByIndex(currentNodeComponentIndex - 1);
-        const afterNodeId = this.getNodeIdByIndex(currentNodeComponentIndex + 1);
+        const currentNodeComponentIndex = this.getNodeIndexById(id, this.pipelineNodeDatas);
+        const beforeNodeId = this.getNodeIdByIndex(currentNodeComponentIndex - 1, this.pipelineNodeDatas);
+        const afterNodeId = this.getNodeIdByIndex(currentNodeComponentIndex + 1, this.pipelineNodeDatas);
 
         const removeAllNodeAffect = (id: string): boolean | void => {
-            // Remove Line and connection line
             this.removeConnectionBetweenTwoNode(beforeNodeId, id);
             this.removeConnectionBetweenTwoNode(id, afterNodeId);
-            // this.removeLine(currentLeaderLineIndex);
-            // this.removeLine(currentLeaderLineIndex - 1);
-            // this.removeItemFromLeaderLine(currentLeaderLineIndex - 1, 2);
 
             // Remove node-element from node-list
             this.removeItemFromNodeList(currentNodeComponentIndex);
@@ -266,8 +223,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         if (this.isFirstNodeById(id) || this.isLastNodeById(id)) return true;
 
         // Create new connection
-        this.connectLeaderLineBetweenTwoElementById(beforeNodeId, afterNodeId);
-        // this.connectLeaderLineBetweenTwoElementById(beforeNodeId, afterNodeId, beforeNodeId);
+        this.connectLeaderLineBetweenTwoElementById(beforeNodeId, afterNodeId, this.pipelineNodeDatas);
 
         // Remove old connection
         removeAllNodeAffect(id);
@@ -279,7 +235,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     public savePositionNodeElement(elementId: string): void {
-        const elementIndex = this.getNodeIndexById(elementId);
+        const elementIndex = this.getNodeIndexById(elementId, this.pipelineNodeDatas);
 
         const component = this.getElementRef(elementId);
         component.style.zIndex = '10';
@@ -295,29 +251,19 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     // LeaderLine
-    public updateLeaderLine(id: string): void | boolean {
-        const currentIndexNode = this.getNodeIndexById(id);
+    public updateLeaderLine(id: string, nodes: PipelineNodeModel[]): void | boolean {
+        const currentIndexNode = this.getNodeIndexById(id, nodes);
         // The last one
         if (this.isLastNodeById(id)) {
-            this.updateLeaderLineByIndex2(this.getNodeIdByIndex(currentIndexNode - 1));
-            // this.pipelineNodeDatas[currentIndexNode - 1].leaderLines[0].leaderLineObj.position();
-            // this.leaderLineLinks[this.leaderLineLinks.length - 1].leaderLineObj.position();
+            this.updateLeaderLineByIndex2(this.getNodeIdByIndex(currentIndexNode - 1, nodes));
             return false;
         }
 
-        // const currentLeaderLineIndex = this.getLeaderIndexById(id);
-        // this.updateLeaderLineByIndex(currentLeaderLineIndex);
-
-        console.log('salaaaaaaaaaaaaaam!');
         this.updateLeaderLineByIndex2(id);
-
-        // this.updateLeaderLineByIndex2(currentIndexNode);
 
         // It's not The first one
         if (!this.isFirstNodeById(id)) {
-            this.updateLeaderLineByIndex2(this.getNodeIdByIndex(currentIndexNode - 1));
-
-            // this.updateLeaderLineByIndex(currentLeaderLineIndex - 1);
+            this.updateLeaderLineByIndex2(this.getNodeIdByIndex(currentIndexNode - 1, nodes));
         }
     }
 
@@ -331,9 +277,6 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         return leaderLines;
     }
 
-    private updateLeaderLineByIndex(index: number): void {
-        this.leaderLineLinks[index].leaderLineObj.position();
-    }
     private updateLeaderLineByIndex2(id: string): void {
         // this.pipelineNodeDatas[index].leaderLines.forEach((line) => line.leaderLineObj.position());
         const pipelines = this.flatArrayToLeaderlineList(this.pipelineNodeDatas);
@@ -350,15 +293,12 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         return nodeComponent;
     }
 
-    private getLeaderIndexById(id: string): number {
-        return this.leaderLineLinks.findIndex((ln) => ln.id == id);
+    private getNodeIndexById(id: string, nodes: PipelineNodeModel[]): number {
+        return nodes.findIndex((node) => node.id == id);
     }
 
-    private getNodeIndexById(id: string): number {
-        return this.pipelineNodeDatas.findIndex((node) => node.id == id);
-    }
-    private getNodeIdByIndex(index: number): string {
-        return this.pipelineNodeDatas[index].id;
+    private getNodeIdByIndex(index: number, nodes: PipelineNodeModel[]): string {
+        return nodes[index].id;
     }
 
     public ngOnDestroy(): void {
