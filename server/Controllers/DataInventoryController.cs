@@ -73,6 +73,22 @@ public class DataInventoryController : ControllerBase
         }
     }
 
+    [EnableCors("CorsPolicy")]
+    [HttpDelete]
+    public IActionResult Delete(int fileID, string category)
+    {
+        try
+        {
+            var filePath = FileSearcher.Search(fileID, category);
+            System.IO.File.Delete(filePath);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
     public static void increaseFileID(int increament)
     {
         fileID += increament;
