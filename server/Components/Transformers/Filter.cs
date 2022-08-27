@@ -11,6 +11,7 @@ public class Filter : Transformer
         FieldToFilter = fieldToFilter;
         Operator = @operator;
         Value = value;
+        Name = $"Filter{Id}";
     }
 
     public string FieldToFilter { get; set; }

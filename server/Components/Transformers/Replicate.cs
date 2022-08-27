@@ -8,6 +8,7 @@ public class Replicate : Mutator
 
     public Replicate(Pipeline pipeline, Position position) : base(pipeline, position)
     {
+        Name = $"Replicate{Id}";
     }
 
     public override string GetQuery()

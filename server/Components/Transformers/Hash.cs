@@ -10,6 +10,7 @@ public class Hash : Transformer
         FieldToHash = fieldToHash;
         NewFieldName = newFieldName;
         ShouldCreateNewField = shouldCreateNewField;
+        Name = $"Hash{Id}";
     }
 
     private const string HashFunction = "h_int";

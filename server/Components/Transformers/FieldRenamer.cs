@@ -9,6 +9,7 @@ public class FieldRenamer : Transformer
     {
         FieldsToRename = fieldsToRename;
         NewNames = newNames;
+        Name =  $"Field Renamer{Id}";
     }
 
     private List<string> FieldsToRename { get; }
