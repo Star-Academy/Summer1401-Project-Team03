@@ -9,7 +9,9 @@ import {DatasetItemModel} from 'src/app/models/dataset/dataset-item.model';
 export class InventoryService {
     public dataset: DatasetItemModel[] = [];
 
-    public constructor(private apiService: ApiService) {}
+    public constructor(private apiService: ApiService) {
+        this.getAllDataset();
+    }
 
     public async getAllDataset(): Promise<void> {
         const response = await this.apiService.get<DatasetItemModel[]>(INVENTORY_ALL);

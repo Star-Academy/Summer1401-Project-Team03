@@ -9,7 +9,9 @@ import {ApiService} from './api.service';
 })
 export class PipelineService {
     public pipelines: PipelineItemModel[] = [];
-    public constructor(private apiService: ApiService) {}
+    public constructor(private apiService: ApiService) {
+        this.getAllPiplelines();
+    }
 
     public async createPipeline(data: NewPipeline): Promise<string> {
         const url = new URL(PIPELINE_CREATE);
