@@ -9,7 +9,7 @@
                 [pipelineNodeData]="pipelineNodeData"
                 (dragStart)="setToUpperLayer(pipelineNodeData.id)"
                 (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
-                (dragMove)="updateLeaderLine(pipelineNodeData.id)"
+                (dragMove)="updateLeaderLine(pipelineNodeData.beforeId, pipelineNodeData.id, pipelineNodeData.afterId)"
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (removeNodeEmit)="removeNodeComponent(pipelineNodeData.id)"
