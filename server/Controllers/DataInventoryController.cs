@@ -53,7 +53,7 @@ public class DataInventoryController : ControllerBase
         }
     }
 
-    [EnableCors("AnotherPolicy")]
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public ActionResult<List<FileInformation>> GetFilesInformation()
     {
