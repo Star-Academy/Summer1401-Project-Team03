@@ -25,7 +25,6 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var dbConfiguration = DBConfigLoader.Load();
             var pipeline = new Pipeline(pipelineName);
 
             _counter++;
