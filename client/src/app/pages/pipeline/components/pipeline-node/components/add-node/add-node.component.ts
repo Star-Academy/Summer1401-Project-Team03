@@ -3,7 +3,7 @@ import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
 import {PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 
-let counter = 10;
+let counter = 20;
 const ADDITIONAL_LEFT = 220;
 const ADDITIONAL_BOTTOM = 140;
 @Component({

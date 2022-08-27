@@ -124,8 +124,14 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         };
 
         const leaderLineListeners = (): void => {
+            console.log(this.leaderLineLinks);
             this.animEventObj = AnimEvent.add(() => {
-                this.leaderLineLinks.forEach((ln) => ln.leaderLineObj.position());
+                console.log(this.leaderLineLinks);
+                // this.leaderLineLinks.forEach((ln) => ln.leaderLineObj.position());
+                this.leaderLineLinks.forEach((ln) => {
+                    console.log(ln.leaderLineObj);
+                    ln.leaderLineObj.position();
+                });
             });
 
             function detectResize(leaderLineLinks: any): void {
@@ -180,16 +186,25 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
             withId: secondElementId,
         };
 
+        this.leaderLineLinks.push(newLeaderLineObj);
         nodes[this.getNodeIndexById(firstElementId, nodes)].leaderLines.push(newLeaderLineObj);
     }
 
     public removeConnectionBetweenTwoNode(beforeId: string, afterId: string): void {
+        this.removeLeaderlineObjArrayById(beforeId, afterId);
         const beforeIndex = this.getNodeIndexById(beforeId, this.pipelineNodeDatas);
 
         const leaderlineIndex = this.getLeaderLineIndexById(beforeId, afterId);
         const nodeObj = this.pipelineNodeDatas[beforeIndex];
         nodeObj.leaderLines[leaderlineIndex].leaderLineObj.remove();
         nodeObj.leaderLines.splice(leaderlineIndex, 1);
+    }
+
+    private removeLeaderlineObjArrayById(beforeId: string, afterId: string): void {
+        const index = this.leaderLineLinks.findIndex((line) => line.id === beforeId && line.withId === afterId);
+        console.log(this.leaderLineLinks);
+        console.log(index);
+        this.leaderLineLinks.splice(index, 1);
     }
 
     public getLeaderLineIndexById(nodeId: string, leaderlineId: string): number {
