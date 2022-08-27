@@ -13,6 +13,7 @@ public class DataInventoryController : ControllerBase
     public static int fileID;
     private PostgresDatabase _database;
 
+    [EnableCors("CorsPolicy")]
     [HttpPost]
     public async Task<IActionResult> Import(IFormFile file)
     {
@@ -38,7 +39,8 @@ public class DataInventoryController : ControllerBase
 
         return BadRequest("The sent file is empty!");
     }
-
+    
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult Export(int fileID)
     {

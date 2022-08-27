@@ -1,5 +1,6 @@
 ﻿using System.Data.Common;
 using DBConfig;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
@@ -18,6 +19,7 @@ public class PipelineController : ControllerBase
     private static int _counter;
     private static readonly Dictionary<int, Pipeline> idToPipeline = new();
 
+    [EnableCors("CorsPolicy")]
     [HttpPost]
     public IActionResult Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
     {
@@ -41,6 +43,7 @@ public class PipelineController : ControllerBase
         }
     }
 
+    [EnableCors("CorsPolicy")]
     [HttpPost]
     public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x,
         double y,
@@ -87,6 +90,7 @@ public class PipelineController : ControllerBase
         pipeline.AddComponent(loader);
     }
 
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult Run(int pipelineID)
     {
@@ -101,7 +105,8 @@ public class PipelineController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult RunUpTo(int pipelineID, int componentID)
     {
@@ -117,6 +122,7 @@ public class PipelineController : ControllerBase
         }
     }
 
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public void GetPipelinesInformation()
     {
