@@ -21,7 +21,7 @@
             <td>{{ item.modifiedAt | convertDate }}</td>
             <td>
                 <app-svg
-                    (click)="openItemSettingModal(item.id); $event.stopPropagation()"
+                    (click)="toggleShowItemSettingModal(item.id); $event.stopPropagation()"
                     class="item-setting"
                     iconType="dots-vertical"
                 ></app-svg>
@@ -30,7 +30,6 @@
                         (deleteEmit)="deleteItem(item.id)"
                         (renameEmit)="renameItem(item.id)"
                         (downloadEmit)="downloadItem(item.id)"
-                        (click)="closeItemSettingModal(item.id); $event.stopPropagation()"
                     ></app-dataset-item-modal>
                 </ng-container>
             </td>

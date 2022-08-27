@@ -1,0 +1,72 @@
+.wrapper {
+    position: relative;
+
+
+    background-color: var(--color-purple-86);
+    color: var(--color-purple-21);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+
+    width: 15rem;
+    height: 10rem;
+
+    padding: 0.6rem 1rem;
+
+    border: 3px solid var(--color-purple-21);
+    border-radius: var(--border-radius-primary);
+
+    font-weight: 600;
+
+    text-transform: capitalize;
+
+    app-svg {
+        color: var(--color-purple-46);
+        height: 2rem;
+    }
+
+    .desc {
+        width: 100%;
+        .label {
+            overflow: hidden;
+
+            width: 100%;
+
+            font-size: 2rem;
+
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        p {
+            font-size: var(--font-size-primary);
+            font-size: 1.25rem;
+            text-align: center;
+        }
+    }
+
+
+    .setting{
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: 0.2rem;
+        .item-setting {
+            cursor: pointer;
+            height: 1.5rem;
+            width: 1.5rem;
+        }
+    }
+
+    .modal{
+        position: absolute;
+        &__container{
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+    }
+}

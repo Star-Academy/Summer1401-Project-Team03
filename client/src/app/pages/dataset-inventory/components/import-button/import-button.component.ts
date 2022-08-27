@@ -8,7 +8,7 @@ import {InventoryService} from 'src/app/services/inventory.service';
     styleUrls: ['./import-button.component.scss'],
 })
 export class ImportButtonComponent {
-    @ViewChild('mymodal') public modal!: ModalComponent;
+    @ViewChild('DatasetImport') public modal!: ModalComponent;
     public file: File | null = null;
 
     public constructor(private inventoryService: InventoryService) {}
@@ -20,7 +20,12 @@ export class ImportButtonComponent {
         }
     }
 
+    public clearFile(): void {
+        this.file = null;
+    }
+
     public async uploadFile(): Promise<void> {
         if (this.file) await this.inventoryService.uploadDataSet(this.file);
+        this.modal.closeModal();
     }
 }

@@ -3,12 +3,11 @@
     [style]="{
         '--board-w': boardWidth,
         '--board-h': boardHeight,
-        '--container-w': containerWidth,
-        '--container-h': containerHeight,
         '--grid-size': gridSize
     }"
 >
     <div class="board">
+        <ng-content></ng-content>
         <div class="resizer xy" (click)="resizeClickHandler(2, 2)"></div>
         <div class="resizer x" (click)="resizeClickHandler(2, 0)"></div>
         <div class="resizer y" (click)="resizeClickHandler(0, 2)"></div>

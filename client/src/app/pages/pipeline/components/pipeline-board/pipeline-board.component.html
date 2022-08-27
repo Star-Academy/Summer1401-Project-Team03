@@ -1,0 +1,20 @@
+<app-board>
+    <div class="wrapper">
+        <ng-container *ngFor="let pipelineNodeData of pipelineNodeDatas">
+            <app-pipeline-node
+                [id]="pipelineNodeData.id"
+                (staticClick)="clickNodeElement(pipelineNodeData.id)"
+                draggabilly
+                [options]="draggabillyOptions"
+                [pipelineNodeData]="pipelineNodeData"
+                (dragStart)="setToUpperLayer(pipelineNodeData.id)"
+                (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
+                (dragMove)="updateLeaderLine(pipelineNodeData.id)"
+                ngDraggable
+                [position]="pipelineNodeData.position"
+                (removeNodeEmit)="removeNodeComponent(pipelineNodeData.id)"
+                (addNodeEmit)="addNodeComponent($event, pipelineNodeData.id)"
+            ></app-pipeline-node>
+        </ng-container>
+    </div>
+</app-board>

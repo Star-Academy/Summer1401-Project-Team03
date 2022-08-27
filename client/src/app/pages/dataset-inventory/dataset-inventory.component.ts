@@ -10,19 +10,9 @@ export class DatasetInventoryComponent {
     public searchPhrase: string = '';
     public datasetItems: DatasetItemModel[] = datasetItemData;
 
-    public openItemSettingModal(id: number): void {
+    public toggleShowItemSettingModal(id: number): void {
         const item = this.datasetItems.find((item) => item.id === id);
-        if (item) item.openedSettingModal = true;
-    }
-
-    public closeItemSettingModal(id: number): void {
-        const item = this.datasetItems.find((item) => item.id === id);
-        if (item) item.openedSettingModal = false;
-    }
-
-    public addItem(): void {
-        console.log(`Added item`);
-        // Connect to inventory service
+        if (item) item.openedSettingModal = !item.openedSettingModal;
     }
 
     public renameItem(id: number): void {

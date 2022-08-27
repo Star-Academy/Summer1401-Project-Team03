@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PipelineNodeComponent } from './pipeline-node.component';
+import { SettingItemModalComponent } from './setting-item-modal.component';
 
-describe('PipelineNodeComponent', () => {
-  let component: PipelineNodeComponent;
-  let fixture: ComponentFixture<PipelineNodeComponent>;
+describe('SettingItemModalComponent', () => {
+  let component: SettingItemModalComponent;
+  let fixture: ComponentFixture<SettingItemModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PipelineNodeComponent ]
+      declarations: [ SettingItemModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PipelineNodeComponent);
+    fixture = TestBed.createComponent(SettingItemModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

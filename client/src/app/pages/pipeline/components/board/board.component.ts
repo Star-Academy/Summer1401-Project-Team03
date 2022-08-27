@@ -1,14 +1,11 @@
 import {Component, Input} from '@angular/core';
 
 @Component({
-    selector: 'app-board2',
+    selector: 'app-board',
     templateUrl: './board.component.html',
     styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent {
-    @Input() public containerWidth: number = 40;
-    @Input() public containerHeight: number = 30;
-
     @Input() public boardWidth: number = 150;
     @Input() public boardHeight: number = 120;
 

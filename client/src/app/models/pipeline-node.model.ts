@@ -5,4 +5,5 @@ export interface PipelineNodeModel {
     title: string;
     processesInfoType: ProcessSchema;
     position: {x: number; y: number};
+    openedSettingModal: boolean;
 }
