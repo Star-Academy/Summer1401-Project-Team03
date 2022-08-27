@@ -141,6 +141,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     private addItemToLeaderLine(insertPlace: number, item: LeaderLineModel): void {
         this.leaderLineLinks.splice(insertPlace, 0, item);
     }
+
     private addItemToNodeList(insertPlace: number, item: PipelineNodeModel): void {
         this.pipelineNodeDatas.splice(insertPlace, 0, item);
     }
@@ -148,13 +149,16 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     private removeItemFromLeaderLine(index: number, count = 1): void {
         this.leaderLineLinks.splice(index, count);
     }
+
     private removeItemFromNodeList(index: number, count = 1): void {
         this.pipelineNodeDatas.splice(index, count);
     }
+
     private removeLineBetweenTwoNodeById(currentId: string, afterId: string): void {
         const index = this.getLeaderIndexByTwoId(currentId, afterId);
         this.leaderLineLinks[index].leaderLineObj.remove();
     }
+
     private removeLeaderLineBetweenTwoNodeById(currentId: string, afterId: string): void {
         const index = this.getLeaderIndexByTwoId(currentId, afterId);
         this.removeItemFromLeaderLine(index);
@@ -170,7 +174,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     ): void {
         const firstElement = this.getElementRef(currentId);
         const secondElement = this.getElementRef(afterId);
-
+        console.log(firstElement);
+        console.log(secondElement);
+        console.log(afterId);
         const newLeaderLine = new LeaderLine(firstElement, secondElement, this.leaderLineOptions);
         const newLeaderLineObj: LeaderLineModel = {
             beforeId: beforeId,
@@ -217,34 +223,52 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.pipelineNodeDatas[afterNodeIndex].beforeId = item.id;
     }
 
-    public removeNodeComponent(id: string): void | boolean {
-        // const currentNodeComponentIndex = this.getNodeIndexById(id);
+    public removeNodeComponent(id: string, beforeId: string, afterId: string): void | boolean {
+        const currentNodeComponentIndex = this.getNodeIndexById(id);
         // const beforeNodeId = this.getNodeIdByIndex(currentNodeComponentIndex - 1);
         // const afterNodeId = this.getNodeIdByIndex(currentNodeComponentIndex + 1);
         //
-        // const removeAllNodeAffect = (id: string): boolean | void => {
-        //     // Remove node-element from node-list
-        //     this.removeItemFromNodeList(currentNodeComponentIndex);
-        //
-        //     // Remove Line and connection line
-        //     const currentLeaderLineIndex = this.getLeaderIndexById(id);
-        //     this.removeLine(currentLeaderLineIndex);
-        //     this.removeLine(currentLeaderLineIndex - 1);
-        //     this.removeItemFromLeaderLine(currentLeaderLineIndex - 1, 2);
-        //
-        //     // Remove component from board
-        //     const component = this.getElementRef(id);
-        //     component.remove();
-        // };
-        //
-        // // The first or last Node that we don't want remove
-        // if (this.isFirstNodeById(id) || this.isLastNodeById(id)) return true;
-        //
-        // // Create new connection
-        // this.connectLeaderLineBetweenTwoElementById(beforeNodeId, afterNodeId, beforeNodeId);
-        //
-        // // Remove old connection
-        // removeAllNodeAffect(id);
+        const removeAllNodeAffect = (id: string): void => {
+            // Remove node-element from node-list
+            this.removeItemFromNodeList(currentNodeComponentIndex);
+
+            // Remove Line and connection line
+            // const currentLeaderLineIndex = this.getLeaderIndexById(id);
+            this.removeLineBetweenTwoNodeById(beforeId, id);
+            this.removeLineBetweenTwoNodeById(id, afterId);
+            // this.removeLine(currentLeaderLineIndex);
+            // this.removeLine(currentLeaderLineIndex - 1);
+            this.removeLeaderLineBetweenTwoNodeById(beforeId, id);
+            this.removeLeaderLineBetweenTwoNodeById(id, afterId);
+            // this.removeItemFromLeaderLine(currentLeaderLineIndex - 1, 2);
+            const afterNodeIndex = this.getNodeIndexById(afterId);
+            try {
+                console.log(afterNodeIndex);
+                console.log(this.leaderLineLinks[afterNodeIndex].beforeId);
+                console.log('too!');
+                console.log(beforeId);
+                this.leaderLineLinks[afterNodeIndex].beforeId = beforeId;
+                this.pipelineNodeDatas[afterNodeIndex].beforeId = beforeId;
+            } catch (e) {
+                console.log(e);
+            } finally {
+                // Remove component from board
+                const component = this.getElementRef(id);
+                component.remove();
+            }
+        };
+
+        // The first or last Node that we don't want remove
+        if (this.isWhatTypeById(id, 'source') || this.isWhatTypeById(id, 'destination')) return undefined;
+
+        const beforeNodeIndex = this.getNodeIndexById(beforeId);
+        const beforeBeforeNodeId = this.pipelineNodeDatas[beforeNodeIndex].beforeId;
+
+        // Create new connection
+        this.connectLeaderLineBetweenTwoElementById(beforeBeforeNodeId, beforeId, afterId, beforeId);
+
+        // Remove old connection
+        removeAllNodeAffect(id);
     }
 
     public setToUpperLayer(elementId: string): void {
