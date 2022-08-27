@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
@@ -36,7 +37,7 @@ public class PipelineController : ControllerBase
 
             var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
             var jsonString = JsonSerializer.Serialize(info);
-            
+
             System.IO.File.WriteAllText($@"D:\Summer1401-Project-Team03\server\json\{pipeline.id}", jsonString);
             return Ok(_counter);
         }
@@ -126,10 +127,19 @@ public class PipelineController : ControllerBase
         }
     }
 
-    // [EnableCors("CorsPolicy")]
-    // [HttpGet]
-    // public ActionResult<List<PipelineInformation>> GetPipelinesInformation()
-    // {
-    // piplines = database.PipelineInformations.ToList();
-    // return Ok(piplines);
+    [EnableCors("CorsPolicy")]
+    [HttpGet]
+    public ActionResult<List<PipelineInformation>> GetPipelinesInformation()
+    {
+        var sb = new StringBuilder("[");
+        var path = @"json";
+        
+        foreach (var file in Directory.GetFiles(path))
+        {
+            sb.Append(System.IO.File.ReadAllText(file)).Append(", ");
+        }
+        sb.Append(']');
+        
+        return Ok(sb.ToString());
     }
+}
