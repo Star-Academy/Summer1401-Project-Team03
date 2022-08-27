@@ -1,0 +1,22 @@
+.sidebar {
+    background-color: var(--color-gray-95);
+
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    block-size: 100%;
+    inline-size: 100%;
+
+    padding: 2rem 1rem;
+
+    .filters {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    app-button {
+        align-self: flex-end;
+    }
+}
