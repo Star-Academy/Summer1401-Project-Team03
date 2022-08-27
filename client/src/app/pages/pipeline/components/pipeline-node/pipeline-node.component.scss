@@ -1,9 +1,9 @@
 .wrapper {
-    position: relative;
-
-
     background-color: var(--color-purple-86);
     color: var(--color-purple-21);
+
+    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -24,11 +24,13 @@
 
     app-svg {
         color: var(--color-purple-46);
+
         height: 2rem;
     }
 
     .desc {
         width: 100%;
+
         .label {
             overflow: hidden;
 
@@ -44,6 +46,7 @@
         p {
             font-size: var(--font-size-primary);
             font-size: 1.25rem;
+
             text-align: center;
         }
     }
@@ -53,16 +56,20 @@
         position: absolute;
         top: 0.5rem;
         right: 0.5rem;
+
         font-size: 0.2rem;
+
         .item-setting {
-            cursor: pointer;
-            height: 1.5rem;
             width: 1.5rem;
+            height: 1.5rem;
+
+            cursor: pointer;
         }
     }
 
     .modal{
         position: absolute;
+
         &__container{
             display: flex;
             justify-content: center;
