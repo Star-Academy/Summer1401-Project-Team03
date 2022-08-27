@@ -20,6 +20,8 @@ public class PipelineController : ControllerBase
     private static int _counter;
     private static readonly Dictionary<int, Pipeline> idToPipeline = new();
 
+    public static string JsonPath = Path.Combine(Directory.GetCurrentDirectory(), "json");
+    
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public IActionResult Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
@@ -132,9 +134,8 @@ public class PipelineController : ControllerBase
     public ActionResult<List<PipelineInformation>> GetPipelinesInformation()
     {
         var sb = new StringBuilder("[");
-        var path = @"json";
         
-        foreach (var file in Directory.GetFiles(path))
+        foreach (var file in Directory.GetFiles(JsonPath))
         {
             sb.Append(System.IO.File.ReadAllText(file)).Append(", ");
         }
