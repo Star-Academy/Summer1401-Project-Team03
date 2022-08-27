@@ -9,6 +9,6 @@ export class TextInputComponent {
     @Input() public label: string = '';
     @Input() public type: string = 'text';
     @Input() public value: string = '';
-    @Input() public disabled: boolean = true;
+    @Input() public disabled: boolean = false;
     @Output() public valueChange = new EventEmitter<string>();
 }

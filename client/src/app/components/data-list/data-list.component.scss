@@ -15,5 +15,10 @@ label {
         outline: none;
 
         font-size: var(--font-size-primary);
+
+        &:disabled {
+            border-color: var(--color-gray-60);
+            color: var(--color-gray-34);
+        }
     }
 }
