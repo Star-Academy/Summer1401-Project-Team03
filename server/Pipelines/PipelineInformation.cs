@@ -14,10 +14,10 @@ public class PipelineInformation
     {
         Name = name;
         ID = id;
-        Components = components.Select(ComponentInformationAdaptor.getInformationFromComponent).ToList();
+        Components = components.Select(ComponentInformationAdaptor.GetInformationFromComponent).ToList();
         DestinationIDs = destinationIDs;
         IdToComponent = idToComponent.ToDictionary( t => t.Key, 
-            t => ComponentInformationAdaptor.getInformationFromComponent(t.Value));
+            t => ComponentInformationAdaptor.GetInformationFromComponent(t.Value));
     }
     
 }

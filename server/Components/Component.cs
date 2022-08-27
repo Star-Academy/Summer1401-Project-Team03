@@ -18,11 +18,16 @@ public abstract class Component
     {
         Id = information.Id;
         Pipeline = pipeline;
-        PreviousComponents = information.PreviousIds.Select(id => pipeline.IdToComponent[id]).ToList();
-        NextComponents = information.NextIds.Select(id => pipeline.IdToComponent[id]).ToList();
         Position = information.Position;
         Name = information.Type;
         TransformData = information.TransformData;
+    }
+
+    public void SetPreviousNextComponents(ComponentInformation information)
+    {
+        PreviousComponents = information.PreviousIds.Select(id => Pipeline.IdToComponent[id]).ToList();
+        NextComponents = information.NextIds.Select(id => Pipeline.IdToComponent[id]).ToList();
+
     }
 
     
