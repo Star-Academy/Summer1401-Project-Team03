@@ -5,8 +5,6 @@ export enum ProcessType {
     FIELD_REMOVE = 'FIELD_REMOVE',
     JOIN = 'JOIN',
     REPLICATE = 'REPLICATE',
-    DESTINATION = 'DESTINATION',
-    SOURCE = 'SOURCE',
     FIELD_RENAME = 'FIELD_RENAME',
 }
 

@@ -31,16 +31,6 @@ export const PROCESS: ProcessInfo = {
         icon: 'join',
         items: [],
     },
-    SOURCE: {
-        title: 'source',
-        icon: 'join',
-        items: [],
-    },
-    DESTINATION: {
-        title: 'destination',
-        icon: 'join',
-        items: [],
-    },
     FIELD_REMOVE: {
         title: 'remove field',
         icon: 'fieldRemove',
