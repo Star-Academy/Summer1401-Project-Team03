@@ -100,11 +100,6 @@ export const PROCESS2: ProcessInfo2 = {
         icon: 'join',
         items: [],
     },
-    REPLICATE: {
-        title: 'replicate',
-        icon: 'join',
-        items: [],
-    },
     FIELD_REMOVE: {
         title: 'remove field',
         icon: 'fieldRemove',
