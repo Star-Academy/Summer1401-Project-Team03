@@ -26,7 +26,7 @@ export class PipelineService {
         const response = await this.apiService.get<PipelineItemModel[]>(PIPELINE_ALL);
 
         if (response) {
-            this.pipelines = response;
+            this.pipelines = [];
         }
     }
 

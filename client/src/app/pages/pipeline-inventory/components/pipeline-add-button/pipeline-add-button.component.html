@@ -3,8 +3,12 @@
 </app-button>
 <app-modal #PipelineAdd title="create pipeline" (cancelled)="clearForm()">
     <app-text-input label="name" type="text" [(value)]="formData.pipelineName"></app-text-input>
-    <app-data-list label="source" [options]="sourceOptions" [(value)]="formData.sourceId"></app-data-list>
-    <app-text-input label="destination" [(value)]="formData.destinationName"></app-text-input>
-    <app-data-list [options]="fileTypes" label="destination type"></app-data-list>
+    <app-data-list
+        label="source"
+        [options]="inventoryService.dataset | fileToOption"
+        [(value)]="formData.sourceFileId"
+    ></app-data-list>
+    <app-text-input label="destination" [(value)]="formData.destFileName"></app-text-input>
+    <app-data-list [options]="fileTypes" label="destination type" [(value)]="formData.destFileFormat"></app-data-list>
     <app-button (click)="createPipeline()">send</app-button>
 </app-modal>

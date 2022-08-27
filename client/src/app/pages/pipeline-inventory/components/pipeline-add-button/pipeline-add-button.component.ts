@@ -17,9 +17,9 @@ export class PipelineAddButtonComponent {
 
     public initialForm: NewPipeline = {
         pipelineName: '',
-        sourceId: '',
-        destinationName: '',
-        destinationType: '',
+        sourceFileId: '',
+        destFileName: '',
+        destFileFormat: '',
     };
 
     public fileTypes = AVAILABLE_FILE_TYPES;
@@ -28,14 +28,9 @@ export class PipelineAddButtonComponent {
 
     public constructor(
         private pipelineService: PipelineService,
-        private inventoryService: InventoryService,
+        public inventoryService: InventoryService,
         private router: Router
     ) {}
-
-    public sourceOptions: DatalistOption[] = this.inventoryService.dataset.map((data) => ({
-        value: data.id,
-        title: data.name,
-    }));
 
     public async createPipeline(): Promise<void> {
         const response = this.pipelineService.createPipeline(this.formData);

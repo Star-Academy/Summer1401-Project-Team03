@@ -1,6 +1,6 @@
 export interface NewPipeline {
     pipelineName: string;
-    sourceId: string;
-    destinationName: string;
-    destinationType: string;
+    sourceFileId: string;
+    destFileName: string;
+    destFileFormat: string;
 }
