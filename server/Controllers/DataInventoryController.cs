@@ -100,7 +100,6 @@ public class DataInventoryController : ControllerBase
             
             var regex = new Regex(".*_[0-9]*\\.(csv|json)");
             var fileType = regex.Match(fileInfo.Name).Groups[1].Value;
-
             var newPath = FilePathGenerator.Path(newName, fileType, fileID, category);
             fileInfo.MoveTo(newPath);
             return Ok();
