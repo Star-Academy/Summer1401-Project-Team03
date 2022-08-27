@@ -24,7 +24,8 @@ export class InventoryService {
 
         if (response) {
             this.dataset.push({
-                id: parseInt(response),
+                id: response,
+                length: file.size.toString(),
                 name: file.name,
                 type: file.type,
                 createTime: new Date(),
