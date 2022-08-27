@@ -20,7 +20,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     },
     {
         id: '4',
-        title: 'forth filter',
+        title: 'first replicate',
         processesInfoType: PROCESS.REPLICATE,
         position: {x: 260, y: 40},
         openedSettingModal: false,
@@ -29,7 +29,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
         pipelines: [
             {
                 id: '7',
-                title: 'seventh filter',
+                title: 'second replicate',
                 processesInfoType: PROCESS.REPLICATE,
                 position: {x: 480, y: 180},
                 openedSettingModal: false,
@@ -38,8 +38,8 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
                 pipelines: [
                     {
                         id: '3',
-                        title: 'third filter',
-                        processesInfoType: PROCESS.JOIN,
+                        title: 'rename field 1',
+                        processesInfoType: PROCESS.FIELD_RENAME,
                         position: {x: 700, y: 180},
                         openedSettingModal: false,
                         leaderLines: [],
@@ -48,7 +48,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
                     },
                     {
                         id: '10',
-                        title: 'ten filter',
+                        title: 'covid renamed',
                         processesInfoType: PROCESS.DESTINATION,
                         position: {x: 920, y: 180},
                         openedSettingModal: false,
@@ -59,10 +59,20 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
                 ],
             },
             {
-                id: '6',
-                title: 'sixth filter',
-                processesInfoType: PROCESS.DESTINATION,
+                id: '121',
+                title: 'filter data 2',
+                processesInfoType: PROCESS.FILTER,
                 position: {x: 700, y: 320},
+                openedSettingModal: false,
+                leaderLines: [],
+                pipelines: [],
+                isReplicate: false,
+            },
+            {
+                id: '6',
+                title: 'covid filtered',
+                processesInfoType: PROCESS.DESTINATION,
+                position: {x: 920, y: 320},
                 openedSettingModal: false,
                 leaderLines: [],
                 pipelines: [],
@@ -70,11 +80,23 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
             },
         ],
     },
+
+    {
+        id: '120',
+        title: 'remove field 3',
+        processesInfoType: PROCESS.FIELD_REMOVE,
+        position: {x: 480, y: 460},
+        openedSettingModal: false,
+        leaderLines: [],
+        pipelines: [],
+        isReplicate: false,
+    },
+
     {
         id: '5',
-        title: 'fifth filter',
+        title: 'covid removed',
         processesInfoType: PROCESS.DESTINATION,
-        position: {x: 480, y: 460},
+        position: {x: 700, y: 460},
         openedSettingModal: false,
         leaderLines: [],
         pipelines: [],
