@@ -6,5 +6,5 @@ import {Component, Input} from '@angular/core';
     styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent {
-    @Input() public config: string | null = 'd';
+    @Input() public config: string | null = null;
 }

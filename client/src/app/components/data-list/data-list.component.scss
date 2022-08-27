@@ -17,8 +17,9 @@ label {
         font-size: var(--font-size-primary);
 
         &:disabled {
-            border-color: var(--color-gray-60);
             color: var(--color-gray-34);
+
+            border-color: var(--color-gray-60);
         }
     }
 }

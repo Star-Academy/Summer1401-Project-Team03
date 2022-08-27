@@ -41,7 +41,7 @@ label {
             content: "";
 
             background-color: var(--color-white-solid);
-            box-shadow: 0 0 0.5rem 0rem var(--color-gray-60);
+            box-shadow: 0 0 0.5rem 0 var(--color-gray-60);
 
             position: absolute;
             inset-block-start: 0;
@@ -61,8 +61,8 @@ label {
 
     input:disabled + span {
         &::before {
-            opacity: 1;
             background-color: var(--color-gray-34);
+            opacity: 1;
         }
 
         &::after {
