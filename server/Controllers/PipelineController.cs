@@ -6,6 +6,7 @@ using server.Components;
 using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Components.Transformers;
+using server.Databases;
 using server.Enums;
 using server.file;
 using server.Pipelines;
@@ -33,7 +34,13 @@ public class PipelineController : ControllerBase
         
             AddSource(pipeline, sourceFileID, 0, 0);
             AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 1);
-        
+
+            using (var database = new PipelineContex())
+            {
+                database.PipelineInformations.Add(PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline));
+                database.SaveChanges();
+            }
+            
             return Ok(_counter);
         }
         
@@ -124,8 +131,14 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public void GetPipelinesInformation()
+    public ActionResult<List<PipelineInformation>> GetPipelinesInformation()
     {
-        
+        List<PipelineInformation> piplines;
+        using (var database = new PipelineContex())
+        {
+            piplines = database.PipelineInformations.ToList();
+        }
+
+        return Ok(piplines);
     }
 }

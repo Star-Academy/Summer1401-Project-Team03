@@ -5,7 +5,8 @@ public class ComponentInformationAdaptor
 
     public static Component getComponentFromInformation(ComponentInformation information)
     {
-        // return new component by type
+        // return new component by 
+        
         throw new NotImplementedException();
     }
 
