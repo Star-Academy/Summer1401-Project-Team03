@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-item.model';
+import {Component} from '@angular/core';
+import {InventoryService} from 'src/app/services/inventory.service';
 
 @Component({
     selector: 'app-dataset.svg-inventory',
@@ -8,7 +8,6 @@ import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-it
 })
 export class DatasetInventoryComponent {
     public searchPhrase: string = '';
-    public datasetItems: DatasetItemModel[] = datasetItemData;
 
     public toggleShowItemSettingModal(id: number): void {
         const item = this.datasetItems.find((item) => item.id === id);
@@ -22,11 +21,6 @@ export class DatasetInventoryComponent {
 
     public downloadItem(id: number): void {
         console.log(`Downloaded item ${id}`);
-        // Connect to inventory service
-    }
-
-    public deleteItem(id: number): void {
-        console.log(`Removed item ${id}`);
         // Connect to inventory service
     }
 

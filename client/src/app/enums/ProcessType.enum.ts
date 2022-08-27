@@ -1,4 +1,6 @@
 export enum ProcessType {
+    SOURCE = 'SOURCE',
+    DESTINATION = 'DESTINATION',
     FILTER = 'FILTER',
     FIELD_REMOVE = 'FIELD_REMOVE',
     JOIN = 'JOIN',
