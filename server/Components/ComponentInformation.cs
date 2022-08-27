@@ -2,12 +2,12 @@
 
 public class ComponentInformation
 {
-    public string Type;
-    public int Id;
-    public List<int> NextIds;
-    public List<int> PreviousIds;
-    public Position Position;
-    public Dictionary<string, string> TransformData;
+    public string Type { get; set; }
+    public int Id { get; set; }
+    public List<int> NextIds { get; set; }
+    public List<int> PreviousIds { get; set; }
+    public Position Position { get; set; }
+    public Dictionary<string, string> TransformData { get; set; }
 
     public ComponentInformation(string type, int id, List<int> nextIds, List<int> previousIds, Position position, Dictionary<string, string> transformData)
     {

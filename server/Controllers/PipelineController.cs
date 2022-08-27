@@ -1,5 +1,4 @@
-﻿using System.Data.Common;
-using DBConfig;
+﻿using System.Text.Json;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
@@ -27,23 +26,21 @@ public class PipelineController : ControllerBase
         try
         {
             var pipeline = new Pipeline(pipelineName);
-        
+
             _counter++;
             idToPipeline[_counter] = pipeline;
             pipeline.id = _counter;
-        
+
             AddSource(pipeline, sourceFileID, 0, 0);
             AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 1);
 
-            using (var database = new PipelineContex())
-            {
-                database.PipelineInformations.Add(PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline));
-                database.SaveChanges();
-            }
+            var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
+            var jsonString = JsonSerializer.Serialize(info);
             
+            System.IO.File.WriteAllText($@"D:\Summer1401-Project-Team03\server\json\{pipeline.id}", jsonString);
             return Ok(_counter);
         }
-        
+
         catch (Exception e)
         {
             return BadRequest(e.Message);
@@ -62,7 +59,7 @@ public class PipelineController : ControllerBase
 
             var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
                 dictionary["operator"].GetOperator(), dictionary["value"]);
-            
+
             pipeline.AddComponent(filter);
             filter.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
 
@@ -112,7 +109,7 @@ public class PipelineController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-    
+
     [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult RunUpTo(int pipelineID, int componentID)
@@ -129,16 +126,10 @@ public class PipelineController : ControllerBase
         }
     }
 
-    [EnableCors("CorsPolicy")]
-    [HttpGet]
-    public ActionResult<List<PipelineInformation>> GetPipelinesInformation()
-    {
-        List<PipelineInformation> piplines;
-        using (var database = new PipelineContex())
-        {
-            piplines = database.PipelineInformations.ToList();
-        }
-
-        return Ok(piplines);
+    // [EnableCors("CorsPolicy")]
+    // [HttpGet]
+    // public ActionResult<List<PipelineInformation>> GetPipelinesInformation()
+    // {
+    // piplines = database.PipelineInformations.ToList();
+    // return Ok(piplines);
     }
-}

@@ -5,11 +5,11 @@ namespace server.Pipelines;
 
 public class PipelineInformation
 {
-    public int ID;
-    public string Name;
-    public List<ComponentInformation> Components;
-    public HashSet<int> DestinationIDs;
-    public Dictionary<int, ComponentInformation> IdToComponent;
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public List<ComponentInformation> Components { get; set; }
+    public HashSet<int> DestinationIDs { get; set; }
+    public Dictionary<int, ComponentInformation> IdToComponent { get; set; }
     
     public PipelineInformation() {}
 
