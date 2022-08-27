@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
-import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
+import {PROCESS, PROCESS2, ProcessInfo, ProcessInfo2, ProcessSchema} from 'src/app/data/Processes.data';
 import {PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 
 let counter = 20;
@@ -12,7 +12,7 @@ const ADDITIONAL_BOTTOM = 140;
     styleUrls: ['./add-node.component.scss'],
 })
 export class addNodeComponent {
-    public processes: ProcessInfo = PROCESS;
+    public processes: ProcessInfo2 = PROCESS2;
 
     @ViewChild('ProcessAdd') public modal!: ModalComponent;
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();

@@ -10,8 +10,8 @@ declare var AnimEvent: any;
 const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '1',
-        title: 'first filter',
-        processesInfoType: PROCESS.FILTER,
+        title: 'Covid',
+        processesInfoType: PROCESS.SOURCE,
         position: {x: 40, y: 40},
         openedSettingModal: false,
         leaderLines: [],
@@ -21,7 +21,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '4',
         title: 'forth filter',
-        processesInfoType: PROCESS.FIELD_RENAME,
+        processesInfoType: PROCESS.REPLICATE,
         position: {x: 260, y: 40},
         openedSettingModal: false,
         leaderLines: [],
@@ -30,7 +30,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
             {
                 id: '7',
                 title: 'seventh filter',
-                processesInfoType: PROCESS.JOIN,
+                processesInfoType: PROCESS.REPLICATE,
                 position: {x: 480, y: 180},
                 openedSettingModal: false,
                 leaderLines: [],
@@ -49,7 +49,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
                     {
                         id: '10',
                         title: 'ten filter',
-                        processesInfoType: PROCESS.JOIN,
+                        processesInfoType: PROCESS.DESTINATION,
                         position: {x: 920, y: 180},
                         openedSettingModal: false,
                         leaderLines: [],
@@ -61,7 +61,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
             {
                 id: '6',
                 title: 'sixth filter',
-                processesInfoType: PROCESS.FILTER,
+                processesInfoType: PROCESS.DESTINATION,
                 position: {x: 700, y: 320},
                 openedSettingModal: false,
                 leaderLines: [],
@@ -73,7 +73,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '5',
         title: 'fifth filter',
-        processesInfoType: PROCESS.FIELD_REMOVE,
+        processesInfoType: PROCESS.DESTINATION,
         position: {x: 480, y: 460},
         openedSettingModal: false,
         leaderLines: [],
