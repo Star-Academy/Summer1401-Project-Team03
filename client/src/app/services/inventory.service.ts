@@ -26,10 +26,8 @@ export class InventoryService {
             this.dataset.push({
                 id: parseInt(response),
                 name: file.name,
-                fileType: file.type,
-                size: file.size.toString(),
-                createAt: new Date(),
-                modifiedAt: new Date(),
+                type: file.type,
+                createTime: new Date(),
                 openedSettingModal: false,
             });
         }

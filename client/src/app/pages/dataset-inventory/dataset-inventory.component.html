@@ -8,9 +8,7 @@
         <tr>
             <th>Name</th>
             <th>File Type</th>
-            <th>Size</th>
             <th>Created At</th>
-            <th>Modified At</th>
             <th></th>
         </tr>
         <tr
@@ -18,10 +16,8 @@
             (click)="navigateWithUrl(item.id)"
         >
             <td>{{ item.name }}</td>
-            <td class="uppercase">{{ item.fileType }}</td>
-            <td>{{ item.size }}</td>
-            <td>{{ item.createAt | convertDate }}</td>
-            <td>{{ item.modifiedAt | convertDate }}</td>
+            <td class="uppercase">{{ item.type }}</td>
+            <td>{{ item.createTime | convertDate }}</td>
             <td>
                 <app-svg
                     (click)="openItemSettingModal(item.id); $event.stopPropagation()"
