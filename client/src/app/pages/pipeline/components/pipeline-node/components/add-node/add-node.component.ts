@@ -23,12 +23,12 @@ export class addNodeComponent {
         this.modal.openModal();
     }
 
-    public addNodeHandle(position: {x: number; y: number}, type: ProcessSchema): void {
+    public addNodeHandle(node: PipelineNodeModel, type: ProcessSchema): void {
         this.modal.closeModal();
         this.nodeData.openedSettingModal = false;
 
         const title = this.nodeTitle;
-        const newPosition = {x: position.x + ADDITIONAL_LEFT, y: position.y};
+        const newPosition = {x: node.position.x + ADDITIONAL_LEFT, y: node.position.y};
 
         const newNodeComponent: PipelineNodeModel = {
             id: counter.toString(),
@@ -36,8 +36,8 @@ export class addNodeComponent {
             processesInfoType: type,
             position: newPosition,
             openedSettingModal: false,
-            afterId: '1',
-            beforeId: '',
+            afterId: node.afterId,
+            beforeId: node.id,
         };
         counter++; // temporary
         this.addNodeEmit.emit(newNodeComponent);

@@ -4,7 +4,7 @@
         <button
             class="list__button"
             *ngFor="let process of processes | keyvalue"
-            (click)="addNodeHandle(nodeData.position, process.value)"
+            (click)="addNodeHandle(nodeData, process.value)"
             [title]="process.value.title"
         >
             <app-svg [iconType]="process.value.icon"></app-svg>
