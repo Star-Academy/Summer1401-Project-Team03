@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Common;
+using DBConfig;
 using server.Components;
 using server.configurations;
 using server.Databases;
@@ -11,12 +12,22 @@ public class Pipeline
     public HashSet<int> DestinationIDs;
     public Dictionary<int, Component> IdToComponent;
 
-    public Pipeline()
+    public Pipeline(PipelineInformation information)
     {
-        
+        var dbConfiguration = DBConfigLoader.Load();
+        Name = information.Name;
+        id = information.ID;
+        DestinationIDs = information.DestinationIDs;
+        IdToComponent = information.IdToComponent.ToDictionary(t => t.Key,
+            t => ComponentInformationAdaptor.getComponentFromInformation(t.Value));
+        Database = new PostgresDatabase(dbConfiguration);
+        QueryBuilder = new PostgresQueryBuilder();
+        TableManager = new TableManager();
+
     }
-    public Pipeline(string name, DBConfiguration dbConfiguration)
+    public Pipeline(string name)
     {
+        var dbConfiguration = DBConfigLoader.Load();
         Name = name;
         Database = new PostgresDatabase(dbConfiguration);
         QueryBuilder = new PostgresQueryBuilder();

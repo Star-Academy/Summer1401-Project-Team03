@@ -26,7 +26,7 @@ public class PipelineController : ControllerBase
         try
         {
             var dbConfiguration = DBConfigLoader.Load();
-            var pipeline = new Pipeline(pipelineName, dbConfiguration);
+            var pipeline = new Pipeline(pipelineName);
 
             _counter++;
             idToPipeline[_counter] = pipeline;
@@ -127,6 +127,6 @@ public class PipelineController : ControllerBase
     [HttpGet]
     public void GetPipelinesInformation()
     {
-        PipelineInformation.ExtractInformation(idToPipeline);
+        
     }
 }

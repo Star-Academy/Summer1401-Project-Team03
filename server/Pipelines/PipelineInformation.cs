@@ -5,28 +5,19 @@ namespace server.Pipelines;
 public class PipelineInformation
 {
     public string Name;
-    public string ID;
-    public List<Component> Components;
+    public int ID;
+    public List<ComponentInformation> Components;
     public HashSet<int> DestinationIDs;
-    public Dictionary<int, Component> IdToComponent;
+    public Dictionary<int, ComponentInformation> IdToComponent;
 
-    public PipelineInformation(string name, string id, List<Component> components, HashSet<int> destinationIDs, Dictionary<int, Component> idToComponent)
+    public PipelineInformation(string name, int id, List<Component> components, HashSet<int> destinationIDs, Dictionary<int, Component> idToComponent)
     {
         Name = name;
         ID = id;
-        Components = components;
+        Components = components.Select(ComponentInformationAdaptor.getInformationFromComponent).ToList();
         DestinationIDs = destinationIDs;
-        IdToComponent = idToComponent;
+        IdToComponent = idToComponent.ToDictionary( t => t.Key, 
+            t => ComponentInformationAdaptor.getInformationFromComponent(t.Value));
     }
-
-    public static PipelineInformation ExtractInformation(Dictionary<int, Pipeline> pipelines)
-    {
-        var informations = new List<PipelineInformation>();
-
-        foreach (var pipeline in pipelines)
-        {
-            var pipelineInformation = new PipelineInformation();
-        }
-        throw new NotImplementedException();
-    }
+    
 }
