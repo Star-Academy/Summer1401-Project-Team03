@@ -89,6 +89,20 @@ public class DataInventoryController : ControllerBase
         }
     }
     
+    [EnableCors("CorsPolicy")]
+    [HttpDelete]
+    public IActionResult Rename(int fileID, string category)
+    {
+        try
+        {
+            throw new NotImplementedException();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
     public static void increaseFileID(int increament)
     {
         fileID += increament;
