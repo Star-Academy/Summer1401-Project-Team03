@@ -36,11 +36,6 @@ export class DatasetInventoryComponent implements OnInit {
         // Connect to inventory service
     }
 
-    public deleteItem(id: number): void {
-        console.log(`Removed item ${id}`);
-        // Connect to inventory service
-    }
-
     public navigateWithUrl(id: number): void {
         console.log(`Navigate item ${id}`);
         // Complete pipeline page

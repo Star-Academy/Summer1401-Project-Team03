@@ -9,6 +9,7 @@
             <th>Name</th>
             <th>File Type</th>
             <th>Size</th>
+            <th>Category</th>
             <th>Created At</th>
             <th></th>
         </tr>
@@ -19,6 +20,7 @@
             <td>{{ item.name }}</td>
             <td class="uppercase">{{ item.type }}</td>
             <td>{{ item.length | size }}</td>
+            <td>{{ item.category }}</td>
             <td>{{ item.createTime | convertDate }}</td>
             <td>
                 <app-svg
@@ -28,7 +30,7 @@
                 ></app-svg>
                 <ng-container *ngIf="item.openedSettingModal">
                     <app-dataset-item-modal
-                        (deleteEmit)="deleteItem(item.id)"
+                        (deleteEmit)="inventoryService.deleteDataset(item.id, item.category)"
                         (renameEmit)="renameItem(item.id)"
                         (downloadEmit)="downloadItem(item.id)"
                         (click)="closeItemSettingModal(item.id); $event.stopPropagation()"

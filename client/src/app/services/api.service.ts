@@ -42,4 +42,8 @@ export class ApiService {
         Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
         return await this.fetchData(u.toString(), init);
     }
+
+    public async delete<T>(url: string): Promise<T | null> {
+        return await this.fetchData(url, {method: 'delete'});
+    }
 }

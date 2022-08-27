@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {INVENTORY_ALL, INVENTORY_IMPORT} from '../utils/api.utils';
+import {INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_IMPORT} from '../utils/api.utils';
 import {ApiService} from './api.service';
 import {DatasetItemModel} from 'src/app/models/dataset/dataset-item.model';
 
@@ -28,11 +28,20 @@ export class InventoryService {
                 length: file.size.toString(),
                 name: file.name,
                 type: file.type,
+                category: 'imports',
                 createTime: new Date(),
                 openedSettingModal: false,
             });
         }
     }
 
-    public async deleteDataset(id: string): Promise<void> {}
+    public async deleteDataset(id: string, category: string): Promise<void> {
+        const url = new URL(INVENTORY_DELETE);
+        url.searchParams.append('fileId', id);
+        url.searchParams.append('category', category);
+        const response = await this.apiService.delete(url.toString());
+        if (response) {
+            this.dataset = this.dataset.filter((data) => data.id !== id);
+        }
+    }
 }

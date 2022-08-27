@@ -5,6 +5,7 @@ export interface DatasetItemModel {
     openedSettingModal: boolean;
     type: string;
     length: string;
+    category: 'imports' | 'exports';
 }
 
 export const datasetItemData: DatasetItemModel[] = [
@@ -15,6 +16,7 @@ export const datasetItemData: DatasetItemModel[] = [
         length: '12',
         openedSettingModal: false,
         type: 'csv',
+        category: 'imports',
     },
     {
         name: 'covid',
@@ -23,6 +25,7 @@ export const datasetItemData: DatasetItemModel[] = [
         length: '12',
         openedSettingModal: false,
         type: 'json',
+        category: 'imports',
     },
     {
         name: 'bijan',
@@ -31,6 +34,7 @@ export const datasetItemData: DatasetItemModel[] = [
         length: '12',
         openedSettingModal: false,
         type: 'csv',
+        category: 'imports',
     },
     {
         name: 'code-star',
@@ -39,5 +43,6 @@ export const datasetItemData: DatasetItemModel[] = [
         length: '12',
         openedSettingModal: false,
         type: 'csv',
+        category: 'imports',
     },
 ];
