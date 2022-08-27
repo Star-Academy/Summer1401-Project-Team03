@@ -12,6 +12,7 @@ public class TypeConverter : Mutator
         TableName = Pipeline.TableManager.NewTableName();
         Field = new List<string>();
         Type = new List<Type>();
+        Name = $"Type Converter{Id}";
     }
     
     public override string GetQuery()

@@ -19,6 +19,8 @@ public abstract class Component
     public List<Component> NextComponents { set; get; }
 
     public Position Position { set; get; }
+    
+    public string Name { set; get; }
 
     public List<Component> PreviousComponents { set; get; }
 

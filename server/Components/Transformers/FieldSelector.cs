@@ -9,6 +9,7 @@ public class FieldSelector : Transformer
     public FieldSelector(Pipeline pipeline, Position position, List<string> fieldsToSelect) : base(pipeline, position)
     {
         FieldsToSelect = fieldsToSelect;
+        Name = $"Field Selector{Id}";
     }
 
     public override string GetQuery()
