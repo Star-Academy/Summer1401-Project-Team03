@@ -1,9 +1,14 @@
 <div class="sidebar">
-    <h2>Config</h2>
-    <div class="filters">
-        <app-text-input label="text"></app-text-input>
-        <app-switch label="switch"></app-switch>
-        <app-data-list label="data"></app-data-list>
-    </div>
-    <app-button>save</app-button>
+    <ng-container *ngIf="config; else emptyBar">
+        <h2>Config</h2>
+        <div class="filters">
+            <app-text-input label="text"></app-text-input>
+            <app-switch label="switch"></app-switch>
+            <app-data-list label="data"></app-data-list>
+        </div>
+        <app-button>save</app-button>
+    </ng-container>
+    <ng-template #emptyBar>
+        <div class="message">select a node to edit</div>
+    </ng-template>
 </div>
