@@ -26,17 +26,17 @@ public class PipelineController : ControllerBase
         try
         {
             var pipeline = new Pipeline(pipelineName);
-
+        
             _counter++;
             idToPipeline[_counter] = pipeline;
             pipeline.id = _counter;
-
+        
             AddSource(pipeline, sourceFileID, 0, 0);
-            AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 0);
-
+            AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 1);
+        
             return Ok(_counter);
         }
-
+        
         catch (Exception e)
         {
             return BadRequest(e.Message);
