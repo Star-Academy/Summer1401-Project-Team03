@@ -7,7 +7,7 @@ import {Component, ViewChild} from '@angular/core';
 })
 export class AppComponent {
     @ViewChild('nameInput', {static: true}) nameInput: any;
-    public shrinkedNavbar: boolean = false;
+    public shrinkedNavbar: boolean = true;
     public toggleShrink(): void {
         this.shrinkedNavbar = !this.shrinkedNavbar;
     }
