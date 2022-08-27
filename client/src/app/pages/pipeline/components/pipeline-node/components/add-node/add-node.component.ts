@@ -36,6 +36,8 @@ export class addNodeComponent {
             processesInfoType: type,
             position: newPosition,
             openedSettingModal: false,
+            afterId: '1',
+            beforeId: '',
         };
         counter++; // temporary
         this.addNodeEmit.emit(newNodeComponent);
