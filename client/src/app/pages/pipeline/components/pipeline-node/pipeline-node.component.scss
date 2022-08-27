@@ -1,8 +1,9 @@
 .wrapper {
-    position: relative;
-
     background-color: var(--color-purple-86);
     color: var(--color-purple-21);
+
+    position: relative;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,11 +24,13 @@
 
     app-svg {
         color: var(--color-purple-46);
+
         height: 3rem;
     }
 
     .desc {
         width: 100%;
+
         .label {
             overflow: hidden;
 
@@ -42,7 +45,8 @@
 
         p {
             font-size: var(--font-size-primary);
-            font-size: 1.2rem;
+
+            font-size: 1.25rem;
             text-align: center;
         }
     }
@@ -51,6 +55,7 @@
         position: absolute;
         inset: 0;
         font-size: 0.2rem;
+
         &__icon {
             z-index: 10;
             cursor: pointer;
@@ -58,12 +63,24 @@
 
             top: 0.5rem;
             right: 0.5rem;
+            width: 2rem;
+            height: 2rem;
 
-            height: 1.5rem;
-            width: 1.5rem;
+            cursor: pointer;
         }
+
         &__modal {
             z-index: -1;
+        }
+
+        .modal {
+            position: absolute;
+
+            &__container {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+            }
         }
     }
 }
