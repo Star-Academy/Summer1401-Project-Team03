@@ -16,12 +16,12 @@ export class DatasetInventoryComponent implements OnInit {
         await this.inventoryService.getAllDataset();
     }
 
-    public openItemSettingModal(id: number): void {
+    public openItemSettingModal(id: string): void {
         const item = this.inventoryService.dataset.find((item) => item.id === id);
         if (item) item.openedSettingModal = true;
     }
 
-    public closeItemSettingModal(id: number): void {
+    public closeItemSettingModal(id: string): void {
         const item = this.inventoryService.dataset.find((item) => item.id === id);
         if (item) item.openedSettingModal = false;
     }

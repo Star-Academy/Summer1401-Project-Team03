@@ -8,6 +8,7 @@
         <tr>
             <th>Name</th>
             <th>File Type</th>
+            <th>Size</th>
             <th>Created At</th>
             <th></th>
         </tr>
@@ -17,6 +18,7 @@
         >
             <td>{{ item.name }}</td>
             <td class="uppercase">{{ item.type }}</td>
+            <td>{{ item.length | size }}</td>
             <td>{{ item.createTime | convertDate }}</td>
             <td>
                 <app-svg
