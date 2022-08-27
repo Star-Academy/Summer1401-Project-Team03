@@ -28,6 +28,7 @@ public class PipelineController : ControllerBase
 
             _counter++;
             idToPipeline[_counter] = pipeline;
+            pipeline.id = _counter;
 
             AddSource(pipeline, sourceFileID, 0, 0);
             AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 0);
