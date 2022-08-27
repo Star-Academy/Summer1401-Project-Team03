@@ -1,20 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {PipelineService} from 'src/app/services/pipeline.service';
-import {pipelineItemData, PipelineItemModel} from '../../models/pipeline/pipeline-item.model';
 
 @Component({
     selector: 'app-pipeline-inventory',
     templateUrl: './pipeline-inventory.component.html',
     styleUrls: ['./pipeline-inventory.component.scss'],
 })
-export class PipelineInventoryComponent implements OnInit {
+export class PipelineInventoryComponent {
     public searchPhrase: string = '';
 
     public constructor(public pipelineService: PipelineService) {}
-
-    public async ngOnInit(): Promise<void> {
-        await this.pipelineService.getAllPiplelines();
-    }
 
     public openItemSettingModal(id: number): void {
         const item = this.pipelineService.pipelines.find((item) => item.id === id);

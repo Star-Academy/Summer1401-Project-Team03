@@ -1,20 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {InventoryService} from 'src/app/services/inventory.service';
-import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-item.model';
 
 @Component({
     selector: 'app-dataset.svg-inventory',
     templateUrl: './dataset-inventory.component.html',
     styleUrls: ['./dataset-inventory.component.scss'],
 })
-export class DatasetInventoryComponent implements OnInit {
+export class DatasetInventoryComponent {
     public searchPhrase: string = '';
 
     public constructor(public inventoryService: InventoryService) {}
-
-    public async ngOnInit(): Promise<void> {
-        await this.inventoryService.getAllDataset();
-    }
 
     public openItemSettingModal(id: string): void {
         const item = this.inventoryService.dataset.find((item) => item.id === id);
