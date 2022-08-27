@@ -16,8 +16,12 @@ import {SettingItemModalComponent} from './components/pipeline-node/components/s
 import {BoardComponent} from './components/board/board.component';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
+
+import {SideBarComponent} from './components/side-bar/side-bar.component';
+import {TextInputModule} from 'src/app/components/text-input/text-input.module';
+import {SwitchModule} from 'src/app/components/switch/switch.module';
+import {DataListModule} from 'src/app/components/data-list/data-list.module';
 import {RemoveNodeComponent} from './components/pipeline-node/components/remove-node/remove-node.component';
-import {TextInputModule} from '../../components/text-input/text-input.module';
 
 @NgModule({
     declarations: [
@@ -29,6 +33,7 @@ import {TextInputModule} from '../../components/text-input/text-input.module';
         SettingItemModalComponent,
         BoardComponent,
         RemoveNodeComponent,
+        SideBarComponent,
     ],
 
     imports: [
@@ -36,6 +41,9 @@ import {TextInputModule} from '../../components/text-input/text-input.module';
         SvgModule,
         LoadingButtonModule,
         ButtonModule,
+        TextInputModule,
+        SwitchModule,
+        DataListModule,
         ModalModule,
         NgxDraggabillyModule,
         AngularDraggableModule,

@@ -9,10 +9,7 @@ label {
     cursor: pointer;
 
     input {
-        opacity: 0;
-
-        block-size: 0;
-        inline-size: 0;
+        display: none;
     }
 
     span {
@@ -23,6 +20,7 @@ label {
         block-size: calc(2 / 3 * var(--slider-length));
         inline-size: calc(2 * var(--slider-length));
 
+        border: 0.1rem solid var(--color-gray-90);
         border-radius: 999rem;
 
         &::before {
@@ -43,7 +41,7 @@ label {
             content: "";
 
             background-color: var(--color-white-solid);
-            box-shadow: 0 0 0.3rem 0 var(--color-shadow);
+            box-shadow: 0 0 0.5rem 0 var(--color-gray-60);
 
             position: absolute;
             inset-block-start: 0;
@@ -54,10 +52,21 @@ label {
 
             border-radius: 999rem;
 
-            transform: translate(-25%, -17%);
+            transform: translate(-25%, -25%);
             transform-origin: center center;
 
             transition: transform 0.3s ease-out;
+        }
+    }
+
+    input:disabled + span {
+        &::before {
+            background-color: var(--color-gray-34);
+            opacity: 1;
+        }
+
+        &::after {
+            background-color: var(--color-gray-60);
         }
     }
 
@@ -67,7 +76,7 @@ label {
         }
 
         &::after {
-            transform: translate(125%, -17%);
+            transform: translate(125%, -25%);
         }
     }
 }

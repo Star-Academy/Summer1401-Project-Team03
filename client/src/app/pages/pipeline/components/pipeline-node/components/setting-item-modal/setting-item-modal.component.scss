@@ -1,11 +1,14 @@
 .modal {
   --color-modal-bg: hsl(263deg 46% 75%);
   --color-modal-border: var(--color-purple-21);
+  background-color: var(--color-modal-bg);
 
   position: absolute;
+
   inset: 0;
   background-color: var(--color-modal-bg);
   padding: 0.5rem;
+
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -13,12 +16,16 @@
   gap: 1rem;
   z-index: 1;
   font-size: 1.5rem;
+
   &__item {
-    cursor: pointer;
-    display: flex;
     color: var(--color-purple-21);
-    gap: 1rem;
+
+    display: flex;
     align-items: center;
+    gap: 1rem;
+
+    cursor: pointer;
+
     app-svg {
       height: 2rem;
       width: 2rem;
