@@ -39,7 +39,7 @@ public class DataInventoryController : ControllerBase
 
         return BadRequest("The sent file is empty!");
     }
-    
+
     [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult Export(int fileID)
@@ -88,21 +88,29 @@ public class DataInventoryController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-    
+
     [EnableCors("CorsPolicy")]
-    [HttpDelete]
-    public IActionResult Rename(int fileID, string category)
+    [HttpPut]
+    public IActionResult Rename(int fileID, string category, string newName)
     {
         try
         {
-            throw new NotImplementedException();
+            var filePath = FileSearcher.Search(fileID, category);
+            var fileInfo = new FileInfo(filePath);
+            
+            var regex = new Regex(".*_[0-9]*\\.(csv|json)");
+            var fileType = regex.Match(fileInfo.Name).Groups[1].Value;
+
+            var newPath = FilePathGenerator.Path(newName, fileType, fileID, category);
+            fileInfo.MoveTo(newPath);
+            return Ok();
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
     }
-    
+
     public static void increaseFileID(int increament)
     {
         fileID += increament;
