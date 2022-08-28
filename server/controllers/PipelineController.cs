@@ -93,7 +93,12 @@ public class PipelineController : ControllerBase
     {
         var filePath = FileSearcher.Search(fileID, "imports");
         
-        var extractor = new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
+        var extractor = (Extractor) new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
+
+        extractor.QueryBuilder = pipeline.QueryBuilder;
+        extractor.Database = pipeline.Database;
+        extractor.Position = position;
+        extractor.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
         
         pipeline.AddComponent(extractor);
     }
@@ -106,7 +111,11 @@ public class PipelineController : ControllerBase
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "exports");
 
         IDCounterHandler.SaveFileID(fileID + 1);
-        var loader = new CSVLoader(pipeline, position, filePath);
+        var loader = (Loader) new ComponentFactory().CreateNewComponent(ComponentType.CSVLoader);
+        loader.QueryBuilder = pipeline.QueryBuilder;
+        loader.Database = pipeline.Database;
+        loader.Position = position;
+        loader.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
 
         loader.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
 
