@@ -3,12 +3,12 @@
     <div class="list__wrapper">
         <button
             class="list__button"
-            *ngFor="let process of processes | keyvalue"
-            (click)="addNodeHandle(nodeData, process.value)"
-            [title]="process.value.title"
+            *ngFor="let process of processTypes()"
+            (click)="addNodeHandle(nodeData, processes[process])"
+            [title]="processes[process].title"
         >
-            <app-svg [iconType]="process.value.icon"></app-svg>
-            {{ process.value.title }}
+            <app-svg [iconType]="processes[process].icon"></app-svg>
+            {{ processes[process].title }}
         </button>
     </div>
 </app-modal>

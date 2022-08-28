@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
+import {customProcessType, ProcessType} from 'src/app/enums/ProcessType.enum';
 import {PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 
 let counter = 10;
@@ -18,6 +19,11 @@ export class addNodeComponent {
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
     @Input() public nodeData!: PipelineNodeModel;
     public nodeTitle: string = 'new node';
+
+    public processTypes(): customProcessType[] {
+        const keys = Object.keys(customProcessType);
+        return keys.map((type) => type as customProcessType);
+    }
 
     public openModal(): void {
         this.modal.openModal();

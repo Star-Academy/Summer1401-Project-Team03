@@ -1,69 +1,89 @@
 .wrapper {
-    position: relative;
+  background-color: var(--color-white-solid);
+  color: var(--color-purple-21);
 
-    background-color: var(--color-purple-86);
-    color: var(--color-purple-21);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+  // border: 3px solid var(--color-purple-21);
+  box-shadow: 0 0 0.3rem 0.2rem var(--color-shadow);
 
-    width: 18rem;
-    height: 10rem;
+  position: relative;
 
-    padding: 0.6rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 
-    border: 3px solid var(--color-purple-21);
-    border-radius: var(--border-radius-primary);
+  width: 22rem;
+  height: 10rem;
 
-    font-weight: 600;
+  padding: 0.6rem 1rem;
 
-    text-transform: capitalize;
+  border-radius: var(--border-radius-primary);
 
-    app-svg {
-        color: var(--color-purple-46);
-        height: 3rem;
+  font-weight: 600;
+
+  text-transform: capitalize;
+
+  app-svg {
+    color: var(--color-purple-46);
+
+    width: 4rem;
+  }
+
+  .desc {
+    width: 100%;
+
+    .label {
+      overflow: hidden;
+
+      width: 100%;
+
+      font-size: var(--font-size-big);
+
+      text-align: center;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
-    .desc {
-        width: 100%;
-        .label {
-            overflow: hidden;
+    p {
+      font-size: var(--font-size-primary);
+      opacity: 0.8;
+      font-size: 1.25rem;
 
-            width: 100%;
+      text-align: center;
+    }
+  }
 
-            font-size: 1.8rem;
+  .setting {
+    position: absolute;
+    inset: 0;
 
-            text-align: center;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
+    font-size: 0.2rem;
 
-        p {
-            font-size: var(--font-size-primary);
-            font-size: 1.2rem;
-            text-align: center;
-        }
+    &__icon {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      z-index: 10;
+
+      width: 2rem;
+      height: 2rem;
+
+      cursor: pointer;
     }
 
-    .setting {
-        position: absolute;
-        inset: 0;
-        font-size: 0.2rem;
-        &__icon {
-            z-index: 10;
-            cursor: pointer;
-            position: absolute;
-
-            top: 0.5rem;
-            right: 0.5rem;
-
-            height: 1.5rem;
-            width: 1.5rem;
-        }
-        &__modal {
-            z-index: -1;
-        }
+    &__modal {
+      z-index: -1;
     }
+
+    .modal {
+      position: absolute;
+
+      &__container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+      }
+    }
+  }
 }

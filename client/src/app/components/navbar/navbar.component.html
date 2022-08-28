@@ -1,15 +1,21 @@
 <div class="wrapper">
-    <app-navbar-item
-        [isShrink]="isShrink"
-        url="pipeline-inventory"
-        title="pipeline"
-        iconType="pipeline"
-    ></app-navbar-item>
-    <app-navbar-item
-        [isShrink]="isShrink"
-        url="dataset-inventory"
-        title="datasets"
-        iconType="dataset"
-    ></app-navbar-item>
-    <app-navbar-item [isShrink]="isShrink" url="pipeline" title="board" iconType="dataset"></app-navbar-item>
+    <span [class.shrink]="isShrink" class="opener">
+        <app-svg iconType="navArrow" (click)="toggleShrink()"></app-svg>
+        <p *ngIf="!isShrink">Menu</p>
+    </span>
+    <ul>
+        <app-navbar-item
+            [isShrink]="isShrink"
+            url="pipeline-inventory"
+            title="pipeline"
+            iconType="pipeline"
+        ></app-navbar-item>
+        <app-navbar-item
+            [isShrink]="isShrink"
+            url="dataset-inventory"
+            title="datasets"
+            iconType="dataset"
+        ></app-navbar-item>
+        <app-navbar-item [isShrink]="isShrink" url="pipeline" title="board" iconType="dataset"></app-navbar-item>
+    </ul>
 </div>

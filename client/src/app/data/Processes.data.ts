@@ -1,4 +1,4 @@
-import {ProcessType} from '../enums/ProcessType.enum';
+import {ProcessType, customProcessType} from '../enums/ProcessType.enum';
 
 export interface ProcessSchema {
     title: string;
@@ -11,8 +11,23 @@ export type ProcessInfo = {
 };
 
 export const PROCESS: ProcessInfo = {
+    SOURCE: {
+        title: 'source',
+        icon: 'source',
+        items: [],
+    },
+    DESTINATION: {
+        title: 'destination',
+        icon: 'source',
+        items: [],
+    },
     JOIN: {
         title: 'join',
+        icon: 'join',
+        items: [],
+    },
+    REPLICATE: {
+        title: 'replicate',
         icon: 'join',
         items: [],
     },

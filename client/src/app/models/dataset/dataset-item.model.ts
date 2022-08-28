@@ -1,48 +1,48 @@
 export interface DatasetItemModel {
-    id: number;
+    id: string;
     name: string;
-    createAt: Date;
-    modifiedAt: Date;
+    createTime: Date;
     openedSettingModal: boolean;
-    fileType: string;
-    size: string;
+    type: string;
+    length: string;
+    category: 'imports' | 'exports';
 }
 
 export const datasetItemData: DatasetItemModel[] = [
     {
         name: 'ali',
-        createAt: new Date(),
-        id: 1,
-        modifiedAt: new Date(),
+        createTime: new Date(),
+        id: '1',
+        length: '12',
         openedSettingModal: false,
-        fileType: 'csv',
-        size: '2.3MB',
+        type: 'csv',
+        category: 'imports',
     },
     {
         name: 'covid',
-        createAt: new Date(),
-        id: 2,
-        modifiedAt: new Date(),
+        createTime: new Date(),
+        id: '2',
+        length: '12',
         openedSettingModal: false,
-        fileType: 'json',
-        size: '0.4MB',
+        type: 'json',
+        category: 'imports',
     },
     {
         name: 'bijan',
-        createAt: new Date(),
-        id: 3,
-        modifiedAt: new Date(),
+        createTime: new Date(),
+        id: '3',
+        length: '12',
         openedSettingModal: false,
-        fileType: 'csv',
-        size: '7.5MB',
+        type: 'csv',
+        category: 'imports',
     },
     {
         name: 'code-star',
-        createAt: new Date(),
-        id: 4,
-        modifiedAt: new Date(),
+        createTime: new Date(),
+        id: '4',
+        length: '12',
         openedSettingModal: false,
-        fileType: 'csv',
-        size: '0.9MB',
+        type: 'csv',
+        category: 'imports',
     },
 ];

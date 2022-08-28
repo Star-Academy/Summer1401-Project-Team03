@@ -10,8 +10,8 @@ declare var AnimEvent: any;
 const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '1',
-        title: 'first filter',
-        processesInfoType: PROCESS.FILTER,
+        title: 'covid dataset',
+        processesInfoType: PROCESS.SOURCE,
         position: {x: 100, y: 100},
         openedSettingModal: false,
         beforeId: '0',
@@ -21,8 +21,8 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
 
     {
         id: '3',
-        title: 'third filter',
-        processesInfoType: PROCESS.JOIN,
+        title: 'location filtered',
+        processesInfoType: PROCESS.FILTER,
         position: {x: 100, y: 300},
         openedSettingModal: false,
         beforeId: '1',
@@ -31,7 +31,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     },
     {
         id: '4',
-        title: 'forth filter',
+        title: 'location renamed',
         processesInfoType: PROCESS.FIELD_RENAME,
         position: {x: 400, y: 300},
         openedSettingModal: false,
@@ -41,7 +41,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     },
     {
         id: '5',
-        title: 'fifth filter',
+        title: 'location removed',
         processesInfoType: PROCESS.FIELD_REMOVE,
         position: {x: 400, y: 100},
         openedSettingModal: false,
@@ -51,7 +51,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     },
     {
         id: '6',
-        title: 'sixth filter',
+        title: 'iran filtered',
         processesInfoType: PROCESS.FILTER,
         position: {x: 700, y: 300},
         openedSettingModal: false,
@@ -61,8 +61,8 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     },
     {
         id: '7',
-        title: 'seventh filter',
-        processesInfoType: PROCESS.JOIN,
+        title: 'covid',
+        processesInfoType: PROCESS.DESTINATION,
         position: {x: 700, y: 100},
         openedSettingModal: false,
         beforeId: '6',
@@ -141,7 +141,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
     private addItemToNodeListById(id: string, item: PipelineNodeModel): void {
         const activeNodeIndex = this.getNodeIndexById(id);
-        this.pipelineNodeDatas.splice(activeNodeIndex, 0, item);
+        this.pipelineNodeDatas.splice(activeNodeIndex + 1, 0, item);
     }
 
     private removeItemFromNodeListById(id: string, count = 1): void {
@@ -201,8 +201,8 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.removeLeaderlineBetweenTwoNodeById(beforeId, afterId);
 
         // Update beforeId,afterId, node component
-        this.changeAfterIdById(beforeId, afterId);
-        this.changeBeforeIdById(afterId, beforeId);
+        this.changeAfterIdById(beforeId, item.id);
+        this.changeBeforeIdById(afterId, item.id);
     }
 
     public removeNodeComponent(id: string, beforeId: string, afterId: string): void | boolean {
