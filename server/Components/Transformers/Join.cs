@@ -1,6 +1,5 @@
 using server.Pipelines;
 using SqlKata;
-using static server.Components.Transformers.ConvertToPostgreQuery;
 
 namespace server.Components.Transformers;
 
@@ -28,7 +27,7 @@ public class Join : Mutator
         var query = new Query(firstTableName);
         query = QueryByJoinType(query, secondTableName, firstProperty, secondProperty);
 
-        Pipeline.Database.Execute(getPostgresQuery(query));
+        // Pipeline.Database.Execute(getPostgresQuery(query));
         Pipeline.QueryBuilder.Copy(firstTableName, GetTable());
         Pipeline.QueryBuilder.Drop(secondTableName);
         Pipeline.QueryBuilder.Drop(firstTableName);
