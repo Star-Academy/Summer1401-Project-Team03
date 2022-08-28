@@ -11,10 +11,15 @@ label {
 
         padding: 0.5rem;
 
-        border: var(--border-default) var(--color-purple-46);
+        border: var(--border-default) var(--color-gray-60);
         border-radius: var(--border-radius-minimal);
 
+        &:focus {
+            border-color: var(--color-purple-55);
+        }
+
         &:disabled {
+            background-color: var(--color-gray-78);
             color: var(--color-gray-34);
 
             border-color: var(--color-gray-60);

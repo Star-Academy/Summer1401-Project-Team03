@@ -58,6 +58,10 @@ button {
     font-family: inherit;
 }
 
+input::placeholder {
+    text-transform: capitalize;
+}
+
 button {
     text-transform: inherit;
 }
@@ -73,13 +77,12 @@ li {
 app-svg {
     display: grid;
     place-items: center;
-
-    height: 3rem;
 }
 
 .uppercase {
     text-transform: uppercase !important;
 }
+
 .absolute {
     position: absolute;
 }
