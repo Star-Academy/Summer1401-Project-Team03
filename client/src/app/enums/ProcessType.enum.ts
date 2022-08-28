@@ -8,7 +8,7 @@ export enum ProcessType {
     FIELD_RENAME = 'FIELD_RENAME',
 }
 
-export enum ProcessType2 {
+export enum customProcessType {
     FILTER = 'FILTER',
     FIELD_REMOVE = 'FIELD_REMOVE',
     JOIN = 'JOIN',
