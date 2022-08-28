@@ -86,10 +86,10 @@ public class PipelineController : ControllerBase
     private void AddDestination(Pipeline pipeline, string fileName, string format, double x, double y,
         int previousComponentId)
     {
-        DataInventoryController.increaseFileID(1);
-        var fileID = DataInventoryController.fileID;
+        var fileID = IDCounterHandler.LoadFileID();
         var filePath = FilePathGenerator.Path(fileName, format, fileID, "exports");
 
+        IDCounterHandler.SaveFileID(fileID + 1);
         var loader = new CSVLoader(pipeline, new Position(x, y), filePath);
 
         loader.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
@@ -177,7 +177,7 @@ public class PipelineController : ControllerBase
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message)
+            return BadRequest(e.Message);
         }
     }
 }

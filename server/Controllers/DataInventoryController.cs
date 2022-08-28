@@ -10,7 +10,6 @@ namespace server.Controller;
 [Route("[controller]/[Action]")]
 public class DataInventoryController : ControllerBase
 {
-    public static int fileID;
     private PostgresDatabase _database;
 
     [EnableCors("CorsPolicy")]
@@ -19,7 +18,6 @@ public class DataInventoryController : ControllerBase
     {
         if (file.Length > 0)
         {
-            increaseFileID(1);
             var regex = new Regex("(.*)\\.(csv|json)");
 
             var match = regex.Match(file.FileName);
@@ -27,8 +25,11 @@ public class DataInventoryController : ControllerBase
             var fileName = match.Groups[1].Value;
             var format = match.Groups[2].Value;
 
+            var fileID = IDCounterHandler.LoadFileID();
+             
             var filePath = FilePathGenerator.Path(fileName, format, fileID, "imports");
-
+            
+            IDCounterHandler.SaveFileID(fileID + 1);
             using (var stream = System.IO.File.Create(filePath))
             {
                 await file.CopyToAsync(stream);
@@ -108,10 +109,5 @@ public class DataInventoryController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-    }
-
-    public static void increaseFileID(int increament)
-    {
-        fileID += increament;
     }
 }

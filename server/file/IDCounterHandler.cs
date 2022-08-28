@@ -1,6 +1,6 @@
 ﻿namespace server.file;
 
-public class IDFileHandler
+public class IDCounterHandler
 {
     public static int LoadPipeLineID()
     {
