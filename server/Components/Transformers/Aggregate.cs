@@ -11,6 +11,7 @@ public class Aggregate : Transformer
         FieldsToAggregate = new List<string>();
         AggregateFunctions = new List<AggregateFunction>();
         FieldsToGroupBy = new List<string>();
+        Name = "aggregate";
     }
     
     public List<string> FieldsToAggregate { get; set; }

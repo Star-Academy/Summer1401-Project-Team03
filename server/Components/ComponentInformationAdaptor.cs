@@ -2,7 +2,7 @@ using server.Pipelines;
 
 namespace server.Components;
 
-public class ComponentInformationAdaptor
+public static class ComponentInformationAdaptor
 {
 
     public static Component GetComponentFromInformation(ComponentInformation information)

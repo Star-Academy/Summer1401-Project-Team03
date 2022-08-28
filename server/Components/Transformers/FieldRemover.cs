@@ -9,7 +9,7 @@ public class FieldRemover : Transformer
     public FieldRemover(Pipeline pipeline, Position position) : base(pipeline, position)
     {
         FieldsToRemove = new List<string>();
-        Name = $"Field Remover{Id}";
+        Name = $"field_remover";
     }
 
     public override string GetQuery()

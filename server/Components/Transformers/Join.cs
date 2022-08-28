@@ -8,7 +8,7 @@ public class Join : Mutator
 {
     public Join(Pipeline pipeline, Position position) : base(pipeline, position)
     {
-        Name = $"Join{Id}";
+        Name = $"join";
     }
 
     private string firstTableProperty { get; set; }

@@ -11,7 +11,7 @@ public class Filter : Transformer
         FieldsToFilter = new List<string>();
         Operators = new List<Operator>();
         Values = new List<object>();
-        Name = $"Filter{Id}";
+        Name = $"filter";
     }
 
     public List<string> FieldsToFilter { get; set; }

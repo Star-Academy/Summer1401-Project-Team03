@@ -1,6 +1,6 @@
 namespace server.Pipelines;
 
-public class PipelineInformationPipelineAdapter
+public static class PipelineInformationPipelineAdapter
 {
 
     public static Pipeline PipelineFromInformation(PipelineInformation information)
