@@ -5,7 +5,7 @@ import {customProcessType, ProcessType} from 'src/app/enums/ProcessType.enum';
 import {PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 
 let counter = 10;
-const ADDITIONAL_LEFT = 220;
+const ADDITIONAL_LEFT = 300;
 
 @Component({
     selector: 'app-add-node',
@@ -20,7 +20,7 @@ export class addNodeComponent {
     @Input() public nodeData!: PipelineNodeModel;
     public nodeTitle: string = 'new node';
 
-    public processTypes(): customProcessType[] {
+    public customProcessType(): customProcessType[] {
         const keys = Object.keys(customProcessType);
         return keys.map((type) => type as customProcessType);
     }
@@ -29,7 +29,7 @@ export class addNodeComponent {
         this.modal.openModal();
     }
 
-    public addNodeHandle(node: PipelineNodeModel, type: ProcessSchema): void {
+    public addNodeHandle(node: PipelineNodeModel, type: customProcessType): void {
         this.modal.closeModal();
         this.nodeData.openedSettingModal = false;
 
@@ -39,7 +39,7 @@ export class addNodeComponent {
         const newNodeComponent: PipelineNodeModel = {
             id: counter.toString(),
             title,
-            processesInfoType: type,
+            processesInfoType: ProcessType[type],
             position: newPosition,
             openedSettingModal: false,
             afterId: node.afterId,

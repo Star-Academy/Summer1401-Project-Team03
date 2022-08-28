@@ -1,7 +1,7 @@
 <div class="wrapper" [title]="pipelineNodeData.title">
-    <app-svg [iconType]="pipelineNodeData.processesInfoType.icon"></app-svg>
+    <app-svg [iconType]="PROCESS[pipelineNodeData.processesInfoType].icon"></app-svg>
     <div class="desc">
-        <h3 class="label">{{ pipelineNodeData.processesInfoType.title }}</h3>
+        <h3 class="label">{{ PROCESS[pipelineNodeData.processesInfoType].title }}</h3>
         <p>{{ pipelineNodeData.title }}</p>
     </div>
 

@@ -3,8 +3,8 @@
     <div class="list__wrapper">
         <button
             class="list__button"
-            *ngFor="let process of processTypes()"
-            (click)="addNodeHandle(nodeData, processes[process])"
+            *ngFor="let process of customProcessType()"
+            (click)="addNodeHandle(nodeData, process)"
             [title]="processes[process].title"
         >
             <app-svg [iconType]="processes[process].icon"></app-svg>

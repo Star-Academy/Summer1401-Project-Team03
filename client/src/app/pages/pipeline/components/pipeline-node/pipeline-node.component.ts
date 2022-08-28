@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {PipelineNodeModel} from '../../../../models/pipeline-node.model';
+import {PROCESS} from '../../../../data/Processes.data';
 
 @Component({
     selector: 'app-pipeline-node',
@@ -7,6 +8,8 @@ import {PipelineNodeModel} from '../../../../models/pipeline-node.model';
     styleUrls: ['./pipeline-node.component.scss'],
 })
 export class PipelineNodeComponent {
+    public PROCESS = PROCESS;
+
     @Input() public pipelineNodeData!: PipelineNodeModel;
     @Output() public removeNodeEmit = new EventEmitter<void>();
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();

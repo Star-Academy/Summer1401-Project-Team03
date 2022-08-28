@@ -1,8 +1,8 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy} from '@angular/core';
 
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {LeaderLineModel, PipelineNodeModel} from '../../../../models/pipeline-node.model';
-import {PROCESS} from '../../../../data/Processes.data';
+import {ProcessType} from '../../../../enums/ProcessType.enum';
 
 declare var LeaderLine: any;
 declare var AnimEvent: any;
@@ -11,7 +11,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '1',
         title: 'covid dataset',
-        processesInfoType: PROCESS.SOURCE,
+        processesInfoType: ProcessType.SOURCE,
         position: {x: 100, y: 100},
         openedSettingModal: false,
         beforeId: '0',
@@ -22,7 +22,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '3',
         title: 'location filtered',
-        processesInfoType: PROCESS.FILTER,
+        processesInfoType: ProcessType.FILTER,
         position: {x: 100, y: 300},
         openedSettingModal: false,
         beforeId: '1',
@@ -32,7 +32,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '4',
         title: 'location renamed',
-        processesInfoType: PROCESS.FIELD_RENAME,
+        processesInfoType: ProcessType.FIELD_RENAME,
         position: {x: 400, y: 300},
         openedSettingModal: false,
         beforeId: '3',
@@ -42,7 +42,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '5',
         title: 'location removed',
-        processesInfoType: PROCESS.FIELD_REMOVE,
+        processesInfoType: ProcessType.FIELD_REMOVE,
         position: {x: 400, y: 100},
         openedSettingModal: false,
         beforeId: '4',
@@ -52,7 +52,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '6',
         title: 'iran filtered',
-        processesInfoType: PROCESS.FILTER,
+        processesInfoType: ProcessType.FILTER,
         position: {x: 700, y: 300},
         openedSettingModal: false,
         beforeId: '5',
@@ -62,7 +62,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: '7',
         title: 'covid',
-        processesInfoType: PROCESS.DESTINATION,
+        processesInfoType: ProcessType.DESTINATION,
         position: {x: 700, y: 100},
         openedSettingModal: false,
         beforeId: '6',
@@ -115,8 +115,6 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
             });
 
             function detectResize(pipelineNodeDatas: PipelineNodeModel[]): void {
-                console.log('-------');
-                console.log(pipelineNodeDatas);
                 pipelineNodeDatas.forEach((node) => node.leaderlines.forEach((line) => line.leaderLineObj.position()));
             }
 
@@ -185,7 +183,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
     public addNodeComponent(item: PipelineNodeModel, beforeId: string, afterId: string): void {
         // is destination
-        if (this.isWhatTypeById(beforeId, 'destination')) {
+        if (this.isWhatTypeById(beforeId, ProcessType.DESTINATION)) {
             return undefined;
         }
 
@@ -224,7 +222,8 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         };
 
         // The first or last Node that we don't want remove
-        if (this.isWhatTypeById(id, 'source') || this.isWhatTypeById(id, 'destination')) return undefined;
+        if (this.isWhatTypeById(id, ProcessType.SOURCE) || this.isWhatTypeById(id, ProcessType.DESTINATION))
+            return undefined;
 
         // Create new connection
         this.connectLeaderLineBetweenTwoElementById(beforeId, afterId);
@@ -257,7 +256,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     // LeaderLine
     public updateLeaderLine(currentId: string): void | boolean {
         // The last one
-        if (this.isWhatTypeById(currentId, 'destination')) {
+        if (this.isWhatTypeById(currentId, ProcessType.DESTINATION)) {
             this.updateLeaderLineById(currentId);
         }
 
@@ -266,15 +265,15 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.updateLeaderLineById(currentId);
 
         // // It's not The first one
-        if (!this.isWhatTypeById(currentId, 'source')) {
+        if (!this.isWhatTypeById(currentId, ProcessType.SOURCE)) {
             console.log(beforeId);
             this.updateLeaderLineById(beforeId);
         }
     }
 
-    private isWhatTypeById(id: string, type: string): boolean {
+    private isWhatTypeById(id: string, type: ProcessType): boolean {
         const currentNodeIndex = this.getNodeIndexById(id);
-        return this.pipelineNodeDatas[currentNodeIndex].processesInfoType.title === type ? true : false;
+        return this.pipelineNodeDatas[currentNodeIndex].processesInfoType === type ? true : false;
     }
 
     private updateLeaderLineById(id: string): void {

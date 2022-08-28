@@ -1,11 +1,11 @@
-import {ProcessSchema} from '../data/Processes.data';
+import {ProcessType} from '../enums/ProcessType.enum';
 
 export interface PipelineNodeModel {
     id: string;
     beforeId: string;
     afterId: string;
     title: string;
-    processesInfoType: ProcessSchema;
+    processesInfoType: ProcessType;
     position: {x: number; y: number};
     openedSettingModal: boolean;
     leaderlines: LeaderLineModel[];
