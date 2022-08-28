@@ -1,12 +1,10 @@
-﻿using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Components.Transformers;
-using server.Databases;
 using server.Enums;
 using server.file;
 using server.Pipelines;
@@ -17,31 +15,32 @@ namespace server.Controller;
 [Route("[controller]/[Action]")]
 public class PipelineController : ControllerBase
 {
-    private static int _counter;
     private static readonly Dictionary<int, Pipeline> idToPipeline = new();
 
     public static string JsonPath = Path.Combine(Directory.GetCurrentDirectory(), "json");
-    
+
     [EnableCors("CorsPolicy")]
     [HttpPost]
-    public IActionResult Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
+    public ActionResult<int> Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
     {
         try
         {
             var pipeline = new Pipeline(pipelineName);
 
-            _counter++;
-            idToPipeline[_counter] = pipeline;
-            pipeline.id = _counter;
+            var pipelineID = IDCounterHandler.LoadPipeLineID();
+            idToPipeline[pipelineID] = pipeline;
+            pipeline.id = pipelineID;
 
-            AddSource(pipeline, sourceFileID, 0, 0);
-            AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 1);
+            IDCounterHandler.SavePipelineID(pipelineID + 1);
+
+            AddSource(pipeline, sourceFileID, new Position(0, 0));
+            AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4), 1);
 
             var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
             var jsonString = JsonSerializer.Serialize(info);
 
             System.IO.File.WriteAllText($@"D:\Summer1401-Project-Team03\server\json\{pipeline.id}", jsonString);
-            return Ok(_counter);
+            return Ok(pipelineID);
         }
 
         catch (Exception e)
@@ -52,21 +51,52 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpPost]
-    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x,
-        double y,
-        [FromBody] Dictionary<string, string> dictionary)
+    public ActionResult<int> AddComponent(int pipelineID, int previousComponentId, int nextComponentId, Position position, TransformerType type)
     {
         try
         {
             var pipeline = idToPipeline[pipelineID];
 
-            var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
-                dictionary["operator"].GetOperator(), dictionary["value"]);
+            Component component = null;
+            switch (type)
+            {
+                case TransformerType.Filter:
+                    component = new Filter(pipeline, position);
+                    break;
+                
+                case TransformerType.Aggregate:
+                    component = new Aggregate(pipeline, position);
+                    break;
 
-            pipeline.AddComponent(filter);
-            filter.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
+                case TransformerType.Hash:
+                    component = new Hash(pipeline, position);
+                    break;
 
-            return Ok(filter.Id);
+                case TransformerType.DataSampling:
+                    component = new DataSampling(pipeline, position);
+                    break;
+
+                case TransformerType.FieldRemover:
+                    component = new FieldRemover(pipeline, position);
+                    break;
+
+                case TransformerType.FieldRenamer:
+                    component = new FieldRenamer(pipeline, position);
+                    break;
+
+                case TransformerType.TypeConverter:
+                    component = new TypeConverter(pipeline, position);
+                    break;
+                
+                case TransformerType.FieldSelector:
+                    component = new FieldSelector(pipeline, position);
+                    break;
+            }
+            
+            pipeline.AddComponent(component);
+            component.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
+
+            return Ok(component.Id);
         }
         catch (Exception e)
         {
@@ -74,23 +104,41 @@ public class PipelineController : ControllerBase
         }
     }
 
-    private void AddSource(Pipeline pipeline, int fileID, double x, double y)
+    [EnableCors("CorsPolicy")]
+    [HttpPost]
+    public IActionResult SetComponentConfig(int pipelineID, int componentID, [FromBody] Dictionary<string, string> configurations)
+    {
+        try
+        {
+            var pipeline = idToPipeline[pipelineID];
+            var component = pipeline.IdToComponent[componentID];
+            component.SetConfig(configurations);
+            
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+
+    private void AddSource(Pipeline pipeline, int fileID, Position position)
     {
         var filePath = FileSearcher.Search(fileID, "imports");
-        var extractor = new CSVExtractor(pipeline, new Position(x, y), filePath);
+        var extractor = new CSVExtractor(pipeline, position, filePath);
 
         pipeline.AddComponent(extractor);
     }
 
 
-    private void AddDestination(Pipeline pipeline, string fileName, string format, double x, double y,
+    private void AddDestination(Pipeline pipeline, string fileName, string format, Position position,
         int previousComponentId)
     {
         var fileID = IDCounterHandler.LoadFileID();
         var filePath = FilePathGenerator.Path(fileName, format, fileID, "exports");
 
         IDCounterHandler.SaveFileID(fileID + 1);
-        var loader = new CSVLoader(pipeline, new Position(x, y), filePath);
+        var loader = new CSVLoader(pipeline, position, filePath);
 
         loader.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
 
@@ -131,33 +179,33 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public ActionResult<List<(string,int)>> GetPipelinesInformation()
+    public ActionResult<List<(string, int)>> GetPipelinesInformation()
     {
         var informations = new List<(string, int)>();
         foreach (var filePath in Directory.GetFiles(JsonPath))
         {
-            var information = System.Text.Json.JsonSerializer.Deserialize<PipelineInformation>(
+            var information = JsonSerializer.Deserialize<PipelineInformation>(
                 System.IO.File.ReadAllText(JsonPath + "\\" + filePath));
-            
+
             informations.Add((information.Name, information.ID));
         }
-        
-        
+
+
         return Ok(informations);
     }
-    
-    
+
+
     [EnableCors("CorsPolicy")]
     [HttpGet]
     public ActionResult<List<PipelineInformation>> GetPipelineInformation(int pipelineID)
     {
         try
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo(JsonPath);
-            FileInfo[] files = directoryInfo.GetFiles("*");
+            var directoryInfo = new DirectoryInfo(JsonPath);
+            var files = directoryInfo.GetFiles("*");
 
             var file = files.Where(x => x.Name == pipelineID.ToString()).ElementAt(0);
-            
+
             return Ok(System.IO.File.ReadAllText(file.FullName));
         }
         catch (Exception e)
