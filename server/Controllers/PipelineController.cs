@@ -131,18 +131,21 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public ActionResult<List<PipelineInformation>> GetPipelinesInformation()
+    public ActionResult<List<(string,int)>> GetPipelinesInformation()
     {
-        var sb = new StringBuilder("[");
-        
-        foreach (var file in Directory.GetFiles(JsonPath))
+        var informations = new List<(string, int)>();
+        foreach (var filePath in Directory.GetFiles(JsonPath))
         {
-            sb.Append(System.IO.File.ReadAllText(file)).Append(", ");
+            var information = System.Text.Json.JsonSerializer.Deserialize<PipelineInformation>(
+                System.IO.File.ReadAllText(JsonPath + "\\" + filePath));
+            
+            informations.Add((information.Name, information.ID));
         }
-        sb.Append(']');
         
-        return Ok(sb.ToString());
+        
+        return Ok(informations);
     }
+    
     
     [EnableCors("CorsPolicy")]
     [HttpGet]
