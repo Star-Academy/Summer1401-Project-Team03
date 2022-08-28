@@ -18,7 +18,7 @@ public class Pipeline
         Name = information.Name;
         id = information.ID;
         DestinationIDs = information.DestinationIDs;
-        IdToComponent = information.IdToComponent.ToDictionary(t => t.Key,
+        IdToComponent = information.Components.ToDictionary(t => t.Key,
             t => ComponentInformationAdaptor.GetComponentFromInformation(t.Value));
         Database = new PostgresDatabase(dbConfiguration);
         QueryBuilder = new PostgresQueryBuilder();
