@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Databases;
 using server.file;
+using FileOperation = System.IO.File;
 
 namespace server.Controller;
 
@@ -27,10 +28,10 @@ public class DataInventoryController : ControllerBase
 
             var fileID = IDCounterHandler.LoadFileID();
              
-            var filePath = FilePathGenerator.Path(fileName, format, fileID, "imports");
+            var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "imports");
             
             IDCounterHandler.SaveFileID(fileID + 1);
-            using (var stream = System.IO.File.Create(filePath))
+            using (var stream = FileOperation.Create(filePath))
             {
                 await file.CopyToAsync(stream);
             }
@@ -48,7 +49,7 @@ public class DataInventoryController : ControllerBase
         try
         {
             var filePath = FileSearcher.Search(fileID, "exports");
-            return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
+            return new FileStreamResult(FileOperation.Open(filePath, FileMode.Open), "text/plain");
         }
         catch (Exception e)
         {
@@ -81,7 +82,7 @@ public class DataInventoryController : ControllerBase
         try
         {
             var filePath = FileSearcher.Search(fileID, category);
-            System.IO.File.Delete(filePath);
+            FileOperation.Delete(filePath);
             return Ok();
         }
         catch (Exception e)
@@ -101,7 +102,7 @@ public class DataInventoryController : ControllerBase
             
             var regex = new Regex(".*_[0-9]*\\.(csv|json)");
             var fileType = regex.Match(fileInfo.Name).Groups[1].Value;
-            var newPath = FilePathGenerator.Path(newName, fileType, fileID, category);
+            var newPath = PathGenerator.GenerateDataPath(newName, fileType, fileID, category);
             fileInfo.MoveTo(newPath);
             return Ok();
         }

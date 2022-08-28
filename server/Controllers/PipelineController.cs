@@ -8,7 +8,7 @@ using server.Components.Transformers;
 using server.Enums;
 using server.file;
 using server.Pipelines;
-
+using FileOperation = System.IO.File;
 namespace server.Controller;
 
 [ApiController]
@@ -39,7 +39,8 @@ public class PipelineController : ControllerBase
             var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
             var jsonString = JsonSerializer.Serialize(info);
 
-            System.IO.File.WriteAllText($@"D:\Summer1401-Project-Team03\server\json\{pipeline.id}", jsonString);
+            var pipelinePath = PathGenerator.GeneratePipelinePath(pipelineID); 
+            FileOperation.WriteAllText(pipelinePath, jsonString);
             return Ok(pipelineID);
         }
 
@@ -135,7 +136,7 @@ public class PipelineController : ControllerBase
         int previousComponentId)
     {
         var fileID = IDCounterHandler.LoadFileID();
-        var filePath = FilePathGenerator.Path(fileName, format, fileID, "exports");
+        var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "exports");
 
         IDCounterHandler.SaveFileID(fileID + 1);
         var loader = new CSVLoader(pipeline, position, filePath);
@@ -185,7 +186,7 @@ public class PipelineController : ControllerBase
         
         foreach (var filePath in Directory.GetFiles(JsonPath))
         {
-            var jsonFile = System.IO.File.ReadAllText(filePath);
+            var jsonFile = FileOperation.ReadAllText(filePath);
             var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
             
             informations[information.ID] = information.Name;
@@ -206,7 +207,7 @@ public class PipelineController : ControllerBase
 
             var file = files.Where(x => x.Name == pipelineID.ToString()).ElementAt(0);
 
-            return Ok(System.IO.File.ReadAllText(file.FullName));
+            return Ok(FileOperation.ReadAllText(file.FullName));
         }
         catch (Exception e)
         {
