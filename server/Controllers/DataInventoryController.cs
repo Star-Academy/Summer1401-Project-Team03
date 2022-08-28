@@ -13,6 +13,7 @@ public class DataInventoryController : ControllerBase
     public static int fileID;
     private PostgresDatabase _database;
 
+    [EnableCors("CorsPolicy")]
     [HttpPost]
     public async Task<IActionResult> Import(IFormFile file)
     {
@@ -39,6 +40,7 @@ public class DataInventoryController : ControllerBase
         return BadRequest("The sent file is empty!");
     }
 
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult Export(int fileID)
     {
@@ -53,7 +55,7 @@ public class DataInventoryController : ControllerBase
         }
     }
 
-    [EnableCors("AnotherPolicy")]
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public ActionResult<List<FileInformation>> GetFilesInformation()
     {
@@ -64,6 +66,43 @@ public class DataInventoryController : ControllerBase
             FileInformation.ExtractInformation(informations, "exports");
 
             return Ok(informations);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [EnableCors("CorsPolicy")]
+    [HttpDelete]
+    public IActionResult Delete(int fileID, string category)
+    {
+        try
+        {
+            var filePath = FileSearcher.Search(fileID, category);
+            System.IO.File.Delete(filePath);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [EnableCors("CorsPolicy")]
+    [HttpPut]
+    public IActionResult Rename(int fileID, string category, string newName)
+    {
+        try
+        {
+            var filePath = FileSearcher.Search(fileID, category);
+            var fileInfo = new FileInfo(filePath);
+            
+            var regex = new Regex(".*_[0-9]*\\.(csv|json)");
+            var fileType = regex.Match(fileInfo.Name).Groups[1].Value;
+            var newPath = FilePathGenerator.Path(newName, fileType, fileID, category);
+            fileInfo.MoveTo(newPath);
+            return Ok();
         }
         catch (Exception e)
         {

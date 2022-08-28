@@ -1,10 +1,12 @@
-﻿using System.Data.Common;
-using DBConfig;
+﻿using System.Text;
+using System.Text.Json;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Components.Transformers;
+using server.Databases;
 using server.Enums;
 using server.file;
 using server.Pipelines;
@@ -18,20 +20,27 @@ public class PipelineController : ControllerBase
     private static int _counter;
     private static readonly Dictionary<int, Pipeline> idToPipeline = new();
 
+    public static string JsonPath = Path.Combine(Directory.GetCurrentDirectory(), "json");
+    
+    [EnableCors("CorsPolicy")]
     [HttpPost]
     public IActionResult Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
     {
         try
         {
-            var dbConfiguration = DBConfigLoader.Load();
-            var pipeline = new Pipeline(pipelineName, dbConfiguration);
+            var pipeline = new Pipeline(pipelineName);
 
             _counter++;
             idToPipeline[_counter] = pipeline;
+            pipeline.id = _counter;
 
             AddSource(pipeline, sourceFileID, 0, 0);
-            AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 0);
+            AddDestination(pipeline, destFileName, destFileFormat, 4, 0, 1);
 
+            var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
+            var jsonString = JsonSerializer.Serialize(info);
+
+            System.IO.File.WriteAllText($@"D:\Summer1401-Project-Team03\server\json\{pipeline.id}", jsonString);
             return Ok(_counter);
         }
 
@@ -41,6 +50,7 @@ public class PipelineController : ControllerBase
         }
     }
 
+    [EnableCors("CorsPolicy")]
     [HttpPost]
     public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x,
         double y,
@@ -52,7 +62,7 @@ public class PipelineController : ControllerBase
 
             var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
                 dictionary["operator"].GetOperator(), dictionary["value"]);
-            
+
             pipeline.AddComponent(filter);
             filter.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
 
@@ -87,6 +97,7 @@ public class PipelineController : ControllerBase
         pipeline.AddComponent(loader);
     }
 
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult Run(int pipelineID)
     {
@@ -102,6 +113,7 @@ public class PipelineController : ControllerBase
         }
     }
 
+    [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult RunUpTo(int pipelineID, int componentID)
     {
@@ -117,9 +129,18 @@ public class PipelineController : ControllerBase
         }
     }
 
+    [EnableCors("CorsPolicy")]
     [HttpGet]
-    public void GetPipelinesInformation()
+    public ActionResult<List<PipelineInformation>> GetPipelinesInformation()
     {
-        PipelineInformation.ExtractInformation(idToPipeline);
+        var sb = new StringBuilder("[");
+        
+        foreach (var file in Directory.GetFiles(JsonPath))
+        {
+            sb.Append(System.IO.File.ReadAllText(file)).Append(", ");
+        }
+        sb.Append(']');
+        
+        return Ok(sb.ToString());
     }
 }

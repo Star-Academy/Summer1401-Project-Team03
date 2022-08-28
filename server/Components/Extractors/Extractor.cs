@@ -8,6 +8,7 @@ public abstract class Extractor : Component
     {
         TableName = pipeline.TableManager.NewTableName();
         FilePath = filePath;
+        Name = $"Source{Id}";
     }
 
     public string TableName { set; get; }
