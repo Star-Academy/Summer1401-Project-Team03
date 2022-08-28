@@ -17,29 +17,36 @@ public class DataInventoryController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Import(IFormFile file)
     {
-        if (file.Length > 0)
+        try
         {
-            var regex = new Regex("(.*)\\.(csv|json)");
-
-            var match = regex.Match(file.FileName);
-
-            var fileName = match.Groups[1].Value;
-            var format = match.Groups[2].Value;
-
-            var fileID = IDCounterHandler.LoadFileID();
-             
-            var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "imports");
-            
-            IDCounterHandler.SaveFileID(fileID + 1);
-            using (var stream = FileOperation.Create(filePath))
+            if (file.Length > 0)
             {
-                await file.CopyToAsync(stream);
+                var regex = new Regex("(.*)\\.(csv|json)");
+
+                var match = regex.Match(file.FileName);
+
+                var fileName = match.Groups[1].Value;
+                var format = match.Groups[2].Value;
+
+                var fileID = IDCounterHandler.LoadFileID();
+             
+                var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "imports");
+            
+                IDCounterHandler.SaveFileID(fileID + 1);
+                using (var stream = FileOperation.Create(filePath))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                return Ok(fileID);
             }
 
-            return Ok(fileID);
+            return BadRequest("The sent file is empty!");
         }
-
-        return BadRequest("The sent file is empty!");
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [EnableCors("CorsPolicy")]
@@ -53,7 +60,7 @@ public class DataInventoryController : ControllerBase
         }
         catch (Exception e)
         {
-            return BadRequest("file not found!");
+            return BadRequest(e.Message);
         }
     }
 
