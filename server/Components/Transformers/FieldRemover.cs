@@ -6,9 +6,9 @@ public class FieldRemover : Transformer
 {
     public List<string> FieldsToRemove;
 
-    public FieldRemover(Pipeline pipeline, Position position, List<string> fieldsToRemove) : base(pipeline, position)
+    public FieldRemover(Pipeline pipeline, Position position) : base(pipeline, position)
     {
-        FieldsToRemove = fieldsToRemove;
+        FieldsToRemove = new List<string>();
     }
 
     public override string GetQuery()

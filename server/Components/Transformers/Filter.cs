@@ -5,23 +5,23 @@ namespace server.Components.Transformers;
 
 public class Filter : Transformer
 {
-    public Filter(Pipeline pipeline, Position position, string fieldToFilter, Operator @operator, object value) :
+    public Filter(Pipeline pipeline, Position position) :
         base(pipeline, position)
     {
-        FieldToFilter = fieldToFilter;
-        Operator = @operator;
-        Value = value;
+        FieldsToFilter = new List<string>();
+        Operators = new List<Operator>();
+        Values = new List<object>();
     }
 
-    public string FieldToFilter { get; set; }
+    public List<string> FieldsToFilter { get; set; }
 
-    public Operator Operator { get; set; }
+    public List<Operator> Operators { get; set; }
 
-    public object Value { get; set; }
+    public List<object> Values { get; set; }
 
     public override string GetQuery()
     {
         return
-            $"{Pipeline.QueryBuilder.Select(new List<string> {"*"}, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName())} {Pipeline.QueryBuilder.Where(FieldToFilter, Operator.GetString(), Value)}";
+            $"{Pipeline.QueryBuilder.Select(new List<string> {"*"}, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName())} {Pipeline.QueryBuilder.Where(FieldsToFilter, Operators, Values)}";
     }
 }

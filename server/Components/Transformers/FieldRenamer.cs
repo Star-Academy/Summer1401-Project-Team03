@@ -4,11 +4,11 @@ namespace server.Components.Transformers;
 
 public class FieldRenamer : Transformer
 {
-    public FieldRenamer(Pipeline pipeline, Position position, List<string> fieldsToRename, List<string> newNames) :
+    public FieldRenamer(Pipeline pipeline, Position position) :
         base(pipeline, position)
     {
-        FieldsToRename = fieldsToRename;
-        NewNames = newNames;
+        FieldsToRename = new List<string>();
+        NewNames = new List<string>();
     }
 
     private List<string> FieldsToRename { get; }

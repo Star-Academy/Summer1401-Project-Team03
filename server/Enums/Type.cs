@@ -4,5 +4,7 @@ public enum Type
 {
     Boolean,
     Integer,
-    Real
+    Real,
+    Text,
+    Date
 }

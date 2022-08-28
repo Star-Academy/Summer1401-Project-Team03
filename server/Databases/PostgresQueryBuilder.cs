@@ -45,6 +45,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     {
         throw new NotImplementedException();
     }
+
     public string ExportJson(string table, string filePath)
     {
         return $"COPY (SELECT row_to_json({table}) from {table} ) TO '{filePath}'";
@@ -87,6 +88,67 @@ public class PostgresQueryBuilder : IQueryBuilder
         return Where(condition);
     }
 
+    public string Where(List<string> keys, List<string> operators, List<object> values)
+    {
+        var query = new StringBuilder(Where("true"));
+        for (var i = 0; i < keys.Count; i++)
+        {
+            var valueString = values[i].ToString();
+            if (values[i] is string) valueString = $"'{valueString}'";
+            query.Append($"AND {keys[i]} {operators[0]} {valueString}");
+        }
+
+        return query.ToString();
+    }
+
+    public string Where(List<string> keys, List<Operator> operators, List<object> values)
+    {
+        var query = new StringBuilder(Where("true"));
+        for (var i = 0; i < keys.Count; i++)
+        {
+            var valueString = values[i].ToString();
+            if (values[i] is string) valueString = $"'{valueString}'";
+            query.Append($"AND {keys[i]} {operators[0].GetString()} {valueString}");
+        }
+
+        return query.ToString();
+    }
+
+    public string ConvertType(string key, string type)
+    {
+        return $"{key}::{type}";
+    }
+
+    public string GroupBy(string key)
+    {
+        return $"GROUP BY {key}";
+    }
+
+    public string GroupBy(List<string> keys)
+    {
+        var query = new StringBuilder(GroupBy(keys[0]));
+        for (var i = 0; i < keys.Count; i++)
+        {
+            query.Append($", {keys[i]}");
+        }
+
+        return query.ToString();
+    }
+
+    public string Aggregate(string key, string function)
+    {
+        if (function.ToLower() == "list")
+        {
+            function = "array_agg";
+        }
+        return $"{function}({key})";
+    }
+
+    public string Sample(string table, string alias, int number)
+    {
+        return $"SELECT * FROM ({table}) AS {alias} ORDER BY random() LIMIT {number}";
+    }
+
     public string AlterType(string key, string type)
     {
         return $"ALTER COLUMN {key} TYPE {type} USING ({key}::{type})";
@@ -101,5 +163,4 @@ public class PostgresQueryBuilder : IQueryBuilder
     {
         throw new NotImplementedException();
     }
-
 }

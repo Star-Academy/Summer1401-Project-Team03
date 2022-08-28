@@ -6,14 +6,14 @@ public class FieldSelector : Transformer
 {
     public List<string> FieldsToSelect;
 
-    public FieldSelector(Pipeline pipeline, Position position, List<string> fieldsToSelect) : base(pipeline, position)
+    public FieldSelector(Pipeline pipeline, Position position) : base(pipeline, position)
     {
-        FieldsToSelect = fieldsToSelect;
+        FieldsToSelect = new List<string>();
     }
 
     public override string GetQuery()
     {
-        return Pipeline.QueryBuilder.Select(GetKeys(), PreviousComponents[0].GetQuery(),
+        return Pipeline.QueryBuilder.Select(FieldsToSelect, PreviousComponents[0].GetQuery(),
             Pipeline.TableManager.NewTableName());
     }
 

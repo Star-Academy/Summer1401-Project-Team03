@@ -4,20 +4,25 @@ namespace server.Components.Transformers;
 
 public class TypeConverter : Mutator
 {
-    public List<string> Field;
-    public List<Type> Type;
+    public List<string> Fields;
+    public List<Type> Types;
     
     public TypeConverter(Pipeline pipeline, Position position) : base(pipeline, position)
     {
         TableName = Pipeline.TableManager.NewTableName();
-        Field = new List<string>();
-        Type = new List<Type>();
+        Fields = new List<string>();
+        Types = new List<Type>();
     }
     
     public override string GetQuery()
     {
-        Mutate();
-        return Pipeline.QueryBuilder.SelectTable(TableName);
+        //Mutate();
+        var fieldsToSelect = GetKeys().Except(Fields).ToList();
+        for (int i = 0; i < Fields.Count; i++)
+        {
+            fieldsToSelect.Add(Pipeline.QueryBuilder.ConvertType(Fields[i],Types[i].ToString()));
+        }
+        return Pipeline.QueryBuilder.Select(fieldsToSelect,PreviousComponents[0].GetQuery(),Pipeline.TableManager.NewTableName());
     }
 
     public override void Mutate()
