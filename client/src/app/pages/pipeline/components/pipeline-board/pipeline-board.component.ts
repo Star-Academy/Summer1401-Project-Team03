@@ -102,7 +102,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
             const nodeComponentLength = this.pipelineNodeDatas.length;
             this.pipelineNodeDatas.forEach((node, index) => {
                 if (index === nodeComponentLength - 1) return;
-                this.connectLeaderLineBetweenTwoElementById(node.beforeId, node.id, node.afterId, '', 0, true);
+                this.connectLeaderLineBetweenTwoElementById(node.id, node.afterId);
             });
         };
 
@@ -156,8 +156,23 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.leaderLineLinks.splice(index, count);
     }
 
-    private removeItemFromNodeList(index: number, count = 1): void {
+    private removeItemFromNodeListByIndex(index: number, count = 1): void {
         this.pipelineNodeDatas.splice(index, count);
+    }
+    private removeItemFromNodeListById(id: string): void {
+        const activeNodeIndex = this.getNodeIndexById(id);
+        this.removeItemFromNodeListByIndex(activeNodeIndex);
+    }
+
+    private removeLeaderlineBetweenTwoNodeById(firstNodeId: string, secondNodeId: string): void {
+        const activeNodeIndex = this.getNodeIndexById(firstNodeId);
+        console.log(activeNodeIndex);
+        console.log(this.pipelineNodeDatas[activeNodeIndex]);
+        const activeLeaderlineNodeIndex = this.pipelineNodeDatas[activeNodeIndex].leaderlines.findIndex(
+            (line) => line.currentId === firstNodeId && line.withId === secondNodeId
+        );
+        this.pipelineNodeDatas[activeNodeIndex].leaderlines[activeLeaderlineNodeIndex].leaderLineObj.remove();
+        this.pipelineNodeDatas[activeNodeIndex].leaderlines.splice(activeLeaderlineNodeIndex, 1);
     }
 
     // private removeLineBetweenTwoNodeById(currentId: string, afterId: string): void {
@@ -170,14 +185,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     //     this.removeItemFromLeaderLine(index);
     // }
 
-    private connectLeaderLineBetweenTwoElementById(
-        beforeId: string,
-        currentId: string,
-        afterId: string,
-        elementIdToInsert: string = '',
-        insertPlace = 0,
-        isPush = false
-    ): void {
+    private connectLeaderLineBetweenTwoElementById(currentId: string, afterId: string): void {
         const firstElement = this.getElementRef(currentId);
         const secondElement = this.getElementRef(afterId);
         console.log(firstElement);
@@ -189,16 +197,13 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
             withId: afterId,
             leaderLineObj: newLeaderLine,
         };
-        if (isPush) {
-            const currentIndex = this.getNodeIndexById(currentId);
-            this.pipelineNodeDatas[currentIndex].leaderlines.push(newLeaderLineObj);
-            // this.leaderLineLinks.push(newLeaderLineObj);
-            console.log(this.leaderLineLinks);
-            return undefined;
-        }
-        const insertPlaceLeaderLine = this.getLeaderIndexById(elementIdToInsert);
-        this.addItemToLeaderLine(insertPlaceLeaderLine + insertPlace, newLeaderLineObj);
-        console.log(this.leaderLineLinks);
+
+        const currentIndex = this.getNodeIndexById(currentId);
+        this.pipelineNodeDatas[currentIndex].leaderlines.push(newLeaderLineObj);
+        //
+        // const insertPlaceLeaderLine = this.getLeaderIndexById(elementIdToInsert);
+        // this.addItemToLeaderLine(insertPlaceLeaderLine + insertPlace, newLeaderLineObj);
+        // console.log(this.leaderLineLinks);
     }
 
     private getLeaderIndexById(id: string): number {
@@ -230,52 +235,43 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         // this.pipelineNodeDatas[afterNodeIndex].beforeId = item.id;
     }
 
+    public changeBeforeIdById(id: string, withId: string): void {
+        const activeNodeIndex = this.getNodeIndexById(id);
+        this.pipelineNodeDatas[activeNodeIndex].beforeId = withId;
+    }
+
+    public changeAfterIdById(id: string, withId: string): void {
+        const activeNodeIndex = this.getNodeIndexById(id);
+        this.pipelineNodeDatas[activeNodeIndex].afterId = withId;
+    }
+
     public removeNodeComponent(id: string, beforeId: string, afterId: string): void | boolean {
-        const currentNodeComponentIndex = this.getNodeIndexById(id);
-        // const beforeNodeId = this.getNodeIdByIndex(currentNodeComponentIndex - 1);
-        // const afterNodeId = this.getNodeIdByIndex(currentNodeComponentIndex + 1);
-        //
-        // const removeAllNodeAffect = (id: string): void => {
-        //     // Remove node-element from node-list
-        //     this.removeItemFromNodeList(currentNodeComponentIndex);
-        //
-        //     // Remove Line and connection line
-        //     // const currentLeaderLineIndex = this.getLeaderIndexById(id);
-        //     this.removeLineBetweenTwoNodeById(beforeId, id);
-        //     this.removeLineBetweenTwoNodeById(id, afterId);
-        //     // this.removeLine(currentLeaderLineIndex);
-        //     // this.removeLine(currentLeaderLineIndex - 1);
-        //     this.removeLeaderLineBetweenTwoNodeById(beforeId, id);
-        //     this.removeLeaderLineBetweenTwoNodeById(id, afterId);
-        //     // this.removeItemFromLeaderLine(currentLeaderLineIndex - 1, 2);
-        //     const afterNodeIndex = this.getNodeIndexById(afterId);
-        //     try {
-        //         console.log(afterNodeIndex);
-        //         console.log(this.leaderLineLinks[afterNodeIndex].beforeId);
-        //         console.log('too!');
-        //         console.log(beforeId);
-        //         this.leaderLineLinks[afterNodeIndex].beforeId = beforeId;
-        //         this.pipelineNodeDatas[afterNodeIndex].beforeId = beforeId;
-        //     } catch (e) {
-        //         console.log(e);
-        //     } finally {
-        //         // Remove component from board
-        //         const component = this.getElementRef(id);
-        //         component.remove();
-        //     }
-        // };
-        //
-        // // The first or last Node that we don't want remove
-        // if (this.isWhatTypeById(id, 'source') || this.isWhatTypeById(id, 'destination')) return undefined;
-        //
-        // const beforeNodeIndex = this.getNodeIndexById(beforeId);
-        // const beforeBeforeNodeId = this.pipelineNodeDatas[beforeNodeIndex].beforeId;
-        //
-        // // Create new connection
-        // this.connectLeaderLineBetweenTwoElementById(beforeBeforeNodeId, beforeId, afterId, beforeId);
-        //
-        // // Remove old connection
-        // removeAllNodeAffect(id);
+        const removeAllNodeAffect = (id: string): void => {
+            // Remove Line and connection line
+            this.removeLeaderlineBetweenTwoNodeById(beforeId, id);
+            this.removeLeaderlineBetweenTwoNodeById(id, afterId);
+
+            // Update beforeId,afterId, node component
+            this.changeAfterIdById(beforeId, afterId);
+            this.changeBeforeIdById(afterId, beforeId);
+
+            // Remove node-element from node-list
+            this.removeItemFromNodeListById(id);
+
+            console.log(this.pipelineNodeDatas);
+            // Remove component from board
+            const component = this.getElementRef(id);
+            component.remove();
+        };
+
+        // The first or last Node that we don't want remove
+        if (this.isWhatTypeById(id, 'source') || this.isWhatTypeById(id, 'destination')) return undefined;
+
+        // Create new connection
+        this.connectLeaderLineBetweenTwoElementById(beforeId, afterId);
+
+        // Remove old connection
+        removeAllNodeAffect(id);
     }
 
     public setToUpperLayer(elementId: string): void {
@@ -327,7 +323,6 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.pipelineNodeDatas[activeNodeIndex].leaderlines.forEach((line) => {
             line.leaderLineObj.position();
         });
-
     }
 
     private getElementRef(id: string): HTMLElement {
