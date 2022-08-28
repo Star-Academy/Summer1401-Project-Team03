@@ -50,29 +50,29 @@ public class PipelineController : ControllerBase
         }
     }
 
-    [EnableCors("CorsPolicy")]
-    [HttpPost]
-    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x,
-        double y,
-        [FromBody] Dictionary<string, string> dictionary)
-    {
-        try
-        {
-            var pipeline = idToPipeline[pipelineID];
-
-            var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
-                dictionary["operator"].GetOperator(), dictionary["value"]);
-
-            pipeline.AddComponent(filter);
-            filter.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
-
-            return Ok(filter.Id);
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e);
-        }
-    }
+    // [EnableCors("CorsPolicy")]
+    // [HttpPost]
+    // public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x,
+    //     double y,
+    //     [FromBody] List<Dictionary<string, string>> dictionary)
+    // {
+    //     try
+    //     {
+    //         var pipeline = idToPipeline[pipelineID];
+    //
+    //         var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
+    //             dictionary["operator"].GetOperator(), dictionary["value"]);
+    //
+    //         pipeline.AddComponent(filter);
+    //         filter.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
+    //
+    //         return Ok(filter.Id);
+    //     }
+    //     catch (Exception e)
+    //     {
+    //         return BadRequest(e);
+    //     }
+    // }
 
     private void AddSource(Pipeline pipeline, int fileID, double x, double y)
     {
@@ -142,5 +142,24 @@ public class PipelineController : ControllerBase
         sb.Append(']');
         
         return Ok(sb.ToString());
+    }
+    
+    [EnableCors("CorsPolicy")]
+    [HttpGet]
+    public ActionResult<List<PipelineInformation>> GetPipelineInformation(int pipelineID)
+    {
+        try
+        {
+            DirectoryInfo directoryInfo = new DirectoryInfo(JsonPath);
+            FileInfo[] files = directoryInfo.GetFiles("*");
+
+            var file = files.Where(x => x.Name == pipelineID.ToString()).ElementAt(0);
+            
+            return Ok(System.IO.File.ReadAllText(file.FullName));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }
