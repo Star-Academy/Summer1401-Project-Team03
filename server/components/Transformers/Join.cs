@@ -5,9 +5,9 @@ namespace server.Components.Transformers;
 
 public class Join : Transformer
 {
-    public Join(Pipeline pipeline, Position position) : base(pipeline, position)
+    public Join() : base()
     {
-        Name = $"join";
+        Type = "join";
     }
 
     private string firstTableProperty { get; set; }
@@ -15,34 +15,10 @@ public class Join : Transformer
     private JoinType joinType { get; set; }
     private string firstTableName { get; set; }
     private string secondTableName { get; set; }
-
-    public override void Mutate()
-    {
-        firstTableName = PreviousComponents[0].GetQuery();
-        secondTableName = PreviousComponents[1].GetQuery();
-
-        var firstProperty = $"{firstTableName}.{firstTableProperty}";
-        var secondProperty = $"{secondTableName}.{secondTableProperty}";
-
-        var query = new Query(firstTableName);
-        query = QueryByJoinType(query, secondTableName, firstProperty, secondProperty);
-
-        // Pipeline.Database.Execute(getPostgresQuery(query));
-        Pipeline.QueryBuilder.Copy(firstTableName, GetTable());
-        Pipeline.QueryBuilder.Drop(secondTableName);
-        Pipeline.QueryBuilder.Drop(firstTableName);
-    }
-
+    
     public override string GetQuery()
     {
-        Mutate();
-
-        return GetTable();
-    }
-
-    public override string GetTable()
-    {
-        return $"({firstTableName}+{secondTableName})";
+        throw new NotImplementedException();
     }
 
     private Query QueryByJoinType(Query query,

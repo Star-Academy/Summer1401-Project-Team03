@@ -4,9 +4,9 @@ namespace server.Components.Transformers;
 
 public class FieldRemover : Transformer
 {
-    public FieldRemover(Pipeline pipeline, Position position) : base()
+    public FieldRemover() : base()
     {
-        Type = $"field_remover";
+        Type = "field_remover";
     }
 
     public override string GetQuery()

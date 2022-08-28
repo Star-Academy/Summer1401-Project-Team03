@@ -6,7 +6,7 @@ public class FieldRenamer : Transformer
 {
     public FieldRenamer() : base()
     {
-        Type =  $"field_renamer";
+        Type =  "field_renamer";
     }
 
     private List<string> FieldsToRename { get; }

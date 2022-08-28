@@ -6,7 +6,7 @@ public class FieldSelector : Transformer
 {
     public FieldSelector() : base()
     {
-        Type = $"field_selector";
+        Type = "field_selector";
     }
 
     public override string GetQuery()

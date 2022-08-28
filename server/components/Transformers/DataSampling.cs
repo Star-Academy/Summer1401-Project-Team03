@@ -6,7 +6,7 @@ public class DataSampling : Transformer
 {
     public DataSampling() : base()
     {
-        Name = "data_sampling";
+        Type = "data_sampling";
     }
 
     public int Number { set; get; }
