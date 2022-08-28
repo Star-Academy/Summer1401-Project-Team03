@@ -25,9 +25,12 @@
 
         background-color: var(--color-purple-46);
 
+        block-size: var(--topbar-block-size);
+
         p {
             color: var(--color-purple-86);
             font-size: var(--font-size-big);
+            font-weight: 600;
         }
 
         app-svg {

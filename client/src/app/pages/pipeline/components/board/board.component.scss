@@ -5,6 +5,12 @@
     background-size: $grid-size $grid-size;
 }
 
+@mixin dot-pattern($bg-color, $dot-space, $dot-size, $dot-color) {
+    background: linear-gradient(90deg, $bg-color calc($dot-space - $dot-size), transparent 1%) center,
+        linear-gradient($bg-color calc($dot-space - $dot-size), transparent 1%) center, $dot-color;
+    background-size: $dot-space $dot-space;
+}
+
 .container {
     position: relative;
     overflow: scroll;
@@ -14,7 +20,7 @@
 
     .board {
         @include grid-pattern(var(--color-white-solid), hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
-
+        // @include dot-pattern(var(--color-white-solid), var(--grid-size), 1.25px, var(--color-gray-60));
         position: absolute;
 
         block-size: calc(var(--board-h) * var(--grid-size));
