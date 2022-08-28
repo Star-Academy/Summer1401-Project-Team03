@@ -8,11 +8,11 @@ export interface PipelineNodeModel {
     processesInfoType: ProcessSchema;
     position: {x: number; y: number};
     openedSettingModal: boolean;
+    leaderlines: LeaderLineModel[];
 }
 
 export interface LeaderLineModel {
-    beforeId: string;
     currentId: string;
-    afterId: string;
+    withId: string;
     leaderLineObj: any;
 }

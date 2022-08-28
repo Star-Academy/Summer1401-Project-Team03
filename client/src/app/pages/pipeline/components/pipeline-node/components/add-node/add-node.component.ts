@@ -38,6 +38,7 @@ export class addNodeComponent {
             openedSettingModal: false,
             afterId: node.afterId,
             beforeId: node.id,
+            leaderlines: [],
         };
         counter++; // temporary
         this.addNodeEmit.emit(newNodeComponent);
