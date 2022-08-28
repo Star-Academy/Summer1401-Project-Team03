@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Databases;
 using server.file;
+using FileOperation = System.IO.File;
 
 namespace server.Controller;
 
@@ -10,34 +11,42 @@ namespace server.Controller;
 [Route("[controller]/[Action]")]
 public class DataInventoryController : ControllerBase
 {
-    public static int fileID;
     private PostgresDatabase _database;
 
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public async Task<IActionResult> Import(IFormFile file)
     {
-        if (file.Length > 0)
+        try
         {
-            increaseFileID(1);
-            var regex = new Regex("(.*)\\.(csv|json)");
-
-            var match = regex.Match(file.FileName);
-
-            var fileName = match.Groups[1].Value;
-            var format = match.Groups[2].Value;
-
-            var filePath = FilePathGenerator.Path(fileName, format, fileID, "imports");
-
-            using (var stream = System.IO.File.Create(filePath))
+            if (file.Length > 0)
             {
-                await file.CopyToAsync(stream);
+                var regex = new Regex("(.*)\\.(csv|json)");
+
+                var match = regex.Match(file.FileName);
+
+                var fileName = match.Groups[1].Value;
+                var format = match.Groups[2].Value;
+
+                var fileID = IDCounterHandler.LoadFileID();
+             
+                var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "imports");
+            
+                IDCounterHandler.SaveFileID(fileID + 1);
+                using (var stream = FileOperation.Create(filePath))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                return Ok(fileID);
             }
 
-            return Ok(fileID);
+            return BadRequest("The sent file is empty!");
         }
-
-        return BadRequest("The sent file is empty!");
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [EnableCors("CorsPolicy")]
@@ -47,11 +56,11 @@ public class DataInventoryController : ControllerBase
         try
         {
             var filePath = FileSearcher.Search(fileID, "exports");
-            return new FileStreamResult(System.IO.File.Open(filePath, FileMode.Open), "text/plain");
+            return new FileStreamResult(FileOperation.Open(filePath, FileMode.Open), "text/plain");
         }
         catch (Exception e)
         {
-            return BadRequest("file not found!");
+            return BadRequest(e.Message);
         }
     }
 
@@ -80,7 +89,7 @@ public class DataInventoryController : ControllerBase
         try
         {
             var filePath = FileSearcher.Search(fileID, category);
-            System.IO.File.Delete(filePath);
+            FileOperation.Delete(filePath);
             return Ok();
         }
         catch (Exception e)
@@ -100,7 +109,7 @@ public class DataInventoryController : ControllerBase
             
             var regex = new Regex(".*_[0-9]*\\.(csv|json)");
             var fileType = regex.Match(fileInfo.Name).Groups[1].Value;
-            var newPath = FilePathGenerator.Path(newName, fileType, fileID, category);
+            var newPath = PathGenerator.GenerateDataPath(newName, fileType, fileID, category);
             fileInfo.MoveTo(newPath);
             return Ok();
         }
@@ -108,10 +117,5 @@ public class DataInventoryController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-    }
-
-    public static void increaseFileID(int increament)
-    {
-        fileID += increament;
     }
 }

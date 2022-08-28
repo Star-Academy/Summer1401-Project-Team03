@@ -9,6 +9,10 @@ public class ComponentInformation
     public Position Position { get; set; }
     public Dictionary<string, string> TransformData { get; set; }
 
+    public ComponentInformation()
+    {
+        
+    }
     public ComponentInformation(string type, int id, List<int> nextIds, List<int> previousIds, Position position, Dictionary<string, string> transformData)
     {
         Type = type;
