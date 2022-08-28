@@ -1,6 +1,4 @@
-﻿using server.Enums;
-
-namespace server.Databases;
+﻿namespace server.Databases;
 
 public interface IQueryBuilder
 {
@@ -28,7 +26,7 @@ public interface IQueryBuilder
     public string Where(string key, string @operator, string value);
 
     public string Where(List<string> keys, List<string> operators, List<string> values);
-    
+
     public string ConvertType(string key, string type);
 
     public string GroupBy(string key);

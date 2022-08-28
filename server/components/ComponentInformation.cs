@@ -1,19 +1,15 @@
-﻿namespace server.Components;
+﻿using server.Enums;
+
+namespace server.Components;
 
 public class ComponentInformation
 {
-    public int Id { get; set; }
-    public string Type { get; set; }
-    public List<int> NextIds { get; set; }
-    public List<int> PreviousIds { get; set; }
-    public Position Position { get; set; }
-    public Dictionary<string, List<string>> Parameters { get; set; }
-
     public ComponentInformation()
     {
-        
     }
-    public ComponentInformation(string type, int id, List<int> nextIds, List<int> previousIds, Position position, Dictionary<string, List<string>> parameters)
+
+    public ComponentInformation(ComponentType type, int id, List<int> nextIds, List<int> previousIds, Position position,
+        Dictionary<string, List<string>> parameters)
     {
         Type = type;
         Id = id;
@@ -32,4 +28,11 @@ public class ComponentInformation
         Position = component.Position;
         Parameters = component.Parameters;
     }
+
+    public int Id { get; set; }
+    public ComponentType Type { get; set; }
+    public List<int> NextIds { get; set; }
+    public List<int> PreviousIds { get; set; }
+    public Position Position { get; set; }
+    public Dictionary<string, List<string>> Parameters { get; set; }
 }

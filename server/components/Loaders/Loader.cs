@@ -1,15 +1,11 @@
 ﻿using server.Databases;
-using server.Pipelines;
 
 namespace server.Components.Loaders;
 
 public abstract class Loader : Component
 {
     public IDatabase Database;
-    public Loader() : base()
-    {
-    }
-    
+
     public override string GetQuery()
     {
         Load();

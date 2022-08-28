@@ -1,12 +1,12 @@
-using server.Pipelines;
+using server.Enums;
 
 namespace server.Components.Transformers;
 
 public class FieldRemover : Transformer
 {
-    public FieldRemover() : base()
+    public FieldRemover()
     {
-        Type = "field_remover";
+        Type = ComponentType.FieldRemover;
     }
 
     public override string GetQuery()

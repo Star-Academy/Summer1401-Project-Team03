@@ -1,12 +1,12 @@
-﻿using server.Pipelines;
+﻿using server.Enums;
 
 namespace server.Components.Loaders;
 
 public class JSONLoader : Loader
 {
-    public JSONLoader() : base()
+    public JSONLoader()
     {
-        Type = "json_loader";
+        Type = ComponentType.JSONLoader;
     }
 
     public override void Load()

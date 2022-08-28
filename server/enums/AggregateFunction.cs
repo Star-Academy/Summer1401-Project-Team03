@@ -7,5 +7,5 @@ public enum AggregateFunction
     Sum,
     Avg,
     Min,
-    Max,
+    Max
 }

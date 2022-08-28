@@ -1,13 +1,12 @@
-﻿using Newtonsoft.Json.Linq;
-using server.Pipelines;
+﻿using server.Enums;
 
 namespace server.Components.Extractors;
 
 public class JSONExtractor : Extractor
 {
-    public JSONExtractor() : base()
+    public JSONExtractor()
     {
-        Type = "json_extractor";
+        Type = ComponentType.JSONExtractor;
     }
 
     public override List<string> GetKeys()

@@ -1,12 +1,12 @@
-﻿using server.Pipelines;
+﻿using server.Enums;
 
 namespace server.Components.Transformers;
 
 public class DataSampling : Transformer
 {
-    public DataSampling() : base()
+    public DataSampling()
     {
-        Type = "data_sampling";
+        Type = ComponentType.DataSampling;
     }
 
     public int Number { set; get; }

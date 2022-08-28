@@ -1,6 +1,6 @@
 ﻿namespace server.Enums;
 
-public enum TransformerType
+public enum ComponentType
 {
     Filter,
     Aggregate,
@@ -9,5 +9,10 @@ public enum TransformerType
     FieldRenamer,
     FieldSelector,
     Hash,
-    TypeConverter
+    TypeConverter,
+    Join,
+    CSVLoader,
+    CSVExtractor,
+    JSONExtractor,
+    JSONLoader
 }

@@ -29,9 +29,9 @@ public class DataInventoryController : ControllerBase
                 var format = match.Groups[2].Value;
 
                 var fileID = IDCounterHandler.LoadFileID();
-             
+
                 var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "imports");
-            
+
                 IDCounterHandler.SaveFileID(fileID + 1);
                 using (var stream = FileOperation.Create(filePath))
                 {
@@ -106,7 +106,7 @@ public class DataInventoryController : ControllerBase
         {
             var filePath = FileSearcher.Search(fileID, category);
             var fileInfo = new FileInfo(filePath);
-            
+
             var regex = new Regex(".*_[0-9]*\\.(csv|json)");
             var fileType = regex.Match(fileInfo.Name).Groups[1].Value;
             var newPath = PathGenerator.GenerateDataPath(newName, fileType, fileID, category);

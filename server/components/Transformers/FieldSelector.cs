@@ -1,12 +1,12 @@
-﻿using server.Pipelines;
+﻿using server.Enums;
 
 namespace server.Components.Transformers;
 
 public class FieldSelector : Transformer
 {
-    public FieldSelector() : base()
+    public FieldSelector()
     {
-        Type = "field_selector";
+        Type = ComponentType.FieldSelector;
     }
 
     public override string GetQuery()

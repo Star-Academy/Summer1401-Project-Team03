@@ -4,11 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using server.Components;
 using server.Components.Extractors;
 using server.Components.Loaders;
-using server.Components.Transformers;
 using server.Enums;
 using server.file;
 using server.Pipelines;
 using FileOperation = System.IO.File;
+
 namespace server.Controller;
 
 [ApiController]
@@ -16,7 +16,7 @@ namespace server.Controller;
 public class PipelineController : ControllerBase
 {
     private static readonly Dictionary<int, Pipeline> idToPipeline = new();
-    
+
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public ActionResult<int> Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
@@ -37,7 +37,7 @@ public class PipelineController : ControllerBase
             var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
             var jsonString = JsonSerializer.Serialize(info);
 
-            var pipelinePath = PathGenerator.GeneratePipelinePath(pipelineID); 
+            var pipelinePath = PathGenerator.GeneratePipelinePath(pipelineID);
             FileOperation.WriteAllText(pipelinePath, jsonString);
             return Ok(pipelineID);
         }
@@ -50,50 +50,17 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpPost]
-    public ActionResult<int> AddComponent(int pipelineID, int previousComponentId, int nextComponentId, Position position, TransformerType type)
+    public ActionResult<int> AddComponent(int pipelineID, int previousComponentId, int nextComponentId,
+        Position position, ComponentType type)
     {
         try
         {
             var pipeline = idToPipeline[pipelineID];
 
-            Component component = null;
-            switch (type)
-            {
-                case TransformerType.Filter:
-                    component = new Filter(pipeline, position);
-                    break;
-                
-                case TransformerType.Aggregate:
-                    component = new Aggregate(pipeline, position);
-                    break;
+            var component = new ComponentFactory().CreateNewComponent(type);
 
-                // case TransformerType.Hash:
-                //     component = new Hash(pipeline, position);
-                //     break;
-
-                case TransformerType.DataSampling:
-                    component = new DataSampling(pipeline, position);
-                    break;
-
-                case TransformerType.FieldRemover:
-                    component = new FieldRemover(pipeline, position);
-                    break;
-
-                case TransformerType.FieldRenamer:
-                    component = new FieldRenamer(pipeline, position);
-                    break;
-
-                case TransformerType.TypeConverter:
-                    component = new TypeConverter(pipeline, position);
-                    break;
-                
-                case TransformerType.FieldSelector:
-                    component = new FieldSelector(pipeline, position);
-                    break;
-            }
-            
             pipeline.AddComponent(component);
-            component.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
+            // TODO Connect to adjacent
 
             return Ok(component.Id);
         }
@@ -105,14 +72,15 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpPost]
-    public IActionResult SetComponentConfig(int pipelineID, int componentID, [FromBody] Dictionary<string, string> configurations)
+    public IActionResult SetComponentConfig(int pipelineID, int componentID,
+        [FromBody] Dictionary<string, List<string>> configurations)
     {
         try
         {
             var pipeline = idToPipeline[pipelineID];
             var component = pipeline.IdToComponent[componentID];
-            // component.SetConfig(configurations);
-            
+
+            component.Parameters = configurations;
             return Ok();
         }
         catch (Exception e)
@@ -124,8 +92,9 @@ public class PipelineController : ControllerBase
     private void AddSource(Pipeline pipeline, int fileID, Position position)
     {
         var filePath = FileSearcher.Search(fileID, "imports");
-        var extractor = new CSVExtractor(pipeline, position, filePath);
-
+        
+        var extractor = new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
+        
         pipeline.AddComponent(extractor);
     }
 
@@ -178,7 +147,7 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public ActionResult<Dictionary<int , string>> GetPipelinesInformation()
+    public ActionResult<Dictionary<int, string>> GetPipelinesInformation()
     {
         var informations = new Dictionary<int, string>();
 
@@ -187,7 +156,7 @@ public class PipelineController : ControllerBase
         {
             var jsonFile = FileOperation.ReadAllText(filePath);
             var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
-            
+
             informations[information.ID] = information.Name;
         }
 

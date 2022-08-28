@@ -4,11 +4,10 @@ namespace server.Components;
 
 public static class ComponentInformationAdaptor
 {
-
     public static Component GetComponentFromInformation(ComponentInformation information)
     {
         // return new component by 
-        
+
         throw new NotImplementedException();
     }
 
@@ -16,7 +15,6 @@ public static class ComponentInformationAdaptor
     {
         foreach (var information in informations)
         {
-            
         }
     }
 

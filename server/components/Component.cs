@@ -1,6 +1,5 @@
-﻿using server.Components.Transformers;
-using server.Databases;
-using server.Pipelines;
+﻿using server.Databases;
+using server.Enums;
 
 namespace server.Components;
 
@@ -27,7 +26,7 @@ public abstract class Component
     public List<Component> PreviousComponents { set; get; }
     public Position Position { set; get; }
 
-    public string Type { set; get; }
+    public ComponentType Type { set; get; }
 
     public int Id { set; get; }
     public IQueryBuilder QueryBuilder { set; get; }

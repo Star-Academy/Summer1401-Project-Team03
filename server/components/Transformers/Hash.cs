@@ -1,19 +1,20 @@
-using server.Pipelines;
+using server.Enums;
 
 namespace server.Components.Transformers;
 
 public class Hash : Transformer
 {
-    public Hash() : base()
+    private const string HashFunction = "h_int";
+
+    public Hash()
     {
-        Type = "hash";
+        Type = ComponentType.Hash;
     }
 
-    private const string HashFunction = "h_int";
     private string FieldToHash { get; set; }
     private bool ShouldCreateNewField { get; set; }
     private string NewFieldName { get; set; }
-    
+
 
     public override string GetQuery()
     {
@@ -29,15 +30,10 @@ public class Hash : Transformer
         var keys = PreviousComponents[0].GetKeys();
 
         if (ShouldCreateNewField)
-        {
             keys.Add(NewFieldName);
-        }
         else
-        {
             keys[keys.IndexOf(FieldToHash)] = NewFieldName;
-        }
 
         return keys;
-        
     }
 }

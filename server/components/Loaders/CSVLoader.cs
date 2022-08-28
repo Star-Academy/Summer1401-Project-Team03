@@ -1,12 +1,12 @@
-﻿using server.Pipelines;
+﻿using server.Enums;
 
 namespace server.Components.Loaders;
 
 public class CSVLoader : Loader
 {
-    public CSVLoader() : base()
+    public CSVLoader()
     {
-        Type = "csv_loader";
+        Type = ComponentType.CSVLoader;
     }
 
     public override void Load()

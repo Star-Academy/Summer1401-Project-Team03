@@ -1,18 +1,17 @@
 ﻿using server.Enums;
-using server.Pipelines;
 
 namespace server.Components.Transformers;
 
 public class Aggregate : Transformer
 {
-    public Aggregate() : base()
+    public Aggregate()
     {
         FieldsToAggregate = new List<string>();
         AggregateFunctions = new List<AggregateFunction>();
         FieldsToGroupBy = new List<string>();
-        Type = "aggregate";
+        Type = ComponentType.Aggregate;
     }
-    
+
     public List<string> FieldsToAggregate { get; set; }
 
     public List<AggregateFunction> AggregateFunctions { get; set; }
@@ -22,10 +21,8 @@ public class Aggregate : Transformer
     public override string GetQuery()
     {
         var fieldsToSelect = new List<string>();
-        for (int i = 0; i < FieldsToAggregate.Count; i++)
-        {
+        for (var i = 0; i < FieldsToAggregate.Count; i++)
             fieldsToSelect.Add(QueryBuilder.Aggregate(FieldsToAggregate[i], AggregateFunctions[i].ToString()));
-        }
 
         return
             $"{QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias())} {QueryBuilder.GroupBy(FieldsToGroupBy)}";

@@ -1,8 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Common;
+﻿using System.Data.Common;
 using DBConfig;
 using server.Components;
-using server.configurations;
 using server.Databases;
 
 namespace server.Pipelines;
@@ -23,8 +21,8 @@ public class Pipeline
         Database = new PostgresDatabase(dbConfiguration);
         QueryBuilder = new PostgresQueryBuilder();
         TableManager = new TableManager();
-
     }
+
     public Pipeline(string name)
     {
         var dbConfiguration = DBConfigLoader.Load();
@@ -35,7 +33,7 @@ public class Pipeline
         IdToComponent = new Dictionary<int, Component>();
         DestinationIDs = new HashSet<int>();
     }
-    
+
     public string Name { get; set; }
     public int id { get; set; }
     public IDatabase Database { set; get; }

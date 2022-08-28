@@ -1,12 +1,12 @@
-using server.Pipelines;
+using server.Enums;
 
 namespace server.Components.Transformers;
 
 public class FieldRenamer : Transformer
 {
-    public FieldRenamer() : base()
+    public FieldRenamer()
     {
-        Type =  "field_renamer";
+        Type = ComponentType.FieldRenamer;
     }
 
     private List<string> FieldsToRename { get; }

@@ -1,13 +1,13 @@
-using server.Pipelines;
+using server.Enums;
 using SqlKata;
 
 namespace server.Components.Transformers;
 
 public class Join : Transformer
 {
-    public Join() : base()
+    public Join()
     {
-        Type = "join";
+        Type = ComponentType.Join;
     }
 
     private string firstTableProperty { get; set; }
@@ -15,7 +15,7 @@ public class Join : Transformer
     private JoinType joinType { get; set; }
     private string firstTableName { get; set; }
     private string secondTableName { get; set; }
-    
+
     public override string GetQuery()
     {
         throw new NotImplementedException();

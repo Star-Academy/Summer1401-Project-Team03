@@ -1,12 +1,12 @@
-﻿using server.Pipelines;
+﻿using server.Enums;
 
 namespace server.Components.Extractors;
 
 public class CSVExtractor : Extractor
 {
-    public CSVExtractor() : base()
+    public CSVExtractor()
     {
-        Type = "csv_extractor";
+        Type = ComponentType.CSVExtractor;
     }
 
     public override List<string> GetKeys()

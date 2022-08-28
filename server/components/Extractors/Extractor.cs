@@ -1,5 +1,4 @@
 ﻿using server.Databases;
-using server.Pipelines;
 
 namespace server.Components.Extractors;
 
@@ -7,11 +6,7 @@ public abstract class Extractor : Component
 {
     public IDatabase Database;
 
-    public Extractor() : base()
-    {
-    }
-    
-    
+
     public override string GetQuery()
     {
         Extract();
