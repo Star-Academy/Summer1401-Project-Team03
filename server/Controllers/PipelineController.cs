@@ -165,4 +165,19 @@ public class PipelineController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [EnableCors("CorsPolicy")]
+    [HttpGet]
+    public ActionResult<ComponentInformation> GetComponent(int pipelineID, int componentID)
+    {
+        try
+        {
+            return Ok(ComponentInformationAdaptor.GetInformationFromComponent(idToPipeline[pipelineID]
+                .IdToComponent[componentID]));
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message)
+        }
+    }
 }
