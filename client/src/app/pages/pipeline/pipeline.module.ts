@@ -5,7 +5,7 @@ import {SvgModule} from '../../components/svg/svg.module';
 import {RunButtonComponent} from './components/run-button/run-button.component';
 import {LoadingButtonModule} from '../../components/loading-button/loading-button.module';
 
-import {addNodeComponent} from './components/pipeline-node/components/add-node/add-node.component';
+import {addNodeComponent} from './components/pipeline-board/components/add-node/add-node.component';
 
 import {ButtonModule} from 'src/app/components/button/button.module';
 import {ModalModule} from 'src/app/components/modal/modal.module';
@@ -21,7 +21,7 @@ import {SideBarComponent} from './components/side-bar/side-bar.component';
 import {TextInputModule} from 'src/app/components/text-input/text-input.module';
 import {SwitchModule} from 'src/app/components/switch/switch.module';
 import {DataListModule} from 'src/app/components/data-list/data-list.module';
-import {RemoveNodeComponent} from './components/pipeline-node/components/remove-node/remove-node.component';
+import {RemoveNodeComponent} from './components/pipeline-board/components/remove-node/remove-node.component';
 
 @NgModule({
     declarations: [

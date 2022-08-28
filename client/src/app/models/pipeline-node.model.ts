@@ -16,3 +16,15 @@ export interface LeaderLineModel {
     withId: string;
     leaderLineObj: any;
 }
+
+export interface NodeRemoveInfoModel {
+    nodeId: string;
+    beforeId: string;
+    afterId: string;
+}
+
+export interface NodeAddInfoModel {
+    beforeId: string;
+    afterId: string;
+    position: {x: number; y: number};
+}

@@ -12,7 +12,7 @@ export class PipelineNodeComponent {
 
     @Input() public pipelineNodeData!: PipelineNodeModel;
     @Output() public removeNodeEmit = new EventEmitter<void>();
-    @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
+    @Output() public addNodeEmit = new EventEmitter<void>();
 
     public toggleShowItemSettingModal(): void {
         this.pipelineNodeData.openedSettingModal = !this.pipelineNodeData.openedSettingModal;

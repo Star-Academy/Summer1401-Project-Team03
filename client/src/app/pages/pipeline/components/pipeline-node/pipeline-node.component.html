@@ -14,24 +14,10 @@
         <ng-container *ngIf="pipelineNodeData.openedSettingModal">
             <app-setting-item-modal
                 class="setting__modal"
-                (newNodeEmit)="addNode.openModal()"
+                (newNodeEmit)="addNodeEmit.emit()"
                 (configNodeEmit)="configNode(pipelineNodeData.id)"
-                (deleteNodeEmit)="removeNode.openModal()"
+                (deleteNodeEmit)="removeNodeEmit.emit()"
             ></app-setting-item-modal>
         </ng-container>
     </div>
-
-    <app-remove-node
-        class="absolute"
-        #removeNode
-        [nodeData]="pipelineNodeData"
-        (removeNodeEmit)="removeNodeEmit.emit()"
-    ></app-remove-node>
-
-    <app-add-node
-        class="absolute"
-        #addNode
-        [nodeData]="pipelineNodeData"
-        (addNodeEmit)="addNodeEmit.emit($event)"
-    ></app-add-node>
 </div>

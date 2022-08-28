@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy} from '@angular/core';
 
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
-import {LeaderLineModel, PipelineNodeModel} from '../../../../models/pipeline-node.model';
+import {LeaderLineModel, NodeRemoveInfoModel, PipelineNodeModel} from '../../../../models/pipeline-node.model';
 import {ProcessType} from '../../../../enums/ProcessType.enum';
 
 declare var LeaderLine: any;
@@ -181,7 +181,10 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.pipelineNodeDatas[currentIndex].leaderlines.push(newLeaderLineObj);
     }
 
-    public addNodeComponent(item: PipelineNodeModel, beforeId: string, afterId: string): void {
+    public addNodeComponent(item: PipelineNodeModel): void {
+        const beforeId = item.beforeId;
+        const afterId = item.afterId;
+
         // is destination
         if (this.isWhatTypeById(beforeId, ProcessType.DESTINATION)) {
             return undefined;
@@ -203,7 +206,13 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.changeBeforeIdById(afterId, item.id);
     }
 
-    public removeNodeComponent(id: string, beforeId: string, afterId: string): void | boolean {
+    public removeNodeComponent(node: NodeRemoveInfoModel): void | boolean {
+        const id = node.nodeId;
+        const beforeId = node.beforeId;
+        const afterId = node.afterId;
+
+        console.log(`${id}, ${beforeId}, ${afterId}`);
+
         const removeAllNodeAffect = (id: string): void => {
             // Remove Line and connection line
             this.removeLeaderlineBetweenTwoNodeById(beforeId, id);

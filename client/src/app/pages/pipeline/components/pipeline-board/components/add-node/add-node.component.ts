@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
 import {customProcessType, ProcessType} from 'src/app/enums/ProcessType.enum';
-import {PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
+import {NodeAddInfoModel, PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 
 let counter = 10;
 const ADDITIONAL_LEFT = 300;
@@ -17,7 +17,7 @@ export class addNodeComponent {
 
     @ViewChild('ProcessAdd') public modal!: ModalComponent;
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
-    @Input() public nodeData!: PipelineNodeModel;
+    public nodeData!: NodeAddInfoModel;
     public nodeTitle: string = 'new node';
 
     public customProcessType(): customProcessType[] {
@@ -25,16 +25,21 @@ export class addNodeComponent {
         return keys.map((type) => type as customProcessType);
     }
 
-    public openModal(): void {
+    public openModal(beforeId: string, afterId: string, position: {x: number; y: number}): void {
+        this.nodeData = {
+            beforeId,
+            afterId,
+            position,
+        };
+
         this.modal.openModal();
     }
 
-    public addNodeHandle(node: PipelineNodeModel, type: customProcessType): void {
+    public addNodeHandle(type: customProcessType): void {
         this.modal.closeModal();
-        this.nodeData.openedSettingModal = false;
 
         const title = this.nodeTitle;
-        const newPosition = {x: node.position.x + ADDITIONAL_LEFT, y: node.position.y};
+        const newPosition = {x: this.nodeData.position.x + ADDITIONAL_LEFT, y: this.nodeData.position.y};
 
         const newNodeComponent: PipelineNodeModel = {
             id: counter.toString(),
@@ -42,8 +47,8 @@ export class addNodeComponent {
             processesInfoType: ProcessType[type],
             position: newPosition,
             openedSettingModal: false,
-            afterId: node.afterId,
-            beforeId: node.id,
+            afterId: this.nodeData.afterId,
+            beforeId: this.nodeData.beforeId,
             leaderlines: [],
         };
         counter++; // temporary

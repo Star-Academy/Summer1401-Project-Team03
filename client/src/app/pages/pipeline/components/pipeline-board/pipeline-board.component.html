@@ -13,10 +13,15 @@
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (removeNodeEmit)="
-                    removeNodeComponent(pipelineNodeData.id, pipelineNodeData.beforeId, pipelineNodeData.afterId)
+                    removeNode.openModal(pipelineNodeData.id, pipelineNodeData.beforeId, pipelineNodeData.afterId)
                 "
-                (addNodeEmit)="addNodeComponent($event, pipelineNodeData.id, pipelineNodeData.afterId)"
+                (addNodeEmit)="
+                    addNode.openModal(pipelineNodeData.id, pipelineNodeData.afterId, pipelineNodeData.position)
+                "
             ></app-pipeline-node>
         </ng-container>
     </div>
+
+    <app-remove-node class="absolute" #removeNode (removeNodeEmit)="removeNodeComponent($event)"></app-remove-node>
+    <app-add-node class="absolute" #addNode (addNodeEmit)="addNodeComponent($event)"></app-add-node>
 </app-board>
