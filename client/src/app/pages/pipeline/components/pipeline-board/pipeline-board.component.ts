@@ -91,9 +91,10 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         grid: [20, 20],
     };
 
-    public pipelineNodeDatas: PipelineNodeModel[] = pipelineNodeDatasDefault;
-    public leaderLineLinks: LeaderLineModel[] = [];
+    public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));
     public animEventObj!: any;
+    public boardEl!: HTMLElement;
+    public resizeObserverObj!: ResizeObserver;
 
     public constructor(private elRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) {}
 
@@ -108,18 +109,25 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
         const leaderLineListeners = (): void => {
             this.animEventObj = AnimEvent.add(() => {
-                this.leaderLineLinks.forEach((ln) => ln.leaderLineObj.position());
+                this.pipelineNodeDatas.forEach((node) =>
+                    node.leaderlines.forEach((line) => line.leaderLineObj.position())
+                );
             });
 
-            function detectResize(leaderLineLinks: any): void {
-                leaderLineLinks.forEach((ln: any) => ln.leaderLineObj.position());
+            function detectResize(pipelineNodeDatas: PipelineNodeModel[]): void {
+                console.log('-------');
+                console.log(pipelineNodeDatas);
+                pipelineNodeDatas.forEach((node) => node.leaderlines.forEach((line) => line.leaderLineObj.position()));
             }
 
             const appBoardEl = this.elRef.nativeElement.querySelector('app-board > .container');
+            this.boardEl = appBoardEl;
             const pipelineContainerEl = this.elRef.nativeElement.parentElement;
 
-            new ResizeObserver(detectResize.bind(this, this.leaderLineLinks)).observe(pipelineContainerEl);
-            appBoardEl.addEventListener('scroll', this.animEventObj);
+            this.resizeObserverObj = new ResizeObserver(detectResize.bind(this, this.pipelineNodeDatas));
+            this.resizeObserverObj.observe(pipelineContainerEl);
+
+            this.boardEl.addEventListener('scroll', this.animEventObj);
         };
 
         leaderLineInit();
@@ -286,7 +294,13 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.leaderLineLinks.forEach((ln) => ln.leaderLineObj.remove());
-        this.leaderLineLinks = [];
+        // this.leaderLineLinks.forEach((ln) => ln.leaderLineObj.remove());
+        // this.leaderLineLinks = [];
+        this.pipelineNodeDatas.forEach((node) => {
+            console.log(node.leaderlines);
+            node.leaderlines.forEach((line) => line.leaderLineObj.remove());
+        });
+        this.resizeObserverObj.unobserve(this.elRef.nativeElement.parentElement);
+        this.boardEl.removeEventListener('scroll', this.animEventObj);
     }
 }
