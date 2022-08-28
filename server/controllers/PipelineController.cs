@@ -16,9 +16,7 @@ namespace server.Controller;
 public class PipelineController : ControllerBase
 {
     private static readonly Dictionary<int, Pipeline> idToPipeline = new();
-
-    public static string JsonPath = Path.Combine(Directory.GetCurrentDirectory(), "json");
-
+    
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public ActionResult<int> Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
@@ -183,8 +181,9 @@ public class PipelineController : ControllerBase
     public ActionResult<Dictionary<int , string>> GetPipelinesInformation()
     {
         var informations = new Dictionary<int, string>();
-        
-        foreach (var filePath in Directory.GetFiles(JsonPath))
+
+        var path = PathGenerator.GetPipelineDirectory();
+        foreach (var filePath in Directory.GetFiles(path))
         {
             var jsonFile = FileOperation.ReadAllText(filePath);
             var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
@@ -202,7 +201,9 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var directoryInfo = new DirectoryInfo(JsonPath);
+            var path = PathGenerator.GetPipelineDirectory();
+
+            var directoryInfo = new DirectoryInfo(path);
             var files = directoryInfo.GetFiles("*");
 
             var file = files.Where(x => x.Name == pipelineID.ToString()).ElementAt(0);

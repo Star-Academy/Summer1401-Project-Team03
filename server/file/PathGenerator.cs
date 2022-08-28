@@ -12,4 +12,9 @@ public static class PathGenerator
     {
         return Path.Combine(Directory.GetCurrentDirectory(), "resources", "pipelines" , pipelineID.ToString());
     }
+    
+    public static string GetPipelineDirectory()
+    {
+        return Path.Combine(Directory.GetCurrentDirectory(), "resources", "pipelines");
+    }
 }
