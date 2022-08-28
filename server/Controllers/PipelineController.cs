@@ -50,29 +50,29 @@ public class PipelineController : ControllerBase
         }
     }
 
-    // [EnableCors("CorsPolicy")]
-    // [HttpPost]
-    // public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x,
-    //     double y,
-    //     [FromBody] List<Dictionary<string, string>> dictionary)
-    // {
-    //     try
-    //     {
-    //         var pipeline = idToPipeline[pipelineID];
-    //
-    //         var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
-    //             dictionary["operator"].GetOperator(), dictionary["value"]);
-    //
-    //         pipeline.AddComponent(filter);
-    //         filter.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
-    //
-    //         return Ok(filter.Id);
-    //     }
-    //     catch (Exception e)
-    //     {
-    //         return BadRequest(e);
-    //     }
-    // }
+    [EnableCors("CorsPolicy")]
+    [HttpPost]
+    public IActionResult AddTransformer(int pipelineID, int previousComponentId, int nextComponentId, double x,
+        double y,
+        [FromBody] Dictionary<string, string> dictionary)
+    {
+        try
+        {
+            var pipeline = idToPipeline[pipelineID];
+
+            var filter = new Filter(pipeline, new Position(x, y), dictionary["field"],
+                dictionary["operator"].GetOperator(), dictionary["value"]);
+
+            pipeline.AddComponent(filter);
+            filter.ConnectToAdjacentComponents(previousComponentId, nextComponentId);
+
+            return Ok(filter.Id);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
 
     private void AddSource(Pipeline pipeline, int fileID, double x, double y)
     {
