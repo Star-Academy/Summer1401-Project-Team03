@@ -59,4 +59,20 @@ public class Pipeline
     {
         DestinationIDs.Add(id);
     }
+
+    public void Connect(int previousId, int nextId)
+    {
+        var previousComponent = IdToComponent[previousId];
+        var nextComponent = IdToComponent[nextId];
+        previousComponent.AddNextComponent(nextComponent);
+        nextComponent.AddPreviousComponent(previousComponent);
+    }
+    
+    public void Disconnect(int previousId, int nextId)
+    {
+        var previousComponent = IdToComponent[previousId];
+        var nextComponent = IdToComponent[nextId];
+        previousComponent.RemoveNextComponent(nextComponent);
+        nextComponent.RemovePreviousComponent(previousComponent);
+    }
 }
