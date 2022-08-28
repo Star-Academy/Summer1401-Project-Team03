@@ -1,6 +1,9 @@
 .wrapper {
-  background-color: var(--color-purple-86);
+  background-color: var(--color-white-solid);
   color: var(--color-purple-21);
+
+  // border: 3px solid var(--color-purple-21);
+  box-shadow: 0 0 0.3rem 0.2rem var(--color-shadow);
 
   position: relative;
 
@@ -10,12 +13,11 @@
   justify-content: center;
   gap: 1rem;
 
-  width: 18rem;
+  width: 22rem;
   height: 10rem;
 
   padding: 0.6rem 1rem;
 
-  border: 3px solid var(--color-purple-21);
   border-radius: var(--border-radius-primary);
 
   font-weight: 600;
@@ -25,7 +27,7 @@
   app-svg {
     color: var(--color-purple-46);
 
-    height: 3rem;
+    width: 4rem;
   }
 
   .desc {
@@ -36,7 +38,7 @@
 
       width: 100%;
 
-      font-size: 1.6rem;
+      font-size: var(--font-size-big);
 
       text-align: center;
       text-overflow: ellipsis;
@@ -45,6 +47,7 @@
 
     p {
       font-size: var(--font-size-primary);
+      opacity: 0.8;
       font-size: 1.25rem;
 
       text-align: center;

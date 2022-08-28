@@ -1,10 +1,9 @@
 <div class="wrapper" [title]="pipelineNodeData.title">
-    <div class="desc">
-        <h3 class="label">{{ pipelineNodeData.title }}</h3>
-        <p>{{ pipelineNodeData.processesInfoType.title }}</p>
-    </div>
-
     <app-svg [iconType]="pipelineNodeData.processesInfoType.icon"></app-svg>
+    <div class="desc">
+        <h3 class="label">{{ pipelineNodeData.processesInfoType.title }}</h3>
+        <p>{{ pipelineNodeData.title }}</p>
+    </div>
 
     <div class="setting">
         <app-svg

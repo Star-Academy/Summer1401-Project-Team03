@@ -13,12 +13,12 @@ export type ProcessInfo = {
 export const PROCESS: ProcessInfo = {
     SOURCE: {
         title: 'source',
-        icon: '',
+        icon: 'source',
         items: [],
     },
     DESTINATION: {
         title: 'destination',
-        icon: '',
+        icon: 'source',
         items: [],
     },
     JOIN: {
