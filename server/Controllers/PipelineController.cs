@@ -68,9 +68,9 @@ public class PipelineController : ControllerBase
                     component = new Aggregate(pipeline, position);
                     break;
 
-                case TransformerType.Hash:
-                    component = new Hash(pipeline, position);
-                    break;
+                // case TransformerType.Hash:
+                //     component = new Hash(pipeline, position);
+                //     break;
 
                 case TransformerType.DataSampling:
                     component = new DataSampling(pipeline, position);
@@ -112,7 +112,7 @@ public class PipelineController : ControllerBase
         {
             var pipeline = idToPipeline[pipelineID];
             var component = pipeline.IdToComponent[componentID];
-            component.SetConfig(configurations);
+            // component.SetConfig(configurations);
             
             return Ok();
         }
@@ -179,17 +179,17 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public ActionResult<List<(string, int)>> GetPipelinesInformation()
+    public ActionResult<Dictionary<int , string>> GetPipelinesInformation()
     {
-        var informations = new List<(string, int)>();
+        var informations = new Dictionary<int, string>();
+        
         foreach (var filePath in Directory.GetFiles(JsonPath))
         {
-            var information = JsonSerializer.Deserialize<PipelineInformation>(
-                System.IO.File.ReadAllText(JsonPath + "\\" + filePath));
-
-            informations.Add((information.Name, information.ID));
+            var jsonFile = System.IO.File.ReadAllText(filePath);
+            var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
+            
+            informations[information.ID] = information.Name;
         }
-
 
         return Ok(informations);
     }
