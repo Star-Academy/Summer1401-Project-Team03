@@ -6,12 +6,10 @@ namespace server.Components;
 
 public abstract class Component
 {
-    private static int _counter;
     public Component()
     {
-        _counter++;
-        Id = _counter;
         NextComponents = new List<Component>();
+        PreviousComponents = new List<Component>();
     }
 
     public Component(ComponentInformation information, IQueryBuilder queryBuilder)
@@ -19,25 +17,9 @@ public abstract class Component
         Id = information.Id;
         Position = information.Position;
         Type = information.Type;
-        Parameters = information.TransformData;
+        Parameters = information.Parameters;
         QueryBuilder = queryBuilder;
     }
-
-    // public static Component CreateComponent(string type, ComponentInformation componentInformation,
-    //     IQueryBuilder queryBuilder) =>
-    //     type switch
-    //     {
-    //         "aggregate" => new Aggregate(componentInformation, queryBuilder),
-    //         "data_sampling" => new DataSampling(componentInformation, queryBuilder),
-    //         "field_remover" => new FieldRemover(componentInformation, position),
-    //         "field_renamer" => new FieldRenamer(pipeline, position),
-    //         "field_selector" => new FieldSelector(pipeline, position),
-    //         "filter" => new Filter(pipeline, position),
-    //         //"hash" => new Hash(pipeline, position),
-    //         "join" => new Join(pipeline, position),
-    //         "type_converter" => new TypeConverter(pipeline, position),
-    //         _ => throw new Exception()
-    //     };
 
     public Dictionary<string, List<string>> Parameters { set; get; }
     public List<Component> NextComponents { set; get; }
@@ -47,7 +29,7 @@ public abstract class Component
 
     public string Type { set; get; }
 
-    public int Id { get; }
+    public int Id { set; get; }
     public IQueryBuilder QueryBuilder { set; get; }
 
     public abstract string GetQuery();

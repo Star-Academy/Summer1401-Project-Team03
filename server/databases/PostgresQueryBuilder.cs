@@ -80,36 +80,18 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"WHERE {condition}";
     }
 
-    public string Where(string key, string @operator, object value)
+    public string Where(string key, string @operator, string value)
     {
-        var valueString = value.ToString();
-        if (value is string) valueString = $"'{valueString}'";
-
-        var condition = $"{key} {@operator} {valueString}";
+        var condition = $"{key} {@operator} {value}";
         return Where(condition);
     }
 
-    public string Where(List<string> keys, List<string> operators, List<object> values)
+    public string Where(List<string> keys, List<string> operators, List<string> values)
     {
         var query = new StringBuilder(Where("true"));
         for (var i = 0; i < keys.Count; i++)
         {
-            var valueString = values[i].ToString();
-            if (values[i] is string) valueString = $"'{valueString}'";
-            query.Append($"AND {keys[i]} {operators[0]} {valueString}");
-        }
-
-        return query.ToString();
-    }
-
-    public string Where(List<string> keys, List<Operator> operators, List<object> values)
-    {
-        var query = new StringBuilder(Where("true"));
-        for (var i = 0; i < keys.Count; i++)
-        {
-            var valueString = values[i].ToString();
-            if (values[i] is string) valueString = $"'{valueString}'";
-            query.Append($"AND {keys[i]} {operators[0].GetString()} {valueString}");
+            query.Append($"AND {keys[i]} {operators[0]} {values[i]}");
         }
 
         return query.ToString();
@@ -142,6 +124,7 @@ public class PostgresQueryBuilder : IQueryBuilder
         {
             function = "array_agg";
         }
+
         return $"{function}({key})";
     }
 
@@ -155,5 +138,4 @@ public class PostgresQueryBuilder : IQueryBuilder
         _counter++;
         return $"T{_counter}";
     }
-        
 }

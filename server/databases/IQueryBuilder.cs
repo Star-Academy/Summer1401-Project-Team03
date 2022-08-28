@@ -25,12 +25,10 @@ public interface IQueryBuilder
 
     public string Where(string condition);
 
-    public string Where(string key, string @operator, object value);
+    public string Where(string key, string @operator, string value);
 
-    public string Where(List<string> keys, List<string> operators, List<object> values);
-
-    public string Where(List<string> keys, List<Operator> operators, List<object> values);
-
+    public string Where(List<string> keys, List<string> operators, List<string> values);
+    
     public string ConvertType(string key, string type);
 
     public string GroupBy(string key);
