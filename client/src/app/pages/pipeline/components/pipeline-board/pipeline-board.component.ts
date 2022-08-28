@@ -148,8 +148,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.leaderLineLinks.splice(insertPlace, 0, item);
     }
 
-    private addItemToNodeList(insertPlace: number, item: PipelineNodeModel): void {
-        this.pipelineNodeDatas.splice(insertPlace, 0, item);
+    private addItemToNodeList(id: string, item: PipelineNodeModel): void {
+        const activeNodeIndex = this.getNodeIndexById(id);
+        this.pipelineNodeDatas.splice(activeNodeIndex, 0, item);
     }
 
     private removeItemFromLeaderLine(index: number, count = 1): void {
@@ -211,18 +212,27 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     public addNodeComponent(item: PipelineNodeModel, beforeId: string, afterId: string): void {
-        // // is destination
-        // if (this.isWhatTypeById(beforeId, 'destination')) {
-        //     return undefined;
-        // }
-        //
-        // const beforeNodeIndex = this.getNodeIndexById(beforeId);
-        // const beforeBeforeNodeId = this.pipelineNodeDatas[beforeNodeIndex].beforeId;
-        //
-        // // Insert to Item to nodeList
-        // this.addItemToNodeList(beforeNodeIndex, item);
-        // this.changeDetectorRef.detectChanges();
-        //
+        // is destination
+        if (this.isWhatTypeById(beforeId, 'destination')) {
+            return undefined;
+        }
+
+        // Insert to Item to nodeList
+        this.addItemToNodeList(beforeId, item);
+        this.changeDetectorRef.detectChanges();
+
+        // Create new Connection
+        this.connectLeaderLineBetweenTwoElementById(beforeId, item.id);
+        this.connectLeaderLineBetweenTwoElementById(item.id, afterId);
+
+        // Remove line and connection between before and after new node;
+        this.removeLeaderlineBetweenTwoNodeById(beforeId, afterId);
+
+        // Update beforeId,afterId, node component
+        this.changeAfterIdById(beforeId, afterId);
+        this.changeBeforeIdById(afterId, beforeId);
+
+
         // // Create new connection first part
         // this.connectLeaderLineBetweenTwoElementById(beforeBeforeNodeId, beforeId, item.id, beforeId, 1);
         // this.connectLeaderLineBetweenTwoElementById(beforeId, item.id, afterId, afterId);
