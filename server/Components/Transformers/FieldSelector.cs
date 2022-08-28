@@ -4,22 +4,19 @@ namespace server.Components.Transformers;
 
 public class FieldSelector : Transformer
 {
-    public List<string> FieldsToSelect;
-
-    public FieldSelector(Pipeline pipeline, Position position) : base(pipeline, position)
+    public FieldSelector() : base()
     {
-        FieldsToSelect = new List<string>();
-        Name = $"Field Selector{Id}";
+        Type = $"field_selector";
     }
 
     public override string GetQuery()
     {
-        return Pipeline.QueryBuilder.Select(FieldsToSelect, PreviousComponents[0].GetQuery(),
-            Pipeline.TableManager.NewTableName());
+        return QueryBuilder.Select(Parameters["fields"], PreviousComponents[0].GetQuery(),
+            QueryBuilder.NewAlias());
     }
 
     public override List<string> GetKeys()
     {
-        return FieldsToSelect;
+        return Parameters["fields"];
     }
 }

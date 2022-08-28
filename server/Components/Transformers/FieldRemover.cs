@@ -4,22 +4,18 @@ namespace server.Components.Transformers;
 
 public class FieldRemover : Transformer
 {
-    public List<string> FieldsToRemove;
-
-    public FieldRemover(Pipeline pipeline, Position position) : base(pipeline, position)
+    public FieldRemover(Pipeline pipeline, Position position) : base()
     {
-        FieldsToRemove = new List<string>();
-        Name = $"Field Remover{Id}";
+        Type = $"field_remover";
     }
 
     public override string GetQuery()
     {
-        return Pipeline.QueryBuilder.Select(GetKeys(), PreviousComponents[0].GetQuery(),
-            Pipeline.TableManager.NewTableName());
+        return QueryBuilder.Select(GetKeys(), PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias());
     }
 
     public override List<string> GetKeys()
     {
-        return PreviousComponents[0].GetKeys().Except(FieldsToRemove).ToList();
+        return PreviousComponents[0].GetKeys().Except(Parameters["fields"]).ToList();
     }
 }

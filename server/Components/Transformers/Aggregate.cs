@@ -5,8 +5,7 @@ namespace server.Components.Transformers;
 
 public class Aggregate : Transformer
 {
-    public Aggregate(Pipeline pipeline, Position position) :
-        base(pipeline, position)
+    public Aggregate() : base()
     {
         FieldsToAggregate = new List<string>();
         AggregateFunctions = new List<AggregateFunction>();
@@ -24,10 +23,10 @@ public class Aggregate : Transformer
         var fieldsToSelect = new List<string>();
         for (int i = 0; i < FieldsToAggregate.Count; i++)
         {
-            fieldsToSelect.Add(Pipeline.QueryBuilder.Aggregate(FieldsToAggregate[i], AggregateFunctions[i].ToString()));
+            fieldsToSelect.Add(QueryBuilder.Aggregate(FieldsToAggregate[i], AggregateFunctions[i].ToString()));
         }
 
         return
-            $"{Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName())} {Pipeline.QueryBuilder.GroupBy(FieldsToGroupBy)}";
+            $"{QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias())} {QueryBuilder.GroupBy(FieldsToGroupBy)}";
     }
 }

@@ -6,6 +6,7 @@ namespace server.Databases;
 public class PostgresQueryBuilder : IQueryBuilder
 {
     private const string PrimaryKey = "__";
+    private static int _counter;
 
     public string CreateTable(string table, List<string> keys)
     {
@@ -149,18 +150,10 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"SELECT * FROM ({table}) AS {alias} ORDER BY random() LIMIT {number}";
     }
 
-    public string AlterType(string key, string type)
+    public string NewAlias()
     {
-        return $"ALTER COLUMN {key} TYPE {type} USING ({key}::{type})";
+        _counter++;
+        return $"T{_counter}";
     }
-
-    public string Join(string firstTable, string secondTable)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string Insert(List<string> values)
-    {
-        throw new NotImplementedException();
-    }
+        
 }

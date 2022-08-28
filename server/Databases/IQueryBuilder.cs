@@ -40,4 +40,6 @@ public interface IQueryBuilder
     public string Aggregate(string key, string function);
 
     public string Sample(string table, string alias, int number);
+
+    public string NewAlias();
 }

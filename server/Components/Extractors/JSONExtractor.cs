@@ -5,15 +5,9 @@ namespace server.Components.Extractors;
 
 public class JSONExtractor : Extractor
 {
-    public JSONExtractor(Pipeline pipeline, Position position, string filePath) :
-        base(pipeline, position, filePath)
+    public JSONExtractor() : base()
     {
-    }
-
-    public override string GetQuery()
-    {
-        Extract();
-        return Pipeline.QueryBuilder.SelectTable(TableName);
+        Type = "json_extractor";
     }
 
     public override List<string> GetKeys()
@@ -23,9 +17,11 @@ public class JSONExtractor : Extractor
 
     public override void Extract()
     {
+        var tableName = Parameters["table_name"][0];
+        var filePath = Parameters["file_path"][0];
         var keys = GetKeys();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(TableName)).Close();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(TableName, keys)).Close();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportJson(TableName, keys, FilePath)).Close();
+        Database.Execute(QueryBuilder.Drop(tableName)).Close();
+        Database.Execute(QueryBuilder.CreateTable(tableName, keys)).Close();
+        Database.Execute(QueryBuilder.ImportJson(tableName, keys, filePath)).Close();
     }
 }

@@ -4,27 +4,23 @@ namespace server.Components.Extractors;
 
 public class CSVExtractor : Extractor
 {
-    public CSVExtractor(Pipeline pipeline, Position position, string filePath) :
-        base(pipeline, position, filePath)
+    public CSVExtractor() : base()
     {
-    }
-
-    public override string GetQuery()
-    {
-        Extract();
-        return Pipeline.QueryBuilder.SelectTable(TableName);
+        Type = "csv_extractor";
     }
 
     public override List<string> GetKeys()
     {
-        return new StreamReader(FilePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
+        return new StreamReader(Parameters["file_path"][0]).ReadLine().Replace("\\s+", "").Split(",").ToList();
     }
 
     public override void Extract()
     {
-        var keys = new StreamReader(FilePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(TableName)).Close();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(TableName, keys)).Close();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportCSV(TableName, keys, FilePath)).Close();
+        var tableName = Parameters["table_name"][0];
+        var filePath = Parameters["file_path"][0];
+        var keys = new StreamReader(filePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
+        Database.Execute(QueryBuilder.Drop(tableName)).Close();
+        Database.Execute(QueryBuilder.CreateTable(tableName, keys)).Close();
+        Database.Execute(QueryBuilder.ImportCSV(tableName, keys, filePath)).Close();
     }
 }

@@ -4,11 +4,11 @@ using static server.Components.Transformers.ConvertToPostgreQuery;
 
 namespace server.Components.Transformers;
 
-public class Join : Mutator
+public class Join : Transformer
 {
     public Join(Pipeline pipeline, Position position) : base(pipeline, position)
     {
-        Name = $"Join{Id}";
+        Type = $"Join{Id}";
     }
 
     private string firstTableProperty { get; set; }

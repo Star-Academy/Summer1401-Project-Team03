@@ -4,13 +4,9 @@ namespace server.Components.Transformers;
 
 public class Hash : Transformer
 {
-    public Hash(Pipeline pipeline, Position position, string fieldToHash, bool shouldCreateNewField,
-        string newFieldName) : base(pipeline, position)
+    public Hash() : base()
     {
-        FieldToHash = fieldToHash;
-        NewFieldName = newFieldName;
-        ShouldCreateNewField = shouldCreateNewField;
-        Name = $"Hash{Id}";
+        Type = "hash";
     }
 
     private const string HashFunction = "h_int";
@@ -25,7 +21,7 @@ public class Hash : Transformer
         var keys = GetKeys();
         keys[keys.IndexOf(NewFieldName)] = newFieldSelectCommand;
 
-        return Pipeline.QueryBuilder.Select(keys, PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName());
+        return QueryBuilder.Select(keys, PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias());
     }
 
     public override List<string> GetKeys()

@@ -2,35 +2,22 @@
 
 namespace server.Components.Transformers;
 
-public class TypeConverter : Mutator
+public class TypeConverter : Transformer
 {
-    public List<string> Fields;
-    public List<Type> Types;
-    
-    public TypeConverter(Pipeline pipeline, Position position) : base(pipeline, position)
+    public TypeConverter() : base()
     {
-        TableName = Pipeline.TableManager.NewTableName();
-        Fields = new List<string>();
-        Types = new List<Type>();
-        Name = $"Type Converter{Id}";
+        Type = "type_converter";
     }
     
     public override string GetQuery()
     {
-        //Mutate();
-        var fieldsToSelect = GetKeys().Except(Fields).ToList();
-        for (int i = 0; i < Fields.Count; i++)
+        var fields = Parameters["fields"];
+        var types = Parameters["types"];
+        var fieldsToSelect = GetKeys().Except(fields).ToList();
+        for (int i = 0; i < fields.Count; i++)
         {
-            fieldsToSelect.Add(Pipeline.QueryBuilder.ConvertType(Fields[i],Types[i].ToString()));
+            fieldsToSelect.Add(QueryBuilder.ConvertType(fields[i],types[i].ToString()));
         }
-        return Pipeline.QueryBuilder.Select(fieldsToSelect,PreviousComponents[0].GetQuery(),Pipeline.TableManager.NewTableName());
+        return QueryBuilder.Select(fieldsToSelect,PreviousComponents[0].GetQuery(),QueryBuilder.NewAlias());
     }
-
-    public override void Mutate()
-    {
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(TableName)).Close();
-        var query = Pipeline.QueryBuilder.Copy(TableName, PreviousComponents[0].GetQuery());
-        Pipeline.Database.Execute(query).Close();
-    }
-    
 }

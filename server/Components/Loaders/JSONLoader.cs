@@ -4,19 +4,13 @@ namespace server.Components.Loaders;
 
 public class JSONLoader : Loader
 {
-    public JSONLoader(Pipeline pipeline, Position position, string filePath) :
-        base(pipeline, position, filePath)
+    public JSONLoader() : base()
     {
-    }
-
-    public override string GetQuery()
-    {
-        Load();
-        return PreviousComponents[0].GetQuery();
+        Type = "json_loader";
     }
 
     public override void Load()
     {
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.ExportJson(PreviousComponents[0].GetQuery(), FilePath)).Close();
+        Database.Execute(QueryBuilder.ExportJson(PreviousComponents[0].GetQuery(), Parameters["file_path"][0])).Close();
     }
 }

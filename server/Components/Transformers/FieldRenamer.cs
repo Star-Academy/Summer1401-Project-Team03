@@ -4,12 +4,9 @@ namespace server.Components.Transformers;
 
 public class FieldRenamer : Transformer
 {
-    public FieldRenamer(Pipeline pipeline, Position position) :
-        base(pipeline, position)
+    public FieldRenamer() : base()
     {
-        FieldsToRename = new List<string>();
-        NewNames = new List<string>();
-        Name =  $"Field Renamer{Id}";
+        Type =  $"field_renamer";
     }
 
     private List<string> FieldsToRename { get; }
@@ -19,8 +16,7 @@ public class FieldRenamer : Transformer
     {
         var selectList = CreateModifiedListForStringsInMap((x, y) => $"{x} AS {y}");
 
-        return Pipeline.QueryBuilder.Select(selectList, PreviousComponents[0].GetQuery(),
-            Pipeline.TableManager.NewTableName());
+        return QueryBuilder.Select(selectList, PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias());
     }
 
     public override List<string> GetKeys()

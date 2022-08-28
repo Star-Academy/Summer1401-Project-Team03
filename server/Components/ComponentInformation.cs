@@ -2,8 +2,8 @@
 
 public class ComponentInformation
 {
-    public string Type { get; set; }
     public int Id { get; set; }
+    public string Type { get; set; }
     public List<int> NextIds { get; set; }
     public List<int> PreviousIds { get; set; }
     public Position Position { get; set; }
@@ -21,11 +21,11 @@ public class ComponentInformation
 
     public ComponentInformation(Component component)
     {
-        Type = component.Name;
+        Type = component.Type;
         Id = component.Id;
         NextIds = component.NextComponents.Select(x => x.Id).ToList();
         PreviousIds = component.PreviousComponents.Select(x => x.Id).ToList();
         Position = component.Position;
-        TransformData = component.TransformData;
+        TransformData = component.Parameters;
     }
 }

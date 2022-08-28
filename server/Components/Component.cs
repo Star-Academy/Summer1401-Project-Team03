@@ -1,53 +1,55 @@
-﻿using server.Pipelines;
+﻿using server.Components.Transformers;
+using server.Databases;
+using server.Pipelines;
 
 namespace server.Components;
 
 public abstract class Component
 {
-
-    public Component(Pipeline pipeline, Position position)
+    private static int _counter;
+    public Component()
     {
-        Id = pipeline.IdToComponent.Count + 1;
-        Pipeline = pipeline;
-        PreviousComponents = new List<Component>();
+        _counter++;
+        Id = _counter;
         NextComponents = new List<Component>();
-        Position = position;
     }
 
-    public Component(ComponentInformation information, Pipeline pipeline)
+    public Component(ComponentInformation information, IQueryBuilder queryBuilder)
     {
         Id = information.Id;
-        Pipeline = pipeline;
         Position = information.Position;
-        Name = information.Type;
-        TransformData = information.TransformData;
+        Type = information.Type;
+        Parameters = information.TransformData;
+        QueryBuilder = queryBuilder;
     }
 
-    public void SetPreviousNextComponents(ComponentInformation information)
-    {
-        PreviousComponents = information.PreviousIds.Select(id => Pipeline.IdToComponent[id]).ToList();
-        NextComponents = information.NextIds.Select(id => Pipeline.IdToComponent[id]).ToList();
+    // public static Component CreateComponent(string type, ComponentInformation componentInformation,
+    //     IQueryBuilder queryBuilder) =>
+    //     type switch
+    //     {
+    //         "aggregate" => new Aggregate(componentInformation, queryBuilder),
+    //         "data_sampling" => new DataSampling(componentInformation, queryBuilder),
+    //         "field_remover" => new FieldRemover(componentInformation, position),
+    //         "field_renamer" => new FieldRenamer(pipeline, position),
+    //         "field_selector" => new FieldSelector(pipeline, position),
+    //         "filter" => new Filter(pipeline, position),
+    //         //"hash" => new Hash(pipeline, position),
+    //         "join" => new Join(pipeline, position),
+    //         "type_converter" => new TypeConverter(pipeline, position),
+    //         _ => throw new Exception()
+    //     };
 
-    }
-
-    
-    public Dictionary<string, string> TransformData { set; get; }
+    public Dictionary<string, List<string>> Parameters { set; get; }
     public List<Component> NextComponents { set; get; }
 
-    public Position Position { set; get; }
-    
-    public string Name { set; get; }
-
     public List<Component> PreviousComponents { set; get; }
+    public Position Position { set; get; }
+
+    public string Type { set; get; }
 
     public int Id { get; }
-    public Pipeline Pipeline { set; get; }
+    public IQueryBuilder QueryBuilder { set; get; }
 
     public abstract string GetQuery();
-
-    public abstract string GetTable();
-
     public abstract List<string> GetKeys();
-
-    public abstract void ConnectToAdjacentComponents(int previousId, int nextId);
 }

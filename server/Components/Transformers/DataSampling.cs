@@ -4,8 +4,7 @@ namespace server.Components.Transformers;
 
 public class DataSampling : Transformer
 {
-    public DataSampling(Pipeline pipeline, Position position) :
-        base(pipeline, position)
+    public DataSampling() : base()
     {
     }
 
@@ -13,7 +12,7 @@ public class DataSampling : Transformer
 
     public override string GetQuery()
     {
-        return Pipeline.QueryBuilder.Sample(PreviousComponents[0].GetQuery(), Pipeline.TableManager.NewTableName(),
+        return QueryBuilder.Sample(PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias(),
             Number);
     }
 }
