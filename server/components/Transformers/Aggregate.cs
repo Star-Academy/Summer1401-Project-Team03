@@ -21,7 +21,7 @@ public class Aggregate : Transformer
     public override string GetQuery()
     {
         var fieldsToSelect = new List<string>();
-        for (var i = 0; i < Parameters["FieldsToAggregate"].Count; i++)
+        for (var i = 0; i < Parameters["fields_to_aggregate"].Count; i++)
             fieldsToSelect.Add(Pipeline.QueryBuilder.Aggregate(Parameters["fields_to_aggregate"][i], Parameters["aggregate_functions"][i]));
 
         return
