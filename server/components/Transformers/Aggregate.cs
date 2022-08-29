@@ -24,7 +24,8 @@ public class Aggregate : Transformer
         for (var i = 0; i < Parameters["fields_to_aggregate"].Count; i++)
             fieldsToSelect.Add(Pipeline.QueryBuilder.Aggregate(Parameters["fields_to_aggregate"][i], Parameters["aggregate_functions"][i]));
 
-        return
+        var x =
             $"{Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.GroupBy(Parameters["fields_to_group_by"])}";
+        return x;
     }
 }
