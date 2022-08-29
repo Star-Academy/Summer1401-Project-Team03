@@ -52,11 +52,11 @@ public class DataInventoryController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public IActionResult Export(int fileID)
+    public IActionResult Export(int fileID, string category)
     {
         try
         {
-            var filePath = FileSearcher.Search(fileID, "exports");
+            var filePath = FileSearcher.Search(fileID, category);
             return new FileStreamResult(FileOperation.Open(filePath, FileMode.Open), "text/plain");
         }
         catch (Exception e)
