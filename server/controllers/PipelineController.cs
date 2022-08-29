@@ -23,9 +23,7 @@ public class PipelineController : ControllerBase
         var path = PathGenerator.GetPipelineDirectory();
         foreach (var filePath in Directory.GetFiles(path))
         {
-            var jsonFile = FileOperation.ReadAllText(filePath);
-            var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
-
+            var information = file.FileOperation.Instance.ReadPipeline(filePath);
             idToPipeline[information.Id] = new Pipeline(information);
         }
     }
@@ -49,7 +47,7 @@ public class PipelineController : ControllerBase
 
             pipeline.Connect(1, 2);
             
-            FileWriter.Instance.WritePipeline(pipeline);
+            file.FileOperation.Instance.WritePipeline(pipeline);
             
             return Ok(pipelineID);
         }
@@ -78,7 +76,7 @@ public class PipelineController : ControllerBase
 
             component.Position = position;
             
-            FileWriter.Instance.WritePipeline(pipeline);
+            file.FileOperation.Instance.WritePipeline(pipeline);
             return Ok(component.Id);
         }
         catch (Exception e)
@@ -98,7 +96,7 @@ public class PipelineController : ControllerBase
 
             component.Position = newPosition;
 
-            FileWriter.Instance.WritePipeline(pipeline);
+            file.FileOperation.Instance.WritePipeline(pipeline);
             return Ok();
         }
         catch (Exception e)
@@ -118,7 +116,7 @@ public class PipelineController : ControllerBase
             var component = pipeline.IdToComponent[componentID];
 
             component.Parameters = configurations;
-            FileWriter.Instance.WritePipeline(pipeline);
+            file.FileOperation.Instance.WritePipeline(pipeline);
             
             return Ok();
         }
@@ -155,6 +153,21 @@ public class PipelineController : ControllerBase
         
         pipeline.AddDestinationId(loader.Id);
         pipeline.AddComponent(loader);
+    }
+
+    [EnableCors("CorsPolicy")]
+    [HttpDelete]
+    public IActionResult DeletePipeline(int pipelineID)
+    {
+        try
+        {
+            file.FileOperation.Instance.RemovePipeline(pipelineID);
+            return Ok();
+        }
+        catch(Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [EnableCors("CorsPolicy")]
@@ -214,14 +227,7 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var path = PathGenerator.GetPipelineDirectory();
-
-            var directoryInfo = new DirectoryInfo(path);
-            var files = directoryInfo.GetFiles("*");
-
-            var file = files.Where(x => x.Name == pipelineID.ToString()).ElementAt(0);
-
-            return Ok(FileOperation.ReadAllText(file.FullName));
+            return Ok(file.FileOperation.Instance.ReadPipeline(pipelineID));
         }
         catch (Exception e)
         {
