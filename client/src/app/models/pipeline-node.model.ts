@@ -1,4 +1,4 @@
-import {ProcessType} from '../enums/ProcessType.enum';
+import {customProcessType, ProcessType} from '../enums/ProcessType.enum';
 
 export interface PipelineNodeModel {
     id: string;
@@ -26,5 +26,18 @@ export interface NodeRemoveInfoModel {
 export interface NodeAddInfoModel {
     beforeId: string;
     afterId: string;
+    position: {x: number; y: number};
+}
+
+export interface RemoveNodeServiceModel {
+    nodeId: string;
+    beforeId: string;
+    afterId: string;
+}
+
+export interface AddNodeServiceModel {
+    beforeId: string;
+    afterId: string;
+    type: customProcessType;
     position: {x: number; y: number};
 }

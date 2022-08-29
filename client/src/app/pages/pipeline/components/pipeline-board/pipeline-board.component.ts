@@ -3,6 +3,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy} from
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {LeaderLineModel, NodeRemoveInfoModel, PipelineNodeModel} from '../../../../models/pipeline-node.model';
 import {ProcessType} from '../../../../enums/ProcessType.enum';
+import {PipelineBoardService} from '../../../../services/pipeline-board.service';
 
 declare var LeaderLine: any;
 declare var AnimEvent: any;
@@ -96,7 +97,11 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     public boardEl!: HTMLElement;
     public resizeObserverObj!: ResizeObserver;
 
-    public constructor(private elRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) {}
+    public constructor(
+        private elRef: ElementRef,
+        private changeDetectorRef: ChangeDetectorRef,
+        public boardService: PipelineBoardService
+    ) {}
 
     public ngAfterViewInit(): void {
         const leaderLineInit = (): void => {

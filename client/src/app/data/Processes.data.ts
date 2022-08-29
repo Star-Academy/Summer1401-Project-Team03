@@ -1,4 +1,5 @@
 import {ProcessType, customProcessType} from '../enums/ProcessType.enum';
+import {ItemType} from '../enums/ItemType.enum';
 
 export interface ProcessSchema {
     title: string;
@@ -46,12 +47,12 @@ export const PROCESS: ProcessInfo = {
         icon: 'filter',
         items: [
             {
-                type: 'TEXT_INPUT',
+                type: ItemType.TEXT_INPUT,
                 label: 'field',
                 value: '',
             },
             {
-                type: 'SELECT',
+                type: ItemType.SELECT,
                 options: [
                     {
                         value: '==',
@@ -82,7 +83,7 @@ export const PROCESS: ProcessInfo = {
                 value: '',
             },
             {
-                type: 'TEXT_INPUT',
+                type: ItemType.TEXT_INPUT,
                 label: 'value',
                 value: '',
             },
