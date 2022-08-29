@@ -5,14 +5,15 @@ public enum ComponentType
     Filter,
     Aggregate,
     DataSampling,
-    FieldRemover,
-    FieldRenamer,
-    FieldSelector,
-    Hash,
-    TypeConverter,
+    FieldRemover, //ok
+    FieldRenamer, //ok
+    FieldSelector, //ok
+    Hash, //ok
+    TypeConverter, //ok
     Join,
-    CSVLoader,
-    CSVExtractor,
+    CSVLoader, //ok
+    CSVExtractor, //ok
     JSONExtractor,
-    JSONLoader
+    JSONLoader, 
+    Math
 }
