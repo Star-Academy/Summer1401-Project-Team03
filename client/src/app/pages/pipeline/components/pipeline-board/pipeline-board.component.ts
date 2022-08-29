@@ -184,6 +184,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
         const currentIndex = this.getNodeIndexById(currentId);
         this.pipelineNodeDatas[currentIndex].leaderlines.push(newLeaderLineObj);
+        console.log(this.pipelineNodeDatas);
     }
 
     public addNodeComponent(item: PipelineNodeModel): void {

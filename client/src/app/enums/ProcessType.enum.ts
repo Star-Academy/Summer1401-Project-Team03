@@ -10,7 +10,9 @@ export enum ProcessType {
 
 export enum customProcessType {
     FILTER = 'FILTER',
+    REPLICATE = 'REPLICATE',
     FIELD_REMOVE = 'FIELD_REMOVE',
     JOIN = 'JOIN',
     FIELD_RENAME = 'FIELD_RENAME',
+    DESTINATION = 'DESTINATION',
 }

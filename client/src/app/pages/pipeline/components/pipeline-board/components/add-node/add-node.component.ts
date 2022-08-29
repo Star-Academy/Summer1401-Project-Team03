@@ -1,12 +1,13 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
-import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
+import {PROCESS, ProcessInfo} from 'src/app/data/Processes.data';
 import {customProcessType, ProcessType} from 'src/app/enums/ProcessType.enum';
 import {AddNodeServiceModel, NodeAddInfoModel, PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 import {PipelineBoardService} from '../../../../../../services/pipeline-board.service';
 
 let counter = 10;
 const ADDITIONAL_LEFT = 300;
+const ADDITIONAL_BOTTOM = 160;
 
 @Component({
     selector: 'app-add-node',
@@ -42,7 +43,59 @@ export class addNodeComponent {
         this.modal.closeModal();
 
         const title = this.nodeTitle;
-        const newPosition = {x: this.nodeData.position.x + ADDITIONAL_LEFT, y: this.nodeData.position.y};
+        let newPosition = {x: this.nodeData.position.x + ADDITIONAL_LEFT, y: this.nodeData.position.y};
+        if (type === customProcessType.REPLICATE) {
+            newPosition = {x: newPosition.x + ADDITIONAL_LEFT, y: this.nodeData.position.y + ADDITIONAL_BOTTOM};
+
+            const addNodeDestinationService: AddNodeServiceModel = {
+                beforeId: this.nodeData.beforeId,
+                afterId: this.nodeData.afterId,
+                position: newPosition,
+                type: customProcessType.DESTINATION,
+            };
+
+            const nodeDestinationId = await this.pipelineBoardService.addNode(addNodeDestinationService);
+            if (nodeDestinationId) {
+                const newNodeDestination: PipelineNodeModel = {
+                    id: nodeDestinationId,
+                    title: 'target',
+                    processesInfoType: ProcessType[customProcessType.DESTINATION],
+                    position: newPosition,
+                    openedSettingModal: false,
+                    afterId: -1,
+                    beforeId: this.nodeData.beforeId,
+                    leaderlines: [],
+                };
+                this.addNodeEmit.emit(newNodeDestination);
+                console.log(`add new node with ${newNodeDestination.id} id, Destination`);
+
+                newPosition = {...newPosition, x: newPosition.x - ADDITIONAL_LEFT};
+                // New node
+                const addNodeService: AddNodeServiceModel = {
+                    beforeId: this.nodeData.beforeId,
+                    afterId: nodeDestinationId,
+                    position: newPosition,
+                    type,
+                };
+
+                const nodeId = await this.pipelineBoardService.addNode(addNodeService);
+                if (nodeId) {
+                    const newNodeComponent: PipelineNodeModel = {
+                        id: nodeId,
+                        title,
+                        processesInfoType: ProcessType[type],
+                        position: newPosition,
+                        openedSettingModal: false,
+                        afterId: nodeDestinationId,
+                        beforeId: this.nodeData.beforeId,
+                        leaderlines: [],
+                    };
+                    this.addNodeEmit.emit(newNodeComponent);
+                    console.log(`add new node with ${newNodeComponent.id} id`);
+                }
+            }
+            return undefined;
+        }
 
         // // TODO Connect to service
 
@@ -54,7 +107,6 @@ export class addNodeComponent {
         };
 
         const nodeId = await this.pipelineBoardService.addNode(addNodeService);
-
         if (nodeId) {
             const newNodeComponent: PipelineNodeModel = {
                 id: nodeId,
@@ -66,7 +118,6 @@ export class addNodeComponent {
                 beforeId: this.nodeData.beforeId,
                 leaderlines: [],
             };
-            counter++; // temporary
             this.addNodeEmit.emit(newNodeComponent);
             console.log(`add new node with ${newNodeComponent.id} id`);
         }
