@@ -106,7 +106,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string GroupBy(List<string> keys)
     {
         var query = new StringBuilder(GroupBy(keys[0]));
-        for (var i = 0; i < keys.Count; i++) query.Append($", {keys[i]}");
+        for (var i = 1; i < keys.Count; i++) query.Append($", {keys[i]}");
 
         return query.ToString();
     }
