@@ -5,7 +5,7 @@ export interface PipelineNodeModel {
     beforeId: number;
     afterId: number;
     title: string;
-    processesInfoType: ProcessType;
+    processesInfoType: string; //TODO edit
     position: {x: number; y: number};
     openedSettingModal: boolean;
     leaderlines: LeaderLineModel[];
@@ -40,4 +40,25 @@ export interface AddNodeServiceModel {
     afterId: number;
     type: customProcessType;
     position: {x: number; y: number};
+}
+
+export interface GetAllNodeServiceModel {
+    id: number;
+    name: string;
+    destinationIDs: number[];
+    componentInformations: ComponentInformationModel[];
+}
+
+export interface ComponentInformationModel {
+    id: number;
+    type: string;
+    title: string;
+    nextIds: number[];
+    previousIds: number[];
+    position: {x: number; y: number};
+    parameters: {
+        additionalProp1: string[];
+        additionalProp2: string[];
+        additionalProp3: string[];
+    };
 }

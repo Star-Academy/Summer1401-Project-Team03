@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {LeaderLineModel, NodeRemoveInfoModel, PipelineNodeModel} from '../../../../models/pipeline-node.model';
@@ -77,7 +77,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     templateUrl: './pipeline-board.component.html',
     styleUrls: ['./pipeline-board.component.scss'],
 })
-export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
+export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy {
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-86)',
@@ -102,6 +102,10 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         private changeDetectorRef: ChangeDetectorRef,
         public boardService: PipelineBoardService
     ) {}
+
+    public ngOnInit(): void {
+        this.pipelineNodeDatas = this.boardService.allNode;
+    }
 
     public ngAfterViewInit(): void {
         const leaderLineInit = (): void => {

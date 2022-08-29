@@ -1,9 +1,17 @@
 import {Injectable} from '@angular/core';
-import {AddNodeServiceModel, PipelineNodeModel, RemoveNodeServiceModel} from '../models/pipeline-node.model';
+import {
+    AddNodeServiceModel,
+    ComponentInformationModel,
+    GetAllNodeServiceModel,
+    LeaderLineModel,
+    PipelineNodeModel,
+    RemoveNodeServiceModel,
+} from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
 import {PIPELINE_ONE, PIPELINE_NODE_CONFIG, ADD_PIPELINE_NODE, PIPELINE_SET_CONFIG} from '../utils/api.utils';
 import {QueryValueType} from '@angular/compiler/src/core';
 import {BehaviorSubject} from 'rxjs';
+import {ProcessType} from '../enums/ProcessType.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -18,8 +26,10 @@ export class PipelineBoardService {
     public selectedNodeConfigRx = new BehaviorSubject<any | null>(null);
 
     public async getAllNode(id: number): Promise<void> {
-        const response = await this.apiService.get<any[]>(PIPELINE_ONE, {pipelineID: id});
-        this.allNode = response || [];
+        const response = (await this.apiService.get<GetAllNodeServiceModel>(PIPELINE_ONE, {pipelineID: id})) || null;
+        if (response) {
+            this.allNode = this.convertComponentInformationsToPielineNodeModel(response.componentInformations);
+        }
     }
 
     public async getNodeConfig(): Promise<void> {
@@ -50,12 +60,31 @@ export class PipelineBoardService {
     }
 
     public async removeNode(nodeInfo: RemoveNodeServiceModel): Promise<void> {
-        // await this.apiService.post(ADD_PIPELINE_NODE, nodeInfo);
+        // await this.apiService.delete(ADD_PIPELINE_NODE, nodeInfo);
     }
-
     //    getSettingNode
     //    sendSettingNode
     //    runUpNode
     //    runNode
+
+    // UTILITY
+    private convertComponentInformationsToPielineNodeModel(
+        components: ComponentInformationModel[]
+    ): PipelineNodeModel[] {
+        const pipelineNodes: PipelineNodeModel[] = components.map((component) => {
+            const converted = {
+                id: component.id,
+                beforeId: component.previousIds[0],
+                afterId: component.nextIds[0],
+                title: component.title,
+                processesInfoType: component.type,
+                position: component.position,
+                openedSettingModal: false,
+                leaderlines: [],
+            };
+            return converted;
+        });
+        return pipelineNodes;
+    }
 }
 // QueryValueType
