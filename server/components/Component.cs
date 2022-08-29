@@ -12,6 +12,7 @@ public abstract class Component
         Parameters = new Dictionary<string, List<string>>();
     }
 
+    public string Title { get; set; }
     public Dictionary<string, List<string>> Parameters { set; get; }
     public List<Component> NextComponents { set; get; }
 

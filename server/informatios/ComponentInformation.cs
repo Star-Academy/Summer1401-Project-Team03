@@ -11,6 +11,7 @@ public class ComponentInformation
 
     public ComponentInformation(Component component)
     {
+        Title = component.Title;
         Type = component.Type.GetString();
         Id = component.Id;
         NextIds = component.NextComponents.Select(x => x.Id).ToList();
@@ -19,6 +20,7 @@ public class ComponentInformation
         Parameters = component.Parameters;
     }
 
+    public string Title { get; set; }
     public int Id { get; set; }
     public string Type { get; set; }
     public List<int> NextIds { get; set; }

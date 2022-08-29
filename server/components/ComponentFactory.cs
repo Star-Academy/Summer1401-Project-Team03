@@ -33,25 +33,28 @@ public class ComponentFactory
         };
     }
 
-    public Component CreateComponent(ComponentType type)
+    public Component CreateComponent(ComponentType type, string title)
     {
         var component = GetComponent(type);
         _counter++;
         component.Id = _counter;
+        component.Title = title;
         return component;
     }
 
-    public Component CreateComponent(ComponentType type, Pipeline pipeline, Position position)
+    public Component CreateComponent(ComponentType type, Pipeline pipeline, Position position, string title)
     {
         var component = GetComponent(type);
         component.Pipeline = pipeline;
         component.Position = position;
+        component.Title = title;
         return component;
     }
 
     public Component LoadComponent(ComponentInformation componentInformation, Pipeline pipeline)
     {
         var component = GetComponent(componentInformation.Type.GetComponentType());
+        component.Title = componentInformation.Title;
         component.Id = componentInformation.Id;
         component.Position = componentInformation.Position;
         component.Parameters = new Dictionary<string, List<string>>(componentInformation.Parameters);
