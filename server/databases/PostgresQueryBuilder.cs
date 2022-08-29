@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using server.Enums;
 
 namespace server.Databases;
 
@@ -10,7 +11,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string CreateTable(string table, List<string> keys)
     {
         var query = new StringBuilder($"CREATE TABLE {table} ( {PrimaryKey} SERIAL PRIMARY KEY");
-        foreach (var key in keys) query.Append($", {key} varchar(40)");
+        foreach (var key in keys) query.Append($", {key} {DataType.Text.ToString()}");
 
         query.Append(')');
         return query.ToString();
