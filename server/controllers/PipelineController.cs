@@ -177,8 +177,8 @@ public class PipelineController : ControllerBase
         {
             var pipeline = idToPipeline[pipelineID];
             var component = pipeline.IdToComponent[componentID];
-            var previousIDs = component.PreviousComponents.Select(x => x.Id);
-            var nextIDs = component.NextComponents.Select(x => x.Id);
+            var previousIDs = component.PreviousComponents.Select(x => x.Id).ToList();
+            var nextIDs = component.NextComponents.Select(x => x.Id).ToList();
 
             foreach (var previousID in previousIDs) pipeline.Disconnect(previousID, componentID);
 
