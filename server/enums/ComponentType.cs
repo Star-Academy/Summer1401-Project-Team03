@@ -3,8 +3,8 @@
 public enum ComponentType
 {
     Filter,
-    Aggregate,
-    DataSampling,
+    Aggregate, //ok
+    DataSampling, //ok
     FieldRemover, //ok
     FieldRenamer, //ok
     FieldSelector, //ok
