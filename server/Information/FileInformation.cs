@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace server.file;
+namespace server.Information;
 
 public class FileInformation
 {

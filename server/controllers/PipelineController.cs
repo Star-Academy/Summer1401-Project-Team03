@@ -6,6 +6,7 @@ using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Enums;
 using server.file;
+using server.Information;
 using server.Pipelines;
 using FileOperation = System.IO.File;
 
@@ -25,7 +26,7 @@ public class PipelineController : ControllerBase
             var jsonFile = FileOperation.ReadAllText(filePath);
             var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
 
-            idToPipeline[information.ID] = PipelineInformationPipelineAdapter.PipelineFromInformation(information);
+            idToPipeline[information.Id] = new Pipeline(information);
         }
     }
 
@@ -39,7 +40,7 @@ public class PipelineController : ControllerBase
 
             var pipelineID = IDCounterHandler.LoadPipeLineID();
             idToPipeline[pipelineID] = pipeline;
-            pipeline.id = pipelineID;
+            pipeline.Id = pipelineID;
 
             IDCounterHandler.SavePipelineID(pipelineID + 1);
 
@@ -47,7 +48,7 @@ public class PipelineController : ControllerBase
             AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4));
 
             pipeline.Connect(1, 2);
-            var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
+            var info = new PipelineInformation(pipeline);
             var jsonString = JsonSerializer.Serialize(info);
 
             var pipelinePath = PathGenerator.GeneratePipelinePath(pipelineID);
@@ -70,7 +71,7 @@ public class PipelineController : ControllerBase
         {
             var pipeline = idToPipeline[pipelineID];
 
-            var component = new ComponentFactory().CreateNewComponent(type);
+            var component = new ComponentFactory().CreateComponent(type);
 
             pipeline.AddComponent(component);
             pipeline.Disconnect(previousComponentId, nextComponentId);
@@ -129,11 +130,11 @@ public class PipelineController : ControllerBase
     {
         var filePath = FileSearcher.Search(fileID, "imports");
 
-        var extractor = new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
+        var extractor = new ComponentFactory().CreateComponent(ComponentType.CSVExtractor);
 
         extractor.Pipeline = pipeline;
         extractor.Position = position;
-        extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
+        extractor.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
 
         pipeline.AddComponent(extractor);
         return;
@@ -146,11 +147,11 @@ public class PipelineController : ControllerBase
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "exports");
 
         IDCounterHandler.SaveFileID(fileID + 1);
-        var loader = (Loader)new ComponentFactory().CreateNewComponent(ComponentType.CSVLoader);
+        var loader = (Loader) new ComponentFactory().CreateComponent(ComponentType.CSVLoader);
         loader.Pipeline = pipeline;
         loader.Position = position;
-        loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
-        
+        loader.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
+
         pipeline.AddComponent(loader);
     }
 
@@ -198,7 +199,7 @@ public class PipelineController : ControllerBase
             var jsonFile = FileOperation.ReadAllText(filePath);
             var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
 
-            informations[information.ID] = information.Name;
+            informations[information.Id] = information.Name;
         }
 
         return Ok(informations);
@@ -232,8 +233,7 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            return Ok(ComponentInformationAdaptor.GetInformationFromComponent(idToPipeline[pipelineID]
-                .IdToComponent[componentID]));
+            return Ok(new ComponentInformation(idToPipeline[pipelineID].IdToComponent[componentID]));
         }
         catch (Exception e)
         {
