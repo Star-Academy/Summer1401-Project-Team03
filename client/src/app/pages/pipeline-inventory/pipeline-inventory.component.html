@@ -15,7 +15,9 @@
             *ngFor="let item of pipelineService.pipelines | searchFilter: searchPhrase"
             (click)="navigateWithUrl(item.id)"
         >
-            <td>{{ item.name }}</td>
+            <td class="name">
+                <a title="open pipeline" [routerLink]="'/pipeline/' + item.id">{{ item.name }}</a>
+            </td>
             <!-- <td>{{ item.createAt | convertDate }}</td>
             <td>{{ item.modifiedAt | convertDate }}</td> -->
             <td>

@@ -58,6 +58,10 @@
             font-size: var(--font-size-primary);
 
             text-align: center;
+
+            .name {
+                cursor: pointer;
+            }
         }
 
         td,
