@@ -25,16 +25,10 @@ export class PipelineService {
     public async getAllPiplelines(): Promise<void> {
         const response = await this.apiService.get<PipelineItemModel[]>(PIPELINE_ALL);
 
-        if (response) {
-            this.pipelines = [];
-        }
+        this.pipelines = response || [];
     }
 
     public async deletePipeline(id: string): Promise<void> {
-        // TODO: add functionality
-    }
-
-    public async getPipeline(id: string): Promise<void> {
         // TODO: add functionality
     }
 }

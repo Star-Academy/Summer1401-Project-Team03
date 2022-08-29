@@ -17,8 +17,8 @@ export class PipelineBoardService {
     public selectedNodeRx = new BehaviorSubject<PipelineNodeModel | null>(null);
     public selectedNodeConfigRx = new BehaviorSubject<any | null>(null);
 
-    public async getAllNode(): Promise<void> {
-        const response = await this.apiService.get<any[]>(PIPELINE_ONE);
+    public async getAllNode(id: number): Promise<void> {
+        const response = await this.apiService.get<any[]>(PIPELINE_ONE, {pipelineID: id});
         this.allNode = response || [];
     }
 
