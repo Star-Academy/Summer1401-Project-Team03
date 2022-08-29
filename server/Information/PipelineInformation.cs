@@ -13,12 +13,11 @@ public class PipelineInformation
         Id = pipeline.Id;
         Name = pipeline.Name;
         DestinationIDs = new HashSet<int>(pipeline.DestinationIDs);
-        Components = pipeline.IdToComponent.ToDictionary(t => t.Key,
-            t => new ComponentInformation(t.Value));
+        ComponentInformations = pipeline.IdToComponent.Select(c => new ComponentInformation(c.Value)).ToList();
     }
 
     public int Id { get; set; }
     public string Name { get; set; }
     public HashSet<int> DestinationIDs { get; set; }
-    public Dictionary<int, ComponentInformation> Components { get; set; }
+    public List<ComponentInformation> ComponentInformations { get; set; }
 }
