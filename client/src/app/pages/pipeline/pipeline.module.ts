@@ -16,6 +16,7 @@ import {SettingItemModalComponent} from './components/setting-item-modal/setting
 import {BoardComponent} from './components/board/board.component';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
+import {DataTableModule} from '../../components/data-table/data-table.module';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import {NgxDraggabillyModule} from 'ngx-draggabilly';
         ModalModule,
         NgxDraggabillyModule,
         AngularDraggableModule,
+        DataTableModule,
     ],
 })
 export class PipelineModule {}

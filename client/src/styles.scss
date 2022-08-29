@@ -1,4 +1,5 @@
 :root {
+    --color-purple-95: hsl(263deg 44% 95%);
     --color-purple-90: hsl(263deg 44% 90%);
     --color-purple-86: hsl(263deg 44% 86%);
     --color-purple-75: hsl(263deg 44% 75%);
@@ -11,13 +12,17 @@
 
     --color-shadow: hsl(0deg 0% 0% / 31.8%);
 
+    --color-gray-95: hsl(0deg 0% 95%);
     --color-gray-90: hsl(0deg 0% 90%);
+    --color-gray-85: hsl(260deg 2% 85%);
     --color-gray-78: hsl(260deg 2% 78%);
+    --color-gray-50: hsl(260deg 2% 50%);
     --color-gray-34: hsl(0deg 0% 34%);
     --color-gray-0: hsl(0deg 0% 0%);
 
     --color-white-solid: hsl(0deg 0% 100%);
 
+    --font-size-small: 1rem;
     --font-size-primary: 1.5rem;
     --font-size-big: 2rem;
 
