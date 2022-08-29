@@ -169,6 +169,37 @@ public class PipelineController : ControllerBase
             return BadRequest(e.Message);
         }
     }
+
+    [EnableCors("CorsPolicy")]
+    [HttpDelete]
+    public IActionResult DeleteComponent(int pipelineID, int componentID)
+    {
+        try
+        {
+            var pipeline = idToPipeline[pipelineID];
+            var component = pipeline.IdToComponent[componentID];
+            var previousIDs = component.PreviousComponents.Select(x => x.Id);
+            var nextIDs = component.NextComponents.Select(x => x.Id);
+            
+            foreach (var previousID in previousIDs)
+            {
+                pipeline.Disconnect(previousID, componentID);
+            }
+            
+            foreach (var nextID in nextIDs)
+            {
+                pipeline.Disconnect(componentID, nextID);
+            }
+            
+            pipeline.Connect(previousIDs.ElementAt(0), nextIDs.ElementAt(0));
+            file.FileOperation.Instance.WritePipeline(pipeline);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
     
     [EnableCors("CorsPolicy")]
     [HttpGet]
