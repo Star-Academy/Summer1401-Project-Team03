@@ -20,6 +20,7 @@ export class addNodeComponent {
     @ViewChild('ProcessAdd') public modal!: ModalComponent;
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
     public nodeData!: NodeAddInfoModel;
+    public pipelineBoardId!: number;
     public nodeTitle: string = 'new node';
 
     public constructor(private pipelineBoardService: PipelineBoardService) {}
@@ -29,13 +30,18 @@ export class addNodeComponent {
         return keys.map((type) => type as customProcessType);
     }
 
-    public openModal(beforeId: number, afterId: number, position: {x: number; y: number}): void {
+    public openModal(
+        beforeId: number,
+        afterId: number,
+        position: {x: number; y: number},
+        pipelineBoardId: number
+    ): void {
         this.nodeData = {
             beforeId,
             afterId,
             position,
         };
-
+        this.pipelineBoardId = pipelineBoardId;
         this.modal.openModal();
     }
 
@@ -48,8 +54,9 @@ export class addNodeComponent {
             newPosition = {x: newPosition.x + ADDITIONAL_LEFT, y: this.nodeData.position.y + ADDITIONAL_BOTTOM};
 
             const addNodeDestinationService: AddNodeServiceModel = {
-                beforeId: this.nodeData.beforeId,
-                afterId: this.nodeData.afterId,
+                pipelineID: this.pipelineBoardId,
+                previousComponentId: this.nodeData.beforeId,
+                nextComponentId: this.nodeData.afterId,
                 position: newPosition,
                 type: customProcessType.DESTINATION,
             };
@@ -72,8 +79,9 @@ export class addNodeComponent {
                 newPosition = {...newPosition, x: newPosition.x - ADDITIONAL_LEFT};
                 // New node
                 const addNodeService: AddNodeServiceModel = {
-                    beforeId: this.nodeData.beforeId,
-                    afterId: nodeDestinationId,
+                    pipelineID: this.pipelineBoardId,
+                    previousComponentId: this.nodeData.beforeId,
+                    nextComponentId: nodeDestinationId,
                     position: newPosition,
                     type,
                 };
@@ -100,8 +108,9 @@ export class addNodeComponent {
         // // TODO Connect to service
 
         const addNodeService: AddNodeServiceModel = {
-            beforeId: this.nodeData.beforeId,
-            afterId: this.nodeData.afterId,
+            pipelineID: this.pipelineBoardId,
+            previousComponentId: this.nodeData.beforeId,
+            nextComponentId: this.nodeData.afterId,
             position: newPosition,
             type,
         };

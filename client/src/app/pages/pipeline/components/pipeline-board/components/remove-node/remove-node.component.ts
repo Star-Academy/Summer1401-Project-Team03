@@ -12,22 +12,27 @@ export class RemoveNodeComponent {
     @ViewChild('removeNodeModal') public modal!: ModalComponent;
     @Output() public removeNodeEmit = new EventEmitter<NodeRemoveInfoModel>();
     public nodeRemoveInfo!: NodeRemoveInfoModel;
+    public pipelineBoardId!: number;
 
     public constructor(private pipelineBoardService: PipelineBoardService) {}
 
-    public openModal(nodeId: number, beforeId: number, afterId: number): void {
+    public openModal(nodeId: number, beforeId: number, afterId: number, pipelineBoardId: number): void {
         this.nodeRemoveInfo = {
             nodeId,
             beforeId,
             afterId,
         };
+        this.pipelineBoardId = pipelineBoardId;
         this.modal.openModal();
     }
 
     public async removeNodeHandle(): Promise<void> {
         this.modal.closeModal();
 
-        await this.pipelineBoardService.removeNode(this.nodeRemoveInfo);
+        await this.pipelineBoardService.removeNode({
+            pipelineID: this.pipelineBoardId,
+            componentID: this.nodeRemoveInfo.nodeId,
+        });
         // TODO check if remove from database, remove node in board
 
         this.removeNodeEmit.emit(this.nodeRemoveInfo);

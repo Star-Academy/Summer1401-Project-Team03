@@ -93,6 +93,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
     };
 
     public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));
+    public pipelineBoardId!: number;
     public animEventObj!: any;
     public boardEl!: HTMLElement;
     public resizeObserverObj!: ResizeObserver;
@@ -104,6 +105,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
     ) {}
 
     public ngOnInit(): void {
+        this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
         this.pipelineNodeDatas = this.boardService.allNode;
     }
 
@@ -256,10 +258,10 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         component.style.zIndex = '100';
     }
 
-    public savePositionNodeElement(elementId: number): void {
-        const elementIndex = this.getNodeIndexById(elementId);
+    public savePositionNodeElement(nodeId: number): void {
+        const elementIndex = this.getNodeIndexById(nodeId);
 
-        const component = this.getElementRef(elementId);
+        const component = this.getElementRef(nodeId);
         component.style.zIndex = '10';
 
         const newPosition = {x: component?.offsetLeft, y: component?.offsetTop};
@@ -268,8 +270,13 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         this.pipelineNodeDatas[elementIndex].position.x = newPosition.x;
         this.pipelineNodeDatas[elementIndex].position.y = newPosition.y;
 
-        console.log(`${elementId}: X:${newPosition.x}|Y:${newPosition.y}`);
-        //   TODO Connect to Service
+        console.log(`${nodeId}: X:${newPosition.x}|Y:${newPosition.y}`);
+
+        this.boardService.changeComponentPosition({
+            pipelineID: this.pipelineBoardId,
+            componentID: nodeId,
+            position: newPosition,
+        });
     }
 
     // LeaderLine

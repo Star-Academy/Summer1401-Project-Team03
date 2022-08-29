@@ -30,15 +30,21 @@ export interface NodeAddInfoModel {
 }
 
 export interface RemoveNodeServiceModel {
-    nodeId: number;
-    beforeId: number;
-    afterId: number;
+    pipelineID: number;
+    componentID: number;
 }
 
 export interface AddNodeServiceModel {
-    beforeId: number;
-    afterId: number;
+    pipelineID: number;
+    previousComponentId: number;
+    nextComponentId: number;
     type: customProcessType;
+    position: {x: number; y: number};
+}
+
+export interface ChangeComponentPositionServiceModel {
+    pipelineID: number;
+    componentID: number;
     position: {x: number; y: number};
 }
 
