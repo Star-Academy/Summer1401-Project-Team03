@@ -1,32 +1,35 @@
 import {Injectable} from '@angular/core';
 import {POST_INIT, FORM_POST_INIT} from '../utils/api.utils';
+import {SpinnerService} from './spinner.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ApiService {
-    public constructor() {}
+    public constructor(private spinnerService: SpinnerService) {}
 
     private async fetchData<T>(url: string, init: Partial<RequestInit> = {}): Promise<T | null> {
-        let response = await fetch(url, init);
+        return await this.spinnerService.wrapAsync(async () => {
+            let response = await fetch(url, init);
 
-        let data = null;
+            let data = null;
 
-        try {
-            data = await response.json();
-        } catch {
-            if (response.ok) {
-                data = true;
-            } else {
-                data = false;
+            try {
+                data = await response.json();
+            } catch {
+                if (response.ok) {
+                    data = true;
+                } else {
+                    data = false;
+                }
             }
-        }
 
-        if (response.ok) {
-            return data as T;
-        }
+            if (response.ok) {
+                return data as T;
+            }
 
-        return null;
+            return null;
+        });
     }
 
     public async post<T>(url: string, body: any = '', init: Partial<RequestInit> = {}): Promise<T | null> {

@@ -1,90 +1,90 @@
 .wrapper {
-  background-color: var(--color-white-solid);
-  color: var(--color-purple-21);
+    background-color: var(--color-white-solid);
+    color: var(--color-purple-21);
 
-  // border: 3px solid var(--color-purple-21);
-  box-shadow: 0 0 0.3rem 0.2rem var(--color-shadow);
+    // border: 3px solid var(--color-purple-21);
+    box-shadow: 0 0 0.3rem 0.2rem var(--color-shadow);
 
-  position: relative;
+    position: relative;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 
-  width: 22rem;
-  height: 10rem;
+    width: 22rem;
+    height: 10rem;
 
-  padding: 0.6rem 1rem;
+    padding: 0.6rem 1rem;
 
-  border-radius: var(--border-radius-primary);
+    border-radius: var(--border-radius-primary);
 
-  font-weight: 600;
+    font-weight: 600;
 
-  text-transform: capitalize;
+    text-transform: capitalize;
 
-  app-svg {
-    color: var(--color-purple-46);
+    app-svg {
+        color: var(--color-purple-46);
 
-    width: 4rem;
-  }
-
-  .desc {
-    width: 100%;
-
-    .label {
-      overflow: hidden;
-
-      width: 100%;
-
-      font-size: var(--font-size-big);
-
-      text-align: center;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+        width: 4rem;
     }
 
-    p {
-      opacity: 0.8;
+    .desc {
+        width: 100%;
 
-      font-size: var(--font-size-primary);
-      font-size: 1.25rem;
+        .label {
+            overflow: hidden;
 
-      text-align: center;
-    }
-  }
+            width: 100%;
 
-  .setting {
-    position: absolute;
-    inset: 0;
+            font-size: var(--font-size-big);
 
-    font-size: 0.2rem;
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
-    &__icon {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      z-index: 10;
+        p {
+            opacity: 0.8;
 
-      width: 2rem;
-      height: 2rem;
+            font-size: var(--font-size-primary);
+            font-size: 1.25rem;
 
-      cursor: pointer;
+            text-align: center;
+        }
     }
 
-    &__modal {
-      z-index: -1;
-    }
+    .setting {
+        position: absolute;
+        inset: 0;
 
-    .modal {
-      position: absolute;
+        font-size: 0.2rem;
 
-      &__container {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-      }
+        &__icon {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            z-index: 10;
+
+            width: 2rem;
+            height: 2rem;
+
+            cursor: pointer;
+        }
+
+        &__modal {
+            z-index: -1;
+        }
+
+        .modal {
+            position: absolute;
+
+            &__container {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
     }
-  }
 }

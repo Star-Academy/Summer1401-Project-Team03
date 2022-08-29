@@ -1,0 +1,65 @@
+.container {
+    background-color: hsl(0deg 0% 0% / 60%);
+
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+
+    .stage {
+        position: fixed;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+
+        transform: translate(-50%, -50%);
+
+        .dot-overtaking {
+            position: relative;
+
+            animation: dot-overtaking 2s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+
+            &,
+            &::before,
+            &::after {
+                background-color: transparent;
+                color: var(--color-white-solid);
+                box-shadow: 0 -2rem 0 0;
+
+                block-size: 1.5rem;
+                inline-size: 1.5rem;
+
+                border-radius: 50%;
+            }
+
+            &::before,
+            &::after {
+                content: "";
+
+                position: absolute;
+                inset-block-start: 0;
+                inset-inline-start: 0;
+
+                display: inline-block;
+            }
+
+            &::before {
+                animation: dot-overtaking 2s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+                animation-delay: 0.3s;
+            }
+
+            &::after {
+                animation: dot-overtaking 1.5s infinite cubic-bezier(0.2, 0.6, 0.8, 0.2);
+                animation-delay: 0.6s;
+            }
+        }
+    }
+}
+
+@keyframes dot-overtaking {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+}

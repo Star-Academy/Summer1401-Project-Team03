@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SettingItemModalComponent} from './setting-item-modal.component';
+import {SpinnerComponent} from './spinner.component';
 
-describe('SettingItemModalComponent', () => {
-    let component: SettingItemModalComponent;
-    let fixture: ComponentFixture<SettingItemModalComponent>;
+describe('SpinnerComponent', () => {
+    let component: SpinnerComponent;
+    let fixture: ComponentFixture<SpinnerComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SettingItemModalComponent],
+            declarations: [SpinnerComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SettingItemModalComponent);
+        fixture = TestBed.createComponent(SpinnerComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

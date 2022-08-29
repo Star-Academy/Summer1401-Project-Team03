@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {SettingItemModalComponent} from './setting-item-modal.component';
+import {LoadingComponent} from './loading.component';
 
-describe('SettingItemModalComponent', () => {
-    let component: SettingItemModalComponent;
-    let fixture: ComponentFixture<SettingItemModalComponent>;
+describe('LoadingShinyComponent', () => {
+    let component: LoadingComponent;
+    let fixture: ComponentFixture<LoadingComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [SettingItemModalComponent],
+            declarations: [LoadingComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(SettingItemModalComponent);
+        fixture = TestBed.createComponent(LoadingComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
