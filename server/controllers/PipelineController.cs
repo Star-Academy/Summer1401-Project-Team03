@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
-using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Enums;
 using server.file;
@@ -46,9 +45,9 @@ public class PipelineController : ControllerBase
             AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4));
 
             pipeline.Connect(1, 2);
-            
+
             file.FileOperation.Instance.WritePipeline(pipeline);
-            
+
             return Ok(pipelineID);
         }
 
@@ -75,7 +74,7 @@ public class PipelineController : ControllerBase
             pipeline.Connect(component.Id, nextComponentId);
 
             component.Position = position;
-            
+
             file.FileOperation.Instance.WritePipeline(pipeline);
             return Ok(component.Id);
         }
@@ -117,7 +116,7 @@ public class PipelineController : ControllerBase
 
             component.Parameters = configurations;
             file.FileOperation.Instance.WritePipeline(pipeline);
-            
+
             return Ok();
         }
         catch (Exception e)
@@ -134,7 +133,7 @@ public class PipelineController : ControllerBase
 
         extractor.Pipeline = pipeline;
         extractor.Position = position;
-        extractor.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
+        extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
 
         pipeline.AddComponent(extractor);
     }
@@ -146,11 +145,11 @@ public class PipelineController : ControllerBase
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "exports");
 
         IDCounterHandler.SaveFileID(fileID + 1);
-        var loader = (Loader) new ComponentFactory().CreateComponent(ComponentType.CSVLoader);
+        var loader = (Loader)new ComponentFactory().CreateComponent(ComponentType.CSVLoader);
         loader.Pipeline = pipeline;
         loader.Position = position;
-        loader.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
-        
+        loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
+
         pipeline.AddDestinationId(loader.Id);
         pipeline.AddComponent(loader);
     }
@@ -164,7 +163,7 @@ public class PipelineController : ControllerBase
             file.FileOperation.Instance.RemovePipeline(pipelineID);
             return Ok();
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             return BadRequest(e.Message);
         }
@@ -180,17 +179,11 @@ public class PipelineController : ControllerBase
             var component = pipeline.IdToComponent[componentID];
             var previousIDs = component.PreviousComponents.Select(x => x.Id);
             var nextIDs = component.NextComponents.Select(x => x.Id);
-            
-            foreach (var previousID in previousIDs)
-            {
-                pipeline.Disconnect(previousID, componentID);
-            }
-            
-            foreach (var nextID in nextIDs)
-            {
-                pipeline.Disconnect(componentID, nextID);
-            }
-            
+
+            foreach (var previousID in previousIDs) pipeline.Disconnect(previousID, componentID);
+
+            foreach (var nextID in nextIDs) pipeline.Disconnect(componentID, nextID);
+
             pipeline.Connect(previousIDs.ElementAt(0), nextIDs.ElementAt(0));
             file.FileOperation.Instance.WritePipeline(pipeline);
             return Ok();
@@ -200,7 +193,7 @@ public class PipelineController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-    
+
     [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult Run(int pipelineID)

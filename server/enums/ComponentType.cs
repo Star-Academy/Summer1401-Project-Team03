@@ -14,6 +14,6 @@ public enum ComponentType
     CSVLoader, //ok
     CSVExtractor, //ok
     JSONExtractor,
-    JSONLoader, 
+    JSONLoader,
     Math
 }

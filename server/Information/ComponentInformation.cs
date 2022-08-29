@@ -8,7 +8,7 @@ public class ComponentInformation
     public ComponentInformation()
     {
     }
-    
+
     public ComponentInformation(Component component)
     {
         Type = component.Type.GetString();

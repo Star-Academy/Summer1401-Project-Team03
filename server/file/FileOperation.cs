@@ -7,7 +7,7 @@ namespace server.file;
 
 public class FileOperation
 {
-    public static FileOperation Instance = new ();
+    public static FileOperation Instance = new();
 
     public void WritePipeline(Pipeline pipeline)
     {
@@ -35,7 +35,7 @@ public class FileOperation
         var jsonFile = File.ReadAllText(file.FullName);
         return JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
     }
-    
+
     public PipelineInformation ReadPipeline(string path)
     {
         var jsonFile = File.ReadAllText(path);
