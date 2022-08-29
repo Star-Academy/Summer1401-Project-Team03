@@ -29,4 +29,47 @@ public static class Extensions
             _ => throw new ArgumentOutOfRangeException(nameof(@string), @string, null)
         };
     }
+
+
+    public static ComponentType GetComponentType(this string componentType)
+    {
+        return componentType switch
+        {
+            "filter" => ComponentType.Filter,
+            "field_selector" => ComponentType.FieldSelector,
+            "field_renamer" => ComponentType.FieldRenamer,
+            "field_remover" => ComponentType.FieldRemover,
+            "aggregate" => ComponentType.Aggregate,
+            "data_sampling" => ComponentType.DataSampling,
+            "hash" => ComponentType.Hash,
+            "join" => ComponentType.Join,
+            "type_converter" => ComponentType.TypeConverter,
+            "csv_loader" => ComponentType.CSVLoader,
+            "csv_extractor" => ComponentType.CSVExtractor,
+            "json_loader" => ComponentType.JSONLoader,
+            "json_extractor" => ComponentType.JSONExtractor,
+            _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
+        };
+    }
+
+    public static string GetString(this ComponentType componentType)
+    {
+        return componentType switch
+        {
+            ComponentType.Filter => "filter",
+            ComponentType.FieldSelector => "field_selector",
+            ComponentType.FieldRenamer => "field_renamer",
+            ComponentType.FieldRemover => "field_remover",
+            ComponentType.Aggregate => "aggregate",
+            ComponentType.DataSampling => "data_sampling",
+            ComponentType.Hash => "hash",
+            ComponentType.Join => "join",
+            ComponentType.TypeConverter => "type_converter",
+            ComponentType.CSVLoader => "csv_loader",
+            ComponentType.CSVExtractor => "csv_extractor",
+            ComponentType.JSONLoader => "json_loader",
+            ComponentType.JSONExtractor => "json_extractor",
+            _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
+        };
+    }
 }

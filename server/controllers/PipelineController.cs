@@ -28,7 +28,7 @@ public class PipelineController : ControllerBase
             idToPipeline[information.ID] = PipelineInformationPipelineAdapter.PipelineFromInformation(information);
         }
     }
-    
+
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public ActionResult<int> Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
@@ -70,14 +70,14 @@ public class PipelineController : ControllerBase
             var pipeline = idToPipeline[pipelineID];
 
             var component = new ComponentFactory().CreateNewComponent(type);
-            
+
             pipeline.AddComponent(component);
             pipeline.Disconnect(previousComponentId, nextComponentId);
             pipeline.Connect(previousComponentId, component.Id);
             pipeline.Connect(component.Id, nextComponentId);
 
             component.Position = position;
-            
+
             return Ok(component.Id);
         }
         catch (Exception e)
@@ -104,7 +104,7 @@ public class PipelineController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-    
+
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public IActionResult SetComponentConfig(int pipelineID, int componentID,
@@ -127,13 +127,13 @@ public class PipelineController : ControllerBase
     private void AddSource(Pipeline pipeline, int fileID, Position position)
     {
         var filePath = FileSearcher.Search(fileID, "imports");
-        
-        var extractor = (Extractor) new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
+
+        var extractor = (Extractor)new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
 
         extractor.Pipeline = pipeline;
         extractor.Position = position;
-        extractor.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
-        
+        extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
+
         pipeline.AddComponent(extractor);
     }
 
@@ -145,10 +145,10 @@ public class PipelineController : ControllerBase
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "exports");
 
         IDCounterHandler.SaveFileID(fileID + 1);
-        var loader = (Loader) new ComponentFactory().CreateNewComponent(ComponentType.CSVLoader);
+        var loader = (Loader)new ComponentFactory().CreateNewComponent(ComponentType.CSVLoader);
         loader.Pipeline = pipeline;
         loader.Position = position;
-        loader.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
+        loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
 
         loader.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
 
