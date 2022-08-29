@@ -10,64 +10,64 @@ declare var AnimEvent: any;
 
 const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
-        id: '1',
+        id: 1,
         title: 'covid dataset',
         processesInfoType: ProcessType.SOURCE,
         position: {x: 100, y: 100},
         openedSettingModal: false,
-        beforeId: '0',
-        afterId: '3',
+        beforeId: 0,
+        afterId: 3,
         leaderlines: [],
     },
 
     {
-        id: '3',
+        id: 3,
         title: 'location filtered',
         processesInfoType: ProcessType.FILTER,
         position: {x: 100, y: 300},
         openedSettingModal: false,
-        beforeId: '1',
-        afterId: '4',
+        beforeId: 1,
+        afterId: 4,
         leaderlines: [],
     },
     {
-        id: '4',
+        id: 4,
         title: 'location renamed',
         processesInfoType: ProcessType.FIELD_RENAME,
         position: {x: 400, y: 300},
         openedSettingModal: false,
-        beforeId: '3',
-        afterId: '5',
+        beforeId: 3,
+        afterId: 5,
         leaderlines: [],
     },
     {
-        id: '5',
+        id: 5,
         title: 'location removed',
         processesInfoType: ProcessType.FIELD_REMOVE,
         position: {x: 400, y: 100},
         openedSettingModal: false,
-        beforeId: '4',
-        afterId: '6',
+        beforeId: 4,
+        afterId: 6,
         leaderlines: [],
     },
     {
-        id: '6',
+        id: 6,
         title: 'iran filtered',
         processesInfoType: ProcessType.FILTER,
         position: {x: 700, y: 300},
         openedSettingModal: false,
-        beforeId: '5',
-        afterId: '7',
+        beforeId: 5,
+        afterId: 7,
         leaderlines: [],
     },
     {
-        id: '7',
+        id: 7,
         title: 'covid',
         processesInfoType: ProcessType.DESTINATION,
         position: {x: 700, y: 100},
         openedSettingModal: false,
-        beforeId: '6',
-        afterId: '-2',
+        beforeId: 6,
+        afterId: -1,
         leaderlines: [],
     },
 ];
@@ -138,21 +138,21 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     // Node Element
-    public clickNodeElement(id: string): void | boolean {
+    public clickNodeElement(id: number): void | boolean {
         console.log(`Clicked on ${id}`);
     }
 
-    private addItemToNodeListById(id: string, item: PipelineNodeModel): void {
+    private addItemToNodeListById(id: number, item: PipelineNodeModel): void {
         const activeNodeIndex = this.getNodeIndexById(id);
         this.pipelineNodeDatas.splice(activeNodeIndex + 1, 0, item);
     }
 
-    private removeItemFromNodeListById(id: string, count = 1): void {
+    private removeItemFromNodeListById(id: number, count = 1): void {
         const activeNodeIndex = this.getNodeIndexById(id);
         this.pipelineNodeDatas.splice(activeNodeIndex, count);
     }
 
-    private removeLeaderlineBetweenTwoNodeById(firstNodeId: string, secondNodeId: string): void {
+    private removeLeaderlineBetweenTwoNodeById(firstNodeId: number, secondNodeId: number): void {
         const activeNodeIndex = this.getNodeIndexById(firstNodeId);
         const activeLeaderlineNodeIndex = this.pipelineNodeDatas[activeNodeIndex].leaderlines.findIndex(
             (line) => line.currentId === firstNodeId && line.withId === secondNodeId
@@ -162,17 +162,17 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.pipelineNodeDatas[activeNodeIndex].leaderlines.splice(activeLeaderlineNodeIndex, 1);
     }
 
-    private changeBeforeIdById(id: string, withId: string): void {
+    private changeBeforeIdById(id: number, withId: number): void {
         const activeNodeIndex = this.getNodeIndexById(id);
         this.pipelineNodeDatas[activeNodeIndex].beforeId = withId;
     }
 
-    private changeAfterIdById(id: string, withId: string): void {
+    private changeAfterIdById(id: number, withId: number): void {
         const activeNodeIndex = this.getNodeIndexById(id);
         this.pipelineNodeDatas[activeNodeIndex].afterId = withId;
     }
 
-    private connectLeaderLineBetweenTwoElementById(currentId: string, afterId: string): void {
+    private connectLeaderLineBetweenTwoElementById(currentId: number, afterId: number): void {
         const firstElement = this.getElementRef(currentId);
         const secondElement = this.getElementRef(afterId);
         const newLeaderLine = new LeaderLine(firstElement, secondElement, this.leaderLineOptions);
@@ -218,7 +218,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
         console.log(`${id}, ${beforeId}, ${afterId}`);
 
-        const removeAllNodeAffect = (id: string): void => {
+        const removeAllNodeAffect = (id: number): void => {
             // Remove Line and connection line
             this.removeLeaderlineBetweenTwoNodeById(beforeId, id);
             this.removeLeaderlineBetweenTwoNodeById(id, afterId);
@@ -246,12 +246,12 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         removeAllNodeAffect(id);
     }
 
-    public setToUpperLayer(elementId: string): void {
+    public setToUpperLayer(elementId: number): void {
         const component = this.getElementRef(elementId);
         component.style.zIndex = '100';
     }
 
-    public savePositionNodeElement(elementId: string): void {
+    public savePositionNodeElement(elementId: number): void {
         const elementIndex = this.getNodeIndexById(elementId);
 
         const component = this.getElementRef(elementId);
@@ -268,7 +268,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     // LeaderLine
-    public updateLeaderLine(currentId: string): void | boolean {
+    public updateLeaderLine(currentId: number): void | boolean {
         // The last one
         if (this.isWhatTypeById(currentId, ProcessType.DESTINATION)) {
             this.updateLeaderLineById(currentId);
@@ -285,24 +285,24 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    private isWhatTypeById(id: string, type: ProcessType): boolean {
+    private isWhatTypeById(id: number, type: ProcessType): boolean {
         const currentNodeIndex = this.getNodeIndexById(id);
         return this.pipelineNodeDatas[currentNodeIndex].processesInfoType === type ? true : false;
     }
 
-    private updateLeaderLineById(id: string): void {
+    private updateLeaderLineById(id: number): void {
         const activeNodeIndex = this.getNodeIndexById(id);
         this.pipelineNodeDatas[activeNodeIndex].leaderlines.forEach((line) => {
             line.leaderLineObj.position();
         });
     }
 
-    private getElementRef(id: string): HTMLElement {
+    private getElementRef(id: number): HTMLElement {
         const nodeComponent = this.mainContainer.querySelector(`app-pipeline-node[id="${id}"]`);
         return nodeComponent;
     }
 
-    private getNodeIndexById(id: string): number {
+    private getNodeIndexById(id: number): number {
         return this.pipelineNodeDatas.findIndex((node) => node.id == id);
     }
 

@@ -18,7 +18,7 @@ export class PipelineNodeComponent {
         this.pipelineNodeData.openedSettingModal = !this.pipelineNodeData.openedSettingModal;
     }
 
-    public configNode(id: string): void {
+    public configNode(id: number): void {
         this.pipelineNodeData.openedSettingModal = false;
         console.log(`configure node ${id}`);
         // TODO Connect to service

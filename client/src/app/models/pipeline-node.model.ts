@@ -1,9 +1,9 @@
 import {customProcessType, ProcessType} from '../enums/ProcessType.enum';
 
 export interface PipelineNodeModel {
-    id: string;
-    beforeId: string;
-    afterId: string;
+    id: number;
+    beforeId: number;
+    afterId: number;
     title: string;
     processesInfoType: ProcessType;
     position: {x: number; y: number};
@@ -12,32 +12,32 @@ export interface PipelineNodeModel {
 }
 
 export interface LeaderLineModel {
-    currentId: string;
-    withId: string;
+    currentId: number;
+    withId: number;
     leaderLineObj: any;
 }
 
 export interface NodeRemoveInfoModel {
-    nodeId: string;
-    beforeId: string;
-    afterId: string;
+    nodeId: number;
+    beforeId: number;
+    afterId: number;
 }
 
 export interface NodeAddInfoModel {
-    beforeId: string;
-    afterId: string;
+    beforeId: number;
+    afterId: number;
     position: {x: number; y: number};
 }
 
 export interface RemoveNodeServiceModel {
-    nodeId: string;
-    beforeId: string;
-    afterId: string;
+    nodeId: number;
+    beforeId: number;
+    afterId: number;
 }
 
 export interface AddNodeServiceModel {
-    beforeId: string;
-    afterId: string;
+    beforeId: number;
+    afterId: number;
     type: customProcessType;
     position: {x: number; y: number};
 }

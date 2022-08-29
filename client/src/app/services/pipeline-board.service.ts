@@ -37,17 +37,20 @@ export class PipelineBoardService {
         }
     }
 
+    public counter = 10;
     public async addNode(node: AddNodeServiceModel): Promise<number | null> {
-        const response = (await this.apiService.post(ADD_PIPELINE_NODE, node)) as number;
+        // const response = (await this.apiService.post(ADD_PIPELINE_NODE, node)) as number;
+        const response = this.counter;
         if (response) {
             //return node id
+            this.counter++;
             return response;
         }
         return null;
     }
 
     public async removeNode(nodeInfo: RemoveNodeServiceModel): Promise<void> {
-         await this.apiService.post(ADD_PIPELINE_NODE, nodeInfo);
+        // await this.apiService.post(ADD_PIPELINE_NODE, nodeInfo);
     }
 
     //    getSettingNode

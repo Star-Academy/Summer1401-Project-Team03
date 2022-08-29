@@ -28,7 +28,7 @@ export class addNodeComponent {
         return keys.map((type) => type as customProcessType);
     }
 
-    public openModal(beforeId: string, afterId: string, position: {x: number; y: number}): void {
+    public openModal(beforeId: number, afterId: number, position: {x: number; y: number}): void {
         this.nodeData = {
             beforeId,
             afterId,
@@ -57,7 +57,7 @@ export class addNodeComponent {
 
         if (nodeId) {
             const newNodeComponent: PipelineNodeModel = {
-                id: nodeId.toString(),
+                id: nodeId,
                 title,
                 processesInfoType: ProcessType[type],
                 position: newPosition,
