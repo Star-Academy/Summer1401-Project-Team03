@@ -14,6 +14,6 @@ public class DataSampling : Transformer
     public override string GetQuery()
     {
         return Pipeline.QueryBuilder.Sample(PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias(),
-            Number);
+            int.Parse(Parameters["number"][0]));
     }
 }

@@ -28,7 +28,7 @@ public class FieldRenamer : Transformer
     {
         var oldNewNameMap = new Dictionary<string, string>();
 
-        for (var i = 0; i < NewNames.Count; i++) oldNewNameMap.Add(FieldsToRename[i], NewNames[i]);
+        for (var i = 0; i < Parameters["new_names"].Count; i++) oldNewNameMap.Add(Parameters["fields_to_rename"][i], Parameters["new_names"][i]);
 
         return oldNewNameMap;
     }

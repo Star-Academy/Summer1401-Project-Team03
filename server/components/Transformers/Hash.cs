@@ -18,9 +18,9 @@ public class Hash : Transformer
 
     public override string GetQuery()
     {
-        var newFieldSelectCommand = $"{HashFunction}({FieldToHash}) AS {NewFieldName}";
+        var newFieldSelectCommand = $"{HashFunction}({Parameters["field_to_hash"][0]}) AS {Parameters["new_field_name"][0]}";
         var keys = GetKeys();
-        keys[keys.IndexOf(NewFieldName)] = newFieldSelectCommand;
+        keys[keys.IndexOf(Parameters["new_field_name"][0])] = newFieldSelectCommand;
 
         return Pipeline.QueryBuilder.Select(keys, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias());
     }
@@ -29,10 +29,10 @@ public class Hash : Transformer
     {
         var keys = PreviousComponents[0].GetKeys();
 
-        if (ShouldCreateNewField)
-            keys.Add(NewFieldName);
+        if (bool.Parse(Parameters["should_create_new_field"][0]))
+            keys.Add(Parameters["new_field_name"][0]);
         else
-            keys[keys.IndexOf(FieldToHash)] = NewFieldName;
+            keys[keys.IndexOf(Parameters["field_to_hash"][0])] = Parameters["new_field_name"][0];
 
         return keys;
     }

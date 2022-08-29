@@ -21,10 +21,10 @@ public class Aggregate : Transformer
     public override string GetQuery()
     {
         var fieldsToSelect = new List<string>();
-        for (var i = 0; i < FieldsToAggregate.Count; i++)
-            fieldsToSelect.Add(Pipeline.QueryBuilder.Aggregate(FieldsToAggregate[i], AggregateFunctions[i].ToString()));
+        for (var i = 0; i < Parameters["FieldsToAggregate"].Count; i++)
+            fieldsToSelect.Add(Pipeline.QueryBuilder.Aggregate(Parameters["fields_to_aggregate"][i], Parameters["aggregate_functions"][i]));
 
         return
-            $"{Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.GroupBy(FieldsToGroupBy)}";
+            $"{Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.GroupBy(Parameters["fields_to_group_by"])}";
     }
 }
