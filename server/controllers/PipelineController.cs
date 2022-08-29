@@ -17,6 +17,18 @@ public class PipelineController : ControllerBase
 {
     private static readonly Dictionary<int, Pipeline> idToPipeline = new();
 
+    public PipelineController()
+    {
+        var path = PathGenerator.GetPipelineDirectory();
+        foreach (var filePath in Directory.GetFiles(path))
+        {
+            var jsonFile = FileOperation.ReadAllText(filePath);
+            var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
+
+            idToPipeline[information.ID] = PipelineInformationPipelineAdapter.PipelineFromInformation(information);
+        }
+    }
+    
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public ActionResult<int> Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
@@ -58,10 +70,14 @@ public class PipelineController : ControllerBase
             var pipeline = idToPipeline[pipelineID];
 
             var component = new ComponentFactory().CreateNewComponent(type);
-
+            
             pipeline.AddComponent(component);
-            // TODO Connect to adjacent
+            pipeline.Disconnect(previousComponentId, nextComponentId);
+            pipeline.Connect(previousComponentId, component.Id);
+            pipeline.Connect(component.Id, nextComponentId);
 
+            component.Position = position;
+            
             return Ok(component.Id);
         }
         catch (Exception e)
@@ -70,6 +86,25 @@ public class PipelineController : ControllerBase
         }
     }
 
+    [EnableCors("CorsPolicy")]
+    [HttpPut]
+    public IActionResult ChangePosition(int pipelineID, int componentID, Position newPosition)
+    {
+        try
+        {
+            var pipeline = idToPipeline[pipelineID];
+            var component = pipeline.IdToComponent[componentID];
+
+            component.Position = newPosition;
+
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public IActionResult SetComponentConfig(int pipelineID, int componentID,
