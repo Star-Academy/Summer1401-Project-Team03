@@ -87,7 +87,7 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpPut]
-    public IActionResult ChangePosition(int pipelineID, int componentID, Position newPosition)
+    public IActionResult ChangeComponentPosition(int pipelineID, int componentID, Position newPosition)
     {
         try
         {
@@ -169,7 +169,7 @@ public class PipelineController : ControllerBase
             return BadRequest(e.Message);
         }
     }
-
+    
     [EnableCors("CorsPolicy")]
     [HttpGet]
     public IActionResult Run(int pipelineID)
