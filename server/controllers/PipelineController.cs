@@ -48,9 +48,7 @@ public class PipelineController : ControllerBase
             AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4));
 
             pipeline.Connect(1, 2);
-            var info = new PipelineInformation(pipeline);
-            var jsonString = JsonSerializer.Serialize(info);
-
+            
             FileWriter.Instance.WritePipeline(pipeline);
             
             return Ok(pipelineID);
