@@ -210,7 +210,7 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public ActionResult<List<PipelineInformation>> GetPipelineInformation(int pipelineID)
+    public ActionResult<PipelineInformation> GetPipelineInformation(int pipelineID)
     {
         try
         {
