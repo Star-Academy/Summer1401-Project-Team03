@@ -9,6 +9,7 @@ import {DatasetInventoryModule} from './pages/dataset-inventory/dataset-inventor
 import {PipelineModule} from './pages/pipeline/pipeline.module';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
+import {SpinnerModule} from './components/spinner/spinner.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -21,6 +22,7 @@ import {NgxDraggabillyModule} from 'ngx-draggabilly';
         PipelineModule,
         AngularDraggableModule,
         NgxDraggabillyModule,
+        SpinnerModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
