@@ -25,7 +25,7 @@
         justify-items: center;
         gap: 1rem;
 
-        block-size: 5rem;
+        block-size: var(--topbar-block-size);
 
         padding-inline: 1rem;
 
@@ -35,6 +35,8 @@
 
         h1 {
             grid-column: 1;
+
+            font-size: var(--font-size-big);
         }
 
         app-run-button {

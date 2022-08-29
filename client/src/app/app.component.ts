@@ -5,10 +5,4 @@ import {Component, ViewChild} from '@angular/core';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-    @ViewChild('nameInput', {static: true}) nameInput: any;
-    public shrinkedNavbar: boolean = true;
-    public toggleShrink(): void {
-        this.shrinkedNavbar = !this.shrinkedNavbar;
-    }
-}
+export class AppComponent {}

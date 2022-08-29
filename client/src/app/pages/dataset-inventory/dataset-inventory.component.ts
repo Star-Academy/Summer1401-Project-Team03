@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-item.model';
+import {Component} from '@angular/core';
+import {InventoryService} from 'src/app/services/inventory.service';
 
 @Component({
     selector: 'app-dataset.svg-inventory',
@@ -8,29 +8,35 @@ import {datasetItemData, DatasetItemModel} from '../../models/dataset/dataset-it
 })
 export class DatasetInventoryComponent {
     public searchPhrase: string = '';
-    public datasetItems: DatasetItemModel[] = datasetItemData;
 
-    public toggleShowItemSettingModal(id: number): void {
-        const item = this.datasetItems.find((item) => item.id === id);
+    public constructor(public inventoryService: InventoryService) {}
+
+    public openItemSettingModal(id: string): void {
+        const item = this.inventoryService.dataset.find((item) => item.id === id);
+        if (item) item.openedSettingModal = true;
+    }
+
+    public closeItemSettingModal(id: string): void {
+        const item = this.inventoryService.dataset.find((item) => item.id === id);
+        if (item) item.openedSettingModal = false;
+    }
+
+    public toggleShowItemSettingModal(id: string): void {
+        const item = this.inventoryService.dataset.find((item) => item.id === id);
         if (item) item.openedSettingModal = !item.openedSettingModal;
     }
 
-    public renameItem(id: number): void {
+    public renameItem(id: string): void {
         console.log(`Renamed item ${id}`);
         // Connect to inventory service
     }
 
-    public downloadItem(id: number): void {
+    public downloadItem(id: string): void {
         console.log(`Downloaded item ${id}`);
         // Connect to inventory service
     }
 
-    public deleteItem(id: number): void {
-        console.log(`Removed item ${id}`);
-        // Connect to inventory service
-    }
-
-    public navigateWithUrl(id: number): void {
+    public navigateWithUrl(id: string): void {
         console.log(`Navigate item ${id}`);
         // Complete pipeline page
     }
