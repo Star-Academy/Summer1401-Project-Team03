@@ -16,11 +16,10 @@ public class JSONExtractor : Extractor
 
     public override void Extract()
     {
-        var tableName = Parameters["table_name"][0];
         var filePath = Parameters["file_path"][0];
         var keys = GetKeys();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(tableName)).Close();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(tableName, keys)).Close();
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportJson(tableName, keys, filePath)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(_tableName)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(_tableName, keys)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportJson(_tableName, keys, filePath)).Close();
     }
 }

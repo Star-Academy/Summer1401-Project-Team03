@@ -50,8 +50,8 @@ public class PipelineController : ControllerBase
             var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
             var jsonString = JsonSerializer.Serialize(info);
 
-            var pipelinePath = PathGenerator.GeneratePipelinePath(pipelineID);
-            FileOperation.WriteAllText(pipelinePath, jsonString);
+            FileWriter.Instance.WritePipeline(pipeline);
+            
             return Ok(pipelineID);
         }
 
@@ -78,7 +78,8 @@ public class PipelineController : ControllerBase
             pipeline.Connect(component.Id, nextComponentId);
 
             component.Position = position;
-
+            
+            FileWriter.Instance.WritePipeline(pipeline);
             return Ok(component.Id);
         }
         catch (Exception e)
@@ -98,6 +99,7 @@ public class PipelineController : ControllerBase
 
             component.Position = newPosition;
 
+            FileWriter.Instance.WritePipeline(pipeline);
             return Ok();
         }
         catch (Exception e)
@@ -117,6 +119,8 @@ public class PipelineController : ControllerBase
             var component = pipeline.IdToComponent[componentID];
 
             component.Parameters = configurations;
+            FileWriter.Instance.WritePipeline(pipeline);
+            
             return Ok();
         }
         catch (Exception e)
@@ -136,7 +140,6 @@ public class PipelineController : ControllerBase
         extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
 
         pipeline.AddComponent(extractor);
-        return;
     }
 
 
@@ -151,6 +154,7 @@ public class PipelineController : ControllerBase
         loader.Position = position;
         loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
         
+        pipeline.AddDestinationId(loader.Id);
         pipeline.AddComponent(loader);
     }
 
