@@ -1,4 +1,5 @@
 using System.Text.Json;
+using server.Information;
 using server.Pipelines;
 using FileOperation = System.IO.File;
 
@@ -10,11 +11,9 @@ public class FileWriter
 
     public void WritePipeline(Pipeline pipeline)
     {
-        
-        var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
+        var info = new PipelineInformation(pipeline);
         var jsonString = JsonSerializer.Serialize(info);
-        var pipelinePath = PathGenerator.GeneratePipelinePath(pipeline.id);
+        var pipelinePath = PathGenerator.GeneratePipelinePath(pipeline.Id);
         FileOperation.WriteAllText(pipelinePath, jsonString);
-
     }
 }
