@@ -16,7 +16,7 @@ public abstract class Component
     {
         Id = information.Id;
         Position = information.Position;
-        Type = information.Type;
+        Type = information.Type.GetComponentType();
         Parameters = information.Parameters;
         Pipeline = pipeline;
     }

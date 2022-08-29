@@ -36,7 +36,7 @@ public class ComponentFactory
 
     public Component CreateComponent(ComponentInformation componentInformation, Pipeline pipeline)
     {
-        var component = GetComponent(componentInformation.Type);
+        var component = GetComponent(componentInformation.Type.GetComponentType());
         component.Id = componentInformation.Id;
         component.Position = componentInformation.Position;
         component.Parameters = componentInformation.Parameters;
