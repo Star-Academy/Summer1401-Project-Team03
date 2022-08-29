@@ -44,8 +44,9 @@ public class PipelineController : ControllerBase
             IDCounterHandler.SavePipelineID(pipelineID + 1);
 
             AddSource(pipeline, sourceFileID, new Position(0, 0));
-            AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4), 1);
+            AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4));
 
+            pipeline.Connect(1, 2);
             var info = PipelineInformationPipelineAdapter.InformationFromPipeline(pipeline);
             var jsonString = JsonSerializer.Serialize(info);
 
@@ -128,18 +129,18 @@ public class PipelineController : ControllerBase
     {
         var filePath = FileSearcher.Search(fileID, "imports");
 
-        var extractor = (Extractor)new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
+        var extractor = new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
 
         extractor.Pipeline = pipeline;
         extractor.Position = position;
         extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
 
         pipeline.AddComponent(extractor);
+        return;
     }
 
 
-    private void AddDestination(Pipeline pipeline, string fileName, string format, Position position,
-        int previousComponentId)
+    private void AddDestination(Pipeline pipeline, string fileName, string format, Position position)
     {
         var fileID = IDCounterHandler.LoadFileID();
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "exports");
@@ -149,9 +150,7 @@ public class PipelineController : ControllerBase
         loader.Pipeline = pipeline;
         loader.Position = position;
         loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
-
-        loader.PreviousComponents.Add(pipeline.IdToComponent[previousComponentId]);
-
+        
         pipeline.AddComponent(loader);
     }
 

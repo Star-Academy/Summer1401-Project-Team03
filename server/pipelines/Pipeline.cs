@@ -17,7 +17,16 @@ public class Pipeline
         id = information.ID;
         DestinationIDs = information.DestinationIDs;
         IdToComponent = information.Components.ToDictionary(t => t.Key,
-            t => ComponentInformationAdaptor.GetComponentFromInformation(t.Value));
+            t => ComponentFactory.Instance.CreateComponent(t.Value, this));
+        
+        foreach (var keyValuePair in information.Components)
+        {
+            foreach (var valuePreviousId in keyValuePair.Value.PreviousIds)
+            {
+                Connect(valuePreviousId, keyValuePair.Key);
+            }
+        }
+        
         Database = new PostgresDatabase(dbConfiguration);
         QueryBuilder = new PostgresQueryBuilder();
         TableManager = new TableManager();
