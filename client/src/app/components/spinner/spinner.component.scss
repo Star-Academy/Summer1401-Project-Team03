@@ -7,8 +7,8 @@
 
     .stage {
         position: fixed;
-        top: 50%;
-        left: 50%;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
 
         transform: translate(-50%, -50%);
 
@@ -24,8 +24,8 @@
                 color: var(--color-white-solid);
                 box-shadow: 0 -2rem 0 0;
 
-                width: 1.5rem;
-                height: 1.5rem;
+                inline-size: 1.5rem;
+                block-size: 1.5rem;
 
                 border-radius: 50%;
             }
@@ -35,8 +35,8 @@
                 content: "";
 
                 position: absolute;
-                top: 0;
-                left: 0;
+                inset-block-start: 0;
+                inset-inline-start: 0;
 
                 display: inline-block;
             }
