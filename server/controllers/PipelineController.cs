@@ -228,17 +228,16 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public ActionResult<Dictionary<int, string>> GetPipelinesInformation()
+    public ActionResult<List<PipelineShortInformation>> GetPipelinesInformation()
     {
-        var informations = new Dictionary<int, string>();
-
+        var informations = new List<PipelineShortInformation>();
         var path = PathGenerator.GetPipelineDirectory();
         foreach (var filePath in Directory.GetFiles(path))
         {
             var jsonFile = FileOperation.ReadAllText(filePath);
             var information = JsonSerializer.Deserialize<PipelineInformation>(jsonFile);
-
-            informations[information.Id] = information.Name;
+            
+            informations.Add(new PipelineShortInformation(information.Name, information.Id));
         }
 
         return Ok(informations);
