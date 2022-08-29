@@ -4,17 +4,17 @@
   background-color: var(--color-modal-bg);
 
   position: absolute;
-
   inset: 0;
-  background-color: var(--color-modal-bg);
-  padding: 0.5rem;
+  z-index: 1;
 
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
+  justify-content: space-around;
   gap: 1rem;
-  z-index: 1;
+
+  padding: 0.5rem;
+
   font-size: 1.5rem;
 
   &__item {
@@ -27,8 +27,8 @@
     cursor: pointer;
 
     app-svg {
-      height: 2rem;
       width: 2rem;
+      height: 2rem;
     }
   }
 }

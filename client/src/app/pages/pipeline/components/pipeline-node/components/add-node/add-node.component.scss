@@ -7,7 +7,7 @@
 
     &__button {
         background-color: var(--color-white-solid);
-        text-transform: capitalize;
+
         display: flex;
         align-items: center;
         gap: 1rem;
@@ -17,6 +17,8 @@
         border-radius: var(--border-radius-minimal);
 
         font-size: var(--font-size-primary);
+
+        text-transform: capitalize;
 
         app-svg {
             color: var(--color-purple-21);
