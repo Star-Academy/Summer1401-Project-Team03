@@ -1,6 +1,4 @@
-﻿using server.Databases;
-
-namespace server.Components.Loaders;
+﻿namespace server.Components.Loaders;
 
 public abstract class Loader : Component
 {

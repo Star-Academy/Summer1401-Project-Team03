@@ -1,6 +1,4 @@
-﻿using server.Databases;
-
-namespace server.Components.Extractors;
+﻿namespace server.Components.Extractors;
 
 public abstract class Extractor : Component
 {

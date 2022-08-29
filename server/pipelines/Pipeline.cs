@@ -67,7 +67,7 @@ public class Pipeline
         previousComponent.AddNextComponent(nextComponent);
         nextComponent.AddPreviousComponent(previousComponent);
     }
-    
+
     public void Disconnect(int previousId, int nextId)
     {
         var previousComponent = IdToComponent[previousId];

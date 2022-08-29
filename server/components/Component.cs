@@ -1,5 +1,4 @@
-﻿using server.Databases;
-using server.Enums;
+﻿using server.Enums;
 using server.Pipelines;
 
 namespace server.Components;
@@ -19,37 +18,7 @@ public abstract class Component
         Position = information.Position;
         Type = information.Type;
         Parameters = information.Parameters;
-        Pipeline= pipeline;
-    }
-    
-    public void AddNextComponent(Component component)
-    {
-        NextComponents.Add(component);
-    }
-
-    public void RemoveNextComponent(Component component)
-    {
-        if (NextComponents.Remove(component))
-        {
-            return;
-        }
-
-        throw new Exception("next component does not exist!");
-    }
-
-    public void AddPreviousComponent(Component component)
-    {
-        PreviousComponents.Add(component);
-    }
-    
-    public void RemovePreviousComponent(Component component)
-    {
-        if (PreviousComponents.Remove(component))
-        {
-            return;
-        }
-
-        throw new Exception("previous component does not exist!");
+        Pipeline = pipeline;
     }
 
     public Dictionary<string, List<string>> Parameters { set; get; }
@@ -62,6 +31,30 @@ public abstract class Component
 
     public int Id { set; get; }
     public Pipeline Pipeline { set; get; }
+
+    public void AddNextComponent(Component component)
+    {
+        NextComponents.Add(component);
+    }
+
+    public void RemoveNextComponent(Component component)
+    {
+        if (NextComponents.Remove(component)) return;
+
+        throw new Exception("next component does not exist!");
+    }
+
+    public void AddPreviousComponent(Component component)
+    {
+        PreviousComponents.Add(component);
+    }
+
+    public void RemovePreviousComponent(Component component)
+    {
+        if (PreviousComponents.Remove(component)) return;
+
+        throw new Exception("previous component does not exist!");
+    }
 
     public abstract string GetQuery();
     public abstract List<string> GetKeys();

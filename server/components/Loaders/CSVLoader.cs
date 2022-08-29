@@ -11,6 +11,8 @@ public class CSVLoader : Loader
 
     public override void Load()
     {
-        Pipeline.Database.Execute(Pipeline.QueryBuilder.ExportCSV(PreviousComponents[0].GetQuery(), Parameters["file_path"][0])).Close();
+        Pipeline.Database
+            .Execute(Pipeline.QueryBuilder.ExportCSV(PreviousComponents[0].GetQuery(), Parameters["file_path"][0]))
+            .Close();
     }
 }
