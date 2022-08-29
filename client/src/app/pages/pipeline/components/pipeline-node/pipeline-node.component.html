@@ -1,4 +1,4 @@
-<div class="wrapper">
+<div class="wrapper" [title]="pipelineNodeData.title">
     <div class="desc">
         <h3 class="label">{{ pipelineNodeData.title }}</h3>
         <p>{{ pipelineNodeData.processesInfoType.title }}</p>
@@ -8,23 +8,31 @@
 
     <div class="setting">
         <app-svg
+            class="setting__icon"
             (click)="toggleShowItemSettingModal(); $event.stopPropagation()"
-            class="item-setting"
             iconType="dots-vertical"
         ></app-svg>
         <ng-container *ngIf="pipelineNodeData.openedSettingModal">
             <app-setting-item-modal
-                (newNodeEmit)="newNode(pipelineNodeData.position)"
+                class="setting__modal"
+                (newNodeEmit)="addNode.openModal()"
                 (configNodeEmit)="configNode(pipelineNodeData.id)"
-                (deleteNodeEmit)="modal.openModal()"
+                (deleteNodeEmit)="removeNode.openModal()"
             ></app-setting-item-modal>
         </ng-container>
     </div>
 
-    <app-modal #mymodal title="remove node" class="modal">
-        <div class="modal__container">
-            <app-button (click)="removeNodeEmit.emit(); deleteNode(pipelineNodeData.id)">Remove</app-button>
-            <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>
-        </div>
-    </app-modal>
+    <app-remove-node
+        class="absolute"
+        #removeNode
+        [nodeData]="pipelineNodeData"
+        (removeNodeEmit)="removeNodeEmit.emit()"
+    ></app-remove-node>
+
+    <app-add-node
+        class="absolute"
+        #addNode
+        [nodeData]="pipelineNodeData"
+        (addNodeEmit)="addNodeEmit.emit($event)"
+    ></app-add-node>
 </div>

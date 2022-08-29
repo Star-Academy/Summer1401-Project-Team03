@@ -9,6 +9,7 @@ import {DatasetInventoryModule} from './pages/dataset-inventory/dataset-inventor
 import {DataTableModule} from './components/data-table/data-table.module';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
+import {SpinnerModule} from './components/spinner/spinner.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -22,6 +23,7 @@ import {NgxDraggabillyModule} from 'ngx-draggabilly';
         DataTableModule,
         AngularDraggableModule,
         NgxDraggabillyModule,
+        SpinnerModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

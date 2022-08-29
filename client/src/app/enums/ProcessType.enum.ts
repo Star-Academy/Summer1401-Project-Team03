@@ -2,5 +2,15 @@ export enum ProcessType {
     FILTER = 'FILTER',
     FIELD_REMOVE = 'FIELD_REMOVE',
     JOIN = 'JOIN',
+    REPLICATE = 'REPLICATE',
+    DESTINATION = 'DESTINATION',
+    SOURCE = 'SOURCE',
+    FIELD_RENAME = 'FIELD_RENAME',
+}
+
+export enum ProcessType2 {
+    FILTER = 'FILTER',
+    FIELD_REMOVE = 'FIELD_REMOVE',
+    JOIN = 'JOIN',
     FIELD_RENAME = 'FIELD_RENAME',
 }

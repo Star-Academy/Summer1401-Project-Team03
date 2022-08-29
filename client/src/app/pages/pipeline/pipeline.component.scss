@@ -77,12 +77,11 @@
     .side-bar {
         grid-area: sidebar;
 
-        background-color: var(--color-gray-90);
         box-shadow: -0.1rem 0 1rem 0 rgb(0 0 0 / 30%);
 
         z-index: 20;
 
-        inline-size: 25rem;
+        inline-size: 30rem;
     }
 
     .bottom-bar {

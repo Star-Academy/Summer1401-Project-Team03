@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {ProcessListComponent} from './process-list.component';
+import {SpinnerComponent} from './spinner.component';
 
-describe('ProcessListComponent', () => {
-    let component: ProcessListComponent;
-    let fixture: ComponentFixture<ProcessListComponent>;
+describe('SpinnerComponent', () => {
+    let component: SpinnerComponent;
+    let fixture: ComponentFixture<SpinnerComponent>;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ProcessListComponent],
+            declarations: [SpinnerComponent],
         }).compileComponents();
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProcessListComponent);
+        fixture = TestBed.createComponent(SpinnerComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });
