@@ -7,7 +7,7 @@ public class PipelineInformation
     public PipelineInformation()
     {
     }
-    
+
     public PipelineInformation(Pipeline pipeline)
     {
         Id = pipeline.Id;

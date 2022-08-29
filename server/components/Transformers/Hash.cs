@@ -18,7 +18,8 @@ public class Hash : Transformer
 
     public override string GetQuery()
     {
-        var newFieldSelectCommand = $"{HashFunction}({Parameters["field_to_hash"][0]}) AS {Parameters["new_field_name"][0]}";
+        var newFieldSelectCommand =
+            $"{HashFunction}({Parameters["field_to_hash"][0]}) AS {Parameters["new_field_name"][0]}";
         var keys = GetKeys();
         keys[keys.IndexOf(Parameters["new_field_name"][0])] = newFieldSelectCommand;
 

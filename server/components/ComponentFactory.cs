@@ -2,7 +2,6 @@
 using server.Components.Loaders;
 using server.Components.Transformers;
 using server.Enums;
-using server.file;
 using server.Information;
 using server.Pipelines;
 
@@ -11,10 +10,11 @@ namespace server.Components;
 public class ComponentFactory
 {
     private static int _counter;
-    public static ComponentFactory Instance = new ComponentFactory();
-    
-    public Component GetComponent(ComponentType type) =>
-        type switch
+    public static ComponentFactory Instance = new();
+
+    public Component GetComponent(ComponentType type)
+    {
+        return type switch
         {
             ComponentType.Aggregate => new Aggregate(),
             ComponentType.DataSampling => new DataSampling(),
@@ -31,6 +31,7 @@ public class ComponentFactory
             ComponentType.JSONLoader => new JSONLoader(),
             _ => throw new Exception()
         };
+    }
 
     public Component CreateComponent(ComponentType type)
     {

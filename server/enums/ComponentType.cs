@@ -11,9 +11,10 @@ public enum ComponentType
     Hash, //ok
     TypeConverter, //ok
     Join,
+    Replicate,
     CSVLoader, //ok
     CSVExtractor, //ok
     JSONExtractor,
-    JSONLoader, 
+    JSONLoader,
     Math
 }
