@@ -12,15 +12,6 @@ public abstract class Component
         Parameters = new Dictionary<string, List<string>>();
     }
 
-    public Component(ComponentInformation information, Pipeline pipeline)
-    {
-        Id = information.Id;
-        Position = information.Position;
-        Type = information.Type.GetComponentType();
-        Parameters = information.Parameters;
-        Pipeline = pipeline;
-    }
-
     public Dictionary<string, List<string>> Parameters { set; get; }
     public List<Component> NextComponents { set; get; }
 

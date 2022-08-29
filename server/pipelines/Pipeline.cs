@@ -2,6 +2,7 @@
 using DBConfig;
 using server.Components;
 using server.Databases;
+using server.Information;
 
 namespace server.Pipelines;
 
@@ -14,10 +15,10 @@ public class Pipeline
     {
         var dbConfiguration = DBConfigLoader.Load();
         Name = information.Name;
-        id = information.ID;
+        Id = information.Id;
         DestinationIDs = information.DestinationIDs;
         IdToComponent = information.Components.ToDictionary(t => t.Key,
-            t => ComponentFactory.Instance.CreateComponent(t.Value, this));
+            t => ComponentFactory.Instance.LoadComponent(t.Value, this));
         
         foreach (var keyValuePair in information.Components)
         {
@@ -44,7 +45,7 @@ public class Pipeline
     }
 
     public string Name { get; set; }
-    public int id { get; set; }
+    public int Id { get; set; }
     public IDatabase Database { set; get; }
     public IQueryBuilder QueryBuilder { set; get; }
     public TableManager TableManager { set; get; }

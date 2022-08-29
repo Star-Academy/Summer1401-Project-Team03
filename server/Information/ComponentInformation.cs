@@ -1,24 +1,14 @@
-﻿using server.Enums;
+﻿using server.Components;
+using server.Enums;
 
-namespace server.Components;
+namespace server.Information;
 
 public class ComponentInformation
 {
     public ComponentInformation()
     {
     }
-
-    public ComponentInformation(ComponentType type, int id, List<int> nextIds, List<int> previousIds, Position position,
-        Dictionary<string, List<string>> parameters)
-    {
-        Type = type.GetString();
-        Id = id;
-        NextIds = nextIds;
-        PreviousIds = previousIds;
-        Position = position;
-        Parameters = parameters;
-    }
-
+    
     public ComponentInformation(Component component)
     {
         Type = component.Type.GetString();
