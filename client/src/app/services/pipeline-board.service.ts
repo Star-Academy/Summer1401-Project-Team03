@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AddNodeServiceModel, PipelineNodeModel} from '../models/pipeline-node.model';
+import {AddNodeServiceModel, PipelineNodeModel, RemoveNodeServiceModel} from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
 import {PIPELINE_ONE, PIPELINE_NODE_CONFIG, ADD_PIPELINE_NODE, PIPELINE_SET_CONFIG} from '../utils/api.utils';
 import {QueryValueType} from '@angular/compiler/src/core';
@@ -44,6 +44,10 @@ export class PipelineBoardService {
             return response;
         }
         return null;
+    }
+
+    public async removeNode(nodeInfo: RemoveNodeServiceModel): Promise<void> {
+         await this.apiService.post(ADD_PIPELINE_NODE, nodeInfo);
     }
 
     //    getSettingNode
