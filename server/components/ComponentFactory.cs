@@ -1,9 +1,11 @@
-﻿using server.Components.Extractors;
+﻿using System.IO.Pipelines;
+using server.Components.Extractors;
 using server.Components.Loaders;
 using server.Components.Transformers;
 using server.Databases;
 using server.Enums;
 using server.file;
+using server.Pipelines;
 
 namespace server.Components;
 
@@ -36,26 +38,13 @@ public class ComponentFactory
         return component;
     }
 
-    public Component CreateComponent(ComponentInformation componentInformation, IQueryBuilder queryBuilder,
-        IDatabase database)
+    public Component CreateComponent(ComponentInformation componentInformation, Pipeline pipeline)
     {
         var component = GetComponent(componentInformation.Type);
         component.Id = componentInformation.Id;
         component.Position = componentInformation.Position;
         component.Parameters = componentInformation.Parameters;
-        component.QueryBuilder = queryBuilder;
-        if (component is Extractor extractor)
-        {
-            extractor.Database = database;
-            return extractor;
-        }
-
-        if (component is Loader loader)
-        {
-            loader.Database = database;
-            return loader;
-        }
-
+        component.Pipeline = pipeline;
         return component;
     }
 }

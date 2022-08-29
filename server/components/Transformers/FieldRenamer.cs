@@ -16,7 +16,7 @@ public class FieldRenamer : Transformer
     {
         var selectList = CreateModifiedListForStringsInMap((x, y) => $"{x} AS {y}");
 
-        return QueryBuilder.Select(selectList, PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias());
+        return Pipeline.QueryBuilder.Select(selectList, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias());
     }
 
     public override List<string> GetKeys()

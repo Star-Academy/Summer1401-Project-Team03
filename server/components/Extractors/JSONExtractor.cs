@@ -19,8 +19,8 @@ public class JSONExtractor : Extractor
         var tableName = Parameters["table_name"][0];
         var filePath = Parameters["file_path"][0];
         var keys = GetKeys();
-        Database.Execute(QueryBuilder.Drop(tableName)).Close();
-        Database.Execute(QueryBuilder.CreateTable(tableName, keys)).Close();
-        Database.Execute(QueryBuilder.ImportJson(tableName, keys, filePath)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(tableName)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(tableName, keys)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportJson(tableName, keys, filePath)).Close();
     }
 }

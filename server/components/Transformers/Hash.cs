@@ -22,7 +22,7 @@ public class Hash : Transformer
         var keys = GetKeys();
         keys[keys.IndexOf(NewFieldName)] = newFieldSelectCommand;
 
-        return QueryBuilder.Select(keys, PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias());
+        return Pipeline.QueryBuilder.Select(keys, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias());
     }
 
     public override List<string> GetKeys()

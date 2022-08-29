@@ -1,6 +1,6 @@
 ﻿namespace server.Enums;
 
-public enum FileTypes
+public enum FileType
 {
     json,
     csv

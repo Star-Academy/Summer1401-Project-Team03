@@ -11,7 +11,7 @@ public class FieldRemover : Transformer
 
     public override string GetQuery()
     {
-        return QueryBuilder.Select(GetKeys(), PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias());
+        return Pipeline.QueryBuilder.Select(GetKeys(), PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias());
     }
 
     public override List<string> GetKeys()

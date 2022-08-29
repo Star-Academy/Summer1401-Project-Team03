@@ -4,8 +4,6 @@ namespace server.Components.Loaders;
 
 public abstract class Loader : Component
 {
-    public IDatabase Database;
-
     public override string GetQuery()
     {
         Load();

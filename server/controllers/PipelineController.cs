@@ -95,8 +95,7 @@ public class PipelineController : ControllerBase
         
         var extractor = (Extractor) new ComponentFactory().CreateNewComponent(ComponentType.CSVExtractor);
 
-        extractor.QueryBuilder = pipeline.QueryBuilder;
-        extractor.Database = pipeline.Database;
+        extractor.Pipeline = pipeline;
         extractor.Position = position;
         extractor.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
         
@@ -112,8 +111,7 @@ public class PipelineController : ControllerBase
 
         IDCounterHandler.SaveFileID(fileID + 1);
         var loader = (Loader) new ComponentFactory().CreateNewComponent(ComponentType.CSVLoader);
-        loader.QueryBuilder = pipeline.QueryBuilder;
-        loader.Database = pipeline.Database;
+        loader.Pipeline = pipeline;
         loader.Position = position;
         loader.Parameters = new Dictionary<string, List<string>> {{"file_path", new List<string> {filePath}}};
 

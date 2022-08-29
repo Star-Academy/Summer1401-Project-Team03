@@ -1,5 +1,6 @@
 ﻿using server.Databases;
 using server.Enums;
+using server.Pipelines;
 
 namespace server.Components;
 
@@ -12,13 +13,13 @@ public abstract class Component
         Parameters = new Dictionary<string, List<string>>();
     }
 
-    public Component(ComponentInformation information, IQueryBuilder queryBuilder)
+    public Component(ComponentInformation information, Pipeline pipeline)
     {
         Id = information.Id;
         Position = information.Position;
         Type = information.Type;
         Parameters = information.Parameters;
-        QueryBuilder = queryBuilder;
+        Pipeline= pipeline;
     }
     
     public void AddNextComponent(Component component)
@@ -60,7 +61,7 @@ public abstract class Component
     public ComponentType Type { set; get; }
 
     public int Id { set; get; }
-    public IQueryBuilder QueryBuilder { set; get; }
+    public Pipeline Pipeline { set; get; }
 
     public abstract string GetQuery();
     public abstract List<string> GetKeys();

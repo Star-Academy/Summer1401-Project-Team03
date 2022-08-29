@@ -12,6 +12,6 @@ public class Filter : Transformer
     public override string GetQuery()
     {
         return
-            $"{QueryBuilder.Select(new List<string> { "*" }, PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias())} {QueryBuilder.Where(Parameters["fields_to_filter"], Parameters["operators"], Parameters["values"])}";
+            $"{Pipeline.QueryBuilder.Select(new List<string> { "*" }, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.Where(Parameters["fields_to_filter"], Parameters["operators"], Parameters["values"])}";
     }
 }

@@ -11,6 +11,6 @@ public class JSONLoader : Loader
 
     public override void Load()
     {
-        Database.Execute(QueryBuilder.ExportJson(PreviousComponents[0].GetQuery(), Parameters["file_path"][0])).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.ExportJson(PreviousComponents[0].GetQuery(), Parameters["file_path"][0])).Close();
     }
 }

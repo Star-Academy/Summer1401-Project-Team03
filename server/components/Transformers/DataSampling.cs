@@ -13,7 +13,7 @@ public class DataSampling : Transformer
 
     public override string GetQuery()
     {
-        return QueryBuilder.Sample(PreviousComponents[0].GetQuery(), QueryBuilder.NewAlias(),
+        return Pipeline.QueryBuilder.Sample(PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias(),
             Number);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace server.Enums;
 
-public enum Type
+public enum DataType
 {
     Boolean,
     Integer,
