@@ -37,6 +37,7 @@ export interface AddNodeServiceModel {
     pipelineID: number;
     previousComponentId: number;
     nextComponentId: number;
+    title: string;
     type: string;
     position: {x: number; y: number};
 }

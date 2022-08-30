@@ -114,13 +114,13 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     public async ngAfterViewInit(): Promise<void> {
         console.log('saaaaaaaaalaam');
         this.pipelineNodeDatas = await this.boardService.getAllNode();
+        console.log(this.pipelineNodeDatas);
         this.changeDetectorRef.detectChanges();
         console.log('raftam jolo');
-        console.log(this.pipelineNodeDatas);
         const leaderLineInit = (): void => {
             const nodeComponentLength = this.pipelineNodeDatas.length;
             this.pipelineNodeDatas.forEach((node, index) => {
-                if (index === nodeComponentLength - 1) return;
+                if (node.processesInfoType === ProcessType.CSV_LOADER) return;
                 this.connectLeaderLineBetweenTwoElementById(node.id, node.afterId);
             });
         };

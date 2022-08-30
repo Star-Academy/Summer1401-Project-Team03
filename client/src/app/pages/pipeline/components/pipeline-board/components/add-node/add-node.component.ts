@@ -65,6 +65,7 @@ export class addNodeComponent implements OnInit {
                 nextComponentId: this.nodeData.afterId,
                 position: newPosition,
                 type: ProcessType.DESTINATION,
+                title,
             };
 
             const nodeDestinationId = await this.pipelineBoardService.addNode(addNodeDestinationService);
@@ -90,6 +91,7 @@ export class addNodeComponent implements OnInit {
                     nextComponentId: nodeDestinationId,
                     position: newPosition,
                     type,
+                    title,
                 };
 
                 const nodeId = await this.pipelineBoardService.addNode(addNodeService);
@@ -119,6 +121,7 @@ export class addNodeComponent implements OnInit {
             nextComponentId: this.nodeData.afterId,
             position: newPosition,
             type,
+            title,
         };
 
         const nodeId = await this.pipelineBoardService.addNode(addNodeService);

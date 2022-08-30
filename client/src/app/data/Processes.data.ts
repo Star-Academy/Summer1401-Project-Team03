@@ -20,6 +20,12 @@ export const PROCESS: ProcessInfo = {
         icon: 'source',
         paramethers: {},
     },
+    data_sampling: {
+        id: 0,
+        title: 'data_sampling',
+        icon: 'join',
+        paramethers: {},
+    },
     destination: {
         id: 0,
         title: 'destination',
@@ -28,13 +34,13 @@ export const PROCESS: ProcessInfo = {
     },
     csv_loader: {
         id: 0,
-        title: 'source',
+        title: 'destination',
         icon: 'source',
         paramethers: {},
     },
     csv_extractor: {
         id: 0,
-        title: 'destination',
+        title: 'source',
         icon: 'source',
         paramethers: {},
     },
