@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {PROCESS, ProcessInfo} from 'src/app/data/Processes.data';
 import {customProcessType, ProcessType} from 'src/app/enums/ProcessType.enum';
@@ -14,32 +14,44 @@ const ADDITIONAL_BOTTOM = 160;
     templateUrl: './add-node.component.html',
     styleUrls: ['./add-node.component.scss'],
 })
-export class addNodeComponent {
+export class addNodeComponent implements OnInit {
     public processes: ProcessInfo = PROCESS;
 
     @ViewChild('ProcessAdd') public modal!: ModalComponent;
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
     public nodeData!: NodeAddInfoModel;
+    public pipelineBoardId!: number;
     public nodeTitle: string = 'new node';
+    public customProcessType: string[] = [];
 
     public constructor(private pipelineBoardService: PipelineBoardService) {}
 
-    public customProcessType(): customProcessType[] {
-        const keys = Object.keys(customProcessType);
-        return keys.map((type) => type as customProcessType);
+    public ngOnInit(): void {
+        this.customProcessType = this.customProcessTypeFunction();
     }
 
-    public openModal(beforeId: number, afterId: number, position: {x: number; y: number}): void {
+    private customProcessTypeFunction(): string[] {
+        const keys = Object.values(customProcessType);
+        console.log(keys);
+        return keys.map((type) => type as string);
+    }
+
+    public openModal(
+        beforeId: number,
+        afterId: number,
+        position: {x: number; y: number},
+        pipelineBoardId: number
+    ): void {
         this.nodeData = {
             beforeId,
             afterId,
             position,
         };
-
+        this.pipelineBoardId = pipelineBoardId;
         this.modal.openModal();
     }
 
-    public async addNodeHandle(type: customProcessType): Promise<void> {
+    public async addNodeHandle(type: string): Promise<void> {
         this.modal.closeModal();
 
         const title = this.nodeTitle;
@@ -48,10 +60,11 @@ export class addNodeComponent {
             newPosition = {x: newPosition.x + ADDITIONAL_LEFT, y: this.nodeData.position.y + ADDITIONAL_BOTTOM};
 
             const addNodeDestinationService: AddNodeServiceModel = {
-                beforeId: this.nodeData.beforeId,
-                afterId: this.nodeData.afterId,
+                pipelineID: this.pipelineBoardId,
+                previousComponentId: this.nodeData.beforeId,
+                nextComponentId: this.nodeData.afterId,
                 position: newPosition,
-                type: customProcessType.DESTINATION,
+                type: ProcessType.DESTINATION,
             };
 
             const nodeDestinationId = await this.pipelineBoardService.addNode(addNodeDestinationService);
@@ -59,7 +72,7 @@ export class addNodeComponent {
                 const newNodeDestination: PipelineNodeModel = {
                     id: nodeDestinationId,
                     title: 'target',
-                    processesInfoType: ProcessType[customProcessType.DESTINATION],
+                    processesInfoType: ProcessType.DESTINATION,
                     position: newPosition,
                     openedSettingModal: false,
                     afterId: -1,
@@ -72,8 +85,9 @@ export class addNodeComponent {
                 newPosition = {...newPosition, x: newPosition.x - ADDITIONAL_LEFT};
                 // New node
                 const addNodeService: AddNodeServiceModel = {
-                    beforeId: this.nodeData.beforeId,
-                    afterId: nodeDestinationId,
+                    pipelineID: this.pipelineBoardId,
+                    previousComponentId: this.nodeData.beforeId,
+                    nextComponentId: nodeDestinationId,
                     position: newPosition,
                     type,
                 };
@@ -83,7 +97,7 @@ export class addNodeComponent {
                     const newNodeComponent: PipelineNodeModel = {
                         id: nodeId,
                         title,
-                        processesInfoType: ProcessType[type],
+                        processesInfoType: type,
                         position: newPosition,
                         openedSettingModal: false,
                         afterId: nodeDestinationId,
@@ -100,8 +114,9 @@ export class addNodeComponent {
         // // TODO Connect to service
 
         const addNodeService: AddNodeServiceModel = {
-            beforeId: this.nodeData.beforeId,
-            afterId: this.nodeData.afterId,
+            pipelineID: this.pipelineBoardId,
+            previousComponentId: this.nodeData.beforeId,
+            nextComponentId: this.nodeData.afterId,
             position: newPosition,
             type,
         };
@@ -111,7 +126,7 @@ export class addNodeComponent {
             const newNodeComponent: PipelineNodeModel = {
                 id: nodeId,
                 title,
-                processesInfoType: ProcessType[type],
+                processesInfoType: type,
                 position: newPosition,
                 openedSettingModal: false,
                 afterId: this.nodeData.afterId,

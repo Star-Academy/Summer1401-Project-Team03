@@ -15,7 +15,7 @@ export class InventoryService {
 
     public constructor(private apiService: ApiService) {
         this.getAllDataset();
-        this.subscribeJoinOptions();
+        // this.subscribeJoinOptions();
     }
 
     public async getAllDataset(): Promise<void> {
@@ -55,12 +55,12 @@ export class InventoryService {
         }
     }
 
-    private subscribeJoinOptions(): void {
-        this.datasetRx.subscribe((value) => {
-            PROCESS.join.paramethers.datasets.options = value?.map((dataset) => ({
-                title: dataset.name,
-                value: dataset.id,
-            }));
-        });
-    }
+    // private subscribeJoinOptions(): void {
+    //     this.datasetRx.subscribe((value) => {
+    //         PROCESS.join.paramethers.datasets.options = value?.map((dataset) => ({
+    //             title: dataset.name,
+    //             value: dataset.id,
+    //         }));
+    //     });
+    // }
 }

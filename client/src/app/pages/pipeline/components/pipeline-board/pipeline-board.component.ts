@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit} from '@angular/core';
 
 import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {LeaderLineModel, NodeRemoveInfoModel, PipelineNodeModel} from '../../../../models/pipeline-node.model';
@@ -77,7 +77,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     templateUrl: './pipeline-board.component.html',
     styleUrls: ['./pipeline-board.component.scss'],
 })
-export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
+export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy {
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-86)',
@@ -92,7 +92,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         grid: [20, 20],
     };
 
-    public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));
+    // public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));
+    public pipelineNodeDatas: PipelineNodeModel[] = [];
+    public pipelineBoardId!: number;
     public animEventObj!: any;
     public boardEl!: HTMLElement;
     public resizeObserverObj!: ResizeObserver;
@@ -103,7 +105,15 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         public boardService: PipelineBoardService
     ) {}
 
-    public ngAfterViewInit(): void {
+    public ngOnInit(): void {
+        // this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
+        // console.log(this.boardService.allNode);
+        // this.pipelineNodeDatas = this.boardService.allNode;
+    }
+
+    public async ngAfterViewInit(): Promise<void> {
+        this.pipelineNodeDatas = await this.boardService.getAllNode();
+        console.log(this.pipelineNodeDatas);
         const leaderLineInit = (): void => {
             const nodeComponentLength = this.pipelineNodeDatas.length;
             this.pipelineNodeDatas.forEach((node, index) => {
@@ -202,20 +212,44 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
         // Create new Connection
         this.connectLeaderLineBetweenTwoElementById(beforeId, item.id);
+        if (item.processesInfoType === ProcessType.DESTINATION) return undefined;
         this.connectLeaderLineBetweenTwoElementById(item.id, afterId);
 
         // Remove line and connection between before and after new node;
         this.removeLeaderlineBetweenTwoNodeById(beforeId, afterId);
 
+        if (item.processesInfoType === ProcessType.REPLICATE) {
+            this.changeBeforeIdById(afterId, item.id);
+            return undefined;
+        }
         // Update beforeId,afterId, node component
         this.changeAfterIdById(beforeId, item.id);
         this.changeBeforeIdById(afterId, item.id);
     }
 
+    private removeAllAfterNodeById(id: number): void {
+        const currentNodeIndex = this.getNodeIndexById(id);
+        // const beforeId = this.pipelineNodeDatas[currentNodeIndex].beforeId;
+        const afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
+        const type = this.pipelineNodeDatas[currentNodeIndex].processesInfoType;
+        console.log(`id man hast: ${id}`);
+        if (afterId === -1) return undefined;
+        this.removeAllAfterNodeById(afterId);
+        this.removeNodeComponent({type, nodeId: id});
+    }
+
     public removeNodeComponent(node: NodeRemoveInfoModel): void | boolean {
         const id = node.nodeId;
-        const beforeId = node.beforeId;
-        const afterId = node.afterId;
+        const currentNodeIndex = this.getNodeIndexById(id);
+
+        const beforeId = this.pipelineNodeDatas[currentNodeIndex].beforeId;
+        let afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
+        const type = node.type;
+
+        if (type === ProcessType.REPLICATE) {
+            this.removeAllAfterNodeById(afterId);
+            afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
+        }
 
         console.log(`${id}, ${beforeId}, ${afterId}`);
 
@@ -252,10 +286,10 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         component.style.zIndex = '100';
     }
 
-    public savePositionNodeElement(elementId: number): void {
-        const elementIndex = this.getNodeIndexById(elementId);
+    public savePositionNodeElement(nodeId: number): void {
+        const elementIndex = this.getNodeIndexById(nodeId);
 
-        const component = this.getElementRef(elementId);
+        const component = this.getElementRef(nodeId);
         component.style.zIndex = '10';
 
         const newPosition = {x: component?.offsetLeft, y: component?.offsetTop};
@@ -264,8 +298,13 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.pipelineNodeDatas[elementIndex].position.x = newPosition.x;
         this.pipelineNodeDatas[elementIndex].position.y = newPosition.y;
 
-        console.log(`${elementId}: X:${newPosition.x}|Y:${newPosition.y}`);
-        //   TODO Connect to Service
+        console.log(`${nodeId}: X:${newPosition.x}|Y:${newPosition.y}`);
+
+        this.boardService.changeComponentPosition({
+            pipelineID: this.pipelineBoardId,
+            componentID: nodeId,
+            position: newPosition,
+        });
     }
 
     // LeaderLine
@@ -286,7 +325,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         }
     }
 
-    private isWhatTypeById(id: number, type: ProcessType): boolean {
+    private isWhatTypeById(id: number, type: string): boolean {
         const currentNodeIndex = this.getNodeIndexById(id);
         return this.pipelineNodeDatas[currentNodeIndex].processesInfoType === type ? true : false;
     }

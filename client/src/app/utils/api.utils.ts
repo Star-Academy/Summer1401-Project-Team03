@@ -12,8 +12,7 @@ export const PIPELINE_TRANSFORMER = PIPELINE_SERVICE + '/AddTransformer';
 export const PIPELINE_ALL = PIPELINE_SERVICE + '/getPipelinesInformation';
 
 // Pipeline node
-export const ADD_PIPELINE_NODE = PIPELINE_SERVICE + '/getPipelineInformation';
-
+export const ADD_PIPELINE_NODE = PIPELINE_SERVICE + '/AddComponent';
 export const PIPELINE_ONE = PIPELINE_SERVICE + '/getPipelineInformation';
 export const PIPELINE_NODE_CONFIG = PIPELINE_SERVICE + '/';
 export const PIPELINE_SET_CONFIG = PIPELINE_SERVICE + '/';

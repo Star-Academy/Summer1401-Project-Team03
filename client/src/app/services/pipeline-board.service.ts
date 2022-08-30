@@ -1,8 +1,14 @@
 import {Injectable} from '@angular/core';
-import {AddNodeServiceModel, PipelineNodeModel, RemoveNodeServiceModel} from '../models/pipeline-node.model';
+import {
+    AddNodeServiceModel,
+    ChangeComponentPositionServiceModel,
+    ComponentInformationModel,
+    GetAllNodeServiceModel,
+    PipelineNodeModel,
+    RemoveNodeServiceModel,
+} from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
 import {PIPELINE_ONE, PIPELINE_NODE_CONFIG, ADD_PIPELINE_NODE, PIPELINE_SET_CONFIG} from '../utils/api.utils';
-import {QueryValueType} from '@angular/compiler/src/core';
 import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
@@ -13,13 +19,19 @@ export class PipelineBoardService {
     public allNode: PipelineNodeModel[] = [];
     public selectedNode: PipelineNodeModel | null = null;
     public selectedNodeConfig: any | null = null;
+    public selectedPipelineBoardId!: number;
 
-    public selectedNodeRx = new BehaviorSubject<PipelineNodeModel | null>(null);
     public selectedNodeConfigRx = new BehaviorSubject<any | null>(null);
 
-    public async getAllNode(id: number): Promise<void> {
-        const response = await this.apiService.get<any[]>(PIPELINE_ONE, {pipelineID: id});
-        this.allNode = response || [];
+    public async getAllNode(): Promise<PipelineNodeModel[]> {
+        const pipelineId = this.selectedPipelineBoardId;
+        const response =
+            (await this.apiService.get<GetAllNodeServiceModel>(PIPELINE_ONE, {pipelineID: pipelineId})) || null;
+        if (response) {
+            this.allNode = this.convertComponentInformationsToPielineNodeModel(response.componentInformations);
+            return this.allNode;
+        }
+        return [];
     }
 
     public async getNodeConfig(): Promise<void> {
@@ -38,7 +50,7 @@ export class PipelineBoardService {
     }
 
     public counter = 10;
-    public async addNode(node: AddNodeServiceModel): Promise<number | null> {
+    public async addNode(addNodeInfo: AddNodeServiceModel): Promise<number | null> {
         // const response = (await this.apiService.post(ADD_PIPELINE_NODE, node)) as number;
         const response = this.counter;
         if (response) {
@@ -49,13 +61,36 @@ export class PipelineBoardService {
         return null;
     }
 
-    public async removeNode(nodeInfo: RemoveNodeServiceModel): Promise<void> {
-        // await this.apiService.post(ADD_PIPELINE_NODE, nodeInfo);
+    public async removeNode(removeNodeInfo: RemoveNodeServiceModel): Promise<void> {
+        // await this.apiService.delete(ADD_PIPELINE_NODE, removeNodeInfo);
+    }
+
+    public async changeComponentPosition(cahgneNodePositionInfo: ChangeComponentPositionServiceModel): Promise<void> {
+        // await this.apiService.delete(ADD_PIPELINE_NODE, removeNodeInfo);
     }
 
     //    getSettingNode
     //    sendSettingNode
     //    runUpNode
     //    runNode
+
+    // UTILITY
+    private convertComponentInformationsToPielineNodeModel(
+        components: ComponentInformationModel[]
+    ): PipelineNodeModel[] {
+        const pipelineNodes: PipelineNodeModel[] = components.map((component) => {
+            const converted = {
+                id: component.id,
+                beforeId: component.previousIds[0],
+                afterId: component.nextIds[0],
+                title: component.title,
+                processesInfoType: component.type,
+                position: component.position,
+                openedSettingModal: false,
+                leaderlines: [],
+            };
+            return converted;
+        });
+        return pipelineNodes;
+    }
 }
-// QueryValueType

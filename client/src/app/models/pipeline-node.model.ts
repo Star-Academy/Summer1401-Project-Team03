@@ -5,7 +5,7 @@ export interface PipelineNodeModel {
     beforeId: number;
     afterId: number;
     title: string;
-    processesInfoType: ProcessType;
+    processesInfoType: string; //TODO edit
     position: {x: number; y: number};
     openedSettingModal: boolean;
     leaderlines: LeaderLineModel[];
@@ -19,8 +19,7 @@ export interface LeaderLineModel {
 
 export interface NodeRemoveInfoModel {
     nodeId: number;
-    beforeId: number;
-    afterId: number;
+    type: string;
 }
 
 export interface NodeAddInfoModel {
@@ -30,14 +29,41 @@ export interface NodeAddInfoModel {
 }
 
 export interface RemoveNodeServiceModel {
-    nodeId: number;
-    beforeId: number;
-    afterId: number;
+    pipelineID: number;
+    componentID: number;
 }
 
 export interface AddNodeServiceModel {
-    beforeId: number;
-    afterId: number;
-    type: customProcessType;
+    pipelineID: number;
+    previousComponentId: number;
+    nextComponentId: number;
+    type: string;
     position: {x: number; y: number};
+}
+
+export interface ChangeComponentPositionServiceModel {
+    pipelineID: number;
+    componentID: number;
+    position: {x: number; y: number};
+}
+
+export interface GetAllNodeServiceModel {
+    id: number;
+    name: string;
+    destinationIDs: number[];
+    componentInformations: ComponentInformationModel[];
+}
+
+export interface ComponentInformationModel {
+    id: number;
+    type: string;
+    title: string;
+    nextIds: number[];
+    previousIds: number[];
+    position: {x: number; y: number};
+    parameters: {
+        additionalProp1: string[];
+        additionalProp2: string[];
+        additionalProp3: string[];
+    };
 }
