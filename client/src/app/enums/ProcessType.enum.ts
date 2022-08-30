@@ -1,36 +1,21 @@
-// export enum ProcessType {
-//     SOURCE = 'SOURCE',
-//     DESTINATION = 'DESTINATION',
-//     FILTER = 'FILTER',
-//     FIELD_REMOVE = 'FIELD_REMOVE',
-//     JOIN = 'JOIN',
-//     REPLICATE = 'REPLICATE',
-//     FIELD_RENAME = 'FIELD_RENAME',
-// }
+export enum ProcessType {
+    SOURCE = 'source',
+    DESTINATION = 'destination',
+    FILTER = 'filter',
+    FIELD_REMOVE = 'field_remove',
+    JOIN = 'join',
+    REPLICATE = 'replicate',
+    FIELD_RENAME = 'field_rename',
+    HASH = 'hash',
+    TYPE_CONVERTER = 'type_converter',
+}
 
-export const ProcessType: {[key: string]: string} = {
-    SOURCE: 'SOURCE',
-    DESTINATION: 'DESTINATION',
-    FILTER: 'FILTER',
-    FIELD_REMOVE: 'FIELD_REMOVE',
-    JOIN: 'JOIN',
-    REPLICATE: 'REPLICATE',
-    FIELD_RENAME: 'FIELD_RENAME',
-};
-
-// export enum customProcessType {
-//     FILTER = 'FILTER',
-//     REPLICATE = 'REPLICATE',
-//     FIELD_REMOVE = 'FIELD_REMOVE',
-//     JOIN = 'JOIN',
-//     FIELD_RENAME = 'FIELD_RENAME',
-//     DESTINATION = 'DESTINATION',
-// }
-
-export const customProcessType = {
-    FILTER: 'FILTER',
-    REPLICATE: 'REPLICATE',
-    FIELD_REMOVE: 'FIELD_REMOVE',
-    JOIN: 'JOIN',
-    FIELD_RENAME: 'FIELD_RENAME',
-};
+export enum customProcessType {
+    FILTER = 'filter',
+    FIELD_REMOVE = 'field_remove',
+    JOIN = 'join',
+    REPLICATE = 'replicate',
+    FIELD_RENAME = 'field_rename',
+    HASH = 'hash',
+    TYPE_CONVERTER = 'type_converter',
+}

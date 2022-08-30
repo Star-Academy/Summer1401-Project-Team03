@@ -1,10 +1,12 @@
-import {ProcessType, customProcessType} from '../enums/ProcessType.enum';
+import {ProcessType} from '../enums/ProcessType.enum';
 import {ItemType} from '../enums/ItemType.enum';
+import {Paramether} from '../models/Paramether.interface';
 
 export interface ProcessSchema {
+    id: number;
     title: string;
     icon: string;
-    items: any[];
+    paramethers: {[key in string]: Paramether};
 }
 
 export type ProcessInfo = {
@@ -12,47 +14,62 @@ export type ProcessInfo = {
 };
 
 export const PROCESS: ProcessInfo = {
-    SOURCE: {
+    source: {
+        id: 0,
         title: 'source',
         icon: 'source',
-        items: [],
+        paramethers: {},
     },
-    DESTINATION: {
+    destination: {
+        id: 0,
         title: 'destination',
         icon: 'source',
-        items: [],
+        paramethers: {},
     },
-    JOIN: {
+    join: {
+        id: 0,
         title: 'join',
         icon: 'join',
-        items: [],
+        paramethers: {
+            dataset: {
+                label: 'dataset',
+                type: ItemType.SELECT,
+                options: [],
+                value: '',
+            },
+        },
     },
-    REPLICATE: {
+    replicate: {
+        id: 0,
         title: 'replicate',
         icon: 'join',
-        items: [],
+        paramethers: {},
     },
-    FIELD_REMOVE: {
+    field_remove: {
+        id: 0,
         title: 'remove field',
         icon: 'fieldRemove',
-        items: [],
+        paramethers: {},
     },
-    FIELD_RENAME: {
+    field_rename: {
+        id: 0,
         title: 'rename field',
         icon: 'fieldRename',
-        items: [],
+        paramethers: {},
     },
-    FILTER: {
+    filter: {
+        id: 0,
         title: 'filter',
         icon: 'filter',
-        items: [
-            {
+        paramethers: {
+            fields: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
                 value: '',
             },
-            {
+            condition: {
                 type: ItemType.SELECT,
+                label: 'condition',
                 options: [
                     {
                         value: '==',
@@ -79,14 +96,64 @@ export const PROCESS: ProcessInfo = {
                         title: '<=',
                     },
                 ],
-                label: 'condition',
-                value: '',
+                value: '==',
             },
-            {
+            value: {
                 type: ItemType.TEXT_INPUT,
                 label: 'value',
                 value: '',
             },
-        ],
+        },
+    },
+    hash: {
+        id: 0,
+        title: 'data hashing',
+        icon: 'hash',
+        paramethers: {
+            field_to_remove: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+        },
+    },
+    type_converter: {
+        id: 0,
+        title: 'type converter',
+        icon: 'typeConverter',
+        paramethers: {
+            fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+            types: {
+                type: ItemType.SELECT,
+                label: 'type',
+                options: [
+                    {
+                        value: 'text',
+                        title: 'string',
+                    },
+                    {
+                        value: 'date',
+                        title: 'date',
+                    },
+                    {
+                        value: 'integer',
+                        title: 'integer',
+                    },
+                    {
+                        value: 'real',
+                        title: 'float/double',
+                    },
+                    {
+                        value: 'bool',
+                        title: 'boolean',
+                    },
+                ],
+                value: 'integer',
+            },
+        },
     },
 };
