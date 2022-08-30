@@ -11,7 +11,6 @@ import {ApiService} from './api.service';
 import {PIPELINE_ONE, PIPELINE_NODE_CONFIG, ADD_PIPELINE_NODE, PIPELINE_SET_CONFIG} from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 
-
 @Injectable({
     providedIn: 'root',
 })
@@ -24,12 +23,15 @@ export class PipelineBoardService {
 
     public selectedNodeConfigRx = new BehaviorSubject<any | null>(null);
 
-    public async getAllNode(id: number): Promise<void> {
-        this.selectedPipelineBoardId = id;
-        const response = (await this.apiService.get<GetAllNodeServiceModel>(PIPELINE_ONE, {pipelineID: id})) || null;
+    public async getAllNode(): Promise<PipelineNodeModel[]> {
+        const pipelineId = this.selectedPipelineBoardId;
+        const response =
+            (await this.apiService.get<GetAllNodeServiceModel>(PIPELINE_ONE, {pipelineID: pipelineId})) || null;
         if (response) {
             this.allNode = this.convertComponentInformationsToPielineNodeModel(response.componentInformations);
+            return this.allNode;
         }
+        return [];
     }
 
     public async getNodeConfig(): Promise<void> {

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {PROCESS, ProcessInfo} from 'src/app/data/Processes.data';
 import {customProcessType, ProcessType} from 'src/app/enums/ProcessType.enum';
@@ -14,7 +14,7 @@ const ADDITIONAL_BOTTOM = 160;
     templateUrl: './add-node.component.html',
     styleUrls: ['./add-node.component.scss'],
 })
-export class addNodeComponent {
+export class addNodeComponent implements OnInit {
     public processes: ProcessInfo = PROCESS;
 
     @ViewChild('ProcessAdd') public modal!: ModalComponent;
@@ -22,11 +22,17 @@ export class addNodeComponent {
     public nodeData!: NodeAddInfoModel;
     public pipelineBoardId!: number;
     public nodeTitle: string = 'new node';
+    public customProcessType: string[] = [];
 
     public constructor(private pipelineBoardService: PipelineBoardService) {}
 
-    public customProcessType(): string[] {
-        const keys = Object.keys(customProcessType);
+    public ngOnInit(): void {
+        this.customProcessType = this.customProcessTypeFunction();
+    }
+
+    private customProcessTypeFunction(): string[] {
+        const keys = Object.values(customProcessType);
+        console.log(keys);
         return keys.map((type) => type as string);
     }
 
@@ -91,7 +97,7 @@ export class addNodeComponent {
                     const newNodeComponent: PipelineNodeModel = {
                         id: nodeId,
                         title,
-                        processesInfoType: ProcessType[type],
+                        processesInfoType: type,
                         position: newPosition,
                         openedSettingModal: false,
                         afterId: nodeDestinationId,
@@ -120,7 +126,7 @@ export class addNodeComponent {
             const newNodeComponent: PipelineNodeModel = {
                 id: nodeId,
                 title,
-                processesInfoType: ProcessType[type],
+                processesInfoType: type,
                 position: newPosition,
                 openedSettingModal: false,
                 afterId: this.nodeData.afterId,

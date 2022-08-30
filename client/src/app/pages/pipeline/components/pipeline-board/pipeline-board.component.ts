@@ -92,7 +92,8 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         grid: [20, 20],
     };
 
-    public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));
+    // public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));
+    public pipelineNodeDatas: PipelineNodeModel[] = [];
     public pipelineBoardId!: number;
     public animEventObj!: any;
     public boardEl!: HTMLElement;
@@ -106,10 +107,13 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
 
     public ngOnInit(): void {
         // this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
+        // console.log(this.boardService.allNode);
         // this.pipelineNodeDatas = this.boardService.allNode;
     }
 
-    public ngAfterViewInit(): void {
+    public async ngAfterViewInit(): Promise<void> {
+        this.pipelineNodeDatas = await this.boardService.getAllNode();
+        console.log(this.pipelineNodeDatas);
         const leaderLineInit = (): void => {
             const nodeComponentLength = this.pipelineNodeDatas.length;
             this.pipelineNodeDatas.forEach((node, index) => {

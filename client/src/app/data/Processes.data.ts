@@ -1,6 +1,6 @@
-import {ProcessType} from '../enums/ProcessType.enum';
 import {ItemType} from '../enums/ItemType.enum';
 import {Paramether} from '../models/Paramether.interface';
+import {ProcessType} from '../enums/ProcessType.enum';
 
 export interface ProcessSchema {
     id: number;
@@ -21,6 +21,18 @@ export const PROCESS: ProcessInfo = {
         paramethers: {},
     },
     destination: {
+        id: 0,
+        title: 'destination',
+        icon: 'source',
+        paramethers: {},
+    },
+    csv_loader: {
+        id: 0,
+        title: 'source',
+        icon: 'source',
+        paramethers: {},
+    },
+    csv_extractor: {
         id: 0,
         title: 'destination',
         icon: 'source',
