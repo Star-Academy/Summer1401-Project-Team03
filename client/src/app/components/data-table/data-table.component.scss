@@ -6,6 +6,8 @@
     align-items: center;
     gap: 0.5rem;
 
+    block-size: 90%;
+
     .title {
         grid-area: title;
 
@@ -34,9 +36,13 @@
 
         overflow: auto;
 
+        block-size: 100%;
+
         table {
             background-color: var(--color-white-solid);
             color: var(--color-purple-15);
+
+            overflow: hidden;
 
             block-size: 100%;
 
@@ -74,10 +80,6 @@
                 &:not(.typed) {
                     padding: 0.75rem 1rem !important;
                 }
-            }
-
-            tbody {
-                overflow-y: auto;
             }
 
             tbody tr:hover {
