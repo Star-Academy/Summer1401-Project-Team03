@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
@@ -148,8 +149,11 @@ public class PipelineController : ControllerBase
     private void AddSource(Pipeline pipeline, int fileID, Position position)
     {
         var filePath = FileSearcher.Search(fileID, "imports");
+        
+        var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
+        var fileName = regex.Match( new FileInfo(filePath).Name).Groups[1].Value;
 
-        var extractor = new ComponentFactory().CreateComponent(ComponentType.CSVExtractor, new FileInfo(filePath).Name);
+        var extractor = new ComponentFactory().CreateComponent(ComponentType.CSVExtractor, fileName);
 
         extractor.Pipeline = pipeline;
         extractor.Position = position;
@@ -239,6 +243,7 @@ public class PipelineController : ControllerBase
             var pipeline = idToPipeline[pipelineID];
             pipeline.Execute(componentID).Close();
             return Ok();
+            
         }
         catch (Exception e)
         {
