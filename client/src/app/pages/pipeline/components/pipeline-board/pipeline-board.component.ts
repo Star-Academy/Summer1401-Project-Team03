@@ -77,7 +77,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     templateUrl: './pipeline-board.component.html',
     styleUrls: ['./pipeline-board.component.scss'],
 })
-export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-86)',
@@ -105,14 +105,17 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         public boardService: PipelineBoardService
     ) {}
 
-    public ngOnInit(): void {
-        // this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
-        // console.log(this.boardService.allNode);
-        // this.pipelineNodeDatas = this.boardService.allNode;
-    }
+    // public ngOnInit(): void {
+    //     // this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
+    //     // console.log(this.boardService.allNode);
+    //     // this.pipelineNodeDatas = this.boardService.allNode;
+    // }
 
     public async ngAfterViewInit(): Promise<void> {
+        console.log('saaaaaaaaalaam');
         this.pipelineNodeDatas = await this.boardService.getAllNode();
+        this.changeDetectorRef.detectChanges();
+        console.log('raftam jolo');
         console.log(this.pipelineNodeDatas);
         const leaderLineInit = (): void => {
             const nodeComponentLength = this.pipelineNodeDatas.length;
@@ -202,7 +205,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         const afterId = item.afterId;
 
         // is destination
-        if (this.isWhatTypeById(beforeId, ProcessType.DESTINATION)) {
+        if (this.isWhatTypeById(beforeId, ProcessType.CSV_LOADER)) {
             return undefined;
         }
 
@@ -212,7 +215,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
 
         // Create new Connection
         this.connectLeaderLineBetweenTwoElementById(beforeId, item.id);
-        if (item.processesInfoType === ProcessType.DESTINATION) return undefined;
+        if (item.processesInfoType === ProcessType.CSV_LOADER) return undefined;
         this.connectLeaderLineBetweenTwoElementById(item.id, afterId);
 
         // Remove line and connection between before and after new node;
@@ -271,7 +274,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         };
 
         // The first or last Node that we don't want remove
-        if (this.isWhatTypeById(id, ProcessType.SOURCE) || this.isWhatTypeById(id, ProcessType.DESTINATION))
+        if (this.isWhatTypeById(id, ProcessType.CSV_EXTRACTOR) || this.isWhatTypeById(id, ProcessType.CSV_LOADER))
             return undefined;
 
         // Create new connection
@@ -310,7 +313,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
     // LeaderLine
     public updateLeaderLine(currentId: number): void | boolean {
         // The last one
-        if (this.isWhatTypeById(currentId, ProcessType.DESTINATION)) {
+        if (this.isWhatTypeById(currentId, ProcessType.CSV_LOADER)) {
             this.updateLeaderLineById(currentId);
         }
 
@@ -319,7 +322,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         this.updateLeaderLineById(currentId);
 
         // // It's not The first one
-        if (!this.isWhatTypeById(currentId, ProcessType.SOURCE)) {
+        if (!this.isWhatTypeById(currentId, ProcessType.CSV_EXTRACTOR)) {
             console.log(beforeId);
             this.updateLeaderLineById(beforeId);
         }
