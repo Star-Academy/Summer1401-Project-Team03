@@ -45,7 +45,7 @@ public class Math : Transformer
         }
         else
         {
-            keys[keys.IndexOf(Parameters[FieldsToCalculate][0])] = valForQuery;
+            keys[keys.IndexOf(Parameters[FieldsToCalculate][0])] = $"{valForQuery} AS {Parameters[FieldsToCalculate][0]}";
         }
 
         return keys;
