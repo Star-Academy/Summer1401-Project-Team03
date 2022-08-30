@@ -18,5 +18,4 @@ public enum MathOperator
     Negate,
     Exponential,
     Mod
-    
 }
