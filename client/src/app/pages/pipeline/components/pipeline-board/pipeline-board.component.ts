@@ -223,10 +223,29 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         this.changeBeforeIdById(afterId, item.id);
     }
 
+    private removeAllAfterNodeById(id: number): void {
+        const currentNodeIndex = this.getNodeIndexById(id);
+        // const beforeId = this.pipelineNodeDatas[currentNodeIndex].beforeId;
+        const afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
+        const type = this.pipelineNodeDatas[currentNodeIndex].processesInfoType;
+        console.log(`id man hast: ${id}`);
+        if (afterId === -1) return undefined;
+        this.removeAllAfterNodeById(afterId);
+        this.removeNodeComponent({type, nodeId: id});
+    }
+
     public removeNodeComponent(node: NodeRemoveInfoModel): void | boolean {
         const id = node.nodeId;
-        const beforeId = node.beforeId;
-        const afterId = node.afterId;
+        const currentNodeIndex = this.getNodeIndexById(id);
+
+        const beforeId = this.pipelineNodeDatas[currentNodeIndex].beforeId;
+        let afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
+        const type = node.type;
+
+        if (type === ProcessType.REPLICATE) {
+            this.removeAllAfterNodeById(afterId);
+            afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
+        }
 
         console.log(`${id}, ${beforeId}, ${afterId}`);
 

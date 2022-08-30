@@ -13,12 +13,7 @@
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (removeNodeEmit)="
-                    removeNode.openModal(
-                        pipelineNodeData.id,
-                        pipelineNodeData.beforeId,
-                        pipelineNodeData.afterId,
-                        pipelineBoardId
-                    )
+                    removeNode.openModal(pipelineNodeData.id, pipelineNodeData.processesInfoType, pipelineBoardId)
                 "
                 (addNodeEmit)="
                     addNode.openModal(

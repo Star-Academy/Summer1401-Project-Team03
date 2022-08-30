@@ -19,8 +19,7 @@ export interface LeaderLineModel {
 
 export interface NodeRemoveInfoModel {
     nodeId: number;
-    beforeId: number;
-    afterId: number;
+    type: string;
 }
 
 export interface NodeAddInfoModel {
