@@ -14,7 +14,6 @@ export class BoardComponent {
     @ViewChild('container') public container!: ElementRef<HTMLDivElement>;
 
     public mouseIsDown: boolean = false;
-    public spaceIsDown: boolean = false;
 
     public resizeClickHandler(dx: number, dy: number): void {
         this.boardWidth += dx;
@@ -22,7 +21,7 @@ export class BoardComponent {
     }
 
     public mouseMoveHandler(event: MouseEvent): void {
-        if (this.mouseIsDown && this.spaceIsDown) {
+        if (this.mouseIsDown) {
             this.container.nativeElement.scrollTop -= event.movementY;
             this.container.nativeElement.scrollLeft -= event.movementX;
         }

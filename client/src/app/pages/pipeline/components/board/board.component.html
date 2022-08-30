@@ -6,10 +6,11 @@
         '--board-h': boardHeight,
         '--grid-size': gridSize
     }"
+    [ngStyle]="{cursor: mouseIsDown ? 'grabbing' : 'grab'}"
     (mousedown)="mouseIsDown = true"
     (mouseup)="mouseIsDown = false"
-    (keydown.space)="spaceIsDown = true; $event.preventDefault()"
-    (keyup.space)="spaceIsDown = false; $event.preventDefault()"
+    (keydown.space)="$event.preventDefault()"
+    (keyup.space)="$event.preventDefault()"
     (mousemove)="mouseMoveHandler($event)"
     tabindex="0"
 >

@@ -7,13 +7,14 @@
                 draggabilly
                 [options]="draggabillyOptions"
                 [pipelineNodeData]="pipelineNodeData"
-                (dragStart)="setToUpperLayer(pipelineNodeData.id)"
-                (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
+                (dragStart)="setToUpperLayer(pipelineNodeData.id); draggedNodeId = pipelineNodeData.id"
+                (dragEnd)="savePositionNodeElement(pipelineNodeData.id); draggedNodeId = null"
                 (dragMove)="updateLeaderLine(pipelineNodeData.id)"
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (removeNodeEmit)="removeNodeComponent(pipelineNodeData.id)"
                 (addNodeEmit)="addNodeComponent($event, pipelineNodeData.id)"
+                [ngStyle]="{cursor: draggedNodeId === pipelineNodeData.id ? 'grabbing' : 'grab'}"
             ></app-pipeline-node>
         </ng-container>
     </div>

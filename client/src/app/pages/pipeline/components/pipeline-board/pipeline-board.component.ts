@@ -77,6 +77,8 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     public leaderLineLinks: any[] = [];
     public animEventObj!: any;
 
+    public draggedNodeId: string | null = null;
+
     public constructor(private elRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) {}
 
     public ngAfterViewInit(): void {
