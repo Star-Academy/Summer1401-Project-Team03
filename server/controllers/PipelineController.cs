@@ -38,10 +38,10 @@ public class PipelineController : ControllerBase
 
             IDCounterHandler.SavePipelineID(pipelineId + 1);
 
-            AddSource(pipeline, sourceFileId, new Position(80, 80));
-            AddDestination(pipeline, destFileName, destFileFormat, new Position(400, 80));
+            var sourceId = AddSource(pipeline, sourceFileId, new Position(80, 80));
+            var destinationId = AddDestination(pipeline, destFileName, destFileFormat, new Position(400, 80));
 
-            pipeline.Connect(1, 2);
+            pipeline.Connect(sourceId, destinationId);
 
             file.FileOperation.Instance.WritePipeline(pipeline);
 
@@ -142,7 +142,7 @@ public class PipelineController : ControllerBase
         }
     }
 
-    private void AddSource(Pipeline pipeline, int fileId, Position position)
+    private int AddSource(Pipeline pipeline, int fileId, Position position)
     {
         var filePath = FileSearcher.Search(fileId, "imports");
 
@@ -156,10 +156,12 @@ public class PipelineController : ControllerBase
         extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
 
         pipeline.AddComponent(extractor);
+
+        return extractor.Id;
     }
 
 
-    private void AddDestination(Pipeline pipeline, string fileName, string format, Position position)
+    private int AddDestination(Pipeline pipeline, string fileName, string format, Position position)
     {
         var fileId = IDCounterHandler.LoadFileID();
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "exports");
@@ -185,6 +187,8 @@ public class PipelineController : ControllerBase
 
         pipeline.AddDestinationId(loader.Id);
         pipeline.AddComponent(loader);
+
+        return loader.Id;
     }
 
     [EnableCors("CorsPolicy")]
