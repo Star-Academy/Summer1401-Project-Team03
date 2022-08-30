@@ -124,6 +124,16 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"SELECT * FROM ({table}) AS {alias} ORDER BY random() LIMIT {number}";
     }
 
+    public string Function(string function, string key)
+    {
+        return $"{function}({key})";
+    }
+
+    public string Alias(string key, string alias)
+    {
+        return $"{key} AS {alias}";
+    }
+
     public string NewAlias()
     {
         _counter++;

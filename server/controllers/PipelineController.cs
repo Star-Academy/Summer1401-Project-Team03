@@ -1,6 +1,7 @@
-﻿using System.Data.Common;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
@@ -150,8 +151,11 @@ public class PipelineController : ControllerBase
     private void AddSource(Pipeline pipeline, int fileID, Position position)
     {
         var filePath = FileSearcher.Search(fileID, "imports");
+        
+        var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
+        var fileName = regex.Match( new FileInfo(filePath).Name).Groups[1].Value;
 
-        var extractor = new ComponentFactory().CreateComponent(ComponentType.CSVExtractor, new FileInfo(filePath).Name);
+        var extractor = new ComponentFactory().CreateComponent(ComponentType.CSVExtractor, fileName);
 
         extractor.Pipeline = pipeline;
         extractor.Position = position;
@@ -259,26 +263,6 @@ public class PipelineController : ControllerBase
         {
             return BadRequest(e.Message);
         }
-    }
-
-    private IEnumerable<Dictionary<string, object>> Serialize(DbDataReader reader)
-    {
-        var results = new List<Dictionary<string, object>>();
-        var cols = new List<string>();
-        for (var i = 0; i < reader.FieldCount; i++) 
-            cols.Add(reader.GetName(i));
-
-        var j = 0;
-        while (reader.Read())
-        {
-            results.Add(cols.ToDictionary(col => col, col => reader[col]));
-            if (j++ > 50)
-            {
-                break;
-            }
-        }
-
-        return results;
     }
 
     [EnableCors("CorsPolicy")]
