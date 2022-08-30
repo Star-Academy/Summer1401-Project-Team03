@@ -92,6 +92,19 @@ export const PROCESS: ProcessInfo = {
         icon: 'fieldRename',
         paramethers: {},
     },
+    data_sampling: {
+        id: 0,
+        title: 'data sampling',
+        icon: 'data_sampling',
+        paramethers: {},
+    },
+    field_selector: {
+        id: 0,
+        title: 'field selector',
+        icon: 'field_selector',
+        paramethers: {},
+    },
+    math: {id: 0, title: 'math', icon: 'math', paramethers: {}},
     csv_loader: {
         id: 0,
         title: 'source',

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
-import {PROCESS, ProcessInfo} from 'src/app/data/Processes.data';
+import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
 import {customProcessType, ProcessType} from 'src/app/enums/ProcessType.enum';
 import {AddNodeServiceModel, NodeAddInfoModel, PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 import {PipelineBoardService} from '../../../../../../services/pipeline-board.service';
@@ -22,7 +22,7 @@ export class addNodeComponent implements OnInit {
     public nodeData!: NodeAddInfoModel;
     public pipelineBoardId!: number;
     public nodeTitle: string = 'new node';
-    public customProcessType: string[] = [];
+    public customProcessType: {[key in string]: ProcessSchema} = {};
 
     public constructor(private pipelineBoardService: PipelineBoardService) {}
 
@@ -30,10 +30,10 @@ export class addNodeComponent implements OnInit {
         this.customProcessType = this.customProcessTypeFunction();
     }
 
-    private customProcessTypeFunction(): string[] {
-        const keys = Object.values(customProcessType);
-        console.log(keys);
-        return keys.map((type) => type as string);
+    private customProcessTypeFunction(): any {
+        return Object.entries(PROCESS)
+            .filter(([key, value]) => Object.values(customProcessType).includes((<any>customProcessType)[key]))
+            .reduce((prev, curr) => ({...prev, [curr[0]]: curr[1]}), {});
     }
 
     public openModal(
