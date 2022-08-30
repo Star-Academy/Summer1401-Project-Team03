@@ -1,4 +1,6 @@
-﻿using System.Text.Json;
+﻿using System.Data.Common;
+using System.Data.SqlClient;
+using System.Text.Json;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
@@ -165,7 +167,18 @@ public class PipelineController : ControllerBase
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "exports");
 
         IDCounterHandler.SaveFileID(fileID + 1);
-        var loader = (Loader)new ComponentFactory().CreateComponent(ComponentType.CSVLoader, fileName);
+
+        ComponentType componentType;
+        
+        switch (format)
+        {
+           case "json" : componentType = ComponentType.JSONLoader;
+               break;
+           default:  componentType = ComponentType.CSVLoader;
+               break;
+        }
+        
+        var loader = new ComponentFactory().CreateComponent(componentType, fileName);
         loader.Pipeline = pipeline;
         loader.Position = position;
         loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
@@ -237,13 +250,35 @@ public class PipelineController : ControllerBase
         try
         {
             var pipeline = idToPipeline[pipelineID];
-            pipeline.Execute(componentID).Close();
-            return Ok();
+            
+            using var reader = pipeline.Execute(componentID);
+            
+            return Ok(Serialize(reader));
         }
         catch (Exception e)
         {
             return BadRequest(e.Message);
         }
+    }
+
+    private IEnumerable<Dictionary<string, object>> Serialize(DbDataReader reader)
+    {
+        var results = new List<Dictionary<string, object>>();
+        var cols = new List<string>();
+        for (var i = 0; i < reader.FieldCount; i++) 
+            cols.Add(reader.GetName(i));
+
+        var j = 0;
+        while (reader.Read())
+        {
+            results.Add(cols.ToDictionary(col => col, col => reader[col]));
+            if (j++ > 50)
+            {
+                break;
+            }
+        }
+
+        return results;
     }
 
     [EnableCors("CorsPolicy")]

@@ -2,6 +2,6 @@
 
 public enum FileType
 {
-    json,
-    csv
+    JSON,
+    CSV
 }
