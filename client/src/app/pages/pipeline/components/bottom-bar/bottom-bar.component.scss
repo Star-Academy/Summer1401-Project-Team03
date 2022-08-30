@@ -29,21 +29,20 @@
     }
 
     .inout-wrapper {
+        grid-area: inout;
+
         display: flex;
-
-        #input {
-        }
-
-        #output {
-        }
+        gap: 0.1rem;
 
         .separator {
             grid-area: seperator;
 
-            background-color: red;
+            background-color: var(--color-gray-78);
 
             block-size: 100%;
-            inline-size: 0.25rem;
+            inline-size: 0.5rem;
+
+            border-radius: 0.5rem;
         }
     }
 }

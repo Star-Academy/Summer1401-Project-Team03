@@ -17,74 +17,84 @@
         grid-area: row-count;
         justify-self: end;
 
-        font-size: var(--font-size-primary);
-        font-weight: bold;
+        font-size: var(--font-size-small);
+
+        b {
+            font-size: var(--font-size-primary);
+        }
     }
 
-    table {
+    .title,
+    .row-count {
+        padding-inline: 0.5rem;
+    }
+
+    .table-wrapper {
         grid-area: table;
 
-        background-color: var(--color-white-solid);
-        color: var(--color-purple-15);
+        overflow: auto;
 
-        overflow: hidden;
+        table {
+            background-color: var(--color-white-solid);
+            color: var(--color-purple-15);
 
-        block-size: 100%;
+            block-size: 100%;
 
-        border: 1px solid transparent;
-        border-collapse: collapse;
-        border-radius: 0.25rem;
+            border: 1px solid transparent;
+            border-collapse: collapse;
+            border-radius: 0.25rem;
 
-        th {
-            background-color: var(--color-purple-95);
+            th {
+                background-color: var(--color-purple-95);
 
-            text-align: start;
+                text-align: start;
 
-            h2 {
-                font-size: 1.65rem;
+                h2 {
+                    font-size: 1.65rem;
 
-                white-space: nowrap;
-            }
+                    white-space: nowrap;
+                }
 
-            h4 {
-                color: var(--color-purple-30);
+                h4 {
+                    color: var(--color-purple-30);
 
-                font-size: 1rem;
+                    font-size: 1rem;
 
-                white-space: nowrap;
+                    white-space: nowrap;
 
-                :nth-child(2) {
-                    font-style: italic;
+                    :nth-child(2) {
+                        font-style: italic;
+                    }
+                }
+
+                &.typed {
+                    padding: 0.75rem 1.35rem !important;
+                }
+
+                &:not(.typed) {
+                    padding: 0.75rem 1rem !important;
                 }
             }
 
-            &.typed {
-                padding: 0.75rem 1.35rem !important;
+            tbody {
+                overflow-y: auto;
             }
 
-            &:not(.typed) {
-                padding: 0.75rem 1rem !important;
+            tbody tr:hover {
+                background-color: var(--color-gray-95);
             }
-        }
 
-        tbody {
-            overflow-y: auto;
-        }
+            tbody tr td {
+                font-family: monospace;
+                font-size: 1.5rem;
+            }
 
-        tbody tr:hover {
-            background-color: var(--color-gray-95);
-        }
+            th,
+            tbody tr td {
+                padding: 0.75rem 1rem;
 
-        tbody tr td {
-            font-family: monospace;
-            font-size: 1.5rem;
-        }
-
-        th,
-        tbody tr td {
-            padding: 0.75rem 1rem;
-
-            border: 1px solid var(--color-gray-50);
+                border: 1px solid var(--color-gray-50);
+            }
         }
     }
 }

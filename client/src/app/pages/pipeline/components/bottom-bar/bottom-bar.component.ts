@@ -127,8 +127,8 @@ export class BottomBarComponent {
     @Input() public processId?: string;
     @Input() public processTitle!: string;
 
-    @Input() public inputColumns: TableColumn[] | null = null;
-    @Input() public inputRows: string[][] | null = null;
+    @Input() public inputColumns: TableColumn[] | null = sampleColumns;
+    @Input() public inputRows: string[][] | null = sampleRows;
 
     @Input() public outputColumns: TableColumn[] | null = sampleColumns;
     @Input() public outputRows: string[][] | null = sampleRows;

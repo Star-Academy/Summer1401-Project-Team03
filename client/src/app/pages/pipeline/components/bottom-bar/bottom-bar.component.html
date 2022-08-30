@@ -14,7 +14,6 @@
 
     <div class="inout-wrapper">
         <app-data-table
-            id="input"
             [hidden]="!inputColumns"
             title="Input"
             [columns]="inputColumns || []"
@@ -22,7 +21,6 @@
         ></app-data-table>
         <div class="separator" [hidden]="!(inputColumns && outputColumns)"></div>
         <app-data-table
-            id="output"
             [hidden]="!outputColumns"
             title="Output"
             [columns]="outputColumns || []"
