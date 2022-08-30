@@ -37,5 +37,9 @@ public interface IQueryBuilder
 
     public string Sample(string table, string alias, int number);
 
+    public string Function(string function, string key);
+
+    public string Alias(string key, string alias);
+
     public string NewAlias();
 }
