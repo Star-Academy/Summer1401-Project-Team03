@@ -1,0 +1,27 @@
+label {
+    display: flex;
+    justify-content: space-between;
+
+    inline-size: fit-content;
+
+    .label {
+    }
+
+    select {
+        option {
+        }
+    }
+
+    &::after {
+        content: "";
+
+        background-color: black;
+
+        inset-block: 0;
+        inset-inline-start: 50%;
+
+        width: 0.25rem;
+
+        transform: translateY(-50%);
+    }
+}

@@ -24,6 +24,7 @@ import {SwitchModule} from 'src/app/components/switch/switch.module';
 import {DataListModule} from 'src/app/components/data-list/data-list.module';
 import {RemoveNodeComponent} from './components/pipeline-node/components/remove-node/remove-node.component';
 import {BottomBarComponent} from './components/bottom-bar/bottom-bar.component';
+import {PillMenuInputModule} from '../../components/pill-menu-input/pill-menu-input.module';
 
 @NgModule({
     declarations: [
@@ -52,6 +53,7 @@ import {BottomBarComponent} from './components/bottom-bar/bottom-bar.component';
         AngularDraggableModule,
         DataTableModule,
         TextInputModule,
+        PillMenuInputModule,
     ],
 })
 export class PipelineModule {}

@@ -1,0 +1,49 @@
+.wrapper {
+    display: grid;
+    grid-template-areas:
+        "title title iotype"
+        "inout inout inout";
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+
+    h2 {
+        grid-area: title;
+
+        display: flex;
+        align-items: center;
+
+        pre {
+            font-family: unset;
+            font-size: var(--font-size-big);
+            font-weight: bold;
+
+            &:nth-of-type(2) {
+                font-size: var(--font-size-primary);
+                font-weight: unset;
+            }
+        }
+    }
+
+    app-pill-menu-input {
+        grid-area: iotype;
+    }
+
+    .inout-wrapper {
+        display: flex;
+
+        #input {
+        }
+
+        #output {
+        }
+
+        .separator {
+            grid-area: seperator;
+
+            background-color: red;
+
+            block-size: 100%;
+            inline-size: 0.25rem;
+        }
+    }
+}

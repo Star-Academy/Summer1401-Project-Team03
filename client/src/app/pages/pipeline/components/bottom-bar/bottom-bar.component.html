@@ -1,0 +1,36 @@
+<!--<ng-container *ngIf="processId; else overallOutput">-->
+<div class="wrapper">
+    <h2>
+        <pre>Data preview - </pre>
+        <pre>{{ 'Hello' }}</pre>
+    </h2>
+
+    <app-pill-menu-input
+        label="Display"
+        [options]="ioTypeValues"
+        [value]="whichSide.toUpperCase()"
+        (valueChange)="whichSideSet = $event"
+    ></app-pill-menu-input>
+
+    <div class="inout-wrapper">
+        <app-data-table
+            id="input"
+            [hidden]="!inputColumns"
+            title="Input"
+            [columns]="inputColumns || []"
+            [rows]="inputRows || []"
+        ></app-data-table>
+        <div class="separator" [hidden]="!(inputColumns && outputColumns)"></div>
+        <app-data-table
+            id="output"
+            [hidden]="!outputColumns"
+            title="Output"
+            [columns]="outputColumns || []"
+            [rows]="outputRows || []"
+        ></app-data-table>
+    </div>
+</div>
+<!--</ng-container>-->
+<ng-template #overallOutput>
+    <!-- todo -->
+</ng-template>
