@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {PipelineBoardService} from '../../../../services/pipeline-board.service';
 import {ItemType} from '../../../../enums/ItemType.enum';
 import {PROCESS} from '../../../../data/Processes.data';
@@ -10,11 +10,6 @@ import {ProcessType} from 'src/app/enums/ProcessType.enum';
     styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent implements OnInit, OnDestroy {
-    @Input() public config: string | null = null;
-
-    public processes = PROCESS;
-    public configTypes = ItemType;
-
     public configs: any | null = null;
 
     public constructor(public boardService: PipelineBoardService) {}
@@ -25,6 +20,8 @@ export class SideBarComponent implements OnInit, OnDestroy {
                 this.configs = null;
                 return;
             }
+
+            this.configs = PROCESS[this.boardService.selectedNode.type];
         });
     }
 
