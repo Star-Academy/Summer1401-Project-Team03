@@ -1,10 +1,12 @@
 import {ProcessType, customProcessType} from '../enums/ProcessType.enum';
 import {ItemType} from '../enums/ItemType.enum';
+import {Paramether} from '../models/Paramether.interface';
 
 export interface ProcessSchema {
+    id: number;
     title: string;
     icon: string;
-    items: any[];
+    paramethers: {[key in string]: Paramether};
 }
 
 export type ProcessInfo = {
@@ -13,47 +15,54 @@ export type ProcessInfo = {
 
 export const PROCESS: ProcessInfo = {
     source: {
+        id: 0,
         title: 'source',
         icon: 'source',
-        items: [],
+        paramethers: {},
     },
     destination: {
+        id: 0,
         title: 'destination',
         icon: 'source',
-        items: [],
+        paramethers: {},
     },
     join: {
+        id: 0,
         title: 'join',
         icon: 'join',
-        items: [],
+        paramethers: {},
     },
     replicate: {
+        id: 0,
         title: 'replicate',
         icon: 'join',
-        items: [],
+        paramethers: {},
     },
     field_remove: {
+        id: 0,
         title: 'remove field',
         icon: 'fieldRemove',
-        items: [],
+        paramethers: {},
     },
     field_rename: {
+        id: 0,
         title: 'rename field',
         icon: 'fieldRename',
-        items: [],
+        paramethers: {},
     },
     filter: {
+        id: 0,
         title: 'filter',
         icon: 'filter',
-        items: [
-            {
+        paramethers: {
+            fields: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
-                field: 'fields',
                 value: '',
             },
-            {
+            condition: {
                 type: ItemType.SELECT,
+                label: 'condition',
                 options: [
                     {
                         value: '==',
@@ -80,48 +89,43 @@ export const PROCESS: ProcessInfo = {
                         title: '<=',
                     },
                 ],
-                label: 'condition',
-                field: 'condition',
                 value: '==',
             },
-            {
+            value: {
                 type: ItemType.TEXT_INPUT,
                 label: 'value',
-                field: 'value',
                 value: '',
             },
-        ],
+        },
     },
     hash: {
+        id: 0,
         title: 'data hashing',
         icon: 'hash',
-        items: [
-            {
+        paramethers: {
+            field_to_remove: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
-                field: 'field to remove',
                 value: '',
             },
-        ],
+        },
     },
-
     type_converter: {
+        id: 0,
         title: 'type converter',
         icon: 'typeConverter',
-        items: [
-            {
+        paramethers: {
+            fields: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
-                field: 'fields',
                 value: '',
             },
-            {
+            types: {
                 type: ItemType.DATA_LIST,
                 label: 'type',
-                field: 'types',
                 options: [
                     {
-                        value: 'string',
+                        value: 'text',
                         title: 'string',
                     },
                     {
@@ -129,16 +133,20 @@ export const PROCESS: ProcessInfo = {
                         title: 'date',
                     },
                     {
-                        value: 'int',
-                        title: 'int',
+                        value: 'integer',
+                        title: 'integer',
                     },
                     {
-                        value: 'float',
-                        title: 'float',
+                        value: 'real',
+                        title: 'float/double',
+                    },
+                    {
+                        value: 'bool',
+                        title: 'boolean',
                     },
                 ],
-                value: 'int',
+                value: 'integer',
             },
-        ],
+        },
     },
 };
