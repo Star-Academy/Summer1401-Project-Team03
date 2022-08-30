@@ -61,8 +61,8 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
 export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
-        color: 'var(--color-purple-86)',
-        outlineColor: 'var(--color-purple-46)',
+        color: 'var(--color-purple-95)',
+        outlineColor: 'var(--color-purple-30)',
         outline: true,
         endPlugOutline: true,
         endPlugSize: 0.8,
