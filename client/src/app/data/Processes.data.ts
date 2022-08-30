@@ -14,13 +14,25 @@ export type ProcessInfo = {
 };
 
 export const PROCESS: ProcessInfo = {
-    source: {
+    csv_loader: {
         id: 0,
         title: 'source',
         icon: 'source',
         paramethers: {},
     },
-    destination: {
+    csv_extractor: {
+        id: 0,
+        title: 'destination',
+        icon: 'source',
+        paramethers: {},
+    },
+    json_loader: {
+        id: 0,
+        title: 'source',
+        icon: 'source',
+        paramethers: {},
+    },
+    json_extractor: {
         id: 0,
         title: 'destination',
         icon: 'source',
@@ -45,13 +57,13 @@ export const PROCESS: ProcessInfo = {
         icon: 'join',
         paramethers: {},
     },
-    field_remove: {
+    field_remover: {
         id: 0,
         title: 'remove field',
         icon: 'fieldRemove',
         paramethers: {},
     },
-    field_rename: {
+    field_renamer: {
         id: 0,
         title: 'rename field',
         icon: 'fieldRename',
