@@ -1,5 +1,6 @@
 <label>
     <span class="label">{{ label }}</span>
+    <div class="separator"></div>
     <select [(ngModel)]="value" [disabled]="disabled">
         <option *ngFor="let option of options" [value]="option.value">{{ option.title }}</option>
     </select>
