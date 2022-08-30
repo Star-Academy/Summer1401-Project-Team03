@@ -265,6 +265,26 @@ public class PipelineController : ControllerBase
         }
     }
 
+    private IEnumerable<Dictionary<string, object>> Serialize(DbDataReader reader)
+    {
+        var results = new List<Dictionary<string, object>>();
+        var cols = new List<string>();
+        for (var i = 0; i < reader.FieldCount; i++) 
+            cols.Add(reader.GetName(i));
+
+        var j = 0;
+        while (reader.Read())
+        {
+            results.Add(cols.ToDictionary(col => col, col => reader[col]));
+            if (j++ > 50)
+            {
+                break;
+            }
+        }
+
+        return results;
+    }
+    
     [EnableCors("CorsPolicy")]
     [HttpGet]
     public ActionResult<List<PipelineShortInformation>> GetPipelinesInformation()
