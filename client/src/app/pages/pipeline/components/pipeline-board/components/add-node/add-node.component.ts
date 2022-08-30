@@ -90,6 +90,7 @@ export class addNodeComponent implements OnInit {
                     nextComponentId: nodeDestinationId,
                     position: newPosition,
                     type,
+                    title,
                 };
 
                 const nodeId = await this.pipelineBoardService.addNode(addNodeService);
@@ -113,12 +114,14 @@ export class addNodeComponent implements OnInit {
 
         // // TODO Connect to service
 
+        console.log(this.pipelineBoardId);
         const addNodeService: AddNodeServiceModel = {
             pipelineID: this.pipelineBoardId,
             previousComponentId: this.nodeData.beforeId,
             nextComponentId: this.nodeData.afterId,
             position: newPosition,
             type,
+            title,
         };
 
         const nodeId = await this.pipelineBoardService.addNode(addNodeService);

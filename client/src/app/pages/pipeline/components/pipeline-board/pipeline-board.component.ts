@@ -77,7 +77,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     templateUrl: './pipeline-board.component.html',
     styleUrls: ['./pipeline-board.component.scss'],
 })
-export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-86)',
@@ -105,19 +105,13 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         public boardService: PipelineBoardService
     ) {}
 
-    public ngOnInit(): void {
-        // this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
-        // console.log(this.boardService.allNode);
-        // this.pipelineNodeDatas = this.boardService.allNode;
-    }
-
     public async ngAfterViewInit(): Promise<void> {
+        this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
         this.pipelineNodeDatas = await this.boardService.getAllNode();
-        console.log(this.pipelineNodeDatas);
+        this.changeDetectorRef.detectChanges();
         const leaderLineInit = (): void => {
-            const nodeComponentLength = this.pipelineNodeDatas.length;
             this.pipelineNodeDatas.forEach((node, index) => {
-                if (index === nodeComponentLength - 1) return;
+                if (node.processesInfoType === ProcessType.csv_loader) return;
                 this.connectLeaderLineBetweenTwoElementById(node.id, node.afterId);
             });
         };
