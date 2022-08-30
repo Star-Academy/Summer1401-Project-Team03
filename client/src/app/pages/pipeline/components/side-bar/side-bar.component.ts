@@ -22,8 +22,13 @@ export class SideBarComponent implements OnInit, OnDestroy {
                 return;
             }
 
-            const typeConfigs = PROCESS[this.boardService.selectedNode.processesInfoType].paramethers;
-            this.configs = Object.keys(typeConfigs).map((param) => ({...typeConfigs[param], value: value[param]}));
+            const process: ProcessType = (<any>ProcessType)[this.boardService.selectedNode.processesInfoType];
+
+            const typeConfigs = PROCESS[process].paramethers;
+            this.configs = Object.keys(typeConfigs).map((param) => ({
+                ...typeConfigs[param],
+                value: value[param] || '',
+            }));
         });
     }
 

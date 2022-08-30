@@ -10,71 +10,10 @@ export interface ProcessSchema {
 }
 
 export type ProcessInfo = {
-    [key in string]: ProcessSchema;
+    [key in ProcessType]: ProcessSchema;
 };
 
 export const PROCESS: ProcessInfo = {
-    source: {
-        id: 0,
-        title: 'source',
-        icon: 'source',
-        paramethers: {},
-    },
-    data_sampling: {
-        id: 0,
-        title: 'data_sampling',
-        icon: 'join',
-        paramethers: {},
-    },
-    destination: {
-        id: 0,
-        title: 'destination',
-        icon: 'source',
-        paramethers: {},
-    },
-    csv_loader: {
-        id: 0,
-        title: 'destination',
-        icon: 'source',
-        paramethers: {},
-    },
-    csv_extractor: {
-        id: 0,
-        title: 'source',
-        icon: 'source',
-        paramethers: {},
-    },
-    join: {
-        id: 0,
-        title: 'join',
-        icon: 'join',
-        paramethers: {
-            dataset: {
-                label: 'dataset',
-                type: ItemType.SELECT,
-                options: [],
-                value: '',
-            },
-        },
-    },
-    replicate: {
-        id: 0,
-        title: 'replicate',
-        icon: 'join',
-        paramethers: {},
-    },
-    field_remove: {
-        id: 0,
-        title: 'remove field',
-        icon: 'fieldRemove',
-        paramethers: {},
-    },
-    field_rename: {
-        id: 0,
-        title: 'rename field',
-        icon: 'fieldRename',
-        paramethers: {},
-    },
     filter: {
         id: 0,
         title: 'filter',
@@ -122,6 +61,92 @@ export const PROCESS: ProcessInfo = {
                 value: '',
             },
         },
+    },
+    aggregate: {
+        id: 1,
+        title: 'aggregation',
+        icon: 'aggregate',
+        paramethers: {
+            fields_to_aggregate: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+            aggregate_functions: {
+                type: ItemType.SELECT,
+                label: 'function',
+                options: [],
+                value: '',
+            },
+        },
+    },
+    field_remover: {
+        id: 3,
+        title: 'remove field',
+        icon: 'fieldRemove',
+        paramethers: {},
+    },
+    field_renamer: {
+        id: 4,
+        title: 'rename field',
+        icon: 'fieldRename',
+        paramethers: {},
+    },
+    data_sampling: {
+        id: 0,
+        title: 'data sampling',
+        icon: 'data_sampling',
+        paramethers: {},
+    },
+    field_selector: {
+        id: 0,
+        title: 'field selector',
+        icon: 'field_selector',
+        paramethers: {},
+    },
+    math: {id: 0, title: 'math', icon: 'math', paramethers: {}},
+    csv_loader: {
+        id: 0,
+        title: 'source',
+        icon: 'source',
+        paramethers: {},
+    },
+    csv_extractor: {
+        id: 0,
+        title: 'destination',
+        icon: 'source',
+        paramethers: {},
+    },
+    json_loader: {
+        id: 0,
+        title: 'source',
+        icon: 'source',
+        paramethers: {},
+    },
+    json_extractor: {
+        id: 0,
+        title: 'destination',
+        icon: 'source',
+        paramethers: {},
+    },
+    join: {
+        id: 0,
+        title: 'join',
+        icon: 'join',
+        paramethers: {
+            dataset: {
+                label: 'dataset',
+                type: ItemType.SELECT,
+                options: [],
+                value: '',
+            },
+        },
+    },
+    replicate: {
+        id: 0,
+        title: 'replicate',
+        icon: 'join',
+        paramethers: {},
     },
     hash: {
         id: 0,

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
-import {PROCESS, ProcessInfo} from 'src/app/data/Processes.data';
+import {PROCESS, ProcessInfo, ProcessSchema} from 'src/app/data/Processes.data';
 import {customProcessType, ProcessType} from 'src/app/enums/ProcessType.enum';
 import {AddNodeServiceModel, NodeAddInfoModel, PipelineNodeModel} from '../../../../../../models/pipeline-node.model';
 import {PipelineBoardService} from '../../../../../../services/pipeline-board.service';
@@ -22,7 +22,7 @@ export class addNodeComponent implements OnInit {
     public nodeData!: NodeAddInfoModel;
     public pipelineBoardId!: number;
     public nodeTitle: string = 'new node';
-    public customProcessType: string[] = [];
+    public customProcessType: {[key in string]: ProcessSchema} = {};
 
     public constructor(private pipelineBoardService: PipelineBoardService) {}
 
@@ -30,10 +30,10 @@ export class addNodeComponent implements OnInit {
         this.customProcessType = this.customProcessTypeFunction();
     }
 
-    private customProcessTypeFunction(): string[] {
-        const keys = Object.values(customProcessType);
-        console.log(keys);
-        return keys.map((type) => type as string);
+    private customProcessTypeFunction(): any {
+        return Object.entries(PROCESS)
+            .filter(([key, value]) => Object.values(customProcessType).includes((<any>customProcessType)[key]))
+            .reduce((prev, curr) => ({...prev, [curr[0]]: curr[1]}), {});
     }
 
     public openModal(
@@ -56,7 +56,7 @@ export class addNodeComponent implements OnInit {
 
         const title = this.nodeTitle;
         let newPosition = {x: this.nodeData.position.x + ADDITIONAL_LEFT, y: this.nodeData.position.y};
-        if (type === customProcessType.REPLICATE) {
+        if (type === customProcessType.replicate) {
             newPosition = {x: newPosition.x + ADDITIONAL_LEFT, y: this.nodeData.position.y + ADDITIONAL_BOTTOM};
 
             const addNodeDestinationService: AddNodeServiceModel = {
@@ -64,7 +64,7 @@ export class addNodeComponent implements OnInit {
                 previousComponentId: this.nodeData.beforeId,
                 nextComponentId: this.nodeData.afterId,
                 position: newPosition,
-                type: ProcessType.DESTINATION,
+                type: ProcessType.csv_loader, //TODO Edit
                 title,
             };
 
@@ -73,7 +73,7 @@ export class addNodeComponent implements OnInit {
                 const newNodeDestination: PipelineNodeModel = {
                     id: nodeDestinationId,
                     title: 'target',
-                    processesInfoType: ProcessType.DESTINATION,
+                    processesInfoType: ProcessType.csv_loader, //TODO Edit
                     position: newPosition,
                     openedSettingModal: false,
                     afterId: -1,
@@ -99,7 +99,7 @@ export class addNodeComponent implements OnInit {
                     const newNodeComponent: PipelineNodeModel = {
                         id: nodeId,
                         title,
-                        processesInfoType: type,
+                        processesInfoType: (<any>ProcessType)[type],
                         position: newPosition,
                         openedSettingModal: false,
                         afterId: nodeDestinationId,
@@ -130,7 +130,7 @@ export class addNodeComponent implements OnInit {
             const newNodeComponent: PipelineNodeModel = {
                 id: nodeId,
                 title,
-                processesInfoType: type,
+                processesInfoType: (<any>ProcessType)[type],
                 position: newPosition,
                 openedSettingModal: false,
                 afterId: this.nodeData.afterId,

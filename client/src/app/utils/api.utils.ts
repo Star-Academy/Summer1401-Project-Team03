@@ -15,8 +15,8 @@ export const PIPELINE_ALL = PIPELINE_SERVICE + '/getPipelinesInformation';
 export const ADD_PIPELINE_NODE = PIPELINE_SERVICE + '/AddComponent';
 export const ADD_PIPELINE_CHANGE_POSITION = PIPELINE_SERVICE + '/ChangeComponentPosition';
 export const PIPELINE_ONE = PIPELINE_SERVICE + '/getPipelineInformation';
-export const PIPELINE_NODE_CONFIG = PIPELINE_SERVICE + '/';
-export const PIPELINE_SET_CONFIG = PIPELINE_SERVICE + '/';
+export const PIPELINE_NODE_CONFIG = PIPELINE_SERVICE + '/GetComponent';
+export const PIPELINE_SET_CONFIG = PIPELINE_SERVICE + '/SetComponentConfig';
 
 export const POST_INIT = {
     method: 'post',
