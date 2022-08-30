@@ -1,6 +1,7 @@
 using System.Data.Common;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using DefaultNamespace;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
@@ -16,16 +17,10 @@ namespace server.controllers;
 [Route("[controller]/[Action]")]
 public class PipelineController : ControllerBase
 {
-    private static readonly Dictionary<int, Pipeline> IdToPipeline = new();
-
-    public PipelineController()
+    private static Dictionary<int, Pipeline> IdToPipeline = new();
+    public PipelineController(PipelineService pipelineService)
     {
-        var path = PathGenerator.GetPipelineDirectory();
-        foreach (var filePath in Directory.GetFiles(path))
-        {
-            var information = file.FileOperation.Instance.ReadPipeline(filePath);
-            IdToPipeline[information.Id] = new Pipeline(information);
-        }
+        IdToPipeline = pipelineService.IdToPipeline;
     }
 
     [EnableCors("CorsPolicy")]
