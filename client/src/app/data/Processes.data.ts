@@ -12,43 +12,44 @@ export type ProcessInfo = {
 };
 
 export const PROCESS: ProcessInfo = {
-    SOURCE: {
+    source: {
         title: 'source',
         icon: 'source',
         items: [],
     },
-    DESTINATION: {
+    destination: {
         title: 'destination',
         icon: 'source',
         items: [],
     },
-    JOIN: {
+    join: {
         title: 'join',
         icon: 'join',
         items: [],
     },
-    REPLICATE: {
+    replicate: {
         title: 'replicate',
         icon: 'join',
         items: [],
     },
-    FIELD_REMOVE: {
+    field_remove: {
         title: 'remove field',
         icon: 'fieldRemove',
         items: [],
     },
-    FIELD_RENAME: {
+    field_rename: {
         title: 'rename field',
         icon: 'fieldRename',
         items: [],
     },
-    FILTER: {
+    filter: {
         title: 'filter',
         icon: 'filter',
         items: [
             {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
+                field: 'fields',
                 value: '',
             },
             {
@@ -80,12 +81,63 @@ export const PROCESS: ProcessInfo = {
                     },
                 ],
                 label: 'condition',
-                value: '',
+                field: 'condition',
+                value: '==',
             },
             {
                 type: ItemType.TEXT_INPUT,
                 label: 'value',
+                field: 'value',
                 value: '',
+            },
+        ],
+    },
+    hash: {
+        title: 'data hashing',
+        icon: 'hash',
+        items: [
+            {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                field: 'field to remove',
+                value: '',
+            },
+        ],
+    },
+
+    type_converter: {
+        title: 'type converter',
+        icon: 'typeConverter',
+        items: [
+            {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                field: 'fields',
+                value: '',
+            },
+            {
+                type: ItemType.DATA_LIST,
+                label: 'type',
+                field: 'types',
+                options: [
+                    {
+                        value: 'string',
+                        title: 'string',
+                    },
+                    {
+                        value: 'date',
+                        title: 'date',
+                    },
+                    {
+                        value: 'int',
+                        title: 'int',
+                    },
+                    {
+                        value: 'float',
+                        title: 'float',
+                    },
+                ],
+                value: 'int',
             },
         ],
     },
