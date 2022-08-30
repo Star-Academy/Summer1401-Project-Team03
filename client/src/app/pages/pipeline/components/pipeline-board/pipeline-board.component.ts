@@ -208,11 +208,16 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
 
         // Create new Connection
         this.connectLeaderLineBetweenTwoElementById(beforeId, item.id);
+        if (item.processesInfoType === ProcessType.DESTINATION) return undefined;
         this.connectLeaderLineBetweenTwoElementById(item.id, afterId);
 
         // Remove line and connection between before and after new node;
         this.removeLeaderlineBetweenTwoNodeById(beforeId, afterId);
 
+        if (item.processesInfoType === ProcessType.REPLICATE) {
+            this.changeBeforeIdById(afterId, item.id);
+            return undefined;
+        }
         // Update beforeId,afterId, node component
         this.changeAfterIdById(beforeId, item.id);
         this.changeBeforeIdById(afterId, item.id);
