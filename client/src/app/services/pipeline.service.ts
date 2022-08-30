@@ -13,13 +13,14 @@ export class PipelineService {
         this.getAllPiplelines();
     }
 
-    public async createPipeline(data: NewPipeline): Promise<string> {
+    public async createPipeline(data: NewPipeline): Promise<number | null> {
         const url = new URL(PIPELINE_CREATE);
         Object.keys(data).forEach((key) => url.searchParams.append(key, data[key as keyof NewPipeline]));
 
-        const response = await this.apiService.post<string>(url.toString(), {});
+        const response = await this.apiService.post<number>(url.toString(), {});
+        console.log(response);
 
-        return response ?? '';
+        return response ?? null;
     }
 
     public async getAllPiplelines(): Promise<void> {

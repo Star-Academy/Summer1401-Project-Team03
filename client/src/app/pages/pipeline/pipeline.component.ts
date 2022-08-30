@@ -16,8 +16,8 @@ export class PipelineComponent implements OnInit {
 
     public ngOnInit(): void {
         this.route.params.subscribe(async (params: Params) => {
-            // this.boardService.getAllNode(params.id);
             this.boardService.selectedPipelineBoardId = params.id;
+            this.boardService.getAllNode();
         });
     }
 }
