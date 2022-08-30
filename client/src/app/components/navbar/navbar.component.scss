@@ -39,6 +39,8 @@
             color: var(--color-purple-86);
 
             transition: transform 0.3s ease;
+
+            cursor: pointer;
         }
 
         &.shrink {
