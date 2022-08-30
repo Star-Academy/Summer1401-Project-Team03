@@ -48,6 +48,8 @@ public static class Extensions
             "csv_extractor" => ComponentType.CSVExtractor,
             "json_loader" => ComponentType.JSONLoader,
             "json_extractor" => ComponentType.JSONExtractor,
+            "replicate" => ComponentType.Replicate,
+            "math"=> ComponentType.Math,
             _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
         };
     }
@@ -69,6 +71,8 @@ public static class Extensions
             ComponentType.CSVExtractor => "csv_extractor",
             ComponentType.JSONLoader => "json_loader",
             ComponentType.JSONExtractor => "json_extractor",
+            ComponentType.Replicate => "replicate",
+            ComponentType.Math => "math",
             _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
         };
     }

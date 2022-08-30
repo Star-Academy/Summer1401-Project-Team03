@@ -4,15 +4,15 @@ namespace server.Components.Transformers;
 
 public class Math : Transformer
 {
-    private const string FieldsToCalculate = "fields_to_calculate";
-    private const string ShouldCreateNewColumn = "should_create_new_column";
-    private const string Values = "values";
-    private const string  Operators = "operators";
-
     public Math()
     {
         Type = ComponentType.Math;
     }
+    
+    private const string FieldsToCalculate = "fields_to_calculate";
+    private const string ShouldCreateNewColumn = "should_create_new_column";
+    private const string Values = "values";
+    private const string  Operators = "operators";
 
     public override string GetQuery()
     {

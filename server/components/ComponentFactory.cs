@@ -4,6 +4,7 @@ using server.Components.Transformers;
 using server.Enums;
 using server.Information;
 using server.Pipelines;
+using Math = server.Components.Transformers.Math;
 
 namespace server.Components;
 
@@ -29,6 +30,8 @@ public class ComponentFactory
             ComponentType.CSVLoader => new CSVLoader(),
             ComponentType.JSONExtractor => new JSONExtractor(),
             ComponentType.JSONLoader => new JSONLoader(),
+            ComponentType.Math => new Math(),
+            ComponentType.Replicate => new Replicate(),
             _ => throw new Exception()
         };
     }
