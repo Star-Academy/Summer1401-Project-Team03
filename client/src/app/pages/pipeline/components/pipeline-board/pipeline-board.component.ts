@@ -105,8 +105,8 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
     ) {}
 
     public ngOnInit(): void {
-        this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
-        this.pipelineNodeDatas = this.boardService.allNode;
+        // this.pipelineBoardId = this.boardService.selectedPipelineBoardId;
+        // this.pipelineNodeDatas = this.boardService.allNode;
     }
 
     public ngAfterViewInit(): void {
@@ -297,7 +297,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         }
     }
 
-    private isWhatTypeById(id: number, type: ProcessType): boolean {
+    private isWhatTypeById(id: number, type: string): boolean {
         const currentNodeIndex = this.getNodeIndexById(id);
         return this.pipelineNodeDatas[currentNodeIndex].processesInfoType === type ? true : false;
     }

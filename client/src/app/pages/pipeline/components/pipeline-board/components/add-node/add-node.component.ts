@@ -25,9 +25,9 @@ export class addNodeComponent {
 
     public constructor(private pipelineBoardService: PipelineBoardService) {}
 
-    public customProcessType(): customProcessType[] {
+    public customProcessType(): string[] {
         const keys = Object.keys(customProcessType);
-        return keys.map((type) => type as customProcessType);
+        return keys.map((type) => type as string);
     }
 
     public openModal(
@@ -45,7 +45,7 @@ export class addNodeComponent {
         this.modal.openModal();
     }
 
-    public async addNodeHandle(type: customProcessType): Promise<void> {
+    public async addNodeHandle(type: string): Promise<void> {
         this.modal.closeModal();
 
         const title = this.nodeTitle;
@@ -58,7 +58,7 @@ export class addNodeComponent {
                 previousComponentId: this.nodeData.beforeId,
                 nextComponentId: this.nodeData.afterId,
                 position: newPosition,
-                type: customProcessType.DESTINATION,
+                type: ProcessType.DESTINATION,
             };
 
             const nodeDestinationId = await this.pipelineBoardService.addNode(addNodeDestinationService);
@@ -66,7 +66,7 @@ export class addNodeComponent {
                 const newNodeDestination: PipelineNodeModel = {
                     id: nodeDestinationId,
                     title: 'target',
-                    processesInfoType: ProcessType[customProcessType.DESTINATION],
+                    processesInfoType: ProcessType.DESTINATION,
                     position: newPosition,
                     openedSettingModal: false,
                     afterId: -1,

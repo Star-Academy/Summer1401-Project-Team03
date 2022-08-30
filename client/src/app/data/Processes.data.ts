@@ -8,7 +8,7 @@ export interface ProcessSchema {
 }
 
 export type ProcessInfo = {
-    [key in ProcessType]: ProcessSchema;
+    [key in string]: ProcessSchema;
 };
 
 export const PROCESS: ProcessInfo = {

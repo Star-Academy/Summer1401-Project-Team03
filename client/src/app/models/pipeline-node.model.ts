@@ -38,7 +38,7 @@ export interface AddNodeServiceModel {
     pipelineID: number;
     previousComponentId: number;
     nextComponentId: number;
-    type: customProcessType;
+    type: string;
     position: {x: number; y: number};
 }
 
