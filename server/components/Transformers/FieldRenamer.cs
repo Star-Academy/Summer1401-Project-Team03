@@ -4,14 +4,13 @@ namespace server.Components.Transformers;
 
 public class FieldRenamer : Transformer
 {
+    private const string FieldsToRename = "fields_to_rename";
+    private const string NewNames = "new_names";
+
     public FieldRenamer()
     {
         Type = ComponentType.FieldRenamer;
     }
-
-
-    private const string FieldsToRename = "fields_to_rename";
-    private const string NewNames = "new_names";
 
     public override string GetQuery()
     {

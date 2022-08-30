@@ -2,9 +2,8 @@
 
 public abstract class Loader : Component
 {
-
     protected const string FilePath = "file_path";
-    
+
     public override string GetQuery()
     {
         Load();

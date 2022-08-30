@@ -49,7 +49,7 @@ public static class Extensions
             "json_loader" => ComponentType.JSONLoader,
             "json_extractor" => ComponentType.JSONExtractor,
             "replicate" => ComponentType.Replicate,
-            "math"=> ComponentType.Math,
+            "math" => ComponentType.Math,
             _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
         };
     }
@@ -76,52 +76,54 @@ public static class Extensions
             _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
         };
     }
-    
+
     public static MathOperator GetOperatorType(this string operatorType)
-        =>
-            operatorType switch
-            {
-                "log"  => MathOperator.Log,
-                "sin" => MathOperator.Sin,
-                "cos" => MathOperator.Cos,
-                "sqrt" => MathOperator.SquareRoot,
-                "tan" => MathOperator.Tan,
-                "add" => MathOperator.Add,
-                "subtract" => MathOperator.Subtract,
-                "multiply" => MathOperator.Multiply,
-                "divide" => MathOperator.Divide,
-                "abs" => MathOperator.Abs,
-                "exp" => MathOperator.Exponential,
-                "power" => MathOperator.Power,
-                "negate" => MathOperator.Negate,
-                "mod" => MathOperator.Mod,
+    {
+        return operatorType switch
+        {
+            "log" => MathOperator.Log,
+            "sin" => MathOperator.Sin,
+            "cos" => MathOperator.Cos,
+            "sqrt" => MathOperator.SquareRoot,
+            "tan" => MathOperator.Tan,
+            "add" => MathOperator.Add,
+            "subtract" => MathOperator.Subtract,
+            "multiply" => MathOperator.Multiply,
+            "divide" => MathOperator.Divide,
+            "abs" => MathOperator.Abs,
+            "exp" => MathOperator.Exponential,
+            "power" => MathOperator.Power,
+            "negate" => MathOperator.Negate,
+            "mod" => MathOperator.Mod,
 
-                "max" => MathOperator.Max,
-                "min" => MathOperator.Min,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-    
+            "max" => MathOperator.Max,
+            "min" => MathOperator.Min,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
     public static string GetOperatorString(this MathOperator @operator)
-        =>
-            @operator switch
-            {
-                MathOperator.Log => "log",
-                MathOperator.Sin => "sin",
-                MathOperator.Cos => "cos",
-                MathOperator.SquareRoot => "sqrt",
-                MathOperator.Tan => "tan",
-                MathOperator.Add => "add",
-                MathOperator.Subtract => "subtract",
-                MathOperator.Multiply => "multiply",
-                MathOperator.Divide => "divide",
-                MathOperator.Abs => "abs",
-                MathOperator.Exponential => "exp",
-                MathOperator.Power => "power",
-                MathOperator.Negate => "negate",
-                MathOperator.Mod => "mod",
+    {
+        return @operator switch
+        {
+            MathOperator.Log => "log",
+            MathOperator.Sin => "sin",
+            MathOperator.Cos => "cos",
+            MathOperator.SquareRoot => "sqrt",
+            MathOperator.Tan => "tan",
+            MathOperator.Add => "add",
+            MathOperator.Subtract => "subtract",
+            MathOperator.Multiply => "multiply",
+            MathOperator.Divide => "divide",
+            MathOperator.Abs => "abs",
+            MathOperator.Exponential => "exp",
+            MathOperator.Power => "power",
+            MathOperator.Negate => "negate",
+            MathOperator.Mod => "mod",
 
-                MathOperator.Max => "max",
-                MathOperator.Min => "min",
-                _ => throw new ArgumentOutOfRangeException()
-            };
+            MathOperator.Max => "max",
+            MathOperator.Min => "min",
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
 }

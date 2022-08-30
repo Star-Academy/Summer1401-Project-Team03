@@ -2,8 +2,8 @@
 
 public abstract class Extractor : Component
 {
-    protected string _tableName;
     protected const string FilePath = "file_path";
+    protected string _tableName;
 
     public override string GetQuery()
     {

@@ -4,12 +4,12 @@ namespace server.Components.Transformers;
 
 public class FieldSelector : Transformer
 {
+    private const string Fields = "fields";
+
     public FieldSelector()
     {
         Type = ComponentType.FieldSelector;
     }
-
-    private const string Fields = "fields";
 
     public override string GetQuery()
     {

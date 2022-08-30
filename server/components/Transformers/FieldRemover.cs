@@ -5,7 +5,7 @@ namespace server.Components.Transformers;
 public class FieldRemover : Transformer
 {
     private const string Fields = "fields";
-    
+
     public FieldRemover()
     {
         Type = ComponentType.FieldRemover;

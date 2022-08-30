@@ -1,19 +1,16 @@
 ﻿using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using server.Databases;
 using server.file;
 using server.Information;
 using FileOperation = System.IO.File;
 
-namespace server.Controller;
+namespace server.controllers;
 
 [ApiController]
 [Route("[controller]/[Action]")]
 public class DataInventoryController : ControllerBase
 {
-    private PostgresDatabase _database;
-
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public async Task<IActionResult> Import(IFormFile file)
@@ -29,17 +26,17 @@ public class DataInventoryController : ControllerBase
                 var fileName = match.Groups[1].Value;
                 var format = match.Groups[2].Value;
 
-                var fileID = IDCounterHandler.LoadFileID();
+                var fileId = IDCounterHandler.LoadFileID();
 
-                var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "imports");
+                var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "imports");
 
-                IDCounterHandler.SaveFileID(fileID + 1);
+                IDCounterHandler.SaveFileID(fileId + 1);
                 using (var stream = FileOperation.Create(filePath))
                 {
                     await file.CopyToAsync(stream);
                 }
 
-                return Ok(fileID);
+                return Ok(fileId);
             }
 
             return BadRequest("The sent file is empty!");
@@ -52,12 +49,13 @@ public class DataInventoryController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public IActionResult Export(int fileID, string category)
+    public async Task<ActionResult> Export(int fileId, string category)
     {
         try
         {
-            var filePath = FileSearcher.Search(fileID, category);
-            return new FileStreamResult(FileOperation.Open(filePath, FileMode.Open), "text/plain");
+            var filePath = FileSearcher.Search(fileId, category);
+            var bytes = await FileOperation.ReadAllBytesAsync(filePath);
+            return File(bytes, "text/plain", Path.GetFileName(filePath));
         }
         catch (Exception e)
         {
@@ -85,11 +83,11 @@ public class DataInventoryController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpDelete]
-    public IActionResult Delete(int fileID, string category)
+    public IActionResult Delete(int fileId, string category)
     {
         try
         {
-            var filePath = FileSearcher.Search(fileID, category);
+            var filePath = FileSearcher.Search(fileId, category);
             FileOperation.Delete(filePath);
             return Ok();
         }
@@ -101,16 +99,16 @@ public class DataInventoryController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpPut]
-    public IActionResult Rename(int fileID, string category, string newName)
+    public IActionResult Rename(int fileId, string category, string newName)
     {
         try
         {
-            var filePath = FileSearcher.Search(fileID, category);
+            var filePath = FileSearcher.Search(fileId, category);
             var fileInfo = new FileInfo(filePath);
 
             var regex = new Regex(".*_[0-9]*\\.(csv|json)");
             var fileType = regex.Match(fileInfo.Name).Groups[1].Value;
-            var newPath = PathGenerator.GenerateDataPath(newName, fileType, fileID, category);
+            var newPath = PathGenerator.GenerateDataPath(newName, fileType, fileId, category);
             fileInfo.MoveTo(newPath);
             return Ok();
         }

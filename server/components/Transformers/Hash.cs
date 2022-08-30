@@ -6,23 +6,21 @@ public class Hash : Transformer
 {
     private const string HashFunction = "hash";
 
+    private const string FieldsToHash = "fields_to_hash";
+
     public Hash()
     {
         Type = ComponentType.Hash;
     }
 
-    private const string FieldsToHash = "fields_to_hash";
-
     public override string GetQuery()
     {
         var fieldsToHash = Parameters[FieldsToHash];
         var fieldsToSelect = GetKeys().Except(fieldsToHash).ToList();
-        for (int i = 0; i < fieldsToHash.Count; i++)
-        {
+        for (var i = 0; i < fieldsToHash.Count; i++)
             fieldsToSelect.Add(
                 Pipeline.QueryBuilder.Alias(Pipeline.QueryBuilder.Function(HashFunction, fieldsToHash[i]),
                     fieldsToHash[i]));
-        }
 
         return Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(),
             Pipeline.QueryBuilder.NewAlias());

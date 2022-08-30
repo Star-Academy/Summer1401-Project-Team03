@@ -4,14 +4,14 @@ namespace server.Components.Transformers;
 
 public class TypeConverter : Transformer
 {
+    private const string Fields = "fields";
+    private const string Types = "types";
+
     public TypeConverter()
     {
         Type = ComponentType.TypeConverter;
     }
 
-    private const string Fields = "fields";
-    private const string Types = "types";
-    
     public override string GetQuery()
     {
         var fields = Parameters[Fields];

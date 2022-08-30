@@ -4,12 +4,12 @@ namespace server.Components.Transformers;
 
 public class DataSampling : Transformer
 {
+    private const string Number = "number";
+
     public DataSampling()
     {
         Type = ComponentType.DataSampling;
     }
-
-    private const string Number = "number";
 
     public override string GetQuery()
     {
