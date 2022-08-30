@@ -1,4 +1,4 @@
-import {ProcessType, customProcessType} from '../enums/ProcessType.enum';
+import {ProcessType} from '../enums/ProcessType.enum';
 import {ItemType} from '../enums/ItemType.enum';
 import {Paramether} from '../models/Paramether.interface';
 
@@ -30,7 +30,14 @@ export const PROCESS: ProcessInfo = {
         id: 0,
         title: 'join',
         icon: 'join',
-        paramethers: {},
+        paramethers: {
+            dataset: {
+                label: 'dataset',
+                type: ItemType.SELECT,
+                options: [],
+                value: '',
+            },
+        },
     },
     replicate: {
         id: 0,
@@ -121,7 +128,7 @@ export const PROCESS: ProcessInfo = {
                 value: '',
             },
             types: {
-                type: ItemType.DATA_LIST,
+                type: ItemType.SELECT,
                 label: 'type',
                 options: [
                     {

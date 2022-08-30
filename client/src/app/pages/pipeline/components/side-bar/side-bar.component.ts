@@ -10,6 +10,7 @@ import {ProcessType} from 'src/app/enums/ProcessType.enum';
     styleUrls: ['./side-bar.component.scss'],
 })
 export class SideBarComponent implements OnInit, OnDestroy {
+    public itemTypes = ItemType;
     public configs: any | null = null;
 
     public constructor(public boardService: PipelineBoardService) {}
@@ -21,7 +22,8 @@ export class SideBarComponent implements OnInit, OnDestroy {
                 return;
             }
 
-            this.configs = PROCESS[this.boardService.selectedNode.type];
+            const typeConfigs = PROCESS[this.boardService.selectedNode.processesInfoType].paramethers;
+            this.configs = Object.keys(typeConfigs).map((param) => ({...typeConfigs[param], value: value[param]}));
         });
     }
 

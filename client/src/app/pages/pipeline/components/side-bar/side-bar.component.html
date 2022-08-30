@@ -2,26 +2,26 @@
     <ng-container *ngIf="boardService.selectedNode; else emptyBar">
         <h2>Config</h2>
         <div class="filters">
-            <ng-container
-                *ngIF="configs"
-                *ngFor="let config of processes[boardService.selectedNode.processesInfoType].items"
-                *ngSwitch="config.type"
-            >
-                <app-text-input
-                    *ngSwitchCase="configTypes.TEXT_INPUT"
-                    [label]="config.label"
-                    [(value)]="configs[config.label]"
-                ></app-text-input>
-                <app-switch
-                    *ngSwitchCase="configTypes.SWITCH"
-                    [label]="config.label"
-                    [(value)]="configs[config.label]"
-                ></app-switch>
-                <app-data-list
-                    *ngSwitchCase="configTypes.DATA_LIST"
-                    [label]="config.label"
-                    [(value)]="configs[config.label]"
-                ></app-data-list>
+            <ng-container *ngIF="configs">
+                <ng-container *ngFor="let config of configs">
+                    <ng-container *ngSwitch="config.type">
+                        <app-text-input
+                            *ngSwitchCase="itemTypes.TEXT_INPUT"
+                            [label]="config.label"
+                            [(value)]="configs[config.label]"
+                        ></app-text-input>
+                        <app-switch
+                            *ngSwitchCase="itemTypes.SWITCH"
+                            [label]="config.label"
+                            [(value)]="configs[config.label]"
+                        ></app-switch>
+                        <app-data-list
+                            *ngSwitchCase="itemTypes.SELECT"
+                            [label]="config.label"
+                            [(value)]="configs[config.label]"
+                        ></app-data-list>
+                    </ng-container>
+                </ng-container>
             </ng-container>
         </div>
         <app-button>save</app-button>
