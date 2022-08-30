@@ -51,6 +51,7 @@ public static class Extensions
             "replicate" => ComponentType.Replicate,
             "math" => ComponentType.Math,
             "data_cleanser" => ComponentType.DataCleanser,
+            "split" => ComponentType.Split,
             _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
         };
     }
@@ -75,6 +76,7 @@ public static class Extensions
             ComponentType.Replicate => "replicate",
             ComponentType.Math => "math",
             ComponentType.DataCleanser => "data_cleanser",
+            ComponentType.Split => "split",
             _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
         };
     }

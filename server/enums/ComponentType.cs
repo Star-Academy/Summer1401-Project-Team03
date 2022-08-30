@@ -17,5 +17,6 @@ public enum ComponentType
     JSONExtractor,
     JSONLoader,
     Math, 
-    DataCleanser
+    DataCleanser,
+    Split
 }
