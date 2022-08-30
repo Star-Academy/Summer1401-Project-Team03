@@ -64,7 +64,7 @@ export class addNodeComponent implements OnInit {
                 previousComponentId: this.nodeData.beforeId,
                 nextComponentId: this.nodeData.afterId,
                 position: newPosition,
-                type: ProcessType.DESTINATION,
+                type: ProcessType.csv_loader, //TODO Edit
             };
 
             const nodeDestinationId = await this.pipelineBoardService.addNode(addNodeDestinationService);
@@ -72,7 +72,7 @@ export class addNodeComponent implements OnInit {
                 const newNodeDestination: PipelineNodeModel = {
                     id: nodeDestinationId,
                     title: 'target',
-                    processesInfoType: ProcessType.DESTINATION,
+                    processesInfoType: ProcessType.csv_loader, //TODO Edit
                     position: newPosition,
                     openedSettingModal: false,
                     afterId: -1,
@@ -97,7 +97,7 @@ export class addNodeComponent implements OnInit {
                     const newNodeComponent: PipelineNodeModel = {
                         id: nodeId,
                         title,
-                        processesInfoType: type,
+                        processesInfoType: (<any>ProcessType)[type],
                         position: newPosition,
                         openedSettingModal: false,
                         afterId: nodeDestinationId,
@@ -126,7 +126,7 @@ export class addNodeComponent implements OnInit {
             const newNodeComponent: PipelineNodeModel = {
                 id: nodeId,
                 title,
-                processesInfoType: type,
+                processesInfoType: (<any>ProcessType)[type],
                 position: newPosition,
                 openedSettingModal: false,
                 afterId: this.nodeData.afterId,
