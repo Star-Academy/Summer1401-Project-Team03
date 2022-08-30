@@ -12,7 +12,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 1,
         title: 'covid dataset',
-        processesInfoType: ProcessType.SOURCE,
+        processesInfoType: ProcessType.csv_extractor,
         position: {x: 100, y: 100},
         openedSettingModal: false,
         beforeId: 0,
@@ -23,7 +23,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 3,
         title: 'location filtered',
-        processesInfoType: ProcessType.FILTER,
+        processesInfoType: ProcessType.filter,
         position: {x: 100, y: 300},
         openedSettingModal: false,
         beforeId: 1,
@@ -33,7 +33,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 4,
         title: 'location renamed',
-        processesInfoType: ProcessType.FIELD_RENAME,
+        processesInfoType: ProcessType.field_renamer,
         position: {x: 400, y: 300},
         openedSettingModal: false,
         beforeId: 3,
@@ -43,7 +43,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 5,
         title: 'location removed',
-        processesInfoType: ProcessType.FIELD_REMOVE,
+        processesInfoType: ProcessType.field_remover,
         position: {x: 400, y: 100},
         openedSettingModal: false,
         beforeId: 4,
@@ -53,7 +53,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 6,
         title: 'iran filtered',
-        processesInfoType: ProcessType.FILTER,
+        processesInfoType: ProcessType.filter,
         position: {x: 700, y: 300},
         openedSettingModal: false,
         beforeId: 5,
@@ -63,7 +63,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 7,
         title: 'covid',
-        processesInfoType: ProcessType.DESTINATION,
+        processesInfoType: ProcessType.csv_loader,
         position: {x: 700, y: 100},
         openedSettingModal: false,
         beforeId: 6,
@@ -202,7 +202,11 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         const afterId = item.afterId;
 
         // is destination
-        if (this.isWhatTypeById(beforeId, ProcessType.DESTINATION)) {
+        if (
+            [ProcessType.csv_loader, ProcessType.json_loader].some(
+                (type: ProcessType) => type == item.processesInfoType
+            )
+        ) {
             return undefined;
         }
 
@@ -212,13 +216,18 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
 
         // Create new Connection
         this.connectLeaderLineBetweenTwoElementById(beforeId, item.id);
-        if (item.processesInfoType === ProcessType.DESTINATION) return undefined;
+        if (
+            [ProcessType.json_loader, ProcessType.csv_loader].some(
+                (type: ProcessType) => type === item.processesInfoType
+            )
+        )
+            return undefined;
         this.connectLeaderLineBetweenTwoElementById(item.id, afterId);
 
         // Remove line and connection between before and after new node;
         this.removeLeaderlineBetweenTwoNodeById(beforeId, afterId);
 
-        if (item.processesInfoType === ProcessType.REPLICATE) {
+        if (item.processesInfoType === ProcessType.replicate) {
             this.changeBeforeIdById(afterId, item.id);
             return undefined;
         }
@@ -246,7 +255,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         let afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
         const type = node.type;
 
-        if (type === ProcessType.REPLICATE) {
+        if (type === ProcessType.replicate) {
             this.removeAllAfterNodeById(afterId);
             afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
         }
@@ -271,7 +280,14 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         };
 
         // The first or last Node that we don't want remove
-        if (this.isWhatTypeById(id, ProcessType.SOURCE) || this.isWhatTypeById(id, ProcessType.DESTINATION))
+        if (
+            this.isWhatTypeById(id, [
+                ProcessType.csv_extractor,
+                ProcessType.json_extractor,
+                ProcessType.csv_loader,
+                ProcessType.json_loader,
+            ])
+        )
             return undefined;
 
         // Create new connection
@@ -310,7 +326,7 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
     // LeaderLine
     public updateLeaderLine(currentId: number): void | boolean {
         // The last one
-        if (this.isWhatTypeById(currentId, ProcessType.DESTINATION)) {
+        if (this.isWhatTypeById(currentId, [ProcessType.csv_loader, ProcessType.json_loader])) {
             this.updateLeaderLineById(currentId);
         }
 
@@ -319,15 +335,15 @@ export class PipelineBoardComponent implements OnInit, AfterViewInit, OnDestroy 
         this.updateLeaderLineById(currentId);
 
         // // It's not The first one
-        if (!this.isWhatTypeById(currentId, ProcessType.SOURCE)) {
+        if (!this.isWhatTypeById(currentId, [ProcessType.csv_extractor, ProcessType.json_extractor])) {
             console.log(beforeId);
             this.updateLeaderLineById(beforeId);
         }
     }
 
-    private isWhatTypeById(id: number, type: string): boolean {
+    private isWhatTypeById(id: number, types: ProcessType[]): boolean {
         const currentNodeIndex = this.getNodeIndexById(id);
-        return this.pipelineNodeDatas[currentNodeIndex].processesInfoType === type ? true : false;
+        return types.some((type) => type === this.pipelineNodeDatas[currentNodeIndex].processesInfoType);
     }
 
     private updateLeaderLineById(id: number): void {

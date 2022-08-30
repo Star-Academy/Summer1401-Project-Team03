@@ -56,7 +56,7 @@ export class addNodeComponent implements OnInit {
 
         const title = this.nodeTitle;
         let newPosition = {x: this.nodeData.position.x + ADDITIONAL_LEFT, y: this.nodeData.position.y};
-        if (type === customProcessType.REPLICATE) {
+        if (type === customProcessType.Replicate) {
             newPosition = {x: newPosition.x + ADDITIONAL_LEFT, y: this.nodeData.position.y + ADDITIONAL_BOTTOM};
 
             const addNodeDestinationService: AddNodeServiceModel = {

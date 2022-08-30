@@ -10,6 +10,7 @@ import {
 import {ApiService} from './api.service';
 import {PIPELINE_ONE, PIPELINE_NODE_CONFIG, ADD_PIPELINE_NODE, PIPELINE_SET_CONFIG} from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
+import {ProcessType} from '../enums/ProcessType.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -34,18 +35,19 @@ export class PipelineBoardService {
         return [];
     }
 
-    public async getNodeConfig(): Promise<void> {
-        const response = await this.apiService.get<any>(PIPELINE_NODE_CONFIG);
-        this.selectedNodeConfig = response || null;
-        this.selectedNodeConfigRx.next(response || null);
+    public async getNodeConfig(id: number): Promise<void> {
+        const response = await this.apiService.get<any>(PIPELINE_NODE_CONFIG, {
+            pipelineId: this.selectedPipelineBoardId,
+            componentId: id,
+        });
+        this.selectedNodeConfig = response.parameters || null;
+        this.selectedNodeConfigRx.next(this.selectedNodeConfig);
     }
 
     public async setNodeConfig(config: any): Promise<void> {
-        this.selectedNodeConfigRx.next(null);
         const response = await this.apiService.post(PIPELINE_SET_CONFIG, config);
         if (response) {
             this.selectedNodeConfig = config;
-            this.selectedNodeConfigRx.next(config);
         }
     }
 
@@ -84,7 +86,7 @@ export class PipelineBoardService {
                 beforeId: component.previousIds[0],
                 afterId: component.nextIds[0],
                 title: component.title,
-                processesInfoType: component.type,
+                processesInfoType: (<any>ProcessType)[component.type],
                 position: component.position,
                 openedSettingModal: false,
                 leaderlines: [],

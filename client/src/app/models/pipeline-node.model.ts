@@ -5,7 +5,7 @@ export interface PipelineNodeModel {
     beforeId: number;
     afterId: number;
     title: string;
-    processesInfoType: string; //TODO edit
+    processesInfoType: ProcessType; //TODO edit
     position: {x: number; y: number};
     openedSettingModal: boolean;
     leaderlines: LeaderLineModel[];
