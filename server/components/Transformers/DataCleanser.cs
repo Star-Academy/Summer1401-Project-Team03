@@ -27,13 +27,13 @@ public class DataCleanser : Transformer
 
         for (var i = 0; i < Parameters[Fields].Count; i++)
         {
-            keys[keys.IndexOf(Parameters[Fields][i])] = $"COALESCE({Parameters[Fields][i]}, {modifyByType(Parameters[Types][i], Parameters[Values][i])}) AS {Parameters[Fields][i]}";
+            keys[keys.IndexOf(Parameters[Fields][i])] = $"COALESCE({Parameters[Fields][i]}, {ModifyByType(Parameters[Types][i], Parameters[Values][i])}) AS {Parameters[Fields][i]}";
         }
         
         return keys;
     }
 
-    private string modifyByType(string type, string value)
+    private string ModifyByType(string type, string value)
     {
         if (type == "string")
         {
