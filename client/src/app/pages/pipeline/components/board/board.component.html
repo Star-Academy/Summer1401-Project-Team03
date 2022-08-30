@@ -1,10 +1,17 @@
 <div
+    #container
     class="container"
     [style]="{
         '--board-w': boardWidth,
         '--board-h': boardHeight,
         '--grid-size': gridSize
     }"
+    (mousedown)="mouseIsDown = true"
+    (mouseup)="mouseIsDown = false"
+    (keydown.space)="spaceIsDown = true; $event.preventDefault()"
+    (keyup.space)="spaceIsDown = false; $event.preventDefault()"
+    (mousemove)="mouseMoveHandler($event)"
+    tabindex="0"
 >
     <div class="board">
         <ng-content></ng-content>
