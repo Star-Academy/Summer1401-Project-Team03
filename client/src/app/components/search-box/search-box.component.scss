@@ -1,7 +1,7 @@
 .input-box {
     --clr-gray-20: hsl(0deg 0% 20%);
     --color-search-bg: var(--color-white-solid);
-    --color-icon: var(--color-purple-21);
+    --color-icon: var(--color-purple-15);
 
     position: relative;
 
@@ -38,7 +38,7 @@
         font-size: 1.6rem;
 
         &:focus {
-            border-color: var(--color-purple-55);
+            border-color: var(--color-purple-50);
         }
 
         &::placeholder {

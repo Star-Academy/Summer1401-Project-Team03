@@ -16,6 +16,7 @@ import {SettingItemModalComponent} from './components/pipeline-node/components/s
 import {BoardComponent} from './components/board/board.component';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
+import {DataTableModule} from '../../components/data-table/data-table.module';
 
 import {SideBarComponent} from './components/side-bar/side-bar.component';
 import {TextInputModule} from 'src/app/components/text-input/text-input.module';
@@ -47,6 +48,7 @@ import {RemoveNodeComponent} from './components/pipeline-node/components/remove-
         ModalModule,
         NgxDraggabillyModule,
         AngularDraggableModule,
+        DataTableModule,
         TextInputModule,
     ],
 })
