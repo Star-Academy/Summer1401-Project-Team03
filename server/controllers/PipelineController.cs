@@ -29,7 +29,7 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpPost]
-    public ActionResult<int> Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat, string title)
+    public ActionResult<int> Create(string pipelineName, int sourceFileID, string destFileName, string destFileFormat)
     {
         try
         {
@@ -42,7 +42,7 @@ public class PipelineController : ControllerBase
             IDCounterHandler.SavePipelineID(pipelineID + 1);
 
             AddSource(pipeline, sourceFileID, new Position(0, 0));
-            AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4), destFileName);
+            AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4));
 
             pipeline.Connect(1, 2);
 
@@ -104,6 +104,26 @@ public class PipelineController : ControllerBase
         }
     }
 
+    [EnableCors("CosPolicy")]
+    [HttpPut]
+    public IActionResult ChangeComponentTitle(int pipelineID, int componentID, string newTitle)
+    {
+        try
+        {
+            var pipeline = idToPipeline[pipelineID];
+            var component = pipeline.IdToComponent[componentID];
+
+            component.Title = newTitle;
+
+            file.FileOperation.Instance.WritePipeline(pipeline);
+            return Ok();
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
     [EnableCors("CorsPolicy")]
     [HttpPost]
     public IActionResult SetComponentConfig(int pipelineID, int componentID,
@@ -139,13 +159,13 @@ public class PipelineController : ControllerBase
     }
 
 
-    private void AddDestination(Pipeline pipeline, string fileName, string format, Position position, string title)
+    private void AddDestination(Pipeline pipeline, string fileName, string format, Position position)
     {
         var fileID = IDCounterHandler.LoadFileID();
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileID, "exports");
 
         IDCounterHandler.SaveFileID(fileID + 1);
-        var loader = (Loader)new ComponentFactory().CreateComponent(ComponentType.CSVLoader, title);
+        var loader = (Loader)new ComponentFactory().CreateComponent(ComponentType.CSVLoader, fileName);
         loader.Pipeline = pipeline;
         loader.Position = position;
         loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
