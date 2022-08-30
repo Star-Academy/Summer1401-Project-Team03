@@ -17,15 +17,15 @@ export enum ProcessType {
 }
 
 export enum customProcessType {
-    Filter = 'filter',
-    Aggregate = 'aggregate',
-    DataSampling = 'data_sampling',
-    FieldRemover = 'field_remover',
-    FieldRenamer = 'field_renamer',
-    FieldSelector = 'field_selector',
-    Hash = 'hash',
-    TypeConverter = 'type_converter',
-    Join = 'join',
-    Replicate = 'replicate',
-    Math = 'math',
+    filter = 'filter',
+    aggregate = 'aggregate',
+    data_sampling = 'data_sampling',
+    field_remover = 'field_remover',
+    field_renamer = 'field_renamer',
+    field_selector = 'field_selector',
+    hash = 'hash',
+    type_converter = 'type_converter',
+    join = 'join',
+    replicate = 'replicate',
+    math = 'math',
 }
