@@ -8,7 +8,13 @@ import {
     RemoveNodeServiceModel,
 } from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
-import {PIPELINE_ONE, PIPELINE_NODE_CONFIG, ADD_PIPELINE_NODE, PIPELINE_SET_CONFIG} from '../utils/api.utils';
+import {
+    PIPELINE_ONE,
+    PIPELINE_NODE_CONFIG,
+    ADD_PIPELINE_NODE,
+    PIPELINE_SET_CONFIG,
+    ADD_PIPELINE_CHANGE_POSITION,
+} from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
@@ -54,7 +60,8 @@ export class PipelineBoardService {
         const fakeData = {...addNodeInfo, type: 0};
         console.log(fakeData);
         console.log(ADD_PIPELINE_NODE);
-        const response = (await this.apiService.post<number>(ADD_PIPELINE_NODE, fakeData)) || undefined;
+        const response =
+            (await this.apiService.post<number>(ADD_PIPELINE_NODE, {...fakeData}, fakeData.position)) || undefined;
         // const response = this.counter;
         if (response) {
             //return node id
@@ -68,8 +75,13 @@ export class PipelineBoardService {
         // await this.apiService.delete(ADD_PIPELINE_NODE, removeNodeInfo);
     }
 
-    public async changeComponentPosition(cahgneNodePositionInfo: ChangeComponentPositionServiceModel): Promise<void> {
-        // await this.apiService.delete(ADD_PIPELINE_NODE, removeNodeInfo);
+    public async changeComponentPosition(changeNodePositionInfo: ChangeComponentPositionServiceModel): Promise<void> {
+        console.log(changeNodePositionInfo);
+        await this.apiService.put(
+            ADD_PIPELINE_CHANGE_POSITION,
+            {...changeNodePositionInfo},
+            changeNodePositionInfo.position
+        );
     }
 
     //    getSettingNode

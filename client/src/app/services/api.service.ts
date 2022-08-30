@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {POST_INIT, FORM_POST_INIT} from '../utils/api.utils';
+import {POST_INIT, FORM_POST_INIT, PUT_INIT} from '../utils/api.utils';
 
 @Injectable({
     providedIn: 'root',
@@ -29,8 +29,26 @@ export class ApiService {
         return null;
     }
 
-    public async post<T>(url: string, body: any = '', init: Partial<RequestInit> = {}): Promise<T | null> {
-        return await this.fetchData(url, {...POST_INIT, body: JSON.stringify(body), ...init});
+    public async post<T>(
+        url: string,
+        queries: any = {},
+        body: any = '',
+        init: Partial<RequestInit> = {}
+    ): Promise<T | null> {
+        const u = new URL(url);
+        Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
+        return await this.fetchData(u.toString(), {...POST_INIT, body: JSON.stringify(body), ...init});
+    }
+
+    public async put<T>(
+        url: string,
+        queries: any = {},
+        body: any = '',
+        init: Partial<RequestInit> = {}
+    ): Promise<T | null> {
+        const u = new URL(url);
+        Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
+        return await this.fetchData(u.toString(), {...PUT_INIT, body: JSON.stringify(body), ...init});
     }
 
     public async formPost<T>(url: string, body: any = '', init: Partial<RequestInit> = {}): Promise<T | null> {

@@ -115,6 +115,7 @@ export class addNodeComponent implements OnInit {
 
         // // TODO Connect to service
 
+        console.log(this.pipelineBoardId);
         const addNodeService: AddNodeServiceModel = {
             pipelineID: this.pipelineBoardId,
             previousComponentId: this.nodeData.beforeId,
