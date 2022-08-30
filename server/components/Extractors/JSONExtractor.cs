@@ -16,7 +16,7 @@ public class JSONExtractor : Extractor
 
     public override void Extract()
     {
-        var filePath = Parameters["file_path"][0];
+        var filePath = Parameters[FilePath][0];
         var keys = GetKeys();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(_tableName)).Close();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(_tableName, keys)).Close();

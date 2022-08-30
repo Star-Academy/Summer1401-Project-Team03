@@ -11,17 +11,17 @@ public class Hash : Transformer
         Type = ComponentType.Hash;
     }
 
-    private string FieldToHash { get; set; }
-    private bool ShouldCreateNewField { get; set; }
-    private string NewFieldName { get; set; }
+    private const string FieldToHash = "field_to_hash";
+    private const string ShouldCreateNewField = "should_create_new_field";
+    private const string NewFieldName = "new_field_name";
 
 
     public override string GetQuery()
     {
         var newFieldSelectCommand =
-            $"{HashFunction}({Parameters["field_to_hash"][0]}) AS {Parameters["new_field_name"][0]}";
+            $"{HashFunction}({Parameters[FieldToHash][0]}) AS {Parameters[NewFieldName][0]}";
         var keys = GetKeys();
-        keys[keys.IndexOf(Parameters["new_field_name"][0])] = newFieldSelectCommand;
+        keys[keys.IndexOf(Parameters[NewFieldName][0])] = newFieldSelectCommand;
 
         return Pipeline.QueryBuilder.Select(keys, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias());
     }
@@ -30,10 +30,10 @@ public class Hash : Transformer
     {
         var keys = PreviousComponents[0].GetKeys();
 
-        if (bool.Parse(Parameters["should_create_new_field"][0]))
-            keys.Add(Parameters["new_field_name"][0]);
+        if (bool.Parse(Parameters[ShouldCreateNewField][0]))
+            keys.Add(Parameters[NewFieldName][0]);
         else
-            keys[keys.IndexOf(Parameters["field_to_hash"][0])] = Parameters["new_field_name"][0];
+            keys[keys.IndexOf(Parameters[FieldToHash][0])] = Parameters[NewFieldName][0];
 
         return keys;
     }

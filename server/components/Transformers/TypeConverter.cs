@@ -9,10 +9,13 @@ public class TypeConverter : Transformer
         Type = ComponentType.TypeConverter;
     }
 
+    private const string Fields = "fields";
+    private const string Types = "types";
+    
     public override string GetQuery()
     {
-        var fields = Parameters["fields"];
-        var types = Parameters["types"];
+        var fields = Parameters[Fields];
+        var types = Parameters[Types];
         var fieldsToSelect = GetKeys().Except(fields).ToList();
         for (var i = 0; i < fields.Count; i++)
             fieldsToSelect.Add(Pipeline.QueryBuilder.ConvertType(fields[i], types[i]));

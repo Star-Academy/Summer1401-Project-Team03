@@ -6,29 +6,26 @@ public class Aggregate : Transformer
 {
     public Aggregate()
     {
-        FieldsToAggregate = new List<string>();
-        AggregateFunctions = new List<AggregateFunction>();
-        FieldsToGroupBy = new List<string>();
         Type = ComponentType.Aggregate;
     }
 
-    public List<string> FieldsToAggregate { get; set; }
+    private const string FieldsToAggregate = "fields_to_aggregate";
 
-    public List<AggregateFunction> AggregateFunctions { get; set; }
+    private const string AggregateFunctions = "aggregate_functions";
 
-    public List<string> FieldsToGroupBy { get; set; }
+    private const string FieldsToGroupBy = "fields_to_group_by";
 
     public override string GetQuery()
     {
-        var fieldsToSelect = new List<string>(Parameters["fields_to_group_by"]);
-        for (var i = 0; i < Parameters["fields_to_aggregate"].Count; i++)
+        var fieldsToSelect = new List<string>(Parameters[FieldsToGroupBy]);
+        for (var i = 0; i < Parameters[FieldsToAggregate].Count; i++)
         {
-            fieldsToSelect.Add(Pipeline.QueryBuilder.Aggregate(Parameters["fields_to_aggregate"][i],
-                Parameters["aggregate_functions"][i]));
+            fieldsToSelect.Add(Pipeline.QueryBuilder.Aggregate(Parameters[FieldsToAggregate][i],
+                Parameters[AggregateFunctions][i]));
         }
 
         var x =
-            $"{Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.GroupBy(Parameters["fields_to_group_by"])}";
+            $"{Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.GroupBy(Parameters[FieldsToGroupBy])}";
         return x;
     }
 }

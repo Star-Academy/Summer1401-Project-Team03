@@ -9,8 +9,9 @@ public class FieldRenamer : Transformer
         Type = ComponentType.FieldRenamer;
     }
 
-    private List<string> FieldsToRename { get; }
-    private List<string> NewNames { get; }
+
+    private const string FieldsToRename = "fields_to_rename";
+    private const string NewNames = "new_names";
 
     public override string GetQuery()
     {
@@ -29,8 +30,8 @@ public class FieldRenamer : Transformer
     {
         var oldNewNameMap = new Dictionary<string, string>();
 
-        for (var i = 0; i < Parameters["new_names"].Count; i++)
-            oldNewNameMap.Add(Parameters["fields_to_rename"][i], Parameters["new_names"][i]);
+        for (var i = 0; i < Parameters[NewNames].Count; i++)
+            oldNewNameMap.Add(Parameters[FieldsToRename][i], Parameters[NewNames][i]);
 
         return oldNewNameMap;
     }

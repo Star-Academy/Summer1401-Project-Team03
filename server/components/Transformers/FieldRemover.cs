@@ -4,6 +4,8 @@ namespace server.Components.Transformers;
 
 public class FieldRemover : Transformer
 {
+    private const string Fields = "fields";
+    
     public FieldRemover()
     {
         Type = ComponentType.FieldRemover;
@@ -17,6 +19,6 @@ public class FieldRemover : Transformer
 
     public override List<string> GetKeys()
     {
-        return PreviousComponents[0].GetKeys().Except(Parameters["fields"]).ToList();
+        return PreviousComponents[0].GetKeys().Except(Parameters[Fields]).ToList();
     }
 }

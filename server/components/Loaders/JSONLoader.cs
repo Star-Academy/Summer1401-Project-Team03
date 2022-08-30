@@ -12,7 +12,7 @@ public class JSONLoader : Loader
     public override void Load()
     {
         Pipeline.Database
-            .Execute(Pipeline.QueryBuilder.ExportJson(PreviousComponents[0].GetQuery(), Parameters["file_path"][0]))
+            .Execute(Pipeline.QueryBuilder.ExportJson(PreviousComponents[0].GetQuery(), Parameters[FilePath][0]))
             .Close();
     }
 }

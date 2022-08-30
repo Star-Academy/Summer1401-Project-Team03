@@ -9,9 +9,13 @@ public class Filter : Transformer
         Type = ComponentType.Filter;
     }
 
+    private const string FieldsToFilter = "fields_to_filter";
+    private const string Operators = "operators";
+    private const string Values = "values";
+
     public override string GetQuery()
     {
         return
-            $"{Pipeline.QueryBuilder.Select(new List<string> { "*" }, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.Where(Parameters["fields_to_filter"], Parameters["operators"], Parameters["values"])}";
+            $"{Pipeline.QueryBuilder.Select(new List<string> { "*" }, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.Where(Parameters[FieldsToFilter], Parameters[Operators], Parameters[Values])}";
     }
 }

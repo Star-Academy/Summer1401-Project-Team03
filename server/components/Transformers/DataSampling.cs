@@ -9,11 +9,11 @@ public class DataSampling : Transformer
         Type = ComponentType.DataSampling;
     }
 
-    public int Number { set; get; }
+    private const string Number = "number";
 
     public override string GetQuery()
     {
         return Pipeline.QueryBuilder.Sample(PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias(),
-            int.Parse(Parameters["number"][0]));
+            int.Parse(Parameters[Number][0]));
     }
 }
