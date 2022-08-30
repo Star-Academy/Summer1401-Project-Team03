@@ -32,6 +32,7 @@ public class ComponentFactory
             ComponentType.JSONLoader => new JSONLoader(),
             ComponentType.Math => new Math(),
             ComponentType.Replicate => new Replicate(),
+            ComponentType.DataCleanser => new DataCleanser(),
             _ => throw new Exception()
         };
     }
