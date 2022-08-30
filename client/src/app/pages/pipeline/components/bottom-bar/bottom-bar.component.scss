@@ -32,12 +32,14 @@
         grid-area: inout;
 
         display: flex;
-        gap: 0.1rem;
+        gap: 1rem;
 
         .separator {
             grid-area: seperator;
 
             background-color: var(--color-gray-78);
+
+            display: none;
 
             block-size: 100%;
             inline-size: 0.5rem;

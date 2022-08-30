@@ -36,10 +36,12 @@ label {
         text-align: end;
     }
 
+    .label {
+        margin-inline-end: 0.35rem;
+    }
+
     .label,
     select {
-        inline-size: var(--item-width);
-
         padding-block: 0.15rem;
     }
 }
