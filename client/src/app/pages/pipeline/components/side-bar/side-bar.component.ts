@@ -3,6 +3,7 @@ import {PipelineBoardService} from '../../../../services/pipeline-board.service'
 import {ItemType} from '../../../../enums/ItemType.enum';
 import {PROCESS} from '../../../../data/Processes.data';
 import {ProcessType} from 'src/app/enums/ProcessType.enum';
+import {Paramether} from 'src/app/models/Paramether.interface';
 
 @Component({
     selector: 'app-side-bar',
@@ -11,12 +12,13 @@ import {ProcessType} from 'src/app/enums/ProcessType.enum';
 })
 export class SideBarComponent implements OnInit, OnDestroy {
     public itemTypes = ItemType;
-    public configs: any | null = null;
+    public configs: {[key in string]: Paramether} | null = null;
 
     public constructor(public boardService: PipelineBoardService) {}
 
     public ngOnInit(): void {
         this.boardService.selectedNodeConfigRx.subscribe((value: any | null) => {
+            console.log('called');
             if (!value || !this.boardService.selectedNode) {
                 this.configs = null;
                 return;
@@ -25,10 +27,18 @@ export class SideBarComponent implements OnInit, OnDestroy {
             const process: ProcessType = (<any>ProcessType)[this.boardService.selectedNode.processesInfoType];
 
             const typeConfigs = PROCESS[process].paramethers;
-            this.configs = Object.keys(typeConfigs).map((param) => ({
-                ...typeConfigs[param],
-                value: value[param] || '',
-            }));
+            this.configs = Object.keys(typeConfigs).reduce(
+                (prev, param) => ({
+                    ...prev,
+                    [param]: {
+                        ...typeConfigs[param],
+                        value: value[param]?.value || typeConfigs[param].value,
+                    },
+                }),
+                {}
+            );
+
+            console.log('setting', this.configs);
         });
     }
 

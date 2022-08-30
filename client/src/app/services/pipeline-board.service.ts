@@ -42,6 +42,7 @@ export class PipelineBoardService {
     }
 
     public async getNodeConfig(id: number): Promise<void> {
+        this.selectedNode = this.allNode.find((node) => node.id === id) || null;
         const response = await this.apiService.get<any>(PIPELINE_NODE_CONFIG, {
             pipelineId: this.selectedPipelineBoardId,
             componentId: id,

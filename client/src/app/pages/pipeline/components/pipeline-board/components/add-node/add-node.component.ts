@@ -65,6 +65,7 @@ export class addNodeComponent implements OnInit {
                 nextComponentId: this.nodeData.afterId,
                 position: newPosition,
                 type: ProcessType.csv_loader, //TODO Edit
+                title: this.nodeTitle,
             };
 
             const nodeDestinationId = await this.pipelineBoardService.addNode(addNodeDestinationService);

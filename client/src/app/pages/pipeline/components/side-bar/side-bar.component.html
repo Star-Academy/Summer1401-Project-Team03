@@ -1,26 +1,25 @@
 <div class="sidebar">
     <ng-container *ngIf="boardService.selectedNode; else emptyBar">
-        <h2>Config</h2>
-        <div class="filters">
-            <ng-container *ngIF="configs">
-                <ng-container *ngFor="let config of configs">
-                    <ng-container *ngSwitch="config.type">
-                        <app-text-input
-                            *ngSwitchCase="itemTypes.TEXT_INPUT"
-                            [label]="config.label"
-                            [(value)]="configs[config.label]"
-                        ></app-text-input>
-                        <app-switch
-                            *ngSwitchCase="itemTypes.SWITCH"
-                            [label]="config.label"
-                            [(value)]="configs[config.label]"
-                        ></app-switch>
-                        <app-data-list
-                            *ngSwitchCase="itemTypes.SELECT"
-                            [label]="config.label"
-                            [(value)]="configs[config.label]"
-                        ></app-data-list>
-                    </ng-container>
+        <h2>{{ boardService.selectedNode.title }}</h2>
+        <div *ngIf="configs" class="filters">
+            <ng-container *ngFor="let config of configs | keyvalue">
+                <ng-container [ngSwitch]="config.value.type">
+                    <app-text-input
+                        *ngSwitchCase="itemTypes.TEXT_INPUT"
+                        [label]="config.value.label"
+                        [(value)]="configs[config.key].value"
+                    ></app-text-input>
+                    <app-switch
+                        *ngSwitchCase="itemTypes.SWITCH"
+                        [label]="config.value.label"
+                        [(value)]="configs[config.key].value"
+                    ></app-switch>
+                    <app-data-list
+                        *ngSwitchCase="itemTypes.SELECT"
+                        [options]="config.value.options!"
+                        [label]="config.value.label"
+                        [(value)]="configs[config.key].value"
+                    ></app-data-list>
                 </ng-container>
             </ng-container>
         </div>
