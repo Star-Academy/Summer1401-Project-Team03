@@ -1,9 +1,9 @@
-.modal{
-  position: absolute;
+.modal {
+    position: absolute;
 
-  &__container{
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-  }
+    &__container {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
 }

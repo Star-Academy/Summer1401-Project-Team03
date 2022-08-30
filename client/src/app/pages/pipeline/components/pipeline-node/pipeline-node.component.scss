@@ -1,86 +1,90 @@
 .wrapper {
-  background-color: var(--color-purple-86);
-  color: var(--color-purple-21);
+    background-color: var(--color-white-solid);
+    color: var(--color-purple-21);
 
-  position: relative;
+    // border: 3px solid var(--color-purple-21);
+    box-shadow: 0 0 0.3rem 0.2rem var(--color-shadow);
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
+    position: relative;
 
-  width: 18rem;
-  height: 10rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 
-  padding: 0.6rem 1rem;
+    width: 22rem;
+    height: 10rem;
 
-  border: 3px solid var(--color-purple-21);
-  border-radius: var(--border-radius-primary);
+    padding: 0.6rem 1rem;
 
-  font-weight: 600;
+    border-radius: var(--border-radius-primary);
 
-  text-transform: capitalize;
+    font-weight: 600;
 
-  app-svg {
-    color: var(--color-purple-46);
+    text-transform: capitalize;
 
-    height: 3rem;
-  }
+    app-svg {
+        color: var(--color-purple-46);
 
-  .desc {
-    width: 100%;
-
-    .label {
-      overflow: hidden;
-
-      width: 100%;
-
-      font-size: 1.6rem;
-
-      text-align: center;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+        width: 4rem;
     }
 
-    p {
-      font-size: var(--font-size-primary);
-      font-size: 1.25rem;
+    .desc {
+        width: 100%;
 
-      text-align: center;
-    }
-  }
+        .label {
+            overflow: hidden;
 
-  .setting {
-    position: absolute;
-    inset: 0;
+            width: 100%;
 
-    font-size: 0.2rem;
+            font-size: var(--font-size-big);
 
-    &__icon {
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-      z-index: 10;
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
 
-      width: 2rem;
-      height: 2rem;
+        p {
+            opacity: 0.8;
 
-      cursor: pointer;
-    }
+            font-size: var(--font-size-primary);
+            font-size: 1.25rem;
 
-    &__modal {
-      z-index: -1;
+            text-align: center;
+        }
     }
 
-    .modal {
-      position: absolute;
+    .setting {
+        position: absolute;
+        inset: 0;
 
-      &__container {
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-      }
+        font-size: 0.2rem;
+
+        &__icon {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            z-index: 10;
+
+            width: 2rem;
+            height: 2rem;
+
+            cursor: pointer;
+        }
+
+        &__modal {
+            z-index: -1;
+        }
+
+        .modal {
+            position: absolute;
+
+            &__container {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
     }
-  }
 }

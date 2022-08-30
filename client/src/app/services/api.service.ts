@@ -11,7 +11,18 @@ export class ApiService {
     private async fetchData<T>(url: string, init: Partial<RequestInit> = {}): Promise<T | null> {
         return await this.spinnerService.wrapAsync(async () => {
             let response = await fetch(url, init);
-            let data = await response.json();
+
+            let data = null;
+
+            try {
+                data = await response.json();
+            } catch {
+                if (response.ok) {
+                    data = true;
+                } else {
+                    data = false;
+                }
+            }
 
             if (response.ok) {
                 return data as T;
@@ -29,7 +40,13 @@ export class ApiService {
         return await this.fetchData(url, {...FORM_POST_INIT, body: body, ...init});
     }
 
-    public async get<T>(url: string, init: Partial<RequestInit> = {}): Promise<T | null> {
-        return await this.fetchData(url, init);
+    public async get<T>(url: string, queries: any = {}, init: Partial<RequestInit> = {}): Promise<T | null> {
+        const u = new URL(url);
+        Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
+        return await this.fetchData(u.toString(), init);
+    }
+
+    public async delete<T>(url: string): Promise<T | null> {
+        return await this.fetchData(url, {method: 'delete'});
     }
 }

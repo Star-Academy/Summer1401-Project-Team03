@@ -1,9 +1,9 @@
 <div class="container">
-    <div class="navbar" (click)="toggleShrink()">
-        <app-navbar [isShrink]="shrinkedNavbar"></app-navbar>
-    </div>
-    <div class="content">
+    <nav class="navbar">
+        <app-navbar></app-navbar>
+    </nav>
+    <main class="content">
         <router-outlet></router-outlet>
-    </div>
+    </main>
 </div>
 <app-spinner></app-spinner>
