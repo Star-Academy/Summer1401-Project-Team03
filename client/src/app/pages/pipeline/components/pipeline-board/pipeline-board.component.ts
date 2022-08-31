@@ -145,7 +145,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     // Node Element
     public async clickNodeElement(id: number): Promise<void | boolean> {
         this.boardService.selectedNode = this.pipelineNodeDatas[this.getNodeIndexById(id)];
-        console.log(await this.boardService.runUpToNode());
+        this.boardService.selectedNodeRx.next(this.boardService.selectedNode);
     }
 
     private addItemToNodeListById(id: number, item: PipelineNodeModel): void {

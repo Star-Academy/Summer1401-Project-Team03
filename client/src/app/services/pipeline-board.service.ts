@@ -16,6 +16,7 @@ import {
     PIPELINE_NODE_CONFIG,
     PIPELINE_ONE,
     PIPELINE_RUN_UP_TO,
+    PIPELINE_RUN_ALL,
     PIPELINE_SET_CONFIG,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
@@ -28,13 +29,16 @@ import {TableColumn} from '../components/data-table/models/table-column.model';
     providedIn: 'root',
 })
 export class PipelineBoardService {
-    public constructor(private apiService: ApiService) {}
-
     public allNode: PipelineNodeModel[] = [];
     public selectedNode: PipelineNodeModel | null = null;
     public selectedNodeConfig: any | null = null;
     public selectedPipelineBoardId!: number;
 
+    public constructor(private apiService: ApiService) {
+        this.getNodeData();
+    }
+
+    public selectedNodeRx = new BehaviorSubject<PipelineNodeModel | null>(null);
     public selectedNodeConfigRx = new BehaviorSubject<any | null>(null);
 
     public nodePreview: PreviewTableData = {
@@ -56,8 +60,7 @@ export class PipelineBoardService {
         return [];
     }
 
-    public async getNodeConfig(id: number): Promise<void> {
-        this.selectedNode = this.allNode.find((node) => node.id === id) || null;
+    private async getNodeConfig(id: number): Promise<void> {
         const response = await this.apiService.get<any>(PIPELINE_NODE_CONFIG, {
             pipelineId: this.selectedPipelineBoardId,
             componentId: id,
@@ -141,6 +144,11 @@ export class PipelineBoardService {
 
     //    runNode
 
+    public async runPipeline(): Promise<boolean> {
+        const result = await this.apiService.get<boolean>(PIPELINE_RUN_ALL, {pipelineId: this.selectedPipelineBoardId});
+        return result || false;
+    }
+
     // UTILITY
     private convertComponentInformationsToPielineNodeModel(
         components: ComponentInformationModel[]
@@ -170,5 +178,15 @@ export class PipelineBoardService {
     public convertIdToType(id: number): ProcessSchema {
         const type = Object.entries(PROCESS).find((process) => process[1].id === id) || null;
         return (type?.[1] as ProcessSchema) || null;
+    }
+
+    private getNodeData(): void {
+        this.selectedNodeRx.subscribe((value) => {
+            if (!value) {
+                return;
+            }
+            this.getNodeConfig(value.id);
+            this.runUpToNode(value.id);
+        });
     }
 }

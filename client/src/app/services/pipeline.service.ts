@@ -1,4 +1,6 @@
+import {ThisReceiver} from '@angular/compiler';
 import {Injectable} from '@angular/core';
+import {NavigationEnd, Router} from '@angular/router';
 import {NewPipeline} from '../models/NewPipeline.interface';
 import {PipelineItemModel} from '../models/pipeline/pipeline-item.model';
 import {PIPELINE_ALL, PIPELINE_CREATE, PIPELINE_DELETE} from '../utils/api.utils';
@@ -9,8 +11,9 @@ import {ApiService} from './api.service';
 })
 export class PipelineService {
     public pipelines: PipelineItemModel[] = [];
-    public constructor(private apiService: ApiService) {
+    public constructor(private apiService: ApiService, private router: Router) {
         this.getAllPiplelines();
+        this.subscribeRoute();
     }
 
     public async createPipeline(data: NewPipeline): Promise<number | null> {
@@ -34,5 +37,13 @@ export class PipelineService {
             this.pipelines = this.pipelines.filter((pipeline) => pipeline.id !== pipelineId);
         }
         // TODO: add functionality
+    }
+
+    private subscribeRoute(): void {
+        this.router.events.subscribe(async (value) => {
+            if (value instanceof NavigationEnd) {
+                if (value.url.startsWith('/pipeline-inventory')) await this.getAllPiplelines();
+            }
+        });
     }
 }

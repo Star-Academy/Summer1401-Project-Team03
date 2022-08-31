@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {PipelineBoardService} from 'src/app/services/pipeline-board.service';
 import {RunStep} from './enums/run-step.enum';
 
 @Component({
@@ -11,6 +12,8 @@ export class RunButtonComponent {
 
     public RunStep = RunStep;
 
+    public constructor(private boardService: PipelineBoardService) {}
+
     public get text(): string {
         switch (this.runStep) {
             case RunStep.NOT_STARTED:
@@ -22,7 +25,9 @@ export class RunButtonComponent {
         }
     }
 
-    public runClickHandler(): void {
-        this.runStep += 1;
+    public async runClickHandler(): Promise<void> {
+        this.runStep = RunStep.PROCESSING;
+        const result = await this.boardService.runPipeline();
+        this.runStep = RunStep.NOT_STARTED;
     }
 }
