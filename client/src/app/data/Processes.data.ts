@@ -1,6 +1,7 @@
 import {ItemType} from '../enums/ItemType.enum';
-import {Paramether} from '../models/Parameter.interface';
+
 import {ProcessType} from '../enums/ProcessType.enum';
+import {Paramether} from '../models/Parameter.interface';
 
 export interface ProcessSchema {
     id: number;

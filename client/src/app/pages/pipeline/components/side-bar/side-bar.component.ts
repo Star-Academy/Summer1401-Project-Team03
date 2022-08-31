@@ -3,7 +3,7 @@ import {PipelineBoardService} from '../../../../services/pipeline-board.service'
 import {ItemType} from '../../../../enums/ItemType.enum';
 import {PROCESS} from '../../../../data/Processes.data';
 import {ProcessType} from 'src/app/enums/ProcessType.enum';
-import {Paramether} from 'src/app/models/Parameter.interface';
+import {Paramether} from '../../../../models/Parameter.interface';
 
 @Component({
     selector: 'app-side-bar',
