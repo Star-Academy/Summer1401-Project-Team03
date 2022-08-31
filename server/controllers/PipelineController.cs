@@ -19,9 +19,9 @@ public class PipelineController : ControllerBase
 {
     private static Dictionary<int, Pipeline> IdToPipeline = new();
 
-    public PipelineController(PipelineService pipelineService)
+    public PipelineController(PipelineControllerService pipelineControllerService)
     {
-        IdToPipeline = pipelineService.IdToPipeline;
+        IdToPipeline = pipelineControllerService.IdToPipeline;
     }
 
     [EnableCors("CorsPolicy")]

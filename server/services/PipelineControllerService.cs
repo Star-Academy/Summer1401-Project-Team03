@@ -3,10 +3,10 @@ using server.Pipelines;
 
 namespace DefaultNamespace;
 
-public class PipelineService
+public class PipelineControllerService
 {
     public Dictionary<int, Pipeline> IdToPipeline { get; }= new ();
-    public PipelineService()
+    public PipelineControllerService()
     {
         LoadPipelines();
     }

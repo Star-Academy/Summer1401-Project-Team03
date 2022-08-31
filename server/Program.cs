@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<PipelineService>();
+builder.Services.AddSingleton<PipelineControllerService>();
 
 builder.Services.AddCors(options =>
 {
