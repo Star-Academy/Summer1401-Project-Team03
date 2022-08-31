@@ -19,7 +19,8 @@ import {
     PIPELINE_RUN_UP_TO,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
-import {PROCESS} from '../data/Processes.data';
+import {PROCESS, ProcessInfo, ProcessSchema} from '../data/Processes.data';
+import {ProcessType} from '../enums/ProcessType.enum';
 import {Pair} from '../models/pair.model';
 import {TableColumn} from '../components/data-table/models/table-column.model';
 
@@ -135,5 +136,10 @@ export class PipelineBoardService {
         const typeNumber = Object.entries(PROCESS).find((process) => process[0] === type);
         if (typeNumber) return typeNumber[1].id;
         return 0;
+    }
+
+    public convertIdToType(id: number): ProcessSchema {
+        const type = Object.entries(PROCESS).find((process) => process[1].id === id) || null;
+        return (type?.[1] as ProcessSchema) || null;
     }
 }
