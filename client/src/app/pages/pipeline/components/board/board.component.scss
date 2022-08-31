@@ -14,13 +14,12 @@
 
 .container {
     position: relative;
-    overflow: scroll;
+    overflow: auto;
     scrollbar-gutter: stable;
 
     block-size: 100%;
 
     .board {
-        // @include grid-pattern(var(--color-white-solid), hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
         @include dot-pattern(var(--color-gray-95), var(--color-gray-60), var(--grid-size), 1px);
         position: absolute;
 
@@ -65,15 +64,34 @@
             content: "";
 
             position: absolute;
-            right: -10rem;
-            bottom: -10rem;
+            inset-block-end: -10rem;
+            inset-inline-end: -10rem;
 
-            width: 10rem;
-            height: 10rem;
+            block-size: 10rem;
+            inline-size: 10rem;
         }
     }
 
-    &:focus-visible {
-        outline: none;
+    &::-webkit-scrollbar {
+        display: none;
+
+        block-size: 0.75rem;
+        inline-size: 0.75rem;
+    }
+
+    &:hover {
+        &::-webkit-scrollbar {
+            display: unset;
+        }
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: var(--color-gray-95);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--color-gray-78);
+
+        border-radius: 1rem;
     }
 }

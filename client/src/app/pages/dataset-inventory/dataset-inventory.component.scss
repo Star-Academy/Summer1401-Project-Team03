@@ -11,7 +11,7 @@
     flex-direction: column;
     gap: 3rem;
 
-    width: 90%;
+    inline-size: 90%;
 
     margin-inline: auto;
     padding-block-start: 7rem;
@@ -25,7 +25,7 @@
         app-svg {
             background-color: var(--color-th-bg);
 
-            height: auto;
+            block-size: auto;
 
             padding: 0.5rem;
 
@@ -82,7 +82,7 @@
         }
 
         .item-setting {
-            height: 2rem;
+            block-size: 2rem;
 
             cursor: pointer;
         }
