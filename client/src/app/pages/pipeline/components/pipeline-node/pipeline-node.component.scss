@@ -13,8 +13,8 @@
     justify-content: center;
     gap: 1rem;
 
-    inline-size: 22rem;
-    block-size: 10rem;
+    block-size: calc(var(--grid-size) * 5);
+    inline-size: calc(var(--grid-size) * 11);
 
     padding: 0.6rem 1rem;
 

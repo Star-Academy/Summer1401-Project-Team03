@@ -79,6 +79,8 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     styleUrls: ['./pipeline-board.component.scss'],
 })
 export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
+    public gridSize: number = 20;
+
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-95)',
@@ -90,7 +92,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
     public draggabillyOptions: NgxDraggabillyOptions = {
         containment: true,
-        grid: [20, 20],
+        grid: [this.gridSize, this.gridSize],
     };
 
     // public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));

@@ -1,4 +1,4 @@
-<app-board>
+<app-board [gridSize]="gridSize">
     <div class="wrapper">
         <ng-container *ngFor="let pipelineNodeData of pipelineNodeDatas">
             <app-pipeline-node
