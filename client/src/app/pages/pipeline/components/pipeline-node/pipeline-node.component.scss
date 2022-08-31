@@ -1,8 +1,8 @@
 .wrapper {
     background-color: var(--color-white-solid);
-    color: var(--color-purple-21);
+    color: var(--color-purple-15);
 
-    // border: 3px solid var(--color-purple-21);
+    // border: 3px solid var(--color-purple-15);
     box-shadow: 0 0 0.3rem 0.2rem var(--color-shadow);
 
     position: relative;
@@ -25,7 +25,7 @@
     text-transform: capitalize;
 
     app-svg {
-        color: var(--color-purple-46);
+        color: var(--color-purple-30);
 
         width: 4rem;
     }
