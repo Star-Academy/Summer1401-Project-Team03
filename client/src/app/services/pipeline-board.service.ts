@@ -14,6 +14,7 @@ import {
     ADD_PIPELINE_NODE,
     PIPELINE_SET_CONFIG,
     ADD_PIPELINE_CHANGE_POSITION,
+    DELETE_PIPELINE_NODE,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 import {ProcessType} from '../enums/ProcessType.enum';
@@ -80,7 +81,10 @@ export class PipelineBoardService {
     }
 
     public async removeNode(removeNodeInfo: RemoveNodeServiceModel): Promise<void> {
-        // await this.apiService.delete(ADD_PIPELINE_NODE, removeNodeInfo);
+        await this.apiService.delete(DELETE_PIPELINE_NODE, {
+            pipelineID: +removeNodeInfo.pipelineID,
+            componentID: +removeNodeInfo.componentID,
+        });
     }
 
     public async changeComponentPosition(changeNodePositionInfo: ChangeComponentPositionServiceModel): Promise<void> {

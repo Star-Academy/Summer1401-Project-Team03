@@ -28,6 +28,7 @@ export class RemoveNodeComponent {
     public async removeNodeHandle(): Promise<void> {
         this.modal.closeModal();
 
+        console.log(this.pipelineBoardId);
         await this.pipelineBoardService.removeNode({
             pipelineID: this.pipelineBoardId,
             componentID: this.nodeRemoveInfo.nodeId,

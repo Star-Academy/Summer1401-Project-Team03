@@ -196,6 +196,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         const afterId = item.afterId;
 
         // is destination
+
         if (
             [ProcessType.csv_loader, ProcessType.json_loader].some(
                 (type: ProcessType) => type == item.processesInfoType
@@ -210,12 +211,14 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
         // Create new Connection
         this.connectLeaderLineBetweenTwoElementById(beforeId, item.id);
+
         if (
             [ProcessType.json_loader, ProcessType.csv_loader].some(
                 (type: ProcessType) => type === item.processesInfoType
             )
         )
             return undefined;
+
         this.connectLeaderLineBetweenTwoElementById(item.id, afterId);
 
         // Remove line and connection between before and after new node;
@@ -281,9 +284,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
                 ProcessType.csv_loader,
                 ProcessType.json_loader,
             ])
-        )
+        ) {
             return undefined;
-
+        }
         // Create new connection
         this.connectLeaderLineBetweenTwoElementById(beforeId, afterId);
 
@@ -320,6 +323,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     // LeaderLine
     public updateLeaderLine(currentId: number): void | boolean {
         // The last one
+
         if (this.isWhatTypeById(currentId, [ProcessType.csv_loader, ProcessType.json_loader])) {
             this.updateLeaderLineById(currentId);
         }
@@ -329,6 +333,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.updateLeaderLineById(currentId);
 
         // // It's not The first one
+
         if (!this.isWhatTypeById(currentId, [ProcessType.csv_extractor, ProcessType.json_extractor])) {
             console.log(beforeId);
             this.updateLeaderLineById(beforeId);
