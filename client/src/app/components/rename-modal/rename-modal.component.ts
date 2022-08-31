@@ -10,7 +10,6 @@ import {DatasetRenameModel} from '../../models/dataset/dataset-item.model';
 })
 export class RenameModalComponent {
     @ViewChild('renameModal') public modal!: ModalComponent;
-    @Output() public renameFieldEmit = new EventEmitter<string>();
     public newRenameData: DatasetRenameModel = {newName: '', fileId: 0, category: ''};
 
     public constructor(private inventoryService: InventoryService) {}
