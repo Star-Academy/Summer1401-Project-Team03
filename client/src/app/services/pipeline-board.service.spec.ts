@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { PipelineBoardService } from './pipeline-board.service';
+import {PipelineBoardService} from './pipeline-board.service';
 
 describe('PipelineBoardService', () => {
-  let service: PipelineBoardService;
+    let service: PipelineBoardService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(PipelineBoardService);
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(PipelineBoardService);
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });
