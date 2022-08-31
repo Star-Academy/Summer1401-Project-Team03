@@ -14,18 +14,41 @@ export type ProcessInfo = {
     [key in ProcessType]: ProcessSchema;
 };
 
+const inputTypes = [
+    {
+        value: 'text',
+        title: 'string',
+    },
+    {
+        value: 'date',
+        title: 'date',
+    },
+    {
+        value: 'integer',
+        title: 'integer',
+    },
+    {
+        value: 'real',
+        title: 'float/double',
+    },
+    {
+        value: 'bool',
+        title: 'boolean',
+    },
+];
+
 export const PROCESS: ProcessInfo = {
     filter: {
-        id: 0,
+        id: 1,
         title: 'filter',
         icon: 'filter',
         paramethers: {
-            fields: {
+            fields_to_filter: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
                 value: '',
             },
-            condition: {
+            operators: {
                 type: ItemType.SELECT,
                 label: 'condition',
                 options: [
@@ -56,10 +79,16 @@ export const PROCESS: ProcessInfo = {
                 ],
                 value: '==',
             },
-            value: {
+            values: {
                 type: ItemType.TEXT_INPUT,
                 label: 'value',
                 value: '',
+            },
+            types: {
+                type: ItemType.SELECT,
+                label: 'value type',
+                options: inputTypes,
+                value: 'text',
             },
         },
     },
@@ -76,7 +105,46 @@ export const PROCESS: ProcessInfo = {
             aggregate_functions: {
                 type: ItemType.SELECT,
                 label: 'function',
-                options: [],
+                options: [
+                    {
+                        value: 'count',
+                        title: 'count',
+                    },
+                    {
+                        value: 'sum',
+                        title: 'sum',
+                    },
+                    {
+                        value: 'avg',
+                        title: 'average',
+                    },
+                    {
+                        value: 'min',
+                        title: 'min',
+                    },
+                    {
+                        value: 'max',
+                        title: 'max',
+                    },
+                ],
+                value: '',
+            },
+            fields_to_group_by: {
+                type: ItemType.TEXT_INPUT,
+                label: 'group by',
+                value: '',
+            },
+        },
+    },
+    data_sampling: {
+        id: 2,
+        title: 'data sampling',
+        icon: 'data_sampling',
+        paramethers: {
+            number: {
+                type: ItemType.TEXT_INPUT,
+                text_type: 'number',
+                label: 'number of rows',
                 value: '',
             },
         },
@@ -85,53 +153,75 @@ export const PROCESS: ProcessInfo = {
         id: 3,
         title: 'remove field',
         icon: 'fieldRemove',
-        paramethers: {},
+        paramethers: {
+            fields_to_remove: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+        },
     },
     field_renamer: {
         id: 4,
         title: 'rename field',
         icon: 'fieldRename',
-        paramethers: {},
-    },
-    data_sampling: {
-        id: 0,
-        title: 'data sampling',
-        icon: 'data_sampling',
-        paramethers: {},
+        paramethers: {
+            fields_to_rename: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+            new_names: {
+                type: ItemType.TEXT_INPUT,
+                label: 'new name',
+                value: '',
+            },
+        },
     },
     field_selector: {
-        id: 0,
+        id: 5,
         title: 'field selector',
         icon: 'field_selector',
-        paramethers: {},
+        paramethers: {
+            fields_to_select: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+        },
     },
-    math: {id: 0, title: 'math', icon: 'math', paramethers: {}},
-    csv_loader: {
-        id: 0,
-        title: 'destination',
-        icon: 'source',
-        paramethers: {},
+    hash: {
+        id: 6,
+        title: 'data hashing',
+        icon: 'hash',
+        paramethers: {
+            fields_to_hash: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+        },
     },
-    csv_extractor: {
-        id: 0,
-        title: 'source',
-        icon: 'source',
-        paramethers: {},
-    },
-    json_loader: {
-        id: 0,
-        title: 'destination',
-        icon: 'source',
-        paramethers: {},
-    },
-    json_extractor: {
-        id: 0,
-        title: 'source',
-        icon: 'source',
-        paramethers: {},
+    type_converter: {
+        id: 7,
+        title: 'type converter',
+        icon: 'typeConverter',
+        paramethers: {
+            fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+            types: {
+                type: ItemType.SELECT,
+                label: 'type',
+                options: inputTypes,
+                value: 'integer',
+            },
+        },
     },
     join: {
-        id: 0,
+        id: 8,
         title: 'join',
         icon: 'join',
         paramethers: {
@@ -144,59 +234,109 @@ export const PROCESS: ProcessInfo = {
         },
     },
     replicate: {
-        id: 0,
+        id: 9,
         title: 'replicate',
         icon: 'join',
         paramethers: {},
     },
-    hash: {
-        id: 0,
-        title: 'data hashing',
-        icon: 'hash',
-        paramethers: {
-            field_to_remove: {
-                type: ItemType.TEXT_INPUT,
-                label: 'field',
-                value: '',
-            },
-        },
+    csv_loader: {
+        id: 10,
+        title: 'destination',
+        icon: 'source',
+        paramethers: {},
     },
-    type_converter: {
-        id: 0,
-        title: 'type converter',
-        icon: 'typeConverter',
+    csv_extractor: {
+        id: 11,
+        title: 'source',
+        icon: 'source',
+        paramethers: {},
+    },
+    json_loader: {
+        id: 12,
+        title: 'destination',
+        icon: 'source',
+        paramethers: {},
+    },
+    json_extractor: {
+        id: 13,
+        title: 'source',
+        icon: 'source',
+        paramethers: {},
+    },
+    math: {
+        id: 14,
+        title: 'math',
+        icon: 'math',
         paramethers: {
             fields: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
                 value: '',
             },
+            should_create_new_column: {
+                type: ItemType.SWITCH,
+                label: 'should create new column',
+                value: true,
+            },
+            values: {
+                type: ItemType.TEXT_INPUT,
+                label: 'value',
+                value: '',
+            },
+            operators: {
+                type: ItemType.SELECT,
+                label: 'operator',
+                value: '',
+            },
+        },
+    },
+    data_cleanser: {
+        id: 15,
+        title: 'data cleanser',
+        icon: 'dataCleanser',
+        paramethers: {
+            fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'field',
+                value: '',
+            },
+            default_values: {
+                type: ItemType.TEXT_INPUT,
+                label: 'default value',
+                value: '',
+            },
             types: {
                 type: ItemType.SELECT,
                 label: 'type',
-                options: [
-                    {
-                        value: 'text',
-                        title: 'string',
-                    },
-                    {
-                        value: 'date',
-                        title: 'date',
-                    },
-                    {
-                        value: 'integer',
-                        title: 'integer',
-                    },
-                    {
-                        value: 'real',
-                        title: 'float/double',
-                    },
-                    {
-                        value: 'bool',
-                        title: 'boolean',
-                    },
-                ],
-                value: 'integer',
+                options: inputTypes,
+                value: 'string',
+            },
+        },
+    },
+    concatenate: {
+        id: 16,
+        title: 'concatenate',
+        icon: 'concatenate',
+        paramethers: {
+            first_fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'first field',
+                value: '',
+            },
+            second_fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'second field',
+                value: '',
+            },
+            seperator: {
+                type: ItemType.TEXT_INPUT,
+                label: 'seperator',
+                value: '_',
+            },
+            new_names: {
+                type: ItemType.TEXT_INPUT,
+                label: 'new column',
+                value: '',
             },
         },
     },

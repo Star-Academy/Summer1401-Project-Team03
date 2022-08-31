@@ -5,7 +5,7 @@ export interface PipelineNodeModel {
     beforeId: number;
     afterId: number;
     title: string;
-    processesInfoType: ProcessType; //TODO edit
+    processesInfoType: number; //TODO edit
     position: {x: number; y: number};
     openedSettingModal: boolean;
     leaderlines: LeaderLineModel[];
@@ -19,7 +19,7 @@ export interface LeaderLineModel {
 
 export interface NodeRemoveInfoModel {
     nodeId: number;
-    type: string;
+    type: number;
 }
 
 export interface NodeAddInfoModel {
@@ -38,7 +38,7 @@ export interface AddNodeServiceModel {
     previousComponentId: number;
     nextComponentId: number;
     title: string;
-    type: string;
+    type: number;
     position: {x: number; y: number};
 }
 
