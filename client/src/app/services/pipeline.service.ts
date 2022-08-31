@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {NewPipeline} from '../models/NewPipeline.interface';
 import {PipelineItemModel} from '../models/pipeline/pipeline-item.model';
-import {PIPELINE_ALL, PIPELINE_CREATE} from '../utils/api.utils';
+import {PIPELINE_ALL, PIPELINE_CREATE, PIPELINE_DELETE} from '../utils/api.utils';
 import {ApiService} from './api.service';
 
 @Injectable({
@@ -29,7 +29,11 @@ export class PipelineService {
         this.pipelines = response || [];
     }
 
-    public async deletePipeline(id: string): Promise<void> {
+    public async deletePipeline(pipelineId: number): Promise<void> {
+        const response = await this.apiService.delete(PIPELINE_DELETE, {pipelineId});
+        if (response) {
+            this.pipelines = this.pipelines.filter((pipeline) => pipeline.id !== pipelineId);
+        }
         // TODO: add functionality
     }
 }

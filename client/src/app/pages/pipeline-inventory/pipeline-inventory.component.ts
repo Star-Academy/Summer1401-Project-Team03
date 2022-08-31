@@ -27,6 +27,7 @@ export class PipelineInventoryComponent {
     }
 
     public deleteItem(id: number): void {
+        this.pipelineService.deletePipeline(id);
         console.log(`Removed item ${id}`);
         // Connect to inventory service
     }

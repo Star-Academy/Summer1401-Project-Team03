@@ -8,6 +8,7 @@ export const INVENTORY_DELETE = INVENTORY_SERVICE + '/delete';
 
 const PIPELINE_SERVICE = BASE_URL + '/Pipeline';
 export const PIPELINE_CREATE = PIPELINE_SERVICE + '/Create';
+export const PIPELINE_DELETE = PIPELINE_SERVICE + '/deletePipeline';
 export const PIPELINE_TRANSFORMER = PIPELINE_SERVICE + '/AddTransformer';
 export const PIPELINE_ALL = PIPELINE_SERVICE + '/getPipelinesInformation';
 
