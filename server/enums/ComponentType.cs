@@ -18,5 +18,5 @@ public enum ComponentType
     JSONLoader,
     Math,  //ok
     DataCleanser, //ok
-    Split
+    Concatenate
 }

@@ -4,7 +4,7 @@ namespace server.Components.Transformers;
 
 public class FieldSelector : Transformer
 {
-    private const string Fields = "fields";
+    private const string Fields = "fields_to_select";
 
     public FieldSelector()
     {

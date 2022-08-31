@@ -33,7 +33,7 @@ public class ComponentFactory
             ComponentType.Math => new Math(),
             ComponentType.Replicate => new Replicate(),
             ComponentType.DataCleanser => new DataCleanser(),
-            ComponentType.Split => new Split(),
+            ComponentType.Concatenate => new Concatenate(),
             _ => throw new Exception()
         };
     }
