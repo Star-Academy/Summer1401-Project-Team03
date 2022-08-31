@@ -186,7 +186,7 @@ export class PipelineBoardService {
                 return;
             }
             this.getNodeConfig(value.id);
-            this.runUpToNode(value.id);
+            this.runUpToNode();
         });
     }
 }
