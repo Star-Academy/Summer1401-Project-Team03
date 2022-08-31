@@ -5,5 +5,6 @@ export interface Paramether {
     label: string;
     type: ItemType;
     options?: DatalistOption[];
+    text_type?: 'text' | 'number' | 'password';
     value: any;
 }
