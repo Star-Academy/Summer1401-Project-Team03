@@ -13,7 +13,7 @@ public class Pipeline
 
     public Pipeline(PipelineInformation information)
     {
-        var dbConfiguration = DBConfigLoader.Load();
+        var dbConfiguration = DbConfigLoader.Load();
         Name = information.Name;
         Id = information.Id;
         DestinationIDs = information.DestinationIDs;
@@ -31,7 +31,7 @@ public class Pipeline
 
     public Pipeline(string name)
     {
-        var dbConfiguration = DBConfigLoader.Load();
+        var dbConfiguration = DbConfigLoader.Load();
         Name = name;
         Database = new PostgresDatabase(dbConfiguration);
         QueryBuilder = new PostgresQueryBuilder();

@@ -132,7 +132,7 @@ public class PipelineController : ControllerBase
             var component = pipeline.IdToComponent[componentId];
 
             component.Parameters = configurations;
-            component.isConfigSet = true;
+            component.IsConfigSet = true;
             file.FileOperation.Instance.WritePipeline(pipeline);
 
             return Ok();
@@ -155,7 +155,7 @@ public class PipelineController : ControllerBase
         extractor.Pipeline = pipeline;
         extractor.Position = position;
         extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
-        extractor.isConfigSet = true;
+        extractor.IsConfigSet = true;
         
         pipeline.AddComponent(extractor);
 
@@ -186,7 +186,7 @@ public class PipelineController : ControllerBase
         loader.Pipeline = pipeline;
         loader.Position = position;
         loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
-        loader.isConfigSet = true;
+        loader.IsConfigSet = true;
         
         pipeline.AddDestinationId(loader.Id);
         pipeline.AddComponent(loader);

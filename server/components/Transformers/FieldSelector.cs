@@ -13,7 +13,7 @@ public class FieldSelector : Transformer
 
     public override string GetQuery()
     {
-        if (!isConfigSet)
+        if (!IsConfigSet)
             throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
 
         return Pipeline.QueryBuilder.Select(Parameters[Fields], PreviousComponents[0].GetQuery(),

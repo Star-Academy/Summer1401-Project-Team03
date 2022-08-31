@@ -14,14 +14,14 @@ public abstract class Component
 
     public string Title { get; set; }
     
-    public bool isConfigSet { get; set; }
+    public bool IsConfigSet { get; set; }
     public Dictionary<string, List<string>> Parameters { set; get; }
     public List<Component> NextComponents { set; get; }
 
     public List<Component> PreviousComponents { set; get; }
     public Position Position { set; get; }
 
-    public ComponentType Type { set; get; }
+    public ComponentType Type { protected init; get; }
 
     public int Id { set; get; }
     public Pipeline Pipeline { set; get; }

@@ -11,9 +11,9 @@ namespace server.components;
 public class ComponentFactory
 {
     private static int _counter;
-    public static ComponentFactory Instance = new();
+    public static readonly ComponentFactory Instance = new();
 
-    public Component GetComponent(ComponentType type)
+    private Component GetComponent(ComponentType type)
     {
         return type switch
         {
@@ -34,6 +34,7 @@ public class ComponentFactory
             ComponentType.Replicate => new Replicate(),
             ComponentType.DataCleanser => new DataCleanser(),
             ComponentType.Concatenate => new Concatenate(),
+            ComponentType.Python => new Python(),
             _ => throw new Exception()
         };
     }
