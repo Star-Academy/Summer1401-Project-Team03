@@ -1,4 +1,5 @@
 import {customProcessType, ProcessType} from '../enums/ProcessType.enum';
+import {TableColumn} from '../components/data-table/models/table-column.model';
 
 export interface PipelineNodeModel {
     id: number;
@@ -53,6 +54,11 @@ export interface GetAllNodeServiceModel {
     name: string;
     destinationIDs: number[];
     componentInformations: ComponentInformationModel[];
+}
+
+export interface RunUpToNodeServiceModel {
+    columns: TableColumn[];
+    cells: any[];
 }
 
 export interface ComponentInformationModel {

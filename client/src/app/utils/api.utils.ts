@@ -11,6 +11,8 @@ export const PIPELINE_CREATE = PIPELINE_SERVICE + '/Create';
 export const PIPELINE_DELETE = PIPELINE_SERVICE + '/deletePipeline';
 export const PIPELINE_TRANSFORMER = PIPELINE_SERVICE + '/AddTransformer';
 export const PIPELINE_ALL = PIPELINE_SERVICE + '/getPipelinesInformation';
+export const PIPELINE_RUN_UP_TO = PIPELINE_SERVICE + '/RunUpTo';
+export const PIPELINE_RUN_ALL = PIPELINE_SERVICE + '/Run';
 
 // Pipeline node
 export const ADD_PIPELINE_NODE = PIPELINE_SERVICE + '/AddComponent';

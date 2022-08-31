@@ -3,13 +3,13 @@
         <ng-container *ngFor="let pipelineNodeData of pipelineNodeDatas">
             <app-pipeline-node
                 [id]="pipelineNodeData.id"
-                (staticClick)="clickNodeElement(pipelineNodeData.id)"
                 draggabilly
                 [options]="draggabillyOptions"
                 [pipelineNodeData]="pipelineNodeData"
                 (dragStart)="setToUpperLayer(pipelineNodeData.id)"
                 (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
                 (dragMove)="updateLeaderLine(pipelineNodeData.id)"
+                (nodeClick)="clickNodeElement(pipelineNodeData.id)"
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (removeNodeEmit)="

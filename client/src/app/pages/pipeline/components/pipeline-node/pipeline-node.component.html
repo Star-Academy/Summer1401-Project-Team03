@@ -1,11 +1,11 @@
 <div class="wrapper" [title]="pipelineNodeData.title">
     <app-svg [iconType]="PROCESS[processType].icon"></app-svg>
-    <div class="desc">
+    <div class="desc" (click)="nodeClick.emit()">
         <h3 class="label">{{ PROCESS[processType].title }}</h3>
         <p class="no-cap">{{ pipelineNodeData.title }}</p>
     </div>
 
-    <div class="setting">
+    <div class="setting" [ngClass]="{opened: pipelineNodeData.openedSettingModal}">
         <app-svg
             class="setting__icon"
             (click)="toggleShowItemSettingModal(); $event.stopPropagation()"

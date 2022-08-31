@@ -6,6 +6,7 @@ import {
     GetAllNodeServiceModel,
     PipelineNodeModel,
     RemoveNodeServiceModel,
+    RunUpToNodeServiceModel,
 } from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
 import {
@@ -15,10 +16,12 @@ import {
     PIPELINE_SET_CONFIG,
     ADD_PIPELINE_CHANGE_POSITION,
     DELETE_PIPELINE_NODE,
+    PIPELINE_RUN_UP_TO,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
-import {ProcessType} from '../enums/ProcessType.enum';
 import {PROCESS} from '../data/Processes.data';
+import {Pair} from '../models/pair.model';
+import {TableColumn} from '../components/data-table/models/table-column.model';
 
 @Injectable({
     providedIn: 'root',
@@ -96,7 +99,16 @@ export class PipelineBoardService {
 
     //    getSettingNode
     //    sendSettingNode
-    //    runUpNode
+    public async runUpToNode(): Promise<Pair<TableColumn[], string[][]>> {
+        const response = await this.apiService.get<RunUpToNodeServiceModel>(PIPELINE_RUN_UP_TO, {
+            pipelineId: this.selectedPipelineBoardId,
+            componentId: this.selectedNode?.id,
+        });
+
+        const cells = response?.cells.map((row) => Object.values(row as string));
+
+        return new Pair<TableColumn[], string[][]>(response?.columns || [], cells || []);
+    }
     //    runNode
 
     // UTILITY

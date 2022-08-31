@@ -15,6 +15,7 @@ export class PipelineNodeComponent implements OnInit {
     @Input() public pipelineNodeData!: PipelineNodeModel;
     @Output() public removeNodeEmit = new EventEmitter<void>();
     @Output() public addNodeEmit = new EventEmitter<void>();
+    @Output() public nodeClick = new EventEmitter<void>();
 
     public constructor(private boardService: PipelineBoardService) {}
 
