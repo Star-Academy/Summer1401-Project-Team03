@@ -41,15 +41,19 @@ export class SideBarComponent implements OnInit, OnDestroy {
             return;
         }
 
-        this.configs = Object.keys(typeConfigs).reduce(
-            (prev, param) => ({
+        this.configs = Object.keys(typeConfigs).reduce((prev, param) => {
+            const result = value[param]
+                ? typeConfigs[param].type === ItemType.TEXT_INPUT
+                    ? value[param].join(', ')
+                    : value[param][0]
+                : typeConfigs[param].value;
+            return {
                 ...prev,
                 [param]: {
                     ...typeConfigs[param],
-                    value: value[param]?.[0] || typeConfigs[param].value,
+                    value: result,
                 },
-            }),
-            {}
-        );
+            };
+        }, {});
     }
 }
