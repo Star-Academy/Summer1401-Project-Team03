@@ -34,7 +34,7 @@ export class PipelineAddButtonComponent {
     ) {}
 
     public async createPipeline(): Promise<void> {
-        const response = this.pipelineService.createPipeline(this.formData);
+        const response = await this.pipelineService.createPipeline(this.formData);
         if (response) {
             this.router.navigateByUrl(`/pipeline/${response}`);
         }
