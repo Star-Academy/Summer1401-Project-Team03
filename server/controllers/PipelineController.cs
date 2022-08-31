@@ -63,15 +63,13 @@ public class PipelineController : ControllerBase
         {
             var pipeline = _idToPipeline[pipelineId];
 
-            var component = new ComponentFactory().CreateComponent(type, title);
+            var component = new ComponentFactory().CreateComponent(type, pipeline, position,title);
 
             pipeline.AddComponent(component);
             pipeline.Disconnect(previousComponentId, nextComponentId);
             pipeline.Connect(previousComponentId, component.Id);
             pipeline.Connect(component.Id, nextComponentId);
-
-            component.Position = position;
-
+            
             file.FileOperation.Instance.WritePipeline(pipeline);
             return Ok(component.Id);
         }
@@ -150,10 +148,8 @@ public class PipelineController : ControllerBase
         var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
         var fileName = regex.Match(new FileInfo(filePath).Name).Groups[1].Value;
 
-        var extractor = new ComponentFactory().CreateComponent(ComponentType.CsvExtractor, fileName);
-
-        extractor.Pipeline = pipeline;
-        extractor.Position = position;
+        var extractor = new ComponentFactory().CreateComponent(ComponentType.CsvExtractor, pipeline, position,fileName);
+        
         extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
         extractor.IsConfigSet = true;
         
@@ -176,9 +172,7 @@ public class PipelineController : ControllerBase
             _ => ComponentType.CsvLoader
         };
 
-        var loader = new ComponentFactory().CreateComponent(componentType, fileName);
-        loader.Pipeline = pipeline;
-        loader.Position = position;
+        var loader = new ComponentFactory().CreateComponent(componentType, pipeline, position, fileName);
         loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
         loader.IsConfigSet = true;
         
