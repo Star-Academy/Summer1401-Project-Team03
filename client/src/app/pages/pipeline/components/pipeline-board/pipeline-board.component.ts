@@ -143,9 +143,15 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     // Node Element
-    public async clickNodeElement(id: number): Promise<void | boolean> {
-        this.boardService.selectedNode = this.pipelineNodeDatas[this.getNodeIndexById(id)];
-        this.boardService.selectedNodeRx.next(this.boardService.selectedNode);
+    public async clickNodeElement(event: Event, id: number): Promise<void | boolean> {
+        let clickOnDesc = false;
+        for (let target of event.composedPath()) {
+            if ((target as HTMLElement).className === 'desc') clickOnDesc = true;
+        }
+        if (clickOnDesc) {
+            this.boardService.selectedNode = this.pipelineNodeDatas[this.getNodeIndexById(id)];
+            this.boardService.selectedNodeRx.next(this.boardService.selectedNode);
+        }
     }
 
     private addItemToNodeListById(id: number, item: PipelineNodeModel): void {

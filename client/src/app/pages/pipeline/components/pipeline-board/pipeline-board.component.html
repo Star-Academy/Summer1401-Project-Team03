@@ -6,10 +6,10 @@
                 draggabilly
                 [options]="draggabillyOptions"
                 [pipelineNodeData]="pipelineNodeData"
+                (staticClick)="clickNodeElement($event.event, pipelineNodeData.id)"
                 (dragStart)="setToUpperLayer(pipelineNodeData.id)"
                 (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
                 (dragMove)="updateLeaderLine(pipelineNodeData.id)"
-                (nodeClick)="clickNodeElement(pipelineNodeData.id)"
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (removeNodeEmit)="
