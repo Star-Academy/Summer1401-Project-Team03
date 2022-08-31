@@ -1,0 +1,13 @@
+<ng-container *ngIf="isLoading; else notLoading">
+    <p>Loading...</p>
+</ng-container>
+
+<ng-template #notLoading>
+    <ng-container *ngIf="isError; else notError">
+        <p>Error...</p>
+    </ng-container>
+
+    <ng-template #notError>
+        <ng-content></ng-content>
+    </ng-template>
+</ng-template>
