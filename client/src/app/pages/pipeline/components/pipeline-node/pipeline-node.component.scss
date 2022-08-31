@@ -13,8 +13,8 @@
     justify-content: center;
     gap: 1rem;
 
-    width: 22rem;
-    height: 10rem;
+    inline-size: 22rem;
+    block-size: 10rem;
 
     padding: 0.6rem 1rem;
 
@@ -27,16 +27,16 @@
     app-svg {
         color: var(--color-purple-30);
 
-        width: 4rem;
+        inline-size: 4rem;
     }
 
     .desc {
-        width: 100%;
+        inline-size: 100%;
 
         .label {
             overflow: hidden;
 
-            width: 100%;
+            inline-size: 100%;
 
             font-size: var(--font-size-big);
 
@@ -67,8 +67,8 @@
             right: 0.5rem;
             z-index: 10;
 
-            width: 2rem;
-            height: 2rem;
+            inline-size: 2rem;
+            block-size: 2rem;
 
             cursor: pointer;
         }

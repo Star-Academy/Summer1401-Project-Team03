@@ -7,17 +7,19 @@
     <table class="inventory__table">
         <tr>
             <th>Name</th>
-            <th>Created At</th>
-            <th>Modified At</th>
+            <!-- <th>Created At</th>
+            <th>Modified At</th> -->
             <th></th>
         </tr>
         <tr
             *ngFor="let item of pipelineService.pipelines | searchFilter: searchPhrase"
             (click)="navigateWithUrl(item.id)"
         >
-            <td>{{ item.name }}</td>
-            <td>{{ item.createAt | convertDate }}</td>
-            <td>{{ item.modifiedAt | convertDate }}</td>
+            <td class="name">
+                <a title="open pipeline" [routerLink]="'/pipeline/' + item.id">{{ item.name }}</a>
+            </td>
+            <!-- <td>{{ item.createAt | convertDate }}</td>
+            <td>{{ item.modifiedAt | convertDate }}</td> -->
             <td>
                 <app-svg
                     (click)="openItemSettingModal(item.id); $event.stopPropagation()"

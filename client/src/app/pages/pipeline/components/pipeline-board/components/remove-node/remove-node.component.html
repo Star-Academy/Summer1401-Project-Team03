@@ -1,6 +1,6 @@
 <app-modal #removeNodeModal title="remove node" class="modal">
     <div class="modal__container">
-        <app-button (click)="removeNodeHandle(nodeData.id); removeNodeEmit.emit()">Remove</app-button>
+        <app-button (click)="removeNodeHandle()">Remove</app-button>
         <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>
     </div>
 </app-modal>

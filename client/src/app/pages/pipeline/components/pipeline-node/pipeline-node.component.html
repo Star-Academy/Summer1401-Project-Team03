@@ -1,7 +1,7 @@
 <div class="wrapper" [title]="pipelineNodeData.title">
-    <app-svg [iconType]="pipelineNodeData.processesInfoType.icon"></app-svg>
+    <app-svg [iconType]="PROCESS[pipelineNodeData.processesInfoType].icon"></app-svg>
     <div class="desc">
-        <h3 class="label">{{ pipelineNodeData.processesInfoType.title }}</h3>
+        <h3 class="label">{{ PROCESS[pipelineNodeData.processesInfoType].title }}</h3>
         <p class="no-cap">{{ pipelineNodeData.title }}</p>
     </div>
 
@@ -14,24 +14,10 @@
         <ng-container *ngIf="pipelineNodeData.openedSettingModal">
             <app-setting-item-modal
                 class="setting__modal"
-                (newNodeEmit)="addNode.openModal()"
+                (newNodeEmit)="addNodeEmit.emit()"
                 (configNodeEmit)="configNode(pipelineNodeData.id)"
-                (deleteNodeEmit)="removeNode.openModal()"
+                (deleteNodeEmit)="removeNodeEmit.emit()"
             ></app-setting-item-modal>
         </ng-container>
     </div>
-
-    <app-remove-node
-        class="absolute"
-        #removeNode
-        [nodeData]="pipelineNodeData"
-        (removeNodeEmit)="removeNodeEmit.emit()"
-    ></app-remove-node>
-
-    <app-add-node
-        class="absolute"
-        #addNode
-        [nodeData]="pipelineNodeData"
-        (addNodeEmit)="addNodeEmit.emit($event)"
-    ></app-add-node>
 </div>

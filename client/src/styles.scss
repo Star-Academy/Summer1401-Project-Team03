@@ -1,6 +1,5 @@
 :root {
     --color-purple-95: hsl(263deg 35% 95%);
-    --color-purple-90: hsl(263deg 35% 90%);
     --color-purple-75: hsl(263deg 35% 75%);
     --color-purple-50: hsl(263deg 35% 50%);
     --color-purple-30: hsl(263deg 35% 30%);
@@ -11,18 +10,15 @@
 
     --color-shadow: hsl(0deg 0% 0% / 31.8%);
 
-    --color-gray-95: hsl(0deg 0% 95%);
-    --color-gray-90: hsl(0deg 0% 90%);
-    --color-gray-85: hsl(0deg 0% 85%);
-    --color-gray-78: hsl(0deg 0% 78%);
-    --color-gray-60: hsl(0deg 0% 60%);
-    --color-gray-50: hsl(0deg 0% 50%);
-    --color-gray-34: hsl(0deg 0% 34%);
-    --color-gray-0: hsl(0deg 0% 0%);
+    --color-gray-95: hsl(0deg 2% 95%);
+    --color-gray-90: hsl(0deg 2% 90%);
+    --color-gray-78: hsl(260deg 2% 78%);
+    --color-gray-60: hsl(260deg 2% 60%);
+    --color-gray-34: hsl(0deg 2% 34%);
+    --color-gray-0: hsl(0deg 2% 0%);
 
     --color-white-solid: hsl(0deg 0% 100%);
 
-    --font-size-small: 1rem;
     --font-size-primary: 1.3rem;
     --font-size-big: 1.7rem;
 
@@ -75,6 +71,8 @@ button {
 }
 
 a {
+    color: inherit;
+
     text-decoration: none;
 }
 

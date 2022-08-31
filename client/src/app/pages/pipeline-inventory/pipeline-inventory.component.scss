@@ -1,17 +1,17 @@
 .inventory {
-    --color-hr-border: var(--color-purple-30);
+    --color-hr-border: var(--color-gray-60);
     --color-hr-bg: var(--color-white-solid);
     --color-hr-bg-hover: var(--color-gray-78);
 
-    --color-th-text: var(--color-purple-15);
-    --color-th-bg: hsl(263deg 46% 70%);
+    --color-th-text: var(--color-gray-0);
+    --color-th-bg: var(--color-white-solid);
 
     --color-td-text: hsl(0deg 0% 20%);
     display: flex;
     flex-direction: column;
     gap: 3rem;
 
-    width: 90%;
+    inline-size: 90%;
 
     margin-inline: auto;
     padding-block-start: 7rem;
@@ -46,7 +46,7 @@
         th {
             color: var(--color-th-text);
 
-            font-size: 2rem;
+            font-size: var(--font-size-big);
             font-weight: 700;
         }
 
@@ -55,20 +55,24 @@
 
             position: relative;
 
-            font-size: 1.6rem;
+            font-size: var(--font-size-primary);
 
             text-align: center;
+
+            .name {
+                cursor: pointer;
+            }
         }
 
         td,
         th {
-            padding: 2rem 0.75rem;
+            padding: 1rem 0.75rem;
 
             text-transform: capitalize;
         }
 
         .item-setting {
-            height: 2rem;
+            block-size: 2rem;
 
             cursor: pointer;
         }

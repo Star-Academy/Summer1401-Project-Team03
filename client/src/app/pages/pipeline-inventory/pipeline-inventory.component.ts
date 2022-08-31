@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {PipelineService} from 'src/app/services/pipeline.service';
+import {PipelineService} from '../../services/pipeline.service';
 
 @Component({
     selector: 'app-pipeline-inventory',
@@ -27,7 +27,9 @@ export class PipelineInventoryComponent {
     }
 
     public deleteItem(id: number): void {
+        this.pipelineService.deletePipeline(id);
         console.log(`Removed item ${id}`);
+        this.pipelineService.deletePipeline(id);
         // Connect to inventory service
     }
 

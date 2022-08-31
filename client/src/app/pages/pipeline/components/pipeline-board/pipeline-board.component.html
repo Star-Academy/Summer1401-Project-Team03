@@ -12,9 +12,21 @@
                 (dragMove)="updateLeaderLine(pipelineNodeData.id)"
                 ngDraggable
                 [position]="pipelineNodeData.position"
-                (removeNodeEmit)="removeNodeComponent(pipelineNodeData.id)"
-                (addNodeEmit)="addNodeComponent($event, pipelineNodeData.id)"
+                (removeNodeEmit)="
+                    removeNode.openModal(pipelineNodeData.id, pipelineNodeData.processesInfoType, pipelineBoardId)
+                "
+                (addNodeEmit)="
+                    addNode.openModal(
+                        pipelineNodeData.id,
+                        pipelineNodeData.afterId,
+                        pipelineNodeData.position,
+                        pipelineBoardId
+                    )
+                "
             ></app-pipeline-node>
         </ng-container>
     </div>
+
+    <app-remove-node class="absolute" #removeNode (removeNodeEmit)="removeNodeComponent($event)"></app-remove-node>
+    <app-add-node class="absolute" #addNode (addNodeEmit)="addNodeComponent($event)"></app-add-node>
 </app-board>
