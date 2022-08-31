@@ -18,6 +18,7 @@ import {
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 import {ProcessType} from '../enums/ProcessType.enum';
+import {PROCESS} from '../data/Processes.data';
 
 @Injectable({
     providedIn: 'root',
@@ -67,8 +68,6 @@ export class PipelineBoardService {
     public counter = 10;
     public async addNode(addNodeInfo: AddNodeServiceModel): Promise<number | null> {
         const fakeData = {...addNodeInfo, type: 0};
-        console.log(fakeData);
-        console.log(ADD_PIPELINE_NODE);
         const response =
             (await this.apiService.post<number>(ADD_PIPELINE_NODE, {...fakeData}, fakeData.position)) || undefined;
         // const response = this.counter;
@@ -88,7 +87,6 @@ export class PipelineBoardService {
     }
 
     public async changeComponentPosition(changeNodePositionInfo: ChangeComponentPositionServiceModel): Promise<void> {
-        console.log(changeNodePositionInfo);
         await this.apiService.put(
             ADD_PIPELINE_CHANGE_POSITION,
             {...changeNodePositionInfo},
@@ -111,7 +109,7 @@ export class PipelineBoardService {
                 beforeId: component.previousIds[0],
                 afterId: component.nextIds[0],
                 title: component.title,
-                processesInfoType: (<any>ProcessType)[component.type],
+                processesInfoType: this.convertStringTypeToNumber(component.type),
                 position: component.position,
                 openedSettingModal: false,
                 leaderlines: [],
@@ -119,5 +117,11 @@ export class PipelineBoardService {
             return converted;
         });
         return pipelineNodes;
+    }
+
+    private convertStringTypeToNumber(type: string): number {
+        const typeNumber = Object.entries(PROCESS).find((process) => process[0] === type);
+        if (typeNumber) return typeNumber[1].id;
+        return 0;
     }
 }

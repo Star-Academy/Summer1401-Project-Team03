@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {PipelineNodeModel} from '../../../../models/pipeline-node.model';
-import {PROCESS} from '../../../../data/Processes.data';
+import {PROCESS, ProcessInfo} from '../../../../data/Processes.data';
 import {PipelineBoardService} from 'src/app/services/pipeline-board.service';
+import {ProcessType} from '../../../../enums/ProcessType.enum';
 
 @Component({
     selector: 'app-pipeline-node',
@@ -10,7 +11,7 @@ import {PipelineBoardService} from 'src/app/services/pipeline-board.service';
 })
 export class PipelineNodeComponent implements OnInit {
     public PROCESS = PROCESS;
-    public processType!: string;
+    public processType!: ProcessType;
     @Input() public pipelineNodeData!: PipelineNodeModel;
     @Output() public removeNodeEmit = new EventEmitter<void>();
     @Output() public addNodeEmit = new EventEmitter<void>();
@@ -18,9 +19,9 @@ export class PipelineNodeComponent implements OnInit {
     public constructor(private boardService: PipelineBoardService) {}
 
     public ngOnInit(): void {
-        console.log('saaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaalam');
-        const type = Object.entries(PROCESS).find((process) => process[1].id === this.pipelineNodeData.id) || '';
-        console.log(type[0]);
+        const type =
+            Object.entries(PROCESS).find((process) => process[1].id === this.pipelineNodeData.processesInfoType) || '';
+        this.processType = (<any>ProcessType)[type[0]];
     }
 
     public toggleShowItemSettingModal(): void {
