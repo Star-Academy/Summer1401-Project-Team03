@@ -23,6 +23,7 @@ import {BehaviorSubject} from 'rxjs';
 import {PROCESS, ProcessSchema} from '../data/Processes.data';
 import {IoType} from '../pages/pipeline/components/bottom-bar/enums/io-type.enum';
 import {TableColumn} from '../components/data-table/models/table-column.model';
+import {ItemType} from '../enums/ItemType.enum';
 
 @Injectable({
     providedIn: 'root',
@@ -69,7 +70,11 @@ export class PipelineBoardService {
     }
 
     public async setNodeConfig(config: any): Promise<void> {
-        const body = Object.keys(config).reduce((prev, key) => ({...prev, [key]: [config[key].value]}), {});
+        const body = Object.keys(config).reduce((prev, key) => {
+            const value = config[key].type === ItemType.TEXT_INPUT ? config[key].value.split(', ') : config[key].value;
+
+            return {...prev, [key]: value};
+        }, {});
         const response = await this.apiService.post(
             PIPELINE_SET_CONFIG,
             {pipelineId: this.selectedPipelineBoardId, componentId: this.selectedNode?.id},

@@ -18,31 +18,42 @@ export class SideBarComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.boardService.selectedNodeConfigRx.subscribe((value: any | null) => {
-            console.log('called');
-            if (!value || !this.boardService.selectedNode) {
+            if (!value) {
                 this.configs = null;
                 return;
             }
 
-            const process: number = this.boardService.selectedNode.processesInfoType;
-
-            const typeConfigs = this.boardService.convertIdToType(process).paramethers;
-            this.configs = Object.keys(typeConfigs).reduce(
-                (prev, param) => ({
-                    ...prev,
-                    [param]: {
-                        ...typeConfigs[param],
-                        value: value[param]?.[0] || typeConfigs[param].value,
-                    },
-                }),
-                {}
-            );
-
-            console.log('setting', this.configs);
+            this.setupConfigs(value);
         });
     }
 
     public ngOnDestroy(): void {
         this.boardService.selectedNodeConfigRx.unsubscribe();
+    }
+
+    private setupConfigs(value: any): void {
+        const process: number = this.boardService.selectedNode!.processesInfoType;
+
+        const typeConfigs = this.boardService.convertIdToType(process).parameters;
+
+        if (!Object.keys(typeConfigs).length) {
+            this.configs = null;
+            return;
+        }
+
+        this.configs = Object.keys(typeConfigs).reduce((prev, param) => {
+            const result = value[param]
+                ? typeConfigs[param].type === ItemType.TEXT_INPUT
+                    ? value[param].join(', ')
+                    : value[param][0]
+                : typeConfigs[param].value;
+            return {
+                ...prev,
+                [param]: {
+                    ...typeConfigs[param],
+                    value: result,
+                },
+            };
+        }, {});
     }
 }

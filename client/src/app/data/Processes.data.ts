@@ -7,7 +7,7 @@ export interface ProcessSchema {
     id: number;
     title: string;
     icon: string;
-    paramethers: {[key in string]: Paramether};
+    parameters: {[key in string]: Paramether};
 }
 
 export type ProcessInfo = {
@@ -42,7 +42,7 @@ export const PROCESS: ProcessInfo = {
         id: 0,
         title: 'filter',
         icon: 'filter',
-        paramethers: {
+        parameters: {
             fields_to_filter: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -96,7 +96,7 @@ export const PROCESS: ProcessInfo = {
         id: 1,
         title: 'aggregation',
         icon: 'aggregate',
-        paramethers: {
+        parameters: {
             fields_to_aggregate: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -140,7 +140,7 @@ export const PROCESS: ProcessInfo = {
         id: 2,
         title: 'data sampling',
         icon: 'data_sampling',
-        paramethers: {
+        parameters: {
             number: {
                 type: ItemType.TEXT_INPUT,
                 text_type: 'number',
@@ -153,7 +153,7 @@ export const PROCESS: ProcessInfo = {
         id: 3,
         title: 'remove field',
         icon: 'fieldRemove',
-        paramethers: {
+        parameters: {
             fields_to_remove: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -165,7 +165,7 @@ export const PROCESS: ProcessInfo = {
         id: 4,
         title: 'rename field',
         icon: 'fieldRename',
-        paramethers: {
+        parameters: {
             fields_to_rename: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -182,7 +182,7 @@ export const PROCESS: ProcessInfo = {
         id: 5,
         title: 'field selector',
         icon: 'field_selector',
-        paramethers: {
+        parameters: {
             fields_to_select: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -194,7 +194,7 @@ export const PROCESS: ProcessInfo = {
         id: 6,
         title: 'data hashing',
         icon: 'hash',
-        paramethers: {
+        parameters: {
             fields_to_hash: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -206,7 +206,7 @@ export const PROCESS: ProcessInfo = {
         id: 7,
         title: 'type converter',
         icon: 'typeConverter',
-        paramethers: {
+        parameters: {
             fields: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -224,7 +224,7 @@ export const PROCESS: ProcessInfo = {
         id: 8,
         title: 'join',
         icon: 'join',
-        paramethers: {
+        parameters: {
             dataset: {
                 label: 'dataset',
                 type: ItemType.SELECT,
@@ -237,37 +237,37 @@ export const PROCESS: ProcessInfo = {
         id: 9,
         title: 'replicate',
         icon: 'join',
-        paramethers: {},
+        parameters: {},
     },
     csv_loader: {
         id: 10,
         title: 'destination',
         icon: 'source',
-        paramethers: {},
+        parameters: {},
     },
     csv_extractor: {
         id: 11,
         title: 'source',
         icon: 'source',
-        paramethers: {},
+        parameters: {},
     },
     json_extractor: {
         id: 12,
         title: 'source',
         icon: 'source',
-        paramethers: {},
+        parameters: {},
     },
     json_loader: {
         id: 13,
         title: 'destination',
         icon: 'source',
-        paramethers: {},
+        parameters: {},
     },
     math: {
         id: 14,
         title: 'math',
         icon: 'math',
-        paramethers: {
+        parameters: {
             fields: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -294,7 +294,7 @@ export const PROCESS: ProcessInfo = {
         id: 15,
         title: 'data cleanser',
         icon: 'dataCleanser',
-        paramethers: {
+        parameters: {
             fields: {
                 type: ItemType.TEXT_INPUT,
                 label: 'field',
@@ -317,7 +317,7 @@ export const PROCESS: ProcessInfo = {
         id: 16,
         title: 'concatenate',
         icon: 'concatenate',
-        paramethers: {
+        parameters: {
             first_fields: {
                 type: ItemType.TEXT_INPUT,
                 label: 'first field',

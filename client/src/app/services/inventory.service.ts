@@ -66,7 +66,7 @@ export class InventoryService {
 
     // private subscribeJoinOptions(): void {
     //     this.datasetRx.subscribe((value) => {
-    //         PROCESS.join.paramethers.datasets.options = value?.map((dataset) => ({
+    //         PROCESS.join.parameters.datasets.options = value?.map((dataset) => ({
     //             title: dataset.name,
     //             value: dataset.id,
     //         }));
