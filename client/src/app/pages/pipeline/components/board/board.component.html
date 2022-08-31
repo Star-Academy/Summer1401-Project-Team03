@@ -9,10 +9,7 @@
     [ngStyle]="{cursor: mouseIsDown ? 'grabbing' : 'grab'}"
     (mousedown)="mouseIsDown = true"
     (mouseup)="mouseIsDown = false"
-    (keydown.space)="$event.preventDefault()"
-    (keyup.space)="$event.preventDefault()"
     (mousemove)="mouseMoveHandler($event)"
-    tabindex="0"
 >
     <div class="board">
         <ng-content></ng-content>
