@@ -67,7 +67,7 @@ export class PipelineBoardService {
 
     public counter = 10;
     public async addNode(addNodeInfo: AddNodeServiceModel): Promise<number | null> {
-        const fakeData = {...addNodeInfo, type: 0};
+        const fakeData = {...addNodeInfo};
         const response =
             (await this.apiService.post<number>(ADD_PIPELINE_NODE, {...fakeData}, fakeData.position)) || undefined;
         // const response = this.counter;
