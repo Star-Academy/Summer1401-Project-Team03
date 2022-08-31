@@ -13,6 +13,8 @@ public abstract class Component
     }
 
     public string Title { get; set; }
+    
+    public bool isConfigSet { get; set; }
     public Dictionary<string, List<string>> Parameters { set; get; }
     public List<Component> NextComponents { set; get; }
 

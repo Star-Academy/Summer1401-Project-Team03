@@ -16,6 +16,8 @@ public enum ComponentType
     CSVExtractor, //ok
     JSONExtractor,
     JSONLoader,
-    Math,
+    Math,  //ok
+    DataCleanser, //ok
+    Concatenate,
     Python
 }

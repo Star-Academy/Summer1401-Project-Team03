@@ -17,6 +17,9 @@ public class Aggregate : Transformer
 
     public override string GetQuery()
     {
+        if (!isConfigSet)
+            throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
+        
         var fieldsToSelect = new List<string>(Parameters[FieldsToGroupBy]);
         for (var i = 0; i < Parameters[FieldsToAggregate].Count; i++)
             fieldsToSelect.Add(Pipeline.QueryBuilder.Aggregate(Parameters[FieldsToAggregate][i],

@@ -50,6 +50,8 @@ public static class Extensions
             "json_extractor" => ComponentType.JSONExtractor,
             "replicate" => ComponentType.Replicate,
             "math" => ComponentType.Math,
+            "data_cleanser" => ComponentType.DataCleanser,
+            "split" => ComponentType.Concatenate,
             _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
         };
     }
@@ -73,6 +75,8 @@ public static class Extensions
             ComponentType.JSONExtractor => "json_extractor",
             ComponentType.Replicate => "replicate",
             ComponentType.Math => "math",
+            ComponentType.DataCleanser => "data_cleanser",
+            ComponentType.Concatenate => "split",
             _ => throw new ArgumentOutOfRangeException(nameof(componentType), componentType, null)
         };
     }

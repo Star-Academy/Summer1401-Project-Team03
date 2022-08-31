@@ -4,7 +4,7 @@ namespace server.Components.Transformers;
 
 public class Math : Transformer
 {
-    private const string FieldsToCalculate = "fields_to_calculate";
+    private const string FieldsToCalculate = "fields";
     private const string ShouldCreateNewColumn = "should_create_new_column";
     private const string Values = "values";
     private const string Operators = "operators";
@@ -16,6 +16,9 @@ public class Math : Transformer
 
     public override string GetQuery()
     {
+        if (!isConfigSet)
+            throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
+
         var selectList = GetKeysForQuery();
         return Pipeline.QueryBuilder.Select(selectList, PreviousComponents[0].GetQuery(),
             Pipeline.QueryBuilder.NewAlias());
@@ -25,29 +28,39 @@ public class Math : Transformer
     {
         var keys = PreviousComponents[0].GetKeys();
 
-        if (bool.Parse(Parameters[ShouldCreateNewColumn][0]))
-            keys.Add($"{Parameters[FieldsToCalculate][0]}__{Parameters[Values][0]}");
-
+        for (var i = 0; i < Parameters[ShouldCreateNewColumn].Count; i++)
+        {
+            if (bool.Parse(Parameters[ShouldCreateNewColumn][i]))
+                keys.Add($"{Parameters[FieldsToCalculate][i]}__{Parameters[Values][i]}");
+        }
+        
         return keys;
     }
 
     private List<string> GetKeysForQuery()
     {
         var keys = PreviousComponents[0].GetKeys();
-        var valForQuery = GetFunctionFromMathOperator(Parameters[FieldsToCalculate][0], Parameters[Values][0]);
 
-        if (bool.Parse(Parameters[ShouldCreateNewColumn][0]))
-            keys.Add($"{valForQuery} AS {Parameters[FieldsToCalculate][0]}__{Parameters[Values][0]}");
-        else
-            keys[keys.IndexOf(Parameters[FieldsToCalculate][0])] = valForQuery;
+        for (var i = 0; i < Parameters[FieldsToCalculate].Count; i++)
+        {
+            var valForQuery = GetFunctionFromMathOperator(Parameters[FieldsToCalculate][i], Parameters[Values][i], Parameters[Operators][i]);
 
+            if (bool.Parse(Parameters[ShouldCreateNewColumn][i]))
+                keys.Add($"{valForQuery} AS {Parameters[FieldsToCalculate][i]}__{Parameters[Values][i]}");
+            else
+            {
+                keys[keys.IndexOf(Parameters[FieldsToCalculate][i])] = $"{valForQuery} AS {Parameters[FieldsToCalculate][i]}";
+            }
+
+        }
+        
         return keys;
     }
 
 
-    private string GetFunctionFromMathOperator(string x, string y)
+    private string GetFunctionFromMathOperator(string x, string y, string @operator)
     {
-        return Parameters[Operators][0].GetOperatorType() switch
+        return @operator.GetOperatorType() switch
         {
             MathOperator.Log => $"LOG({x}, {y})",
             MathOperator.Sin => $"SIN({x})",
