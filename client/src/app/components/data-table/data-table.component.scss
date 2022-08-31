@@ -57,7 +57,7 @@
                 text-align: start;
 
                 h2 {
-                    font-size: 1.65rem;
+                    font-size: var(--font-size-primary);
 
                     white-space: nowrap;
                 }
@@ -65,7 +65,7 @@
                 h4 {
                     color: var(--color-purple-30);
 
-                    font-size: 1rem;
+                    font-size: var(--font-size-small);
 
                     white-space: nowrap;
 
@@ -89,7 +89,7 @@
 
             tbody tr td {
                 font-family: monospace;
-                font-size: 1.5rem;
+                font-size: var(--font-size-primary);
             }
 
             th,
