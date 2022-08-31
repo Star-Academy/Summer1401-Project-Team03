@@ -52,6 +52,10 @@
             font-size: 1.25rem;
 
             text-align: center;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
