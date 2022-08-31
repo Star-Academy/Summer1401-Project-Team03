@@ -1,5 +1,5 @@
 <app-board [gridSize]="gridSize">
-    <div class="wrapper">
+    <div class="wrapper" (click)="clickOnWrapperHandler($event)">
         <ng-container *ngFor="let pipelineNodeData of pipelineNodeDatas">
             <app-pipeline-node
                 [id]="pipelineNodeData.id"
