@@ -1,3 +1,5 @@
+using DefaultNamespace;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.ClearProviders();
@@ -8,6 +10,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<PipelineControllerService>();
 
 builder.Services.AddCors(options =>
 {

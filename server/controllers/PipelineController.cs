@@ -1,6 +1,7 @@
 using System.Data.Common;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using DefaultNamespace;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.Components;
@@ -16,16 +17,11 @@ namespace server.controllers;
 [Route("[controller]/[Action]")]
 public class PipelineController : ControllerBase
 {
-    private static readonly Dictionary<int, Pipeline> IdToPipeline = new();
+    private static Dictionary<int, Pipeline> IdToPipeline = new();
 
-    public PipelineController()
+    public PipelineController(PipelineControllerService pipelineControllerService)
     {
-        var path = PathGenerator.GetPipelineDirectory();
-        foreach (var filePath in Directory.GetFiles(path))
-        {
-            var information = file.FileOperation.Instance.ReadPipeline(filePath);
-            IdToPipeline[information.Id] = new Pipeline(information);
-        }
+        IdToPipeline = pipelineControllerService.IdToPipeline;
     }
 
     [EnableCors("CorsPolicy")]
@@ -42,10 +38,10 @@ public class PipelineController : ControllerBase
 
             IDCounterHandler.SavePipelineID(pipelineId + 1);
 
-            AddSource(pipeline, sourceFileId, new Position(0, 0));
-            AddDestination(pipeline, destFileName, destFileFormat, new Position(0, 4));
+            var sourceId = AddSource(pipeline, sourceFileId, new Position(80, 80));
+            var destinationId = AddDestination(pipeline, destFileName, destFileFormat, new Position(400, 80));
 
-            pipeline.Connect(1, 2);
+            pipeline.Connect(sourceId, destinationId);
 
             file.FileOperation.Instance.WritePipeline(pipeline);
 
@@ -146,7 +142,7 @@ public class PipelineController : ControllerBase
         }
     }
 
-    private void AddSource(Pipeline pipeline, int fileId, Position position)
+    private int AddSource(Pipeline pipeline, int fileId, Position position)
     {
         var filePath = FileSearcher.Search(fileId, "imports");
 
@@ -160,10 +156,12 @@ public class PipelineController : ControllerBase
         extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
 
         pipeline.AddComponent(extractor);
+
+        return extractor.Id;
     }
 
 
-    private void AddDestination(Pipeline pipeline, string fileName, string format, Position position)
+    private int AddDestination(Pipeline pipeline, string fileName, string format, Position position)
     {
         var fileId = IDCounterHandler.LoadFileID();
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "exports");
@@ -189,6 +187,8 @@ public class PipelineController : ControllerBase
 
         pipeline.AddDestinationId(loader.Id);
         pipeline.AddComponent(loader);
+
+        return loader.Id;
     }
 
     [EnableCors("CorsPolicy")]
@@ -218,10 +218,12 @@ public class PipelineController : ControllerBase
             var nextIDs = component.NextComponents.Select(x => x.Id).ToList();
 
             foreach (var previousId in previousIDs) pipeline.Disconnect(previousId, componentId);
-
             foreach (var nextId in nextIDs) pipeline.Disconnect(componentId, nextId);
 
-            pipeline.Connect(previousIDs.ElementAt(0), nextIDs.ElementAt(0));
+            if (previousIDs.Any() && nextIDs.Any()) pipeline.Connect(previousIDs.ElementAt(0), nextIDs.ElementAt(0));
+
+            if (pipeline.IdToComponent.ContainsKey(componentId)) pipeline.IdToComponent.Remove(componentId);
+
             file.FileOperation.Instance.WritePipeline(pipeline);
             return Ok();
         }
