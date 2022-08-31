@@ -31,7 +31,6 @@ export class PipelineNodeComponent implements OnInit {
 
     public configNode(id: number): void {
         this.pipelineNodeData.openedSettingModal = false;
-        this.boardService.getNodeConfig(id);
         console.log(`configure node ${id}`);
         // TODO Connect to service
     }

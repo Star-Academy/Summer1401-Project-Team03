@@ -28,12 +28,16 @@ import {TableColumn} from '../components/data-table/models/table-column.model';
     providedIn: 'root',
 })
 export class PipelineBoardService {
-    public constructor(private apiService: ApiService) {}
     public allNode: PipelineNodeModel[] = [];
     public selectedNode: PipelineNodeModel | null = null;
     public selectedNodeConfig: any | null = null;
     public selectedPipelineBoardId!: number;
 
+    public constructor(private apiService: ApiService) {
+        this.getNodeData();
+    }
+
+    public selectedNodeRx = new BehaviorSubject<PipelineNodeModel | null>(null);
     public selectedNodeConfigRx = new BehaviorSubject<any | null>(null);
 
     public async getAllNode(): Promise<PipelineNodeModel[]> {
@@ -47,8 +51,7 @@ export class PipelineBoardService {
         return [];
     }
 
-    public async getNodeConfig(id: number): Promise<void> {
-        this.selectedNode = this.allNode.find((node) => node.id === id) || null;
+    private async getNodeConfig(id: number): Promise<void> {
         const response = await this.apiService.get<any>(PIPELINE_NODE_CONFIG, {
             pipelineId: this.selectedPipelineBoardId,
             componentId: id,
@@ -100,15 +103,14 @@ export class PipelineBoardService {
 
     //    getSettingNode
     //    sendSettingNode
-    public async runUpToNode(): Promise<Pair<TableColumn[], string[][]>> {
-        const response = await this.apiService.get<RunUpToNodeServiceModel>(PIPELINE_RUN_UP_TO, {
+    private async runUpToNode(id: number): Promise<Pair<string[], string[][]>> {
+        const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
             pipelineId: this.selectedPipelineBoardId,
-            componentId: this.selectedNode?.id,
+            componentId: id,
         });
-
-        const cells = response?.cells.map((row) => Object.values(row as string));
-
-        return new Pair<TableColumn[], string[][]>(response?.columns || [], cells || []);
+        const columns = Object.keys(response?.[0]);
+        const cells = response?.map((row) => Object.values(row as string));
+        return new Pair<string[], string[][]>(columns, cells || []);
     }
     //    runNode
 
@@ -141,5 +143,15 @@ export class PipelineBoardService {
     public convertIdToType(id: number): ProcessSchema {
         const type = Object.entries(PROCESS).find((process) => process[1].id === id) || null;
         return (type?.[1] as ProcessSchema) || null;
+    }
+
+    private getNodeData(): void {
+        this.selectedNodeRx.subscribe((value) => {
+            if (!value) {
+                return;
+            }
+            this.getNodeConfig(value.id);
+            this.runUpToNode(value.id);
+        });
     }
 }
