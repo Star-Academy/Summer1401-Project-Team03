@@ -10,7 +10,7 @@
             label="Display"
             [options]="ioTypeValues"
             [value]="whichSide.toUpperCase()"
-            (valueChange)="whichSideSet = $event"
+            (valueChange)="setWhichSide($event)"
         ></app-pill-menu-input>
     </div>
 

@@ -5,23 +5,23 @@ import {
     ComponentInformationModel,
     GetAllNodeServiceModel,
     PipelineNodeModel,
+    PreviewTableData,
     RemoveNodeServiceModel,
-    RunUpToNodeServiceModel,
 } from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
 import {
-    PIPELINE_ONE,
-    PIPELINE_NODE_CONFIG,
-    ADD_PIPELINE_NODE,
-    PIPELINE_SET_CONFIG,
     ADD_PIPELINE_CHANGE_POSITION,
+    ADD_PIPELINE_NODE,
     DELETE_PIPELINE_NODE,
+    PIPELINE_NODE_CONFIG,
+    PIPELINE_ONE,
     PIPELINE_RUN_UP_TO,
+    PIPELINE_SET_CONFIG,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
-import {PROCESS, ProcessInfo, ProcessSchema} from '../data/Processes.data';
-import {ProcessType} from '../enums/ProcessType.enum';
+import {PROCESS, ProcessSchema} from '../data/Processes.data';
 import {Pair} from '../models/pair.model';
+import {IoType} from '../pages/pipeline/components/bottom-bar/enums/io-type.enum';
 import {TableColumn} from '../components/data-table/models/table-column.model';
 
 @Injectable({
@@ -29,12 +29,21 @@ import {TableColumn} from '../components/data-table/models/table-column.model';
 })
 export class PipelineBoardService {
     public constructor(private apiService: ApiService) {}
+
     public allNode: PipelineNodeModel[] = [];
     public selectedNode: PipelineNodeModel | null = null;
     public selectedNodeConfig: any | null = null;
     public selectedPipelineBoardId!: number;
 
     public selectedNodeConfigRx = new BehaviorSubject<any | null>(null);
+
+    public nodePreview: PreviewTableData = {
+        inputColumns: [],
+        outputColumns: [],
+        inputRows: [],
+        outputRows: [],
+        ioType: IoType.BOTH,
+    };
 
     public async getAllNode(): Promise<PipelineNodeModel[]> {
         const pipelineId = this.selectedPipelineBoardId;
@@ -70,6 +79,7 @@ export class PipelineBoardService {
     }
 
     public counter = 10;
+
     public async addNode(addNodeInfo: AddNodeServiceModel): Promise<number | null> {
         const fakeData = {...addNodeInfo};
         const response =
@@ -100,16 +110,35 @@ export class PipelineBoardService {
 
     //    getSettingNode
     //    sendSettingNode
-    public async runUpToNode(): Promise<Pair<TableColumn[], string[][]>> {
-        const response = await this.apiService.get<RunUpToNodeServiceModel>(PIPELINE_RUN_UP_TO, {
-            pipelineId: this.selectedPipelineBoardId,
-            componentId: this.selectedNode?.id,
-        });
+    public async runUpToNode(): Promise<void> {
+        await Promise.all([
+            Promise.resolve().then(async () => {
+                if (this.nodePreview.ioType !== IoType.INPUT) {
+                    const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                        pipelineId: this.selectedPipelineBoardId,
+                        componentId: this.selectedNode?.id,
+                    });
 
-        const cells = response?.cells.map((row) => Object.values(row as string));
+                    this.nodePreview.outputColumns = Object.keys((response || [])[0]).map(
+                        (col) => new TableColumn(col)
+                    );
+                    this.nodePreview.outputRows = (response || []).map((row) => Object.values(row as string));
+                }
+            }),
+            Promise.resolve().then(async () => {
+                if (this.nodePreview.ioType !== IoType.OUTPUT) {
+                    const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                        pipelineId: this.selectedPipelineBoardId,
+                        componentId: this.selectedNode?.beforeId,
+                    });
 
-        return new Pair<TableColumn[], string[][]>(response?.columns || [], cells || []);
+                    this.nodePreview.inputColumns = Object.keys((response || [])[0]).map((col) => new TableColumn(col));
+                    this.nodePreview.inputRows = (response || []).map((row) => Object.values(row as string));
+                }
+            }),
+        ]);
     }
+
     //    runNode
 
     // UTILITY

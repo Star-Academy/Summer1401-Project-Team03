@@ -1,5 +1,6 @@
 import {customProcessType, ProcessType} from '../enums/ProcessType.enum';
 import {TableColumn} from '../components/data-table/models/table-column.model';
+import {IoType} from '../pages/pipeline/components/bottom-bar/enums/io-type.enum';
 
 export interface PipelineNodeModel {
     id: number;
@@ -73,4 +74,14 @@ export interface ComponentInformationModel {
         additionalProp2: string[];
         additionalProp3: string[];
     };
+}
+
+export interface PreviewTableData {
+    inputColumns: TableColumn[];
+    outputColumns: TableColumn[];
+
+    inputRows: string[][];
+    outputRows: string[][];
+
+    ioType: IoType;
 }
