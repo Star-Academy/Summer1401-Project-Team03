@@ -33,5 +33,7 @@ export class PipelineService {
         if (response) {
             this.pipelines = this.pipelines.filter((pipeline) => pipeline.id !== pipelineId);
         }
+        // TODO: add functionality
+
     }
 }
