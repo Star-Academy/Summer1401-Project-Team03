@@ -7,7 +7,10 @@ public abstract class Extractor : Component
 
     public override string GetQuery()
     {
-        _tableName = Pipeline.QueryBuilder.NewAlias();
+        if (_tableName is null)
+        {
+            _tableName = Pipeline.QueryBuilder.NewAlias();
+        }
         Extract();
         return Pipeline.QueryBuilder.SelectTable(_tableName);
     }

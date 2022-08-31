@@ -137,6 +137,6 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string NewAlias()
     {
         _counter++;
-        return $"T{_counter}";
+        return $"t{_counter}";
     }
 }
