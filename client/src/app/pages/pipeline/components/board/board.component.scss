@@ -64,11 +64,11 @@
             content: "";
 
             position: absolute;
-            right: -10rem;
-            bottom: -10rem;
+            inset-block-end: -10rem;
+            inset-inline-end: -10rem;
 
-            width: 10rem;
-            height: 10rem;
+            block-size: 10rem;
+            inline-size: 10rem;
         }
     }
 

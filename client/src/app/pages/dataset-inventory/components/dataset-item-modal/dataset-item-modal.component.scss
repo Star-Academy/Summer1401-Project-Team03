@@ -8,15 +8,15 @@
     box-shadow: 0 0 0.5rem 0.1rem var(--color-shadow);
 
     position: absolute;
-    top: 50%;
-    right: 56%;
+    inset-block-start: 50%;
+    inset-inline-end: 56%;
     overflow: hidden;
     z-index: 1;
 
     display: flex;
     flex-direction: column;
 
-    width: auto;
+    inline-size: auto;
 
     border-radius: var(--border-radius-primary) 0 var(--border-radius-primary) var(--border-radius-primary);
 
@@ -32,8 +32,8 @@
         cursor: pointer;
 
         app-svg {
-            width: 1.5rem;
-            height: 1.5rem;
+            block-size: 1.5rem;
+            inline-size: 1.5rem;
         }
 
         &:hover {
