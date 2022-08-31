@@ -18,5 +18,6 @@ public enum ComponentType
     JSONLoader,
     Math,  //ok
     DataCleanser, //ok
-    Concatenate
+    Concatenate,
+    Python
 }

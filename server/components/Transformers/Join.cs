@@ -18,6 +18,9 @@ public class Join : Transformer
 
     public override string GetQuery()
     {
+        if (!isConfigSet)
+            throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
+
         throw new NotImplementedException();
     }
 

@@ -6,6 +6,9 @@ public abstract class Loader : Component
 
     public override string GetQuery()
     {
+        if (!isConfigSet)
+            throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
+
         Load();
         return PreviousComponents[0].GetQuery();
     }

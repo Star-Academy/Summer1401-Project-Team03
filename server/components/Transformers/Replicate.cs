@@ -11,6 +11,9 @@ public class Replicate : Transformer
 
     public override string GetQuery()
     {
+        if (!isConfigSet)
+            throw new System.Configuration.ConfigurationException();
+
         return PreviousComponents[0].GetQuery();
     }
 }

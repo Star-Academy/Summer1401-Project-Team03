@@ -18,6 +18,9 @@ public class Concatenate : Transformer
 
     public override string GetQuery()
     {
+        if (!isConfigSet)
+            throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
+
         var selectList = GetKeysForQuery();
         return Pipeline.QueryBuilder.Select(selectList, PreviousComponents[0].GetQuery(),
             Pipeline.QueryBuilder.NewAlias());
