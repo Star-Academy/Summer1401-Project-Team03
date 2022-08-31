@@ -61,7 +61,11 @@ export class PipelineBoardService {
     }
 
     public async setNodeConfig(config: any): Promise<void> {
-        const body = Object.keys(config).reduce((prev, key) => ({...prev, [key]: [config[key].value]}), {});
+        const body = Object.keys(config).reduce((prev, key) => {
+            const value = typeof config[key].value === 'string' ? config[key].value.split(', ') : config[key].value;
+
+            return {...prev, [key]: [value]};
+        }, {});
         const response = await this.apiService.post(
             PIPELINE_SET_CONFIG,
             {pipelineId: this.selectedPipelineBoardId, componentId: this.selectedNode?.id},

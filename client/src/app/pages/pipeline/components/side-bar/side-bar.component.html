@@ -8,6 +8,7 @@
                         *ngSwitchCase="itemTypes.TEXT_INPUT"
                         [label]="config.value.label"
                         [(value)]="configs[config.key].value"
+                        [type]="config.value.text_type || 'text'"
                     ></app-text-input>
                     <app-switch
                         *ngSwitchCase="itemTypes.SWITCH"
