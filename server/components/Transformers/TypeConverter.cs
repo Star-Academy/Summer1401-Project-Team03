@@ -14,6 +14,9 @@ public class TypeConverter : Transformer
 
     public override string GetQuery()
     {
+        if (!isConfigSet)
+            throw new System.Configuration.ConfigurationException($"component type: {Type}, id: {Id}");
+
         var fields = Parameters[Fields];
         var types = Parameters[Types];
         var fieldsToSelect = GetKeys().Except(fields).ToList();

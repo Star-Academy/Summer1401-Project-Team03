@@ -14,6 +14,9 @@ public class FieldRenamer : Transformer
 
     public override string GetQuery()
     {
+        if (!isConfigSet)
+            throw new System.Configuration.ConfigurationException($"component type: {Type}, id: {Id}");
+
         var selectList = CreateModifiedListForStringsInMap((x, y) => $"{x} AS {y}");
 
         return Pipeline.QueryBuilder.Select(selectList, PreviousComponents[0].GetQuery(),
