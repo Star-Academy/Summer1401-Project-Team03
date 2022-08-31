@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_EXPORT, INVENTORY_IMPORT} from '../utils/api.utils';
+import {DATASET_RENAME, INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_EXPORT, INVENTORY_IMPORT} from '../utils/api.utils';
 import {ApiService} from './api.service';
-import {DatasetItemModel} from 'src/app/models/dataset/dataset-item.model';
+import {DatasetItemModel, DatasetRenameModel} from 'src/app/models/dataset/dataset-item.model';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS} from '../data/Processes.data';
 
@@ -53,6 +53,13 @@ export class InventoryService {
             this.dataset = this.dataset.filter((data) => data.id !== id);
             this.datasetRx.next(this.dataset);
         }
+    }
+
+    public async renameDataset(renameData: DatasetRenameModel): Promise<void> {
+        const currentDatasetIndex = this.dataset.findIndex((data) => data.id === renameData.fileId);
+        await this.apiService.put(DATASET_RENAME, renameData);
+        this.dataset[currentDatasetIndex].name = renameData.newName;
+        this.datasetRx.next(this.dataset);
     }
 
     // private subscribeJoinOptions(): void {

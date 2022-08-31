@@ -26,8 +26,8 @@ export class DatasetInventoryComponent {
         if (item) item.openedSettingModal = !item.openedSettingModal;
     }
 
-    public renameItem(id: number): void {
-        console.log(`Renamed item ${id}`);
+    public renameItem(newTitle: string): void {
+        console.log(`Renamed item ${newTitle}`);
         // Connect to inventory service
     }
 
