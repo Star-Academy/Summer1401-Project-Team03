@@ -17,6 +17,7 @@ import {
     ADD_PIPELINE_CHANGE_POSITION,
     DELETE_PIPELINE_NODE,
     PIPELINE_RUN_UP_TO,
+    PIPELINE_RUN_ALL,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS, ProcessInfo, ProcessSchema} from '../data/Processes.data';
@@ -113,6 +114,11 @@ export class PipelineBoardService {
         return new Pair<string[], string[][]>(columns, cells || []);
     }
     //    runNode
+
+    public async runPipeline(): Promise<boolean> {
+        const result = await this.apiService.get<boolean>(PIPELINE_RUN_ALL, {pipelineId: this.selectedPipelineBoardId});
+        return result || false;
+    }
 
     // UTILITY
     private convertComponentInformationsToPielineNodeModel(

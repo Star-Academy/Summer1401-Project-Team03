@@ -4,6 +4,7 @@ import {ApiService} from './api.service';
 import {DatasetItemModel} from 'src/app/models/dataset/dataset-item.model';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS} from '../data/Processes.data';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -13,8 +14,9 @@ export class InventoryService {
 
     public datasetRx = new BehaviorSubject<DatasetItemModel[] | null>(null);
 
-    public constructor(private apiService: ApiService) {
+    public constructor(private apiService: ApiService, private router: Router) {
         this.getAllDataset();
+        this.subscribeRoute();
         // this.subscribeJoinOptions();
     }
 
@@ -63,4 +65,12 @@ export class InventoryService {
     //         }));
     //     });
     // }
+
+    private subscribeRoute(): void {
+        this.router.events.subscribe(async (value) => {
+            if (value instanceof NavigationEnd) {
+                if (value.url.startsWith('/dataset-inventory')) await this.getAllDataset();
+            }
+        });
+    }
 }
