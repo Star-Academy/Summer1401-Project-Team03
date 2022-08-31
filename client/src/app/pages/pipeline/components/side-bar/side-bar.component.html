@@ -23,7 +23,7 @@
                 </ng-container>
             </ng-container>
         </div>
-        <app-button>save</app-button>
+        <app-button (click)="boardService.setNodeConfig(configs)">save</app-button>
     </ng-container>
     <ng-template #emptyBar>
         <div class="message">select a node to edit</div>

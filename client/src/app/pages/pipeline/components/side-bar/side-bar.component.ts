@@ -3,7 +3,7 @@ import {PipelineBoardService} from '../../../../services/pipeline-board.service'
 import {ItemType} from '../../../../enums/ItemType.enum';
 import {PROCESS} from '../../../../data/Processes.data';
 import {ProcessType} from 'src/app/enums/ProcessType.enum';
-import {Paramether} from 'src/app/models/Paramether.interface';
+import {Paramether} from 'src/app/models/Parameter.interface';
 
 @Component({
     selector: 'app-side-bar',
@@ -32,7 +32,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
                     ...prev,
                     [param]: {
                         ...typeConfigs[param],
-                        value: value[param]?.value || typeConfigs[param].value,
+                        value: value[param]?.[0] || typeConfigs[param].value,
                     },
                 }),
                 {}
