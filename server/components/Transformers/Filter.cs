@@ -17,7 +17,7 @@ public class Filter : Transformer
     public override string GetQuery()
     {
         if (!isConfigSet)
-            throw new System.Configuration.ConfigurationException($"component type: {Type}, id: {Id}");
+            throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
 
         var valuesForQuery = new List<string>();
 

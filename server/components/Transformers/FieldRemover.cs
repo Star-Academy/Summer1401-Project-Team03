@@ -14,7 +14,7 @@ public class FieldRemover : Transformer
     public override string GetQuery()
     {
         if (!isConfigSet)
-            throw new System.Configuration.ConfigurationException($"component type: {Type}, id: {Id}");
+            throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
 
         return Pipeline.QueryBuilder.Select(GetKeys(), PreviousComponents[0].GetQuery(),
             Pipeline.QueryBuilder.NewAlias());
