@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_IMPORT} from '../utils/api.utils';
+import {INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_EXPORT, INVENTORY_IMPORT} from '../utils/api.utils';
 import {ApiService} from './api.service';
 import {DatasetItemModel} from 'src/app/models/dataset/dataset-item.model';
 import {BehaviorSubject} from 'rxjs';
@@ -28,7 +28,7 @@ export class InventoryService {
         const data = new FormData();
         data.append('file', file);
 
-        const response = await this.apiService.formPost<string>(INVENTORY_IMPORT, data);
+        const response = await this.apiService.formPost<number>(INVENTORY_IMPORT, data);
 
         if (response) {
             this.dataset.push({
@@ -44,9 +44,9 @@ export class InventoryService {
         }
     }
 
-    public async deleteDataset(id: string, category: string): Promise<void> {
+    public async deleteDataset(id: number, category: string): Promise<void> {
         const url = new URL(INVENTORY_DELETE);
-        url.searchParams.append('fileId', id);
+        url.searchParams.append('fileId', id.toString());
         url.searchParams.append('category', category);
         const response = await this.apiService.delete(url.toString());
         if (response) {
