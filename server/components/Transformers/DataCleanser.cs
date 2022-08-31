@@ -6,7 +6,7 @@ public class DataCleanser : Transformer
 {
 
     private const string Fields = "fields";
-    private const string Values = "values";
+    private const string Values = "default_values";
     private const string Types = "types";
 
     public DataCleanser()

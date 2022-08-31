@@ -3,7 +3,7 @@ using server.Enums;
 
 namespace server.Components.Transformers;
 
-public class Split : Transformer
+public class Concatenate : Transformer
 {
 
     private const string FirstFields = "first_fields";
@@ -11,9 +11,9 @@ public class Split : Transformer
     private const string NewNames = "new_names";
     private const string Separators = "separators";
 
-    public Split()
+    public Concatenate()
     {
-        Type = ComponentType.Split;
+        Type = ComponentType.Concatenate;
     }
 
     public override string GetQuery()
