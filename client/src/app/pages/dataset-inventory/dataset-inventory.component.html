@@ -30,9 +30,10 @@
                 ></app-svg>
                 <ng-container *ngIf="item.openedSettingModal">
                     <app-dataset-item-modal
+                        [dataset]="item"
                         (deleteEmit)="inventoryService.deleteDataset(item.id, item.category)"
                         (renameEmit)="renameItem(item.id)"
-                        (downloadEmit)="downloadItem(item.id)"
+                        (downloadEmit)="downloadItem(item.id, item.category)"
                     ></app-dataset-item-modal>
                 </ng-container>
             </td>
