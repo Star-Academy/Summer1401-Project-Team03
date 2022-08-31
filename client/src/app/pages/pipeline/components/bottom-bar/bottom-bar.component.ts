@@ -154,5 +154,6 @@ export class BottomBarComponent {
             default:
                 throw new Error(newValue);
         }
+        console.log(this.whichSide.toLowerCase());
     }
 }

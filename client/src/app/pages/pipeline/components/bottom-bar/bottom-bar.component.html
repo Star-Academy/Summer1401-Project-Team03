@@ -16,13 +16,13 @@
 
     <div class="row">
         <app-data-table
-            [hidden]="!inputColumns"
+            [hidden]="!(whichSide.toLowerCase() !== 'output' && inputColumns)"
             title="Input"
             [columns]="inputColumns || []"
             [rows]="inputRows || []"
         ></app-data-table>
         <app-data-table
-            [hidden]="!outputColumns"
+            [hidden]="!(whichSide.toLowerCase() !== 'input' && outputColumns)"
             title="Output"
             [columns]="outputColumns || []"
             [rows]="outputRows || []"
