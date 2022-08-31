@@ -14,6 +14,8 @@ export enum ProcessType {
     json_extractor = 'json_extractor',
     json_loader = 'json_loader',
     math = 'math',
+    data_cleanser = 'data_cleanser',
+    concatenate = 'concatenate',
 }
 
 export enum customProcessType {
@@ -28,4 +30,6 @@ export enum customProcessType {
     join = 'join',
     replicate = 'replicate',
     math = 'math',
+    data_cleanser = 'data_cleanser',
+    concatenate = 'concatenate',
 }
