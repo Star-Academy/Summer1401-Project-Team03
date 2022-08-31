@@ -37,7 +37,7 @@ export class ApiService {
     ): Promise<T | null> {
         const u = new URL(url);
         Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
-        return await this.fetchData(u.toString(), {...POST_INIT, body: JSON.stringify(body), ...init});
+        return await this.fetchData<T>(u.toString(), {...POST_INIT, body: JSON.stringify(body), ...init});
     }
 
     public async put<T>(
@@ -48,22 +48,22 @@ export class ApiService {
     ): Promise<T | null> {
         const u = new URL(url);
         Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
-        return await this.fetchData(u.toString(), {...PUT_INIT, body: JSON.stringify(body), ...init});
+        return await this.fetchData<T>(u.toString(), {...PUT_INIT, body: JSON.stringify(body), ...init});
     }
 
     public async formPost<T>(url: string, body: any = '', init: Partial<RequestInit> = {}): Promise<T | null> {
-        return await this.fetchData(url, {...FORM_POST_INIT, body: body, ...init});
+        return await this.fetchData<T>(url, {...FORM_POST_INIT, body: body, ...init});
     }
 
     public async get<T>(url: string, queries: any = {}, init: Partial<RequestInit> = {}): Promise<T | null> {
         const u = new URL(url);
         Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
-        return await this.fetchData(u.toString(), init);
+        return await this.fetchData<T>(u.toString(), init);
     }
 
     public async delete<T>(url: string, queries: any = {}): Promise<T | null> {
         const u = new URL(url);
         Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
-        return await this.fetchData(u.toString(), {method: 'delete'});
+        return await this.fetchData<T>(u.toString(), {method: 'delete'});
     }
 }
