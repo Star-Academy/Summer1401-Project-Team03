@@ -1,12 +1,12 @@
-﻿using server.Components.Extractors;
-using server.Components.Loaders;
-using server.Components.Transformers;
-using server.Enums;
-using server.Information;
-using server.Pipelines;
-using Math = server.Components.Transformers.Math;
+﻿using server.components.Extractors;
+using server.components.Loaders;
+using server.components.Transformers;
+using server.enums;
+using server.informatios;
+using server.pipelines;
+using Math = server.components.Transformers.Math;
 
-namespace server.Components;
+namespace server.components;
 
 public class ComponentFactory
 {

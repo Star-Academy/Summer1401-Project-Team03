@@ -1,6 +1,6 @@
-using server.Enums;
+using server.enums;
 
-namespace server.Components.Transformers;
+namespace server.components.Transformers;
 
 public class Math : Transformer
 {

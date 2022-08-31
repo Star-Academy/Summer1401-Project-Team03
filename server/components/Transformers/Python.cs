@@ -1,9 +1,8 @@
 ﻿using System.Diagnostics;
-using DBConfig;
 using server.configurations;
-using server.Enums;
+using server.enums;
 
-namespace server.Components.Transformers;
+namespace server.components.Transformers;
 
 public class Python : Transformer
 {

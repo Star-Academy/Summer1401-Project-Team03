@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using server.Enums;
+using server.enums;
 
-namespace server.Databases;
+namespace server.databases;
 
 public class PostgresQueryBuilder : IQueryBuilder
 {

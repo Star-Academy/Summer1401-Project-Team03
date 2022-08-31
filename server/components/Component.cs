@@ -1,11 +1,11 @@
-﻿using server.Enums;
-using server.Pipelines;
+﻿using server.enums;
+using server.pipelines;
 
-namespace server.Components;
+namespace server.components;
 
 public abstract class Component
 {
-    public Component()
+    protected Component()
     {
         NextComponents = new List<Component>();
         PreviousComponents = new List<Component>();

@@ -1,10 +1,10 @@
 ﻿using System.Data.Common;
-using DBConfig;
-using server.Components;
-using server.Databases;
-using server.Information;
+using server.components;
+using server.configurations;
+using server.databases;
+using server.informatios;
 
-namespace server.Pipelines;
+namespace server.pipelines;
 
 public class Pipeline
 {

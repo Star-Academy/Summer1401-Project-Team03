@@ -1,7 +1,7 @@
-using server.Enums;
+using server.enums;
 using SqlKata;
 
-namespace server.Components.Transformers;
+namespace server.components.Transformers;
 
 public class Join : Transformer
 {

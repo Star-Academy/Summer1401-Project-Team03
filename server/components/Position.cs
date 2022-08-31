@@ -1,4 +1,4 @@
-﻿namespace server.Components;
+﻿namespace server.components;
 
 public class Position
 {
@@ -8,7 +8,7 @@ public class Position
         Y = y;
     }
 
-    public double X { set; get; }
+    private double X { get; }
 
-    public double Y { set; get; }
+    private double Y { get; }
 }

@@ -1,4 +1,4 @@
-﻿namespace server.Enums;
+﻿namespace server.enums;
 
 public enum ComponentType
 {

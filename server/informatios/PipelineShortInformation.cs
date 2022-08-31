@@ -1,4 +1,4 @@
-﻿namespace server.Information;
+﻿namespace server.informatios;
 
 public record PipelineShortInformation
 {

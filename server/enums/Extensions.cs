@@ -1,4 +1,4 @@
-﻿namespace server.Enums;
+﻿namespace server.enums;
 
 public static class Extensions
 {

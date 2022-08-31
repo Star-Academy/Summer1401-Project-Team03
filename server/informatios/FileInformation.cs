@@ -1,12 +1,12 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace server.Information;
+namespace server.informatios;
 
 public class FileInformation
 {
     public FileInformation(string name, string id, string type, string category, string createTime, string length)
     {
-        ID = id;
+        Id = id;
         Type = type;
         Name = name;
         Category = category;
@@ -14,12 +14,12 @@ public class FileInformation
         Length = length;
     }
 
-    public string Name { get; }
-    public string ID { get; }
-    public string Type { get; }
-    public string Category { get; }
-    public string CreateTime { get; }
-    public string Length { get; }
+    private string Name { get; }
+    private string Id { get; }
+    private string Type { get; }
+    private string Category { get; }
+    private string CreateTime { get; }
+    private string Length { get; }
 
     public static void ExtractInformation(List<FileInformation> informations, string category)
     {

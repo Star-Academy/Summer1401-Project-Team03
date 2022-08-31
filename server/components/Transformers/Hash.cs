@@ -1,6 +1,6 @@
-using server.Enums;
+using server.enums;
 
-namespace server.Components.Transformers;
+namespace server.components.Transformers;
 
 public class Hash : Transformer
 {
@@ -20,10 +20,10 @@ public class Hash : Transformer
 
         var fieldsToHash = Parameters[FieldsToHash];
         var fieldsToSelect = GetKeys().Except(fieldsToHash).ToList();
-        for (var i = 0; i < fieldsToHash.Count; i++)
+        foreach (var t in fieldsToHash)
             fieldsToSelect.Add(
-                Pipeline.QueryBuilder.Alias(Pipeline.QueryBuilder.Function(HashFunction, fieldsToHash[i]),
-                    fieldsToHash[i]));
+                Pipeline.QueryBuilder.Alias(Pipeline.QueryBuilder.Function(HashFunction, t),
+                    t));
 
         return Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(),
             Pipeline.QueryBuilder.NewAlias());

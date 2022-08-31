@@ -1,7 +1,7 @@
 ﻿using server.file;
-using server.Pipelines;
+using server.pipelines;
 
-namespace DefaultNamespace;
+namespace server.services;
 
 public class PipelineControllerService
 {

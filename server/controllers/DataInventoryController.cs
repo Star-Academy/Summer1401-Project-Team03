@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using server.file;
-using server.Information;
+using server.informatios;
 using FileOperation = System.IO.File;
 
 namespace server.controllers;
@@ -26,11 +26,11 @@ public class DataInventoryController : ControllerBase
                 var fileName = match.Groups[1].Value;
                 var format = match.Groups[2].Value;
 
-                var fileId = IDCounterHandler.LoadFileID();
+                var fileId = IdCounterHandler.LoadFileId();
 
                 var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "imports");
 
-                IDCounterHandler.SaveFileID(fileId + 1);
+                IdCounterHandler.SaveFileId(fileId + 1);
                 using (var stream = FileOperation.Create(filePath))
                 {
                     await file.CopyToAsync(stream);

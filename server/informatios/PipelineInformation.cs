@@ -1,6 +1,6 @@
-﻿using server.Pipelines;
+﻿using server.pipelines;
 
-namespace server.Information;
+namespace server.informatios;
 
 public class PipelineInformation
 {

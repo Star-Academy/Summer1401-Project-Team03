@@ -1,6 +1,6 @@
-using server.Enums;
+using server.enums;
 
-namespace server.Components.Transformers;
+namespace server.components.Transformers;
 
 public class FieldRenamer : Transformer
 {
@@ -25,7 +25,7 @@ public class FieldRenamer : Transformer
 
     public override List<string> GetKeys()
     {
-        return CreateModifiedListForStringsInMap((x, y) => y);
+        return CreateModifiedListForStringsInMap((_, y) => y);
     }
 
     private Dictionary<string, string> GetNameMap()

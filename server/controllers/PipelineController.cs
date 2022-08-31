@@ -1,14 +1,14 @@
 using System.Data.Common;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using DefaultNamespace;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using server.Components;
-using server.Enums;
+using server.components;
+using server.enums;
 using server.file;
-using server.Information;
-using server.Pipelines;
+using server.informatios;
+using server.pipelines;
+using server.services;
 using FileOperation = System.IO.File;
 
 namespace server.controllers;
@@ -32,11 +32,11 @@ public class PipelineController : ControllerBase
         {
             var pipeline = new Pipeline(pipelineName);
 
-            var pipelineId = IDCounterHandler.LoadPipeLineID();
+            var pipelineId = IdCounterHandler.LoadPipeLineId();
             IdToPipeline[pipelineId] = pipeline;
             pipeline.Id = pipelineId;
 
-            IDCounterHandler.SavePipelineID(pipelineId + 1);
+            IdCounterHandler.SavePipelineId(pipelineId + 1);
 
             var sourceId = AddSource(pipeline, sourceFileId, new Position(80, 80));
             var destinationId = AddDestination(pipeline, destFileName, destFileFormat, new Position(400, 80));
@@ -165,10 +165,10 @@ public class PipelineController : ControllerBase
 
     private int AddDestination(Pipeline pipeline, string fileName, string format, Position position)
     {
-        var fileId = IDCounterHandler.LoadFileID();
+        var fileId = IdCounterHandler.LoadFileId();
         var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "exports");
 
-        IDCounterHandler.SaveFileID(fileId + 1);
+        IdCounterHandler.SaveFileId(fileId + 1);
 
         ComponentType componentType;
 

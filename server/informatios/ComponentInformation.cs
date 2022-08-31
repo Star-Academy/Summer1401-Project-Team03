@@ -1,7 +1,7 @@
-﻿using server.Components;
-using server.Enums;
+﻿using server.components;
+using server.enums;
 
-namespace server.Information;
+namespace server.informatios;
 
 public class ComponentInformation
 {

@@ -1,4 +1,4 @@
-﻿namespace server.Pipelines;
+﻿namespace server.pipelines;
 
 public class TableManager
 {

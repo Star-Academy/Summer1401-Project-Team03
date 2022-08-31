@@ -1,6 +1,6 @@
-﻿using server.Enums;
+﻿using server.enums;
 
-namespace server.Components.Loaders;
+namespace server.components.Loaders;
 
 public class JSONLoader : Loader
 {

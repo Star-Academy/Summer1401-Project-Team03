@@ -2,7 +2,7 @@
 using Npgsql;
 using server.configurations;
 
-namespace server.Databases;
+namespace server.databases;
 
 public class PostgresDatabase : IDatabase
 {

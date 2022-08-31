@@ -1,6 +1,6 @@
-﻿using server.Enums;
+﻿using server.enums;
 
-namespace server.Components.Extractors;
+namespace server.components.Extractors;
 
 public class CSVExtractor : Extractor
 {

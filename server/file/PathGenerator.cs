@@ -8,9 +8,9 @@ public static class PathGenerator
             $"{fileName}_{fileId}.{fileType}");
     }
 
-    public static string GeneratePipelinePath(int pipelineID)
+    public static string GeneratePipelinePath(int pipelineId)
     {
-        return Path.Combine(Directory.GetCurrentDirectory(), "resources", "pipelines", pipelineID.ToString());
+        return Path.Combine(Directory.GetCurrentDirectory(), "resources", "pipelines", pipelineId.ToString());
     }
 
     public static string GetPipelineDirectory()

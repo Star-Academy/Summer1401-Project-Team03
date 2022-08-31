@@ -1,4 +1,4 @@
-﻿namespace server.Components.Transformers;
+﻿namespace server.components.Transformers;
 
 public abstract class Transformer : Component
 {

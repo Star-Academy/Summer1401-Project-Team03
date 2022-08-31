@@ -1,4 +1,4 @@
-﻿namespace server.Databases;
+﻿namespace server.databases;
 
 public interface IQueryBuilder
 {

@@ -1,4 +1,4 @@
-﻿namespace server.Components.Loaders;
+﻿namespace server.components.Loaders;
 
 public abstract class Loader : Component
 {

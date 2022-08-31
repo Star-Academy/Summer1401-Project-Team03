@@ -1,4 +1,4 @@
-﻿namespace server.Components.Extractors;
+﻿namespace server.components.Extractors;
 
 public abstract class Extractor : Component
 {
