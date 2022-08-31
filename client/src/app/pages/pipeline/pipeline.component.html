@@ -19,9 +19,7 @@
             <app-svg iconType="bottombar"></app-svg>
         </button>
     </div>
-    <app-side-bar class="side-bar" [hidden]="!sideBarShown"></app-side-bar>
-    <div class="bottom-bar" [hidden]="!bottomBarShown">
-        <app-data-table></app-data-table>
-    </div>
+    <app-side-bar [hidden]="!sideBarShown"></app-side-bar>
+    <app-bottom-bar [hidden]="!bottomBarShown"></app-bottom-bar>
     <app-pipeline-board></app-pipeline-board>
 </div>

@@ -6,8 +6,14 @@ import {Component} from '@angular/core';
     styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent {
-    public isShrink: boolean = false;
+    public get isShrink(): boolean {
+        const cached = localStorage.getItem('navbarIsShrink');
+        return (cached || 'false') === 'true';
+    }
 
+    public set isShrink(newValue: boolean) {
+        localStorage.setItem('navbarIsShrink', String(newValue));
+    }
     public toggleShrink(): void {
         this.isShrink = !this.isShrink;
     }

@@ -1,5 +1,6 @@
 <app-button (click)="modal.openModal()">
     <app-svg iconType="plus"> </app-svg>
+    new pipeline
 </app-button>
 <app-modal #PipelineAdd title="create pipeline" (cancelled)="clearForm()">
     <app-text-input label="name" type="text" [(value)]="formData.pipelineName"></app-text-input>

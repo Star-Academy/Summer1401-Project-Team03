@@ -76,7 +76,7 @@
         }
     }
 
-    .side-bar {
+    app-side-bar {
         grid-area: sidebar;
 
         box-shadow: -0.1rem 0 1rem 0 rgb(0 0 0 / 30%);
@@ -86,7 +86,7 @@
         inline-size: 30rem;
     }
 
-    .bottom-bar {
+    app-bottom-bar {
         grid-area: bottom;
 
         background-color: var(--color-gray-90);
@@ -94,7 +94,7 @@
 
         z-index: 10;
 
-        min-block-size: 20rem;
+        block-size: 25rem;
     }
 
     app-board {

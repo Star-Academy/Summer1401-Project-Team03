@@ -22,6 +22,8 @@ import {TextInputModule} from 'src/app/components/text-input/text-input.module';
 import {SwitchModule} from 'src/app/components/switch/switch.module';
 import {DataListModule} from 'src/app/components/data-list/data-list.module';
 import {RemoveNodeComponent} from './components/pipeline-board/components/remove-node/remove-node.component';
+import {BottomBarComponent} from './components/bottom-bar/bottom-bar.component';
+import {PillMenuInputModule} from '../../components/pill-menu-input/pill-menu-input.module';
 import {DataTableModule} from 'src/app/components/data-table/data-table.module';
 
 @NgModule({
@@ -35,6 +37,7 @@ import {DataTableModule} from 'src/app/components/data-table/data-table.module';
         BoardComponent,
         RemoveNodeComponent,
         SideBarComponent,
+        BottomBarComponent,
     ],
 
     imports: [
@@ -49,6 +52,7 @@ import {DataTableModule} from 'src/app/components/data-table/data-table.module';
         NgxDraggabillyModule,
         AngularDraggableModule,
         TextInputModule,
+        PillMenuInputModule,
         DataTableModule,
     ],
 })
