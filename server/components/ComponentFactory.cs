@@ -67,6 +67,7 @@ public class ComponentFactory
         component.Position = componentInformation.Position;
         component.Parameters = new Dictionary<string, List<string>>(componentInformation.Parameters);
         component.Pipeline = pipeline;
+        component.IsConfigSet = componentInformation.IsConfigSet;
         return component;
     }
 }
