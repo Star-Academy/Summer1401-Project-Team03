@@ -51,6 +51,8 @@ public class ComponentFactory
     public Component CreateComponent(ComponentType type, Pipeline pipeline, Position position, string title)
     {
         var component = GetComponent(type);
+        _counter++;
+        component.Id = _counter;
         component.Pipeline = pipeline;
         component.Position = position;
         component.Title = title;
