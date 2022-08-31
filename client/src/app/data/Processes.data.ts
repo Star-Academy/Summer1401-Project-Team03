@@ -1,5 +1,5 @@
 import {ItemType} from '../enums/ItemType.enum';
-import {Paramether} from '../models/Paramether.interface';
+import {Paramether} from '../models/Parameter.interface';
 import {ProcessType} from '../enums/ProcessType.enum';
 
 export interface ProcessSchema {
