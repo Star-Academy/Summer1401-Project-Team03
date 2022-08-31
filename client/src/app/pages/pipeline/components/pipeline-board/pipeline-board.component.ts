@@ -4,6 +4,7 @@ import {NgxDraggabillyOptions} from 'ngx-draggabilly';
 import {LeaderLineModel, NodeRemoveInfoModel, PipelineNodeModel} from '../../../../models/pipeline-node.model';
 import {ProcessType} from '../../../../enums/ProcessType.enum';
 import {PipelineBoardService} from '../../../../services/pipeline-board.service';
+import {PROCESS} from '../../../../data/Processes.data';
 
 declare var LeaderLine: any;
 declare var AnimEvent: any;
@@ -12,7 +13,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 1,
         title: 'covid dataset',
-        processesInfoType: ProcessType.csv_extractor,
+        processesInfoType: PROCESS.csv_extractor.id,
         position: {x: 100, y: 100},
         openedSettingModal: false,
         beforeId: 0,
@@ -23,7 +24,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 3,
         title: 'location filtered',
-        processesInfoType: ProcessType.filter,
+        processesInfoType: PROCESS.filter.id,
         position: {x: 100, y: 300},
         openedSettingModal: false,
         beforeId: 1,
@@ -33,7 +34,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 4,
         title: 'location renamed',
-        processesInfoType: ProcessType.field_renamer,
+        processesInfoType: PROCESS.field_renamer.id,
         position: {x: 400, y: 300},
         openedSettingModal: false,
         beforeId: 3,
@@ -43,7 +44,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 5,
         title: 'location removed',
-        processesInfoType: ProcessType.field_remover,
+        processesInfoType: PROCESS.field_remover.id,
         position: {x: 400, y: 100},
         openedSettingModal: false,
         beforeId: 4,
@@ -53,7 +54,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 6,
         title: 'iran filtered',
-        processesInfoType: ProcessType.filter,
+        processesInfoType: PROCESS.filter.id,
         position: {x: 700, y: 300},
         openedSettingModal: false,
         beforeId: 5,
@@ -63,7 +64,7 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     {
         id: 7,
         title: 'covid',
-        processesInfoType: ProcessType.csv_loader,
+        processesInfoType: PROCESS.csv_loader.id,
         position: {x: 700, y: 100},
         openedSettingModal: false,
         beforeId: 6,
@@ -111,7 +112,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.changeDetectorRef.detectChanges();
         const leaderLineInit = (): void => {
             this.pipelineNodeDatas.forEach((node, index) => {
-                if (node.processesInfoType === ProcessType.csv_loader) return;
+                if (node.processesInfoType === PROCESS.csv_loader.id) return;
                 this.connectLeaderLineBetweenTwoElementById(node.id, node.afterId);
             });
         };
@@ -197,13 +198,8 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
         // is destination
 
-        if (
-            [ProcessType.csv_loader, ProcessType.json_loader].some(
-                (type: ProcessType) => type == item.processesInfoType
-            )
-        ) {
+        if ([PROCESS.csv_loader.id, PROCESS.json_loader.id].some((type: number) => type == item.processesInfoType))
             return undefined;
-        }
 
         // Insert to Item to nodeList
         this.addItemToNodeListById(beforeId, item);
@@ -212,11 +208,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         // Create new Connection
         this.connectLeaderLineBetweenTwoElementById(beforeId, item.id);
 
-        if (
-            [ProcessType.json_loader, ProcessType.csv_loader].some(
-                (type: ProcessType) => type === item.processesInfoType
-            )
-        )
+        if ([PROCESS.csv_loader.id, PROCESS.json_loader.id].some((type: number) => type == item.processesInfoType))
             return undefined;
 
         this.connectLeaderLineBetweenTwoElementById(item.id, afterId);
@@ -224,7 +216,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         // Remove line and connection between before and after new node;
         this.removeLeaderlineBetweenTwoNodeById(beforeId, afterId);
 
-        if (item.processesInfoType === ProcessType.replicate) {
+        if (item.processesInfoType === PROCESS.replicate.id) {
             this.changeBeforeIdById(afterId, item.id);
             return undefined;
         }
@@ -252,7 +244,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         let afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
         const type = node.type;
 
-        if (type === ProcessType.replicate) {
+        if (type === PROCESS.replicate.id) {
             this.removeAllAfterNodeById(afterId);
             afterId = this.pipelineNodeDatas[currentNodeIndex].afterId;
         }
@@ -279,10 +271,10 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         // The first or last Node that we don't want remove
         if (
             this.isWhatTypeById(id, [
-                ProcessType.csv_extractor,
-                ProcessType.json_extractor,
-                ProcessType.csv_loader,
-                ProcessType.json_loader,
+                PROCESS.csv_extractor.id,
+                PROCESS.json_extractor.id,
+                PROCESS.csv_loader.id,
+                PROCESS.json_loader.id,
             ])
         ) {
             return undefined;
@@ -324,7 +316,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     public updateLeaderLine(currentId: number): void | boolean {
         // The last one
 
-        if (this.isWhatTypeById(currentId, [ProcessType.csv_loader, ProcessType.json_loader])) {
+        if (this.isWhatTypeById(currentId, [PROCESS.csv_loader.id, PROCESS.json_loader.id])) {
             this.updateLeaderLineById(currentId);
         }
 
@@ -334,13 +326,13 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
         // // It's not The first one
 
-        if (!this.isWhatTypeById(currentId, [ProcessType.csv_extractor, ProcessType.json_extractor])) {
+        if (!this.isWhatTypeById(currentId, [PROCESS.csv_extractor.id, PROCESS.json_extractor.id])) {
             console.log(beforeId);
             this.updateLeaderLineById(beforeId);
         }
     }
 
-    private isWhatTypeById(id: number, types: ProcessType[]): boolean {
+    private isWhatTypeById(id: number, types: number[]): boolean {
         const currentNodeIndex = this.getNodeIndexById(id);
         return types.some((type) => type === this.pipelineNodeDatas[currentNodeIndex].processesInfoType);
     }

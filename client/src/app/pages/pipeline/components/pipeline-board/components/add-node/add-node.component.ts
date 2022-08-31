@@ -15,8 +15,6 @@ const ADDITIONAL_BOTTOM = 160;
     styleUrls: ['./add-node.component.scss'],
 })
 export class addNodeComponent implements OnInit {
-    public processes: ProcessInfo = PROCESS;
-
     @ViewChild('ProcessAdd') public modal!: ModalComponent;
     @Output() public addNodeEmit = new EventEmitter<PipelineNodeModel>();
     public nodeData!: NodeAddInfoModel;
@@ -51,12 +49,12 @@ export class addNodeComponent implements OnInit {
         this.modal.openModal();
     }
 
-    public async addNodeHandle(type: string): Promise<void> {
+    public async addNodeHandle(type: number): Promise<void> {
         this.modal.closeModal();
 
         const title = this.nodeTitle;
         let newPosition = {x: this.nodeData.position.x + ADDITIONAL_LEFT, y: this.nodeData.position.y};
-        if (type === customProcessType.replicate) {
+        if (type === PROCESS.replicate.id) {
             newPosition = {x: newPosition.x + ADDITIONAL_LEFT, y: this.nodeData.position.y + ADDITIONAL_BOTTOM};
 
             const addNodeDestinationService: AddNodeServiceModel = {
@@ -64,7 +62,7 @@ export class addNodeComponent implements OnInit {
                 previousComponentId: this.nodeData.beforeId,
                 nextComponentId: this.nodeData.afterId,
                 position: newPosition,
-                type: ProcessType.csv_loader, //TODO Edit
+                type: PROCESS.csv_loader.id, //TODO Edit
                 title,
             };
 
@@ -73,7 +71,7 @@ export class addNodeComponent implements OnInit {
                 const newNodeDestination: PipelineNodeModel = {
                     id: nodeDestinationId,
                     title: 'target',
-                    processesInfoType: ProcessType.csv_loader, //TODO Edit
+                    processesInfoType: PROCESS.csv_loader.id, //TODO Edit
                     position: newPosition,
                     openedSettingModal: false,
                     afterId: -1,
@@ -99,7 +97,7 @@ export class addNodeComponent implements OnInit {
                     const newNodeComponent: PipelineNodeModel = {
                         id: nodeId,
                         title,
-                        processesInfoType: (<any>ProcessType)[type],
+                        processesInfoType: type,
                         position: newPosition,
                         openedSettingModal: false,
                         afterId: nodeDestinationId,
@@ -130,7 +128,7 @@ export class addNodeComponent implements OnInit {
             const newNodeComponent: PipelineNodeModel = {
                 id: nodeId,
                 title,
-                processesInfoType: (<any>ProcessType)[type],
+                processesInfoType: type,
                 position: newPosition,
                 openedSettingModal: false,
                 afterId: this.nodeData.afterId,

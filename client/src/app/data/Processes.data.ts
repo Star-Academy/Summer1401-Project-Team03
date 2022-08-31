@@ -16,7 +16,7 @@ export type ProcessInfo = {
 
 export const PROCESS: ProcessInfo = {
     filter: {
-        id: 0,
+        id: 1,
         title: 'filter',
         icon: 'filter',
         paramethers: {

@@ -16,7 +16,7 @@ export class RemoveNodeComponent {
 
     public constructor(private pipelineBoardService: PipelineBoardService) {}
 
-    public openModal(nodeId: number, type: string, pipelineBoardId: number): void {
+    public openModal(nodeId: number, type: number, pipelineBoardId: number): void {
         this.nodeRemoveInfo = {
             nodeId,
             type,
