@@ -39,7 +39,7 @@ const inputTypes = [
 
 export const PROCESS: ProcessInfo = {
     filter: {
-        id: 1,
+        id: 0,
         title: 'filter',
         icon: 'filter',
         paramethers: {
@@ -251,15 +251,15 @@ export const PROCESS: ProcessInfo = {
         icon: 'source',
         paramethers: {},
     },
-    json_loader: {
+    json_extractor: {
         id: 12,
-        title: 'destination',
+        title: 'source',
         icon: 'source',
         paramethers: {},
     },
-    json_extractor: {
+    json_loader: {
         id: 13,
-        title: 'source',
+        title: 'destination',
         icon: 'source',
         paramethers: {},
     },
