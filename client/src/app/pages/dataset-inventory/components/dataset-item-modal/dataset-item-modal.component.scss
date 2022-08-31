@@ -16,7 +16,7 @@
     display: flex;
     flex-direction: column;
 
-    width: auto;
+    inline-size: auto;
 
     border-radius: var(--border-radius-primary) 0 var(--border-radius-primary) var(--border-radius-primary);
 
@@ -32,8 +32,8 @@
         cursor: pointer;
 
         app-svg {
-            width: 1.5rem;
-            height: 1.5rem;
+            inline-size: 1.5rem;
+            block-size: 1.5rem;
         }
 
         &:hover {
