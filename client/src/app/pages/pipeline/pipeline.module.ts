@@ -22,6 +22,7 @@ import {TextInputModule} from 'src/app/components/text-input/text-input.module';
 import {SwitchModule} from 'src/app/components/switch/switch.module';
 import {DataListModule} from 'src/app/components/data-list/data-list.module';
 import {RemoveNodeComponent} from './components/pipeline-board/components/remove-node/remove-node.component';
+import {DataTableModule} from 'src/app/components/data-table/data-table.module';
 
 @NgModule({
     declarations: [
@@ -48,6 +49,7 @@ import {RemoveNodeComponent} from './components/pipeline-board/components/remove
         NgxDraggabillyModule,
         AngularDraggableModule,
         TextInputModule,
+        DataTableModule,
     ],
 })
 export class PipelineModule {}
