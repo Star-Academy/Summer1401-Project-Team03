@@ -114,32 +114,45 @@ export class PipelineBoardService {
     //    getSettingNode
     //    sendSettingNode
     public async runUpToNode(): Promise<void> {
-        await Promise.all([
-            Promise.resolve().then(async () => {
-                if (this.nodePreview.ioType !== IoType.INPUT) {
-                    const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                        pipelineId: this.selectedPipelineBoardId,
-                        componentId: this.selectedNode?.id,
-                    });
+        this.nodePreview.outputColumns = [];
+        this.nodePreview.outputRows = [];
 
-                    this.nodePreview.outputColumns = Object.keys((response || [])[0]).map(
-                        (col) => new TableColumn(col)
-                    );
-                    this.nodePreview.outputRows = (response || []).map((row) => Object.values(row as string));
-                }
-            }),
-            Promise.resolve().then(async () => {
-                if (this.nodePreview.ioType !== IoType.OUTPUT) {
-                    const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                        pipelineId: this.selectedPipelineBoardId,
-                        componentId: this.selectedNode?.beforeId,
-                    });
+        this.nodePreview.inputColumns = [];
+        this.nodePreview.inputRows = [];
 
-                    this.nodePreview.inputColumns = Object.keys((response || [])[0]).map((col) => new TableColumn(col));
-                    this.nodePreview.inputRows = (response || []).map((row) => Object.values(row as string));
-                }
-            }),
-        ]);
+        if (this.nodePreview.ioType !== IoType.INPUT) {
+            if (
+                this.selectedNode?.processesInfoType === PROCESS.json_loader.id ||
+                this.selectedNode?.processesInfoType === PROCESS.csv_loader.id
+            ) {
+                this.nodePreview.ioType = IoType.INPUT;
+            } else {
+                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                    pipelineId: this.selectedPipelineBoardId,
+                    componentId: this.selectedNode?.id,
+                });
+
+                this.nodePreview.outputColumns = Object.keys((response || [])[0]).map((col) => new TableColumn(col));
+                this.nodePreview.outputRows = (response || []).map((row) => Object.values(row as string));
+            }
+        }
+
+        if (this.nodePreview.ioType !== IoType.OUTPUT) {
+            if (
+                this.selectedNode?.processesInfoType === PROCESS.json_extractor.id ||
+                this.selectedNode?.processesInfoType === PROCESS.csv_extractor.id
+            ) {
+                this.nodePreview.ioType = IoType.OUTPUT;
+            } else {
+                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                    pipelineId: this.selectedPipelineBoardId,
+                    componentId: this.selectedNode?.beforeId,
+                });
+
+                this.nodePreview.inputColumns = Object.keys((response || [])[0]).map((col) => new TableColumn(col));
+                this.nodePreview.inputRows = (response || []).map((row) => Object.values(row as string));
+            }
+        }
     }
 
     //    runNode

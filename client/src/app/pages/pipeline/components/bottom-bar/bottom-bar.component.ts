@@ -4,6 +4,7 @@ import {IoType} from './enums/io-type.enum';
 import {DatalistOption} from '../../../../models/DatalistOption.interface';
 import {sampleColumns, sampleRows} from '../../../../data/fake-data/table-sample-data.data';
 import {PipelineBoardService} from '../../../../services/pipeline-board.service';
+import {PROCESS} from 'src/app/data/Processes.data';
 
 @Component({
     selector: 'app-bottom-bar',
@@ -29,7 +30,18 @@ export class BottomBarComponent {
         return this.boardService.nodePreview.outputRows;
     }
 
-    public constructor(private boardService: PipelineBoardService) {}
+    public get isSourceOrDestination(): boolean {
+        return (
+            [
+                PROCESS.json_extractor.id,
+                PROCESS.json_loader.id,
+                PROCESS.csv_extractor.id,
+                PROCESS.csv_loader.id,
+            ].indexOf(this.boardService.selectedNode?.processesInfoType || -1) !== -1
+        );
+    }
+
+    public constructor(public boardService: PipelineBoardService) {}
 
     public get ioTypeValues(): DatalistOption[] {
         return Object.entries(IoType).map(([value, title]) => ({title, value}));
