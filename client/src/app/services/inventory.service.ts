@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
-import {INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_EXPORT, INVENTORY_IMPORT} from '../utils/api.utils';
+import {DATASET_RENAME, INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_EXPORT, INVENTORY_IMPORT} from '../utils/api.utils';
 import {ApiService} from './api.service';
-import {DatasetItemModel} from 'src/app/models/dataset/dataset-item.model';
+import {DatasetItemModel, DatasetRenameModel} from 'src/app/models/dataset/dataset-item.model';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS} from '../data/Processes.data';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -13,8 +14,9 @@ export class InventoryService {
 
     public datasetRx = new BehaviorSubject<DatasetItemModel[] | null>(null);
 
-    public constructor(private apiService: ApiService) {
+    public constructor(private apiService: ApiService, private router: Router) {
         this.getAllDataset();
+        this.subscribeRoute();
         // this.subscribeJoinOptions();
     }
 
@@ -55,6 +57,13 @@ export class InventoryService {
         }
     }
 
+    public async renameDataset(renameData: DatasetRenameModel): Promise<void> {
+        const currentDatasetIndex = this.dataset.findIndex((data) => data.id === renameData.fileId);
+        await this.apiService.put(DATASET_RENAME, renameData);
+        this.dataset[currentDatasetIndex].name = renameData.newName;
+        this.datasetRx.next(this.dataset);
+    }
+
     // private subscribeJoinOptions(): void {
     //     this.datasetRx.subscribe((value) => {
     //         PROCESS.join.parameters.datasets.options = value?.map((dataset) => ({
@@ -63,4 +72,12 @@ export class InventoryService {
     //         }));
     //     });
     // }
+
+    private subscribeRoute(): void {
+        this.router.events.subscribe(async (value) => {
+            if (value instanceof NavigationEnd) {
+                if (value.url.startsWith('/dataset-inventory')) await this.getAllDataset();
+            }
+        });
+    }
 }

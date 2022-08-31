@@ -5,23 +5,24 @@ import {
     ComponentInformationModel,
     GetAllNodeServiceModel,
     PipelineNodeModel,
+    PreviewTableData,
     RemoveNodeServiceModel,
-    RunUpToNodeServiceModel,
 } from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
 import {
-    PIPELINE_ONE,
-    PIPELINE_NODE_CONFIG,
-    ADD_PIPELINE_NODE,
-    PIPELINE_SET_CONFIG,
     ADD_PIPELINE_CHANGE_POSITION,
+    ADD_PIPELINE_NODE,
     DELETE_PIPELINE_NODE,
+    PIPELINE_NODE_CONFIG,
+    PIPELINE_ONE,
     PIPELINE_RUN_UP_TO,
+    PIPELINE_RUN_ALL,
+    PIPELINE_SET_CONFIG,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
-import {PROCESS, ProcessInfo, ProcessSchema} from '../data/Processes.data';
-import {ProcessType} from '../enums/ProcessType.enum';
+import {PROCESS, ProcessSchema} from '../data/Processes.data';
 import {Pair} from '../models/pair.model';
+import {IoType} from '../pages/pipeline/components/bottom-bar/enums/io-type.enum';
 import {TableColumn} from '../components/data-table/models/table-column.model';
 
 @Injectable({
@@ -39,6 +40,14 @@ export class PipelineBoardService {
 
     public selectedNodeRx = new BehaviorSubject<PipelineNodeModel | null>(null);
     public selectedNodeConfigRx = new BehaviorSubject<any | null>(null);
+
+    public nodePreview: PreviewTableData = {
+        inputColumns: [],
+        outputColumns: [],
+        inputRows: [],
+        outputRows: [],
+        ioType: IoType.BOTH,
+    };
 
     public async getAllNode(): Promise<PipelineNodeModel[]> {
         const pipelineId = this.selectedPipelineBoardId;
@@ -77,6 +86,7 @@ export class PipelineBoardService {
     }
 
     public counter = 10;
+
     public async addNode(addNodeInfo: AddNodeServiceModel): Promise<number | null> {
         const fakeData = {...addNodeInfo};
         const response =
@@ -107,16 +117,54 @@ export class PipelineBoardService {
 
     //    getSettingNode
     //    sendSettingNode
-    private async runUpToNode(id: number): Promise<Pair<string[], string[][]>> {
-        const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-            pipelineId: this.selectedPipelineBoardId,
-            componentId: id,
-        });
-        const columns = Object.keys(response?.[0]);
-        const cells = response?.map((row) => Object.values(row as string));
-        return new Pair<string[], string[][]>(columns, cells || []);
+    public async runUpToNode(): Promise<void> {
+        this.nodePreview.outputColumns = [];
+        this.nodePreview.outputRows = [];
+
+        this.nodePreview.inputColumns = [];
+        this.nodePreview.inputRows = [];
+
+        if (this.nodePreview.ioType !== IoType.INPUT) {
+            if (
+                this.selectedNode?.processesInfoType === PROCESS.json_loader.id ||
+                this.selectedNode?.processesInfoType === PROCESS.csv_loader.id
+            ) {
+                this.nodePreview.ioType = IoType.INPUT;
+            } else {
+                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                    pipelineId: this.selectedPipelineBoardId,
+                    componentId: this.selectedNode?.id,
+                });
+
+                this.nodePreview.outputColumns = Object.keys((response || [])[0]).map((col) => new TableColumn(col));
+                this.nodePreview.outputRows = (response || []).map((row) => Object.values(row as string));
+            }
+        }
+
+        if (this.nodePreview.ioType !== IoType.OUTPUT) {
+            if (
+                this.selectedNode?.processesInfoType === PROCESS.json_extractor.id ||
+                this.selectedNode?.processesInfoType === PROCESS.csv_extractor.id
+            ) {
+                this.nodePreview.ioType = IoType.OUTPUT;
+            } else {
+                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                    pipelineId: this.selectedPipelineBoardId,
+                    componentId: this.selectedNode?.beforeId,
+                });
+
+                this.nodePreview.inputColumns = Object.keys((response || [])[0]).map((col) => new TableColumn(col));
+                this.nodePreview.inputRows = (response || []).map((row) => Object.values(row as string));
+            }
+        }
     }
+
     //    runNode
+
+    public async runPipeline(): Promise<boolean> {
+        const result = await this.apiService.get<boolean>(PIPELINE_RUN_ALL, {pipelineId: this.selectedPipelineBoardId});
+        return result || false;
+    }
 
     // UTILITY
     private convertComponentInformationsToPielineNodeModel(
@@ -155,7 +203,7 @@ export class PipelineBoardService {
                 return;
             }
             this.getNodeConfig(value.id);
-            this.runUpToNode(value.id);
+            this.runUpToNode();
         });
     }
 }

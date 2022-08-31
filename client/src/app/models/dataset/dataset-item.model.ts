@@ -8,6 +8,12 @@ export interface DatasetItemModel {
     category: 'imports' | 'exports';
 }
 
+export interface DatasetRenameModel {
+    fileId: number;
+    category: string;
+    newName: string;
+}
+
 export const datasetItemData: DatasetItemModel[] = [
     {
         name: 'ali',

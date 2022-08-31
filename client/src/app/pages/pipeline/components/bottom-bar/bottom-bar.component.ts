@@ -1,8 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {TableColumn} from '../../../../components/data-table/models/table-column.model';
 import {IoType} from './enums/io-type.enum';
 import {DatalistOption} from '../../../../models/DatalistOption.interface';
 import {sampleColumns, sampleRows} from '../../../../data/fake-data/table-sample-data.data';
+import {PipelineBoardService} from '../../../../services/pipeline-board.service';
+import {PROCESS} from 'src/app/data/Processes.data';
 
 @Component({
     selector: 'app-bottom-bar',
@@ -10,36 +12,60 @@ import {sampleColumns, sampleRows} from '../../../../data/fake-data/table-sample
     styleUrls: ['./bottom-bar.component.scss'],
 })
 export class BottomBarComponent {
-    @Input() public processId?: string;
-    @Input() public processTitle!: string;
+    public get processTitle(): string | undefined {
+        return this.boardService.selectedNode?.title;
+    }
 
-    @Input() public inputColumns: TableColumn[] | null = sampleColumns;
-    @Input() public inputRows: string[][] | null = sampleRows;
+    public get inputColumns(): TableColumn[] | null {
+        return this.boardService.nodePreview.inputColumns;
+    }
+    public get inputRows(): string[][] | null {
+        return this.boardService.nodePreview.inputRows;
+    }
 
-    @Input() public outputColumns: TableColumn[] | null = sampleColumns;
-    @Input() public outputRows: string[][] | null = sampleRows;
+    public get outputColumns(): TableColumn[] | null {
+        return this.boardService.nodePreview.outputColumns;
+    }
+    public get outputRows(): string[][] | null {
+        return this.boardService.nodePreview.outputRows;
+    }
 
-    @Input() public whichSide: IoType = IoType.BOTH;
-    @Output() public whichSideChange = new EventEmitter<IoType>();
+    public get isSourceOrDestination(): boolean {
+        return (
+            [
+                PROCESS.json_extractor.id,
+                PROCESS.json_loader.id,
+                PROCESS.csv_extractor.id,
+                PROCESS.csv_loader.id,
+            ].indexOf(this.boardService.selectedNode?.processesInfoType || -1) !== -1
+        );
+    }
+
+    public constructor(public boardService: PipelineBoardService) {}
 
     public get ioTypeValues(): DatalistOption[] {
         return Object.entries(IoType).map(([value, title]) => ({title, value}));
     }
 
-    public set whichSideSet(newValue: string) {
+    public get whichSide(): IoType {
+        return this.boardService.nodePreview.ioType;
+    }
+
+    public setWhichSide(newValue: string): void {
+        const shouldRerun = this.boardService.nodePreview.ioType !== IoType.BOTH;
         switch (newValue) {
             case 'INPUT':
-                this.whichSide = IoType.INPUT;
+                this.boardService.nodePreview.ioType = IoType.INPUT;
                 break;
             case 'OUTPUT':
-                this.whichSide = IoType.OUTPUT;
+                this.boardService.nodePreview.ioType = IoType.OUTPUT;
                 break;
             case 'BOTH':
-                this.whichSide = IoType.BOTH;
+                this.boardService.nodePreview.ioType = IoType.BOTH;
                 break;
             default:
                 throw new Error(newValue);
         }
-        console.log(this.whichSide.toLowerCase());
+        if (shouldRerun && this.boardService.selectedNode) this.boardService.runUpToNode();
     }
 }
