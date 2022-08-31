@@ -32,7 +32,7 @@ public class Filter : Transformer
     
     private string ModifyByType(string type, string value)
     {
-        if (type == "string" || type == "text")
+        if (type is "string" or "text")
         {
             return "'" + value + "'";
         }

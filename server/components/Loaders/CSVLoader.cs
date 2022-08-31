@@ -6,7 +6,7 @@ public class CSVLoader : Loader
 {
     public CSVLoader()
     {
-        Type = ComponentType.CSVLoader;
+        Type = ComponentType.CsvLoader;
     }
 
     public override void Load()

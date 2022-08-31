@@ -6,7 +6,7 @@ public class CSVExtractor : Extractor
 {
     public CSVExtractor()
     {
-        Type = ComponentType.CSVExtractor;
+        Type = ComponentType.CsvExtractor;
     }
 
     public override List<string> GetKeys()

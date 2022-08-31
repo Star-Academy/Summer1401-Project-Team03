@@ -15,7 +15,7 @@ builder.Services.AddSingleton<PipelineControllerService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
-        builder => builder.WithOrigins("http://localhost:4200")
+        policyBuilder => policyBuilder.WithOrigins("http://localhost:4200")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()
