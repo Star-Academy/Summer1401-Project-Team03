@@ -5,6 +5,7 @@ export const INVENTORY_IMPORT = INVENTORY_SERVICE + '/Import';
 export const INVENTORY_EXPORT = INVENTORY_SERVICE + '/Export';
 export const INVENTORY_ALL = INVENTORY_SERVICE + '/GetFilesInformation';
 export const INVENTORY_DELETE = INVENTORY_SERVICE + '/delete';
+export const DATASET_RENAME = INVENTORY_SERVICE + '/Rename';
 
 const PIPELINE_SERVICE = BASE_URL + '/Pipeline';
 export const PIPELINE_CREATE = PIPELINE_SERVICE + '/Create';

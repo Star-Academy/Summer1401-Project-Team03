@@ -1,0 +1,11 @@
+<app-modal #renameModal title="remove node" class="modal">
+    <app-text-input
+        label="title"
+        [value]="newRenameData.newName"
+        (valueChange)="newRenameData.newName = $event"
+    ></app-text-input>
+    <div class="modal__container">
+        <app-button (click)="renameHandle()">Rename</app-button>
+        <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>
+    </div>
+</app-modal>
