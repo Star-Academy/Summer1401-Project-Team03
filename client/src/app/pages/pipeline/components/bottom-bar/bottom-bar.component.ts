@@ -3,6 +3,7 @@ import {TableColumn} from '../../../../components/data-table/models/table-column
 import {IoType} from './enums/io-type.enum';
 import {DatalistOption} from '../../../../models/DatalistOption.interface';
 
+// noinspection JSUnusedLocalSymbols
 const sampleColumns: TableColumn[] = [
     new TableColumn('title 0', 'Date', 'string'),
     new TableColumn('title 1', 'Date', 'string'),
@@ -17,6 +18,7 @@ const sampleColumns: TableColumn[] = [
     new TableColumn('title 10', 'Date', 'string'),
     new TableColumn('title 11', 'Date', 'string'),
 ];
+// noinspection JSUnusedLocalSymbols
 const sampleRows: string[][] = [
     [
         'hi 0 0',
@@ -116,6 +118,24 @@ const sampleRows: string[][] = [
         'hi 6 10',
         'hi 6 11',
     ],
+];
+
+// noinspection JSUnusedLocalSymbols
+const smallSampleColumns: TableColumn[] = [
+    new TableColumn('title 0', 'Date', 'string'),
+    new TableColumn('title 1', 'Date', 'string'),
+    new TableColumn('title 2', 'Date', 'string'),
+    new TableColumn('title 3', 'Date', 'string'),
+];
+// noinspection JSUnusedLocalSymbols
+const smallSampleRows: string[][] = [
+    ['hi 0 0', 'hi 0 1', 'hi 0 2', 'hi 0 3'],
+    ['hi 1 0', 'hi 1 1', 'hi 1 2', 'hi 1 3'],
+    ['hi 2 0', 'hi 2 1', 'hi 2 2', 'hi 2 3'],
+    ['hi 3 0', 'hi 3 1', 'hi 3 2', 'hi 3 3'],
+    ['hi 4 0', 'hi 4 1', 'hi 4 2', 'hi 4 3'],
+    ['hi 5 0', 'hi 5 1', 'hi 5 2', 'hi 5 3'],
+    ['hi 6 0', 'hi 6 1', 'hi 6 2', 'hi 6 3'],
 ];
 
 @Component({

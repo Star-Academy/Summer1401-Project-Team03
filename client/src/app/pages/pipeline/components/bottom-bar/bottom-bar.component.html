@@ -14,7 +14,7 @@
         ></app-pill-menu-input>
     </div>
 
-    <div class="row">
+    <div class="row" [style]="{'--table-min-width': whichSide.toLowerCase() === 'both' ? '50%' : '100%'}">
         <app-data-table
             [hidden]="!(whichSide.toLowerCase() !== 'output' && inputColumns)"
             title="Input"

@@ -18,6 +18,7 @@
 
             app-data-table {
                 block-size: 100%;
+                min-inline-size: var(--table-min-width);
             }
         }
     }
