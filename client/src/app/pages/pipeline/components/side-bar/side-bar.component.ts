@@ -4,6 +4,7 @@ import {ItemType} from '../../../../enums/ItemType.enum';
 import {PROCESS} from '../../../../data/Processes.data';
 import {ProcessType} from 'src/app/enums/ProcessType.enum';
 import {Paramether} from '../../../../models/Parameter.interface';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-side-bar',
@@ -13,11 +14,12 @@ import {Paramether} from '../../../../models/Parameter.interface';
 export class SideBarComponent implements OnInit, OnDestroy {
     public itemTypes = ItemType;
     public configs: {[key in string]: Paramether} | null = null;
+    private subsciprtion: Subscription | null = null;
 
     public constructor(public boardService: PipelineBoardService) {}
 
     public ngOnInit(): void {
-        this.boardService.selectedNodeConfigRx.subscribe((value: any | null) => {
+        this.subsciprtion = this.boardService.selectedNodeConfigRx.subscribe((value: any | null) => {
             console.log(value);
 
             if (!value) {
@@ -30,7 +32,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
     }
 
     public ngOnDestroy(): void {
-        this.boardService.selectedNodeConfigRx.unsubscribe();
+        this.subsciprtion?.unsubscribe();
     }
 
     private setupConfigs(value: any): void {
