@@ -244,7 +244,7 @@ export const PROCESS: ProcessInfo = {
                         title: 'inner join',
                     },
                     {
-                        value: 'outer join',
+                        value: 'FULL OUTER JOIN',
                         title: 'outer join',
                     },
                     {
