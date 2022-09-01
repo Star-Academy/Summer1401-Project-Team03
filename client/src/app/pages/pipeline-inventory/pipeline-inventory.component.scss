@@ -58,8 +58,6 @@
 
             font-size: var(--font-size-primary);
 
-            text-align: center;
-
             .name {
                 cursor: pointer;
             }
@@ -79,6 +77,7 @@
         th {
             padding: 1rem 0.75rem;
 
+            text-align: start;
             text-transform: capitalize;
         }
 
