@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 
 @Component({
     selector: 'app-board',
@@ -11,8 +11,19 @@ export class BoardComponent {
 
     @Input() public gridSize: number = 20;
 
+    @ViewChild('container') public container!: ElementRef<HTMLDivElement>;
+
+    public mouseIsDown: boolean = false;
+
     public resizeClickHandler(dx: number, dy: number): void {
         this.boardWidth += dx;
         this.boardHeight += dy;
+    }
+
+    public mouseMoveHandler(event: MouseEvent): void {
+        if (this.mouseIsDown) {
+            this.container.nativeElement.scrollTop -= event.movementY;
+            this.container.nativeElement.scrollLeft -= event.movementX;
+        }
     }
 }
