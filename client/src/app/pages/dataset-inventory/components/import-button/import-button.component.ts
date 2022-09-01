@@ -27,5 +27,6 @@ export class ImportButtonComponent {
     public async uploadFile(): Promise<void> {
         this.modal.closeModal();
         if (this.file) await this.inventoryService.uploadDataSet(this.file);
+        this.clearFile();
     }
 }
