@@ -14,6 +14,10 @@ export class NavbarItemComponent {
 
     public constructor(private router: Router) {}
 
+    public get isCurrentPage(): boolean {
+        return this.router.url === `/${this.url}`;
+    }
+
     public async navigateUrl(): Promise<void> {
         await this.router.navigate([`/${this.url}`]);
     }
