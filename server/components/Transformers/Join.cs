@@ -1,11 +1,12 @@
 using server.enums;
+using server.file;
 using SqlKata;
 
 namespace server.components.Transformers;
 
 public class Join : Transformer
 {
-    private const string FilePath = "file_path";
+    private const string FileId = "file_id";
     private const string JoinType = "join_type";
     private const string LFields = "l_fields";
     private const string RFields = "r_fields";
@@ -27,7 +28,9 @@ public class Join : Transformer
         var operators = Parameters[Operators];
         var joinType = Parameters[JoinType][0];
         var lKeys = PreviousComponents[0].GetKeys();
-        var rKeys = new StreamReader(Parameters[FilePath][0]).ReadLine().Replace("\\s+", "").Split(",").ToList();
+        var rPath = FileSearcher.Search(int.Parse(Parameters[FileId][0]), "imports");
+        
+        var rKeys = new StreamReader(rPath).ReadLine().Replace("\\s+", "").Split(",").ToList();
         var fieldsToSelect = new List<string>();
         foreach (var key in lKeys)
         {
@@ -45,7 +48,7 @@ public class Join : Transformer
     public string CreateTable()
     {
         var rTable = Pipeline.QueryBuilder.NewAlias();
-        var filePath = Parameters[FilePath][0];
+        var filePath = FileSearcher.Search(int.Parse(Parameters[FileId][0]), "imports");
         var keys = new StreamReader(filePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(rTable)).Close();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(rTable, keys)).Close();
