@@ -2,9 +2,9 @@
 
 public static class PathGenerator
 {
-    public static string GenerateDataPath(string fileName, string fileType, int fileId, string fileCategory)
+    public static string GenerateDataPath(string fileName, string fileType, int fileId)
     {
-        return Path.Combine(Directory.GetCurrentDirectory(), "resources", fileCategory,
+        return Path.Combine(Directory.GetCurrentDirectory(), "resources", "user_files",
             $"{fileName}_{fileId}.{fileType}");
     }
 
