@@ -3,9 +3,10 @@ import {Router} from '@angular/router';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {AVAILABLE_FILE_TYPES} from 'src/app/data/AvailableFileTypes.data';
 import {DatalistOption} from 'src/app/models/DatalistOption.interface';
-import {NewPipeline} from 'src/app/models/NewPipeline.interface';
+
 import {InventoryService} from 'src/app/services/inventory.service';
-import {PipelineService} from 'src/app/services/pipeline.service';
+import {PipelineService} from '../../../../services/pipeline.service';
+import {NewPipeline} from '../../../../models/NewPipeline.interface';
 
 @Component({
     selector: 'app-pipeline-add-button',
@@ -33,7 +34,7 @@ export class PipelineAddButtonComponent {
     ) {}
 
     public async createPipeline(): Promise<void> {
-        const response = this.pipelineService.createPipeline(this.formData);
+        const response = await this.pipelineService.createPipeline(this.formData);
         if (response) {
             this.router.navigateByUrl(`/pipeline/${response}`);
         }

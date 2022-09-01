@@ -7,8 +7,6 @@
         "custom-property-empty-line-before": null,
         "declaration-block-no-redundant-longhand-properties": null,
         "declaration-empty-line-before": null,
-        "declaration-property-value-disallowed-list": {"transition": "/^((?!(opacity|transform)).)+?.*/"},
-        "property-disallowed-list": ["/^((margin|padding)-)?(right|left|top|bottom)/", "/((min|max)-)?(width|height)/"],
         "no-descending-specificity": null,
         "no-empty-source": null,
         "order/order": ["custom-properties", "declarations", "rules"],

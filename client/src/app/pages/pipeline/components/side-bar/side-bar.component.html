@@ -1,12 +1,37 @@
 <div class="sidebar">
-    <ng-container *ngIf="config; else emptyBar">
-        <h2>Config</h2>
-        <div class="filters">
-            <app-text-input label="text"></app-text-input>
-            <app-switch label="switch"></app-switch>
-            <app-data-list label="data"></app-data-list>
+    <ng-container *ngIf="boardService.selectedNode; else emptyBar">
+        <ng-container *ngIf="titleEdit; else titleStatic">
+            <app-text-input [(value)]="newName" (confirm)="renameNode()" (cancel)="titleEdit = false"></app-text-input>
+        </ng-container>
+        <ng-template #titleStatic>
+            <h2 class="no-cap" (dblclick)="titleEdit = true; newName = boardService.selectedNode.title">
+                {{ boardService.selectedNode.title }}
+            </h2>
+        </ng-template>
+        <div *ngIf="configs" class="filters">
+            <ng-container *ngFor="let config of configs | keyvalue">
+                <ng-container [ngSwitch]="config.value.type">
+                    <app-text-input
+                        *ngSwitchCase="itemTypes.TEXT_INPUT"
+                        [label]="config.value.label"
+                        [(value)]="configs[config.key].value"
+                        [type]="config.value.text_type || 'text'"
+                    ></app-text-input>
+                    <app-switch
+                        *ngSwitchCase="itemTypes.SWITCH"
+                        [label]="config.value.label"
+                        [(value)]="configs[config.key].value"
+                    ></app-switch>
+                    <app-data-list
+                        *ngSwitchCase="itemTypes.SELECT"
+                        [options]="config.value.options!"
+                        [label]="config.value.label"
+                        [(value)]="configs[config.key].value"
+                    ></app-data-list>
+                </ng-container>
+            </ng-container>
         </div>
-        <app-button>save</app-button>
+        <app-button (click)="boardService.setNodeConfig(configs)">save</app-button>
     </ng-container>
     <ng-template #emptyBar>
         <div class="message">select a node to edit</div>

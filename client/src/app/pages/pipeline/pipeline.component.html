@@ -1,6 +1,6 @@
 <div class="container">
     <div class="top-bar">
-        <h1>Pipeline name</h1>
+        <h1 class="no-cap">{{ boardService.selectedPipelineBoardTitle }}</h1>
         <app-run-button></app-run-button>
         <button
             id="sidebar"
@@ -19,9 +19,7 @@
             <app-svg iconType="bottombar"></app-svg>
         </button>
     </div>
-    <app-side-bar class="side-bar" [hidden]="!sideBarShown"></app-side-bar>
-    <div class="bottom-bar" [hidden]="!bottomBarShown">
-        <app-data-table></app-data-table>
-    </div>
+    <app-side-bar [hidden]="!sideBarShown"></app-side-bar>
+    <app-bottom-bar [hidden]="!bottomBarShown"></app-bottom-bar>
     <app-pipeline-board></app-pipeline-board>
 </div>

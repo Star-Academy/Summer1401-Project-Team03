@@ -11,12 +11,14 @@ import {PipelineAddButtonComponent} from './components/pipeline-add-button/pipel
 import {ModalModule} from 'src/app/components/modal/modal.module';
 import {TextInputModule} from 'src/app/components/text-input/text-input.module';
 import {DataListModule} from 'src/app/components/data-list/data-list.module';
-import {FileToOptionModule} from 'src/app/pipes/file-to-option/file-to-option.module';
+import {FileToOptionModule} from '../../pipes/file-to-option/file-to-option.module';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
     declarations: [PipelineInventoryComponent, PipelineItemModalComponent, PipelineAddButtonComponent],
     imports: [
         CommonModule,
+        RouterModule,
         ConvertDateModule,
         SvgModule,
         SearchBoxModule,

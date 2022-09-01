@@ -9,7 +9,7 @@ export class BoardComponent {
     @Input() public boardWidth: number = 150;
     @Input() public boardHeight: number = 120;
 
-    @Input() public gridSize: string = '20px';
+    @Input() public gridSize: number = 20;
 
     @ViewChild('container') public container!: ElementRef<HTMLDivElement>;
 

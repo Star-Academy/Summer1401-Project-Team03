@@ -14,7 +14,6 @@ export class NavbarComponent {
     public set isShrink(newValue: boolean) {
         localStorage.setItem('navbarIsShrink', String(newValue));
     }
-
     public toggleShrink(): void {
         this.isShrink = !this.isShrink;
     }

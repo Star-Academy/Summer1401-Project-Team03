@@ -5,7 +5,7 @@
     </div>
     <div class="modal__item" (click)="downloadEmit.emit()">
         <app-svg iconType="download"> </app-svg>
-        <p>download</p>
+        <a [href]="downloadLink" download>download</a>
     </div>
     <div class="modal__item" (click)="deleteEmit.emit()">
         <app-svg iconType="delete"> </app-svg>
