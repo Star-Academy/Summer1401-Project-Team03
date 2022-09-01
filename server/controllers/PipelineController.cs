@@ -65,6 +65,8 @@ public class PipelineController : ControllerBase
 
             var component = new ComponentFactory().CreateComponent(type, pipeline, position,title);
 
+            if (type == ComponentType.Replicate) component.IsConfigSet = true;
+            
             pipeline.AddComponent(component);
             pipeline.Disconnect(previousComponentId, nextComponentId);
             pipeline.Connect(previousComponentId, component.Id);
