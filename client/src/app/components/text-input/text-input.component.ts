@@ -11,4 +11,7 @@ export class TextInputComponent {
     @Input() public value: string = '';
     @Input() public disabled: boolean = false;
     @Output() public valueChange = new EventEmitter<string>();
+
+    @Output() public confirm = new EventEmitter<void>();
+    @Output() public cancel = new EventEmitter<void>();
 }

@@ -35,6 +35,12 @@ export interface RemoveNodeServiceModel {
     componentID: number;
 }
 
+export interface RenameNodeServiceModel {
+    pipelineId: number;
+    componentId: number;
+    newTitle: string;
+}
+
 export interface AddNodeServiceModel {
     pipelineID: number;
     previousComponentId: number;

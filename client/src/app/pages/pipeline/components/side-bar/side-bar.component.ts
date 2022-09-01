@@ -14,6 +14,9 @@ export class SideBarComponent implements OnInit, OnDestroy {
     public itemTypes = ItemType;
     public configs: {[key in string]: Paramether} | null = null;
 
+    public newName = '';
+    public titleEdit = false;
+
     public constructor(public boardService: PipelineBoardService) {}
 
     public ngOnInit(): void {
@@ -57,5 +60,19 @@ export class SideBarComponent implements OnInit, OnDestroy {
                 },
             };
         }, {});
+    }
+
+    public async renameNode(): Promise<void> {
+        const response = await this.boardService.renameNode({
+            pipelineId: this.boardService.selectedPipelineBoardId,
+            componentId: this.boardService.selectedNode!.id,
+            newTitle: this.newName,
+        });
+
+        if (response) {
+            this.boardService.selectedNode!.title = this.newName;
+            this.boardService.selectedNodeRx.next(this.boardService.selectedNode);
+            this.titleEdit = false;
+        }
     }
 }

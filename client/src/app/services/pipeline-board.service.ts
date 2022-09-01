@@ -7,6 +7,7 @@ import {
     PipelineNodeModel,
     PreviewTableData,
     RemoveNodeServiceModel,
+    RenameNodeServiceModel,
 } from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
 import {
@@ -18,6 +19,7 @@ import {
     PIPELINE_RUN_UP_TO,
     PIPELINE_RUN_ALL,
     PIPELINE_SET_CONFIG,
+    RENAME_PIPELINE_NODE,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS, ProcessSchema} from '../data/Processes.data';
@@ -33,6 +35,7 @@ export class PipelineBoardService {
     public selectedNode: PipelineNodeModel | null = null;
     public selectedNodeConfig: any | null = null;
     public selectedPipelineBoardId!: number;
+    public selectedPipelineBoardTitle!: string;
 
     public constructor(private apiService: ApiService) {
         this.getNodeData();
@@ -55,6 +58,7 @@ export class PipelineBoardService {
             (await this.apiService.get<GetAllNodeServiceModel>(PIPELINE_ONE, {pipelineID: pipelineId})) || null;
         if (response) {
             this.allNode = this.convertComponentInformationsToPielineNodeModel(response.componentInformations);
+            this.selectedPipelineBoardTitle = response.name;
             return this.allNode;
         }
         return [];
@@ -106,6 +110,10 @@ export class PipelineBoardService {
             pipelineID: +removeNodeInfo.pipelineID,
             componentID: +removeNodeInfo.componentID,
         });
+    }
+
+    public async renameNode(renameNodeInfo: RenameNodeServiceModel): Promise<boolean> {
+        return !!(await this.apiService.put(RENAME_PIPELINE_NODE, renameNodeInfo));
     }
 
     public async changeComponentPosition(changeNodePositionInfo: ChangeComponentPositionServiceModel): Promise<void> {
