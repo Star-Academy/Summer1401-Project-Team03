@@ -210,10 +210,10 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         const beforeId = item.beforeId;
         const afterId = item.afterId;
 
-        // is destination
-
-        if ([PROCESS.csv_loader.id, PROCESS.json_loader.id].some((type: number) => type == item.processesInfoType))
-            return undefined;
+        // // is destination
+        //
+        // if ([PROCESS.csv_loader.id, PROCESS.json_loader.id].some((type: number) => type == item.processesInfoType))
+        //     return undefined;
 
         // Insert to Item to nodeList
         this.addItemToNodeListById(beforeId, item);

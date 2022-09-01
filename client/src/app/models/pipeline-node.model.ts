@@ -49,6 +49,13 @@ export interface AddNodeServiceModel {
     type: number;
     position: {x: number; y: number};
 }
+export interface AddDestinationNodeServiceModel {
+    pipelineId: number;
+    previousComponentId: number;
+    fileName: string;
+    format: string;
+    position: {x: number; y: number};
+}
 
 export interface ChangeComponentPositionServiceModel {
     pipelineID: number;

@@ -12,3 +12,9 @@
         </button>
     </div>
 </app-modal>
+
+<app-add-node-replicate
+    class="absolute"
+    #replicateModal
+    (replicateNodeEmit)="addNodeReplicateHandle($event)"
+></app-add-node-replicate>
