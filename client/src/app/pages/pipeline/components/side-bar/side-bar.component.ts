@@ -18,6 +18,8 @@ export class SideBarComponent implements OnInit, OnDestroy {
 
     public ngOnInit(): void {
         this.boardService.selectedNodeConfigRx.subscribe((value: any | null) => {
+            console.log(value);
+
             if (!value) {
                 this.configs = null;
                 return;

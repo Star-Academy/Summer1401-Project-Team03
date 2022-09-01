@@ -53,7 +53,7 @@ export const PROCESS: ProcessInfo = {
                 label: 'condition',
                 options: [
                     {
-                        value: '==',
+                        value: '=',
                         title: '==',
                     },
                     {

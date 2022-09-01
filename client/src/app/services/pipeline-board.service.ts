@@ -71,7 +71,8 @@ export class PipelineBoardService {
 
     public async setNodeConfig(config: any): Promise<void> {
         const body = Object.keys(config).reduce((prev, key) => {
-            const value = config[key].type === ItemType.TEXT_INPUT ? config[key].value.split(', ') : config[key].value;
+            const value =
+                config[key].type === ItemType.TEXT_INPUT ? config[key].value.split(', ') : [config[key].value];
 
             return {...prev, [key]: value};
         }, {});
