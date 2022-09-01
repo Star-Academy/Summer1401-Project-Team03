@@ -99,7 +99,7 @@ public class PipelineController : ControllerBase
         }
     }
 
-    [EnableCors("CosPolicy")]
+    [EnableCors("CorsPolicy")]
     [HttpPut]
     public IActionResult ChangeComponentTitle(int pipelineId, int componentId, string newTitle)
     {
@@ -175,7 +175,6 @@ public class PipelineController : ControllerBase
         var loader = new ComponentFactory().CreateComponent(componentType, pipeline, position, fileName);
         loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
         loader.IsConfigSet = true;
-        
         pipeline.AddDestinationId(loader.Id);
         pipeline.AddComponent(loader);
 
