@@ -54,7 +54,7 @@ export class AddNodeReplicateComponent {
             pipelineId: this.pipelineBoardId,
             previousComponentId: this.nodeData.beforeId,
             position: newPosition,
-            format: 'exports', //TODO Edit
+            format: 'csv', //TODO Edit
             fileName: this.destName,
         };
 
