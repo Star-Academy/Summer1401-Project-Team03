@@ -9,27 +9,25 @@ export class ApiService {
     public constructor(private spinnerService: SpinnerService) {}
 
     private async fetchData<T>(url: string, init: Partial<RequestInit> = {}): Promise<T | null> {
-        return await this.spinnerService.wrapAsync(async () => {
-            let response = await fetch(url, init);
+        let response = await fetch(url, init);
 
-            let data = null;
+        let data = null;
 
-            try {
-                data = await response.json();
-            } catch {
-                if (response.ok) {
-                    data = true;
-                } else {
-                    data = false;
-                }
-            }
-
+        try {
+            data = await response.json();
+        } catch {
             if (response.ok) {
-                return data as T;
+                data = true;
+            } else {
+                data = false;
             }
+        }
 
-            return null;
-        });
+        if (response.ok) {
+            return data as T;
+        }
+
+        return null;
     }
 
     public async post<T>(
@@ -59,9 +57,11 @@ export class ApiService {
     }
 
     public async get<T>(url: string, queries: any = {}, init: Partial<RequestInit> = {}): Promise<T | null> {
-        const u = new URL(url);
-        Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
-        return await this.fetchData<T>(u.toString(), init);
+        return await this.spinnerService.wrapAsync(async () => {
+            const u = new URL(url);
+            Object.keys(queries).forEach((key) => u.searchParams.append(key, queries[key]));
+            return await this.fetchData<T>(u.toString(), init);
+        });
     }
 
     public async delete<T>(url: string, queries: any = {}): Promise<T | null> {
