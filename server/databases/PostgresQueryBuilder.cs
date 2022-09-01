@@ -89,7 +89,7 @@ public class PostgresQueryBuilder : IQueryBuilder
     public string Where(List<string> keys, List<string> operators, List<string> values)
     {
         var query = new StringBuilder(Where("true"));
-        for (var i = 0; i < keys.Count; i++) query.Append($"AND {keys[i]} {operators[0]} {values[i]}");
+        for (var i = 0; i < keys.Count; i++) query.Append($" AND {keys[i]} {operators[0]} {values[i]}");
 
         return query.ToString();
     }
