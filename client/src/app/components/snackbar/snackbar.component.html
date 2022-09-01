@@ -5,7 +5,7 @@
         [class]="snack.theme"
         [ngClass]="{hidden: snack.hidden, gone: snack.gone}"
     >
-        {{ snack.text }}
+        <pre>{{ snack.text }}</pre>
         <button class="close" (click)="snackbarService.hide(snack.id)">&times;</button>
     </li>
 </ul>

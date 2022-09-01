@@ -26,6 +26,10 @@ ul {
 
         transition: transform 100ms ease-in-out;
 
+        pre {
+            font-family: unset;
+        }
+
         &.hidden {
             transform: translateX(calc(100% + 2.5rem));
         }

@@ -7,12 +7,7 @@ import {SnackbarTheme} from '../components/snackbar/enums/snackbar-theme';
     providedIn: 'root',
 })
 export class SnackbarService {
-    public snackbars: {[id: number]: SnackbarObject} = {
-        1: {id: 1, text: 'hello 1 hello 1 hello 1', theme: SnackbarTheme.PRIMARY, hidden: false, gone: false},
-        2: {id: 2, text: 'hello 2 hello 2 hello 2', theme: SnackbarTheme.DANGER, hidden: false, gone: false},
-        3: {id: 3, text: 'hello 3 hello 3 hello 3', theme: SnackbarTheme.SUCCESS, hidden: false, gone: false},
-        4: {id: 4, text: 'hello 4 hello 4 hello 4', theme: SnackbarTheme.WARNING, hidden: false, gone: false},
-    };
+    public snackbars: {[id: number]: SnackbarObject} = {};
 
     public component!: SnackbarComponent;
 
@@ -23,6 +18,7 @@ export class SnackbarService {
 
     private show(snackbar: SnackbarObject): void {
         this.snackbars[snackbar.id] = snackbar;
+        setTimeout(() => this.hide(snackbar.id), 3000);
     }
 
     public showNewId(snackbar: SnackbarObject): void {

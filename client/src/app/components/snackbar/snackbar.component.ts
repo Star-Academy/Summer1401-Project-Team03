@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {SnackbarService} from '../../services/snackbar.service';
 import {SnackbarObject} from './models/snackbar-object.model';
 
