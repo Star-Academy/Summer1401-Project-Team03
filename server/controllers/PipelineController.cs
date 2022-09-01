@@ -80,6 +80,45 @@ public class PipelineController : ControllerBase
     }
 
     [EnableCors("CorsPolicy")]
+    [HttpPost]
+    public ActionResult<int> AddDestination(int pipelineId, string fileName, string format, int previousComponentId, Position position)
+    {
+        try
+        {
+            var pipeline = _idToPipeline[pipelineId];
+
+            var fileId = IdCounterHandler.LoadFileId();
+            var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "exports");
+
+            IdCounterHandler.SaveFileId(fileId + 1);
+
+            var componentType = format switch
+            {
+                "json" => ComponentType.JsonLoader,
+                _ => ComponentType.CsvLoader
+            };
+
+            var loader = new ComponentFactory().CreateComponent(componentType, pipeline, position, fileName);
+            
+            loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
+            loader.IsConfigSet = true;
+            
+            pipeline.AddDestinationId(loader.Id);
+            pipeline.AddComponent(loader);
+            pipeline.Connect(previousComponentId, loader.Id);
+
+            file.FileOperation.Instance.WritePipeline(pipeline);
+
+            return loader.Id;
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+    }
+
+    
+    [EnableCors("CorsPolicy")]
     [HttpPut]
     public IActionResult ChangeComponentPosition(int pipelineId, int componentId, Position newPosition)
     {
