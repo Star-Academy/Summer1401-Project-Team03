@@ -1,15 +1,15 @@
-<app-board>
-    <div class="wrapper">
+<app-board [gridSize]="gridSize">
+    <div class="wrapper" (click)="clickOnWrapperHandler($event)">
         <ng-container *ngFor="let pipelineNodeData of pipelineNodeDatas">
             <app-pipeline-node
                 [id]="pipelineNodeData.id"
                 draggabilly
                 [options]="draggabillyOptions"
                 [pipelineNodeData]="pipelineNodeData"
+                (staticClick)="clickNodeElement($event.event, pipelineNodeData.id)"
                 (dragStart)="setToUpperLayer(pipelineNodeData.id)"
                 (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
                 (dragMove)="updateLeaderLine(pipelineNodeData.id)"
-                (nodeClick)="clickNodeElement(pipelineNodeData.id)"
                 ngDraggable
                 [position]="pipelineNodeData.position"
                 (removeNodeEmit)="

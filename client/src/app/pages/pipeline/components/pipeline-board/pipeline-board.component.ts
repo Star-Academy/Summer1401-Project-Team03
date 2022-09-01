@@ -79,6 +79,8 @@ const pipelineNodeDatasDefault: PipelineNodeModel[] = [
     styleUrls: ['./pipeline-board.component.scss'],
 })
 export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
+    public gridSize: number = 20;
+
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-95)',
@@ -90,7 +92,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
 
     public draggabillyOptions: NgxDraggabillyOptions = {
         containment: true,
-        grid: [20, 20],
+        grid: [this.gridSize, this.gridSize],
     };
 
     // public pipelineNodeDatas: PipelineNodeModel[] = JSON.parse(JSON.stringify(pipelineNodeDatasDefault));
@@ -143,9 +145,22 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     // Node Element
-    public async clickNodeElement(id: number): Promise<void | boolean> {
-        this.boardService.selectedNode = this.pipelineNodeDatas[this.getNodeIndexById(id)];
-        this.boardService.selectedNodeRx.next(this.boardService.selectedNode);
+    public async clickNodeElement(event: Event, id: number): Promise<void | boolean> {
+        let clickOnDesc = false;
+        for (let target of event.composedPath()) {
+            if ((target as HTMLElement).className === 'desc') clickOnDesc = true;
+        }
+        if (clickOnDesc) {
+            this.boardService.selectedNode = this.pipelineNodeDatas[this.getNodeIndexById(id)];
+            this.boardService.selectedNodeRx.next(this.boardService.selectedNode);
+        }
+    }
+
+    public clickOnWrapperHandler(event: MouseEvent): void {
+        if (!(event.target as HTMLElement).closest('app-pipeline-node')) {
+            this.boardService.selectedNode = null;
+            this.boardService.selectedNodeRx.next(null);
+        }
     }
 
     private addItemToNodeListById(id: number, item: PipelineNodeModel): void {

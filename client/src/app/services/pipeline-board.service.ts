@@ -21,7 +21,6 @@ import {
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS, ProcessSchema} from '../data/Processes.data';
-import {Pair} from '../models/pair.model';
 import {IoType} from '../pages/pipeline/components/bottom-bar/enums/io-type.enum';
 import {TableColumn} from '../components/data-table/models/table-column.model';
 import {ItemType} from '../enums/ItemType.enum';
@@ -133,32 +132,37 @@ export class PipelineBoardService {
             ) {
                 this.nodePreview.ioType = IoType.INPUT;
             } else {
-                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                    pipelineId: this.selectedPipelineBoardId,
-                    componentId: this.selectedNode?.id,
-                });
+                const response =
+                    (await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                        pipelineId: this.selectedPipelineBoardId,
+                        componentId: this.selectedNode?.id,
+                    })) || [];
 
-                this.nodePreview.outputColumns = Object.keys((response || [])[0]).map((col) => new TableColumn(col));
-                this.nodePreview.outputRows = (response || []).map((row) => Object.values(row as string));
+                for (const item of response) delete item['__'];
+
+                this.nodePreview.outputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
+                this.nodePreview.outputRows = response.map((row) => Object.values(row as string));
             }
         }
 
-        if (this.nodePreview.ioType !== IoType.OUTPUT) {
+        if (this.nodePreview.ioType !== IoType.OUTPUT)
             if (
                 this.selectedNode?.processesInfoType === PROCESS.json_extractor.id ||
                 this.selectedNode?.processesInfoType === PROCESS.csv_extractor.id
             ) {
                 this.nodePreview.ioType = IoType.OUTPUT;
             } else {
-                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                    pipelineId: this.selectedPipelineBoardId,
-                    componentId: this.selectedNode?.beforeId,
-                });
+                const response =
+                    (await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                        pipelineId: this.selectedPipelineBoardId,
+                        componentId: this.selectedNode?.beforeId,
+                    })) || [];
 
-                this.nodePreview.inputColumns = Object.keys((response || [])[0]).map((col) => new TableColumn(col));
-                this.nodePreview.inputRows = (response || []).map((row) => Object.values(row as string));
+                for (const item of response) delete item['__'];
+
+                this.nodePreview.inputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
+                this.nodePreview.inputRows = response.map((row) => Object.values(row as string));
             }
-        }
     }
 
     //    runNode
