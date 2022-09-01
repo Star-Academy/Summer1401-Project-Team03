@@ -34,7 +34,7 @@ public class Filter : Transformer
     {
         if (type == "string" || type == "text")
         {
-            return "'" + value + "'";
+            return $"'{value}'";
         }
 
         return value;

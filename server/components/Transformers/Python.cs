@@ -48,4 +48,22 @@ output.to_sql('{_tableName}', connection)";
         process.WaitForExit();
         return Pipeline.QueryBuilder.SelectTable(_tableName);
     }
+
+    public override List<string> GetKeys()
+    {
+        if (_tableName is null)
+        {
+            return base.GetKeys();
+        }
+        var columnNames = new List<string>();
+        var query =
+            $"SELECT column_name FROM information_schema.columns where table_schema = 'public' and table_name = '{_tableName}'";
+        using var reader = Pipeline.Database.Execute(query);
+
+        while (reader.Read())
+        {
+            columnNames.Add(reader.GetString(0));
+        }
+        return columnNames;
+    }
 }
