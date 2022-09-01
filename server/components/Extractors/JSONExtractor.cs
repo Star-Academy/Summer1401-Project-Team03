@@ -6,7 +6,7 @@ public class JSONExtractor : Extractor
 {
     public JSONExtractor()
     {
-        Type = ComponentType.JSONExtractor;
+        Type = ComponentType.JsonExtractor;
     }
 
     public override List<string> GetKeys()

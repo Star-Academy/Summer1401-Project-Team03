@@ -14,7 +14,7 @@ public class TypeConverter : Transformer
 
     public override string GetQuery()
     {
-        if (!isConfigSet)
+        if (!IsConfigSet)
             throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
 
         var fields = Parameters[Fields];

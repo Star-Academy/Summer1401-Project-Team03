@@ -11,7 +11,7 @@ public class PipelineControllerService
         LoadPipelines();
     }
     
-    public void LoadPipelines()
+    private void LoadPipelines()
     {
         var path = PathGenerator.GetPipelineDirectory();
         foreach (var filePath in Directory.GetFiles(path))

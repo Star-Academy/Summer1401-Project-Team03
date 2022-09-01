@@ -8,7 +8,7 @@ public class Position
         Y = y;
     }
 
-    private double X { get; }
+    public double X { get; }
 
-    private double Y { get; }
+    public double Y { get; }
 }

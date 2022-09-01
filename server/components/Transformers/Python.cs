@@ -6,7 +6,7 @@ namespace server.components.Transformers;
 
 public class Python : Transformer
 {
-    private static readonly DBConfiguration Configuration = DBConfigLoader.Load(); 
+    private static readonly DbConfiguration Configuration = DbConfigLoader.Load(); 
     
     private string _tableName;
     private string _prefix;
@@ -26,7 +26,7 @@ public class Python : Transformer
             _tableName = Pipeline.QueryBuilder.NewAlias();
         }
 
-        var configurations = DBConfigLoader.Load();
+        var configurations = DbConfigLoader.Load();
         var query = Pipeline.QueryBuilder.Select(new List<string>() {"*"}, PreviousComponents[0].GetQuery(),
             Pipeline.QueryBuilder.NewAlias());
         //Start of Python Code

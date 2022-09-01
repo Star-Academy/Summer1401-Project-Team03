@@ -11,9 +11,9 @@ namespace server.components;
 public class ComponentFactory
 {
     private static int _counter;
-    public static ComponentFactory Instance = new();
+    public static readonly ComponentFactory Instance = new();
 
-    public Component GetComponent(ComponentType type)
+    private Component GetComponent(ComponentType type)
     {
         return type switch
         {
@@ -26,14 +26,15 @@ public class ComponentFactory
             ComponentType.Hash => new Hash(),
             ComponentType.Join => new Join(),
             ComponentType.TypeConverter => new TypeConverter(),
-            ComponentType.CSVExtractor => new CSVExtractor(),
-            ComponentType.CSVLoader => new CSVLoader(),
-            ComponentType.JSONExtractor => new JSONExtractor(),
-            ComponentType.JSONLoader => new JSONLoader(),
+            ComponentType.CsvExtractor => new CSVExtractor(),
+            ComponentType.CsvLoader => new CSVLoader(),
+            ComponentType.JsonExtractor => new JSONExtractor(),
+            ComponentType.JsonLoader => new JSONLoader(),
             ComponentType.Math => new Math(),
             ComponentType.Replicate => new Replicate(),
             ComponentType.DataCleanser => new DataCleanser(),
             ComponentType.Concatenate => new Concatenate(),
+            ComponentType.Python => new Python(),
             _ => throw new Exception()
         };
     }
@@ -50,6 +51,8 @@ public class ComponentFactory
     public Component CreateComponent(ComponentType type, Pipeline pipeline, Position position, string title)
     {
         var component = GetComponent(type);
+        _counter++;
+        component.Id = _counter;
         component.Pipeline = pipeline;
         component.Position = position;
         component.Title = title;
@@ -64,6 +67,7 @@ public class ComponentFactory
         component.Position = componentInformation.Position;
         component.Parameters = new Dictionary<string, List<string>>(componentInformation.Parameters);
         component.Pipeline = pipeline;
+        component.IsConfigSet = componentInformation.IsConfigSet;
         return component;
     }
 }

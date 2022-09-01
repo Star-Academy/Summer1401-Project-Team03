@@ -16,7 +16,7 @@ public class Filter : Transformer
 
     public override string GetQuery()
     {
-        if (!isConfigSet)
+        if (!IsConfigSet)
             throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
 
         var valuesForQuery = new List<string>();
@@ -32,7 +32,7 @@ public class Filter : Transformer
     
     private string ModifyByType(string type, string value)
     {
-        if (type == "string" || type == "text")
+        if (type is "string" or "text")
         {
             return $"'{value}'";
         }

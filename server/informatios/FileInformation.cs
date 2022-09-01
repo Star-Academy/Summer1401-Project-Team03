@@ -14,16 +14,16 @@ public class FileInformation
         Length = length;
     }
 
-    private string Name { get; }
-    private string Id { get; }
-    private string Type { get; }
-    private string Category { get; }
-    private string CreateTime { get; }
-    private string Length { get; }
+    public string Name { get; }
+    public string Id { get; }
+    public string Type { get; }
+    public string Category { get; }
+    public string CreateTime { get; }
+    public string Length { get; }
 
     public static void ExtractInformation(List<FileInformation> informations, string category)
     {
-        var directory = new DirectoryInfo(@"resources\" + category);
+        var directory = new DirectoryInfo(Path.Combine("resources", category));
         var files = directory.GetFiles("*");
 
         foreach (var file in files)

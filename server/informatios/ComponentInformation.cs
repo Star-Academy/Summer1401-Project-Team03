@@ -18,9 +18,12 @@ public class ComponentInformation
         PreviousIds = component.PreviousComponents.Select(x => x.Id).ToList();
         Position = component.Position;
         Parameters = component.Parameters;
+        IsConfigSet = component.IsConfigSet;
     }
 
     public string Title { get; set; }
+    
+    public bool IsConfigSet { get; set; }
     public int Id { get; set; }
     public string Type { get; set; }
     public List<int> NextIds { get; set; }

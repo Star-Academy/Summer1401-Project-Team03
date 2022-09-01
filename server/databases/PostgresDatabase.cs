@@ -8,7 +8,7 @@ public class PostgresDatabase : IDatabase
 {
     private readonly NpgsqlConnection _connection;
 
-    public PostgresDatabase(DBConfiguration dbConfiguration)
+    public PostgresDatabase(DbConfiguration dbConfiguration)
     {
         var connectionString =
             $"Host={dbConfiguration.Host};Database={dbConfiguration.Database};Username={dbConfiguration.Username};Password={dbConfiguration.Password}";

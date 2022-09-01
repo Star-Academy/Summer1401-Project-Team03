@@ -31,7 +31,7 @@ public class DataInventoryController : ControllerBase
                 var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "imports");
 
                 IdCounterHandler.SaveFileId(fileId + 1);
-                using (var stream = FileOperation.Create(filePath))
+                await using (var stream = FileOperation.Create(filePath))
                 {
                     await file.CopyToAsync(stream);
                 }

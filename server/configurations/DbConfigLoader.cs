@@ -2,13 +2,13 @@
 
 namespace server.configurations;
 
-public static class DBConfigLoader
+public static class DbConfigLoader
 {
-    public static DBConfiguration Load()
+    public static DbConfiguration Load()
     {
         using var r = new StreamReader("configurations/DBconfig.json");
         var json = r.ReadToEnd();
-        var dbConfiguration = JsonConvert.DeserializeObject<DBConfiguration>(json);
+        var dbConfiguration = JsonConvert.DeserializeObject<DbConfiguration>(json);
         return dbConfiguration;
     }
 }

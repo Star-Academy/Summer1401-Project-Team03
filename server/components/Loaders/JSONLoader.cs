@@ -6,7 +6,7 @@ public class JSONLoader : Loader
 {
     public JSONLoader()
     {
-        Type = ComponentType.JSONLoader;
+        Type = ComponentType.JsonLoader;
     }
 
     public override void Load()

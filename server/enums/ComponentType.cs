@@ -12,10 +12,10 @@ public enum ComponentType
     TypeConverter, //ok
     Join,
     Replicate,
-    CSVLoader, //ok
-    CSVExtractor, //ok
-    JSONExtractor,
-    JSONLoader,
+    CsvLoader, //ok
+    CsvExtractor, //ok
+    JsonExtractor,
+    JsonLoader,
     Math,  //ok
     DataCleanser, //ok
     Concatenate,

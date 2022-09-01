@@ -11,7 +11,7 @@ public abstract class Extractor : Component
         {
             _tableName = Pipeline.QueryBuilder.NewAlias();
         }
-        if (!isConfigSet)
+        if (!IsConfigSet)
             throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
 
         Extract();

@@ -17,11 +17,11 @@ namespace server.controllers;
 [Route("[controller]/[Action]")]
 public class PipelineController : ControllerBase
 {
-    private static Dictionary<int, Pipeline> IdToPipeline = new();
+    private static Dictionary<int, Pipeline> _idToPipeline = new();
 
     public PipelineController(PipelineControllerService pipelineControllerService)
     {
-        IdToPipeline = pipelineControllerService.IdToPipeline;
+        _idToPipeline = pipelineControllerService.IdToPipeline;
     }
 
     [EnableCors("CorsPolicy")]
@@ -33,7 +33,7 @@ public class PipelineController : ControllerBase
             var pipeline = new Pipeline(pipelineName);
 
             var pipelineId = IdCounterHandler.LoadPipeLineId();
-            IdToPipeline[pipelineId] = pipeline;
+            _idToPipeline[pipelineId] = pipeline;
             pipeline.Id = pipelineId;
 
             IdCounterHandler.SavePipelineId(pipelineId + 1);
@@ -61,17 +61,15 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var pipeline = IdToPipeline[pipelineId];
+            var pipeline = _idToPipeline[pipelineId];
 
-            var component = new ComponentFactory().CreateComponent(type, title);
+            var component = new ComponentFactory().CreateComponent(type, pipeline, position,title);
 
             pipeline.AddComponent(component);
             pipeline.Disconnect(previousComponentId, nextComponentId);
             pipeline.Connect(previousComponentId, component.Id);
             pipeline.Connect(component.Id, nextComponentId);
-
-            component.Position = position;
-
+            
             file.FileOperation.Instance.WritePipeline(pipeline);
             return Ok(component.Id);
         }
@@ -87,7 +85,7 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var pipeline = IdToPipeline[pipelineId];
+            var pipeline = _idToPipeline[pipelineId];
             var component = pipeline.IdToComponent[componentId];
 
             component.Position = newPosition;
@@ -107,7 +105,7 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var pipeline = IdToPipeline[pipelineId];
+            var pipeline = _idToPipeline[pipelineId];
             var component = pipeline.IdToComponent[componentId];
 
             component.Title = newTitle;
@@ -128,11 +126,11 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var pipeline = IdToPipeline[pipelineId];
+            var pipeline = _idToPipeline[pipelineId];
             var component = pipeline.IdToComponent[componentId];
 
             component.Parameters = configurations;
-            component.isConfigSet = true;
+            component.IsConfigSet = true;
             file.FileOperation.Instance.WritePipeline(pipeline);
 
             return Ok();
@@ -150,12 +148,10 @@ public class PipelineController : ControllerBase
         var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
         var fileName = regex.Match(new FileInfo(filePath).Name).Groups[1].Value;
 
-        var extractor = new ComponentFactory().CreateComponent(ComponentType.CSVExtractor, fileName);
-
-        extractor.Pipeline = pipeline;
-        extractor.Position = position;
+        var extractor = new ComponentFactory().CreateComponent(ComponentType.CsvExtractor, pipeline, position,fileName);
+        
         extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
-        extractor.isConfigSet = true;
+        extractor.IsConfigSet = true;
         
         pipeline.AddComponent(extractor);
 
@@ -170,23 +166,15 @@ public class PipelineController : ControllerBase
 
         IdCounterHandler.SaveFileId(fileId + 1);
 
-        ComponentType componentType;
-
-        switch (format)
+        var componentType = format switch
         {
-            case "json":
-                componentType = ComponentType.JSONLoader;
-                break;
-            default:
-                componentType = ComponentType.CSVLoader;
-                break;
-        }
+            "json" => ComponentType.JsonLoader,
+            _ => ComponentType.CsvLoader
+        };
 
-        var loader = new ComponentFactory().CreateComponent(componentType, fileName);
-        loader.Pipeline = pipeline;
-        loader.Position = position;
+        var loader = new ComponentFactory().CreateComponent(componentType, pipeline, position, fileName);
         loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
-        loader.isConfigSet = true;
+        loader.IsConfigSet = true;
         
         pipeline.AddDestinationId(loader.Id);
         pipeline.AddComponent(loader);
@@ -215,7 +203,7 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var pipeline = IdToPipeline[pipelineId];
+            var pipeline = _idToPipeline[pipelineId];
             var component = pipeline.IdToComponent[componentId];
             var previousIDs = component.PreviousComponents.Select(x => x.Id).ToList();
             var nextIDs = component.NextComponents.Select(x => x.Id).ToList();
@@ -242,7 +230,7 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var pipeline = IdToPipeline[pipelineId];
+            var pipeline = _idToPipeline[pipelineId];
             pipeline.Execute();
             return Ok();
         }
@@ -258,7 +246,7 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            var pipeline = IdToPipeline[pipelineId];
+            var pipeline = _idToPipeline[pipelineId];
 
             using var reader = pipeline.Execute(componentId);
 
@@ -325,7 +313,7 @@ public class PipelineController : ControllerBase
     {
         try
         {
-            return Ok(new ComponentInformation(IdToPipeline[pipelineId].IdToComponent[componentId]));
+            return Ok(new ComponentInformation(_idToPipeline[pipelineId].IdToComponent[componentId]));
         }
         catch (Exception e)
         {
