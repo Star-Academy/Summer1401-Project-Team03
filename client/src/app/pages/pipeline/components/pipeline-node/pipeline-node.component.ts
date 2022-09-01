@@ -29,7 +29,6 @@ export class PipelineNodeComponent implements OnInit {
     }
 
     public configNode(id: number): void {
-        this.pipelineNodeData.openedSettingModal = false;
         this.boardService.selectedNode = this.pipelineNodeData;
         this.boardService.selectedNodeRx.next(this.pipelineNodeData);
         console.log(`configure node ${id}`);
