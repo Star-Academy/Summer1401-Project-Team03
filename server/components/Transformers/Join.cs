@@ -63,7 +63,9 @@ public class Join : Transformer
         
         var rKeys = new StreamReader(rPath).ReadLine().Replace("\\s+", "").Split(",").ToList();
 
-        lKeys.AddRange(rKeys);
-        return lKeys;
+        var t = lKeys.Select(x => $"L_{x}").ToList();
+        t.AddRange(rKeys.Select(x => $"R_{x}").ToList());
+        
+        return t;
     }
 }
