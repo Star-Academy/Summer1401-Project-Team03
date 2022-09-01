@@ -14,9 +14,9 @@
         <ng-container *ngIf="pipelineNodeData.openedSettingModal">
             <app-setting-item-modal
                 class="setting__modal"
-                (newNodeEmit)="pipelineNodeData.openedSettingModal = false; addNodeEmit.emit()"
-                (configNodeEmit)="pipelineNodeData.openedSettingModal = false; configNode(pipelineNodeData.id)"
-                (deleteNodeEmit)="pipelineNodeData.openedSettingModal = false; removeNodeEmit.emit()"
+                (newNodeEmit)="addNode()"
+                (configNodeEmit)="configNode(pipelineNodeData.id)"
+                (deleteNodeEmit)="removeNode()"
             ></app-setting-item-modal>
         </ng-container>
     </div>

@@ -7,6 +7,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {SnackbarService} from './snackbar.service';
 import {SnackbarObject} from '../components/snackbar/models/snackbar-object.model';
 import {SnackbarTheme} from '../components/snackbar/enums/snackbar-theme';
+import {PROCESS} from '../data/Processes.data';
 
 @Injectable({
     providedIn: 'root',
@@ -23,7 +24,7 @@ export class InventoryService {
     ) {
         this.getAllDataset();
         this.subscribeRoute();
-        // this.subscribeJoinOptions();
+        this.subscribeJoinOptions();
     }
 
     public async getAllDataset(): Promise<void> {
@@ -83,14 +84,17 @@ export class InventoryService {
         }
     }
 
-    // private subscribeJoinOptions(): void {
-    //     this.datasetRx.subscribe((value) => {
-    //         PROCESS.join.parameters.datasets.options = value?.map((dataset) => ({
-    //             title: dataset.name,
-    //             value: dataset.id,
-    //         }));
-    //     });
-    // }
+    private subscribeJoinOptions(): void {
+        this.datasetRx.subscribe((value) => {
+            if (!value) {
+                return;
+            }
+            PROCESS.join.parameters.file_id.options = value?.map((dataset) => ({
+                title: dataset.name,
+                value: dataset.id.toString(),
+            }));
+        });
+    }
 
     private subscribeRoute(): void {
         this.router.events.subscribe(async (value) => {
