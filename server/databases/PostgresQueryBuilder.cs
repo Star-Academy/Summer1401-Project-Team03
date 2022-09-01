@@ -129,6 +129,19 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"{function}({key})";
     }
 
+    public string Join(string lTable, string rTable, string lTableAlias, string rTableAlias, List<string> lFields,
+        List<string> rFields, List<string> operators, string joinType)
+    {
+        var query = new StringBuilder($"({lTable}) AS {lTableAlias} {joinType} ({rTable}) AS {rTableAlias} ON");
+        query.Append($" {lTableAlias}.{lFields[0]} {operators[0]} {rTableAlias}.{rFields[0]}");
+        for (var i = 1; i < operators.Count; i++)
+        {
+            query.Append($" AND {lTableAlias}.{lFields[i]} {operators[i]} {rTableAlias}.{rFields[0]}");
+        }
+
+        return query.ToString();
+    }
+
     public string Alias(string key, string alias)
     {
         return $"{key} AS {alias}";

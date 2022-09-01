@@ -39,6 +39,9 @@ public interface IQueryBuilder
 
     public string Function(string function, string key);
 
+    public string Join(string lTable, string rTable, string lTableAlias, string rTableAlias, List<string> lFields,
+        List<string> rFields, List<string> operators, string joinType);
+
     public string Alias(string key, string alias);
 
     public string NewAlias();

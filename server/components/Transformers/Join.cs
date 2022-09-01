@@ -5,44 +5,51 @@ namespace server.components.Transformers;
 
 public class Join : Transformer
 {
+    private const string FilePath = "file_path";
+    private const string JoinType = "join_type";
+    private const string LFields = "l_fields";
+    private const string RFields = "r_fields";
+    private const string Operators = "operators";
+    
     public Join()
     {
         Type = ComponentType.Join;
     }
 
-    private string firstTableProperty { get; set; }
-    private string secondTableProperty { get; set; }
-    private JoinType joinType { get; set; }
-    private string firstTableName { get; set; }
-    private string secondTableName { get; set; }
-
     public override string GetQuery()
     {
-        if (!IsConfigSet)
-            throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
-
-        throw new NotImplementedException();
-    }
-
-    private Query QueryByJoinType(Query query,
-        string secondTableName, string firstProperty, string secondProperty)
-    {
-        return joinType switch
+        var lTable = PreviousComponents[0].GetQuery();
+        var rTable = CreateTable();
+        var lTableAlias = Pipeline.QueryBuilder.NewAlias();
+        var rTableAlias = Pipeline.QueryBuilder.NewAlias();
+        var lFields = Parameters[LFields];
+        var rFields = Parameters[RFields];
+        var operators = Parameters[Operators];
+        var joinType = Parameters[JoinType][0];
+        var lKeys = PreviousComponents[0].GetKeys();
+        var rKeys = new StreamReader(Parameters[FilePath][0]).ReadLine().Replace("\\s+", "").Split(",").ToList();
+        var fieldsToSelect = new List<string>();
+        foreach (var key in lKeys)
         {
-            JoinType.Inner => query.Join(secondTableName, firstProperty, secondProperty),
-            JoinType.LeftOuter => query.LeftJoin(secondTableName, firstProperty, secondProperty),
-            JoinType.RightOuter => query.RightJoin(secondTableName, firstProperty, secondProperty),
-            JoinType.FullOuter => query.LeftJoin(secondTableName, firstProperty, secondProperty)
-                .Union(query.RightJoin(secondTableName, firstProperty, secondProperty)),
-            _ => throw new ArgumentOutOfRangeException(nameof(joinType), joinType, null)
-        };
+            fieldsToSelect.Add($"{lTableAlias}.{key} AS {lTableAlias}_{key}");    
+        }
+        foreach (var key in rKeys)
+        {
+            fieldsToSelect.Add($"{rTableAlias}.{key} AS {rTableAlias}_{key}");    
+        }
+
+        return Pipeline.QueryBuilder.Select(fieldsToSelect,
+            Pipeline.QueryBuilder.Join(lTable, rTable, lTableAlias, rTableAlias, lFields, rFields, operators, joinType));
     }
 
-    private enum JoinType
+    public string CreateTable()
     {
-        Inner,
-        LeftOuter,
-        RightOuter,
-        FullOuter
+        var rTable = Pipeline.QueryBuilder.NewAlias();
+        var filePath = Parameters[FilePath][0];
+        var keys = new StreamReader(filePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(rTable)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(rTable, keys)).Close();
+        Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportCSV(rTable, keys, filePath)).Close();
+        return Pipeline.QueryBuilder.SelectTable(rTable);
     }
 }
