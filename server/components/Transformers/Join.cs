@@ -34,11 +34,11 @@ public class Join : Transformer
         var fieldsToSelect = new List<string>();
         foreach (var key in lKeys)
         {
-            fieldsToSelect.Add($"{lTableAlias}.{key} AS {lTableAlias}_{key}");    
+            fieldsToSelect.Add($"{lTableAlias}.{key} AS L_{key}");    
         }
         foreach (var key in rKeys)
         {
-            fieldsToSelect.Add($"{rTableAlias}.{key} AS {rTableAlias}_{key}");    
+            fieldsToSelect.Add($"{rTableAlias}.{key} AS R_{key}");    
         }
 
         return Pipeline.QueryBuilder.Select(fieldsToSelect,
