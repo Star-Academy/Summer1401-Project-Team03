@@ -21,19 +21,10 @@
             <!-- <td>{{ item.createAt | convertDate }}</td>
             <td>{{ item.modifiedAt | convertDate }}</td> -->
             <td>
-                <app-svg
-                    (click)="openItemSettingModal(item.id); $event.stopPropagation()"
-                    class="item-setting"
-                    iconType="dots-vertical"
-                ></app-svg>
-                <ng-container *ngIf="item.openedSettingModal">
-                    <app-pipeline-item-modal
-                        (deleteEmit)="deleteItem(item.id)"
-                        (renameEmit)="renameItem(item.id)"
-                        (click)="closeItemSettingModal(item.id); $event.stopPropagation()"
-                    ></app-pipeline-item-modal>
-                </ng-container>
+                <app-svg iconType="delete" (click)="deleteModal.open(item.id)"> </app-svg>
             </td>
         </tr>
     </table>
 </div>
+
+<app-pipeline-item-modal #deleteModal class="absolute" (deleteEmit)="deleteItem($event)"></app-pipeline-item-modal>

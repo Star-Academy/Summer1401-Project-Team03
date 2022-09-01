@@ -11,16 +11,6 @@ export class PipelineInventoryComponent {
 
     public constructor(public pipelineService: PipelineService) {}
 
-    public openItemSettingModal(id: number): void {
-        const item = this.pipelineService.pipelines.find((item) => item.id === id);
-        if (item) item.openedSettingModal = true;
-    }
-
-    public closeItemSettingModal(id: number): void {
-        const item = this.pipelineService.pipelines.find((item) => item.id === id);
-        if (item) item.openedSettingModal = false;
-    }
-
     public renameItem(id: number): void {
         console.log(`Renamed item ${id}`);
         // Connect to inventory service
