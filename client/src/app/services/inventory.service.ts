@@ -17,7 +17,7 @@ export class InventoryService {
     public constructor(private apiService: ApiService, private router: Router) {
         this.getAllDataset();
         this.subscribeRoute();
-        // this.subscribeJoinOptions();
+        this.subscribeJoinOptions();
     }
 
     public async getAllDataset(): Promise<void> {
@@ -64,14 +64,17 @@ export class InventoryService {
         this.datasetRx.next(this.dataset);
     }
 
-    // private subscribeJoinOptions(): void {
-    //     this.datasetRx.subscribe((value) => {
-    //         PROCESS.join.parameters.datasets.options = value?.map((dataset) => ({
-    //             title: dataset.name,
-    //             value: dataset.id,
-    //         }));
-    //     });
-    // }
+    private subscribeJoinOptions(): void {
+        this.datasetRx.subscribe((value) => {
+            if (!value) {
+                return;
+            }
+            PROCESS.join.parameters.file_id.options = value?.map((dataset) => ({
+                title: dataset.name,
+                value: dataset.id.toString(),
+            }));
+        });
+    }
 
     private subscribeRoute(): void {
         this.router.events.subscribe(async (value) => {

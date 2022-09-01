@@ -225,11 +225,79 @@ export const PROCESS: ProcessInfo = {
         title: 'join',
         icon: 'join',
         parameters: {
-            dataset: {
+            file_id: {
                 label: 'dataset',
                 type: ItemType.SELECT,
                 options: [],
                 value: '',
+            },
+            join_type: {
+                label: 'join type',
+                type: ItemType.SELECT,
+                options: [
+                    {
+                        value: 'join',
+                        title: 'join',
+                    },
+                    {
+                        value: 'inner join',
+                        title: 'inner join',
+                    },
+                    {
+                        value: 'outer join',
+                        title: 'outer join',
+                    },
+                    {
+                        value: 'left join',
+                        title: 'left join',
+                    },
+                    {
+                        value: 'right join',
+                        title: 'right join',
+                    },
+                ],
+                value: '',
+            },
+            l_fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'left field',
+                value: '',
+            },
+            r_fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'right field',
+                value: '',
+            },
+            operators: {
+                type: ItemType.SELECT,
+                label: 'operator',
+                options: [
+                    {
+                        value: '=',
+                        title: '==',
+                    },
+                    {
+                        value: '!=',
+                        title: '!=',
+                    },
+                    {
+                        value: '>',
+                        title: '>',
+                    },
+                    {
+                        value: '<',
+                        title: '<',
+                    },
+                    {
+                        value: '>=',
+                        title: '>=',
+                    },
+                    {
+                        value: '<=',
+                        title: '<=',
+                    },
+                ],
+                value: '==',
             },
         },
     },

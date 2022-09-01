@@ -28,6 +28,11 @@ export class PipelineNodeComponent implements OnInit {
         this.pipelineNodeData.openedSettingModal = !this.pipelineNodeData.openedSettingModal;
     }
 
+    public addNode(): void {
+        this.toggleShowItemSettingModal();
+        this.addNodeEmit.emit();
+    }
+
     public configNode(id: number): void {
         this.pipelineNodeData.openedSettingModal = false;
         this.boardService.selectedNode = this.pipelineNodeData;
