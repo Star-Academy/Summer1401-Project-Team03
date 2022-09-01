@@ -2,22 +2,22 @@
 
 public enum ComponentType
 {
-    Filter,
-    Aggregate, //ok
-    DataSampling, //ok
-    FieldRemover, //ok
-    FieldRenamer, //ok
-    FieldSelector, //ok
-    Hash, //ok
-    TypeConverter, //ok
-    Join,
-    Replicate,
-    CsvLoader, //ok
-    CsvExtractor, //ok
-    JsonExtractor,
-    JsonLoader,
-    Math,  //ok
-    DataCleanser, //ok
-    Concatenate,
-    Python
+    Filter, //0
+    Aggregate, //1
+    DataSampling, //2
+    FieldRemover, //3
+    FieldRenamer, //4
+    FieldSelector, //5
+    Hash, //6
+    TypeConverter, //7
+    Join, //8
+    Replicate, //9
+    CsvLoader, //10
+    CsvExtractor, //11
+    JsonExtractor, //12
+    JsonLoader, //13
+    Math,  //14
+    DataCleanser, //15
+    Concatenate, //16
+    Python //17
 }
