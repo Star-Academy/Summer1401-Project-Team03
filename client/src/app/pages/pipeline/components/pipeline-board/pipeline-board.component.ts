@@ -157,7 +157,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     }
 
     public clickOnWrapperHandler(event: MouseEvent): void {
-        if (!(event.target as HTMLElement).closest('app-pipeline-node')) {
+        if (!event.composedPath().find((el) => (el as HTMLElement).tagName?.toLowerCase() === 'app-pipeline-node')) {
             this.boardService.selectedNode = null;
             this.boardService.selectedNodeRx.next(null);
         }

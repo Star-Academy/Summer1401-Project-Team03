@@ -131,16 +131,17 @@ export class PipelineBoardService {
             ) {
                 this.nodePreview.ioType = IoType.INPUT;
             } else {
-                const response =
-                    (await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                        pipelineId: this.selectedPipelineBoardId,
-                        componentId: this.selectedNode?.id,
-                    })) || [];
+                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                    pipelineId: this.selectedPipelineBoardId,
+                    componentId: this.selectedNode?.id,
+                });
 
-                for (const item of response) delete item['__'];
+                if (response) {
+                    for (const item of response) delete item['__'];
 
-                this.nodePreview.outputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
-                this.nodePreview.outputRows = response.map((row) => Object.values(row as string));
+                    this.nodePreview.outputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
+                    this.nodePreview.outputRows = response.map((row) => Object.values(row as string));
+                }
             }
         }
 
@@ -151,16 +152,17 @@ export class PipelineBoardService {
             ) {
                 this.nodePreview.ioType = IoType.OUTPUT;
             } else {
-                const response =
-                    (await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                        pipelineId: this.selectedPipelineBoardId,
-                        componentId: this.selectedNode?.beforeId,
-                    })) || [];
+                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                    pipelineId: this.selectedPipelineBoardId,
+                    componentId: this.selectedNode?.beforeId,
+                });
 
-                for (const item of response) delete item['__'];
+                if (response) {
+                    for (const item of response) delete item['__'];
 
-                this.nodePreview.inputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
-                this.nodePreview.inputRows = response.map((row) => Object.values(row as string));
+                    this.nodePreview.inputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
+                    this.nodePreview.inputRows = response.map((row) => Object.values(row as string));
+                }
             }
     }
 
