@@ -87,6 +87,7 @@ export class PipelineBoardService {
         );
         if (response) {
             this.selectedNodeConfig = config;
+            await this.runUpToNode();
         }
     }
 
