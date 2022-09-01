@@ -1,4 +1,11 @@
 <label>
     {{ label }}
-    <input [type]="type" [disabled]="disabled" [ngModel]="value" (ngModelChange)="valueChange.emit($event)" />
+    <input
+        [type]="type"
+        [disabled]="disabled"
+        [ngModel]="value"
+        (ngModelChange)="valueChange.emit($event)"
+        (keydown.escape)="cancel && cancel.emit()"
+        (keydown.enter)="confirm && confirm.emit()"
+    />
 </label>

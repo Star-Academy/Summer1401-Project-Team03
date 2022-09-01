@@ -7,6 +7,7 @@ import {
     PipelineNodeModel,
     PreviewTableData,
     RemoveNodeServiceModel,
+    RenameNodeServiceModel,
 } from '../models/pipeline-node.model';
 import {ApiService} from './api.service';
 import {
@@ -18,6 +19,7 @@ import {
     PIPELINE_RUN_UP_TO,
     PIPELINE_RUN_ALL,
     PIPELINE_SET_CONFIG,
+    RENAME_PIPELINE_NODE,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS, ProcessSchema} from '../data/Processes.data';
@@ -33,6 +35,7 @@ export class PipelineBoardService {
     public selectedNode: PipelineNodeModel | null = null;
     public selectedNodeConfig: any | null = null;
     public selectedPipelineBoardId!: number;
+    public selectedPipelineBoardTitle!: string;
 
     public constructor(private apiService: ApiService) {
         this.getNodeData();
@@ -55,6 +58,7 @@ export class PipelineBoardService {
             (await this.apiService.get<GetAllNodeServiceModel>(PIPELINE_ONE, {pipelineID: pipelineId})) || null;
         if (response) {
             this.allNode = this.convertComponentInformationsToPielineNodeModel(response.componentInformations);
+            this.selectedPipelineBoardTitle = response.name;
             return this.allNode;
         }
         return [];
@@ -83,6 +87,7 @@ export class PipelineBoardService {
         );
         if (response) {
             this.selectedNodeConfig = config;
+            await this.runUpToNode();
         }
     }
 
@@ -106,6 +111,10 @@ export class PipelineBoardService {
             pipelineID: +removeNodeInfo.pipelineID,
             componentID: +removeNodeInfo.componentID,
         });
+    }
+
+    public async renameNode(renameNodeInfo: RenameNodeServiceModel): Promise<boolean> {
+        return !!(await this.apiService.put(RENAME_PIPELINE_NODE, renameNodeInfo));
     }
 
     public async changeComponentPosition(changeNodePositionInfo: ChangeComponentPositionServiceModel): Promise<void> {
@@ -132,16 +141,17 @@ export class PipelineBoardService {
             ) {
                 this.nodePreview.ioType = IoType.INPUT;
             } else {
-                const response =
-                    (await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                        pipelineId: this.selectedPipelineBoardId,
-                        componentId: this.selectedNode?.id,
-                    })) || [];
+                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                    pipelineId: this.selectedPipelineBoardId,
+                    componentId: this.selectedNode?.id,
+                });
 
-                for (const item of response) delete item['__'];
+                if (response) {
+                    for (const item of response) delete item['__'];
 
-                this.nodePreview.outputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
-                this.nodePreview.outputRows = response.map((row) => Object.values(row as string));
+                    this.nodePreview.outputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
+                    this.nodePreview.outputRows = response.map((row) => Object.values(row as string));
+                }
             }
         }
 
@@ -152,16 +162,17 @@ export class PipelineBoardService {
             ) {
                 this.nodePreview.ioType = IoType.OUTPUT;
             } else {
-                const response =
-                    (await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                        pipelineId: this.selectedPipelineBoardId,
-                        componentId: this.selectedNode?.beforeId,
-                    })) || [];
+                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                    pipelineId: this.selectedPipelineBoardId,
+                    componentId: this.selectedNode?.beforeId,
+                });
 
-                for (const item of response) delete item['__'];
+                if (response) {
+                    for (const item of response) delete item['__'];
 
-                this.nodePreview.inputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
-                this.nodePreview.inputRows = response.map((row) => Object.values(row as string));
+                    this.nodePreview.inputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
+                    this.nodePreview.inputRows = response.map((row) => Object.values(row as string));
+                }
             }
     }
 

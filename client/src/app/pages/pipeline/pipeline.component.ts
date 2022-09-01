@@ -26,7 +26,7 @@ export class PipelineComponent implements OnInit {
         localStorage.setItem('bottomBarShown', String(newValue));
     }
 
-    public constructor(private route: ActivatedRoute, private boardService: PipelineBoardService) {}
+    public constructor(private route: ActivatedRoute, public boardService: PipelineBoardService) {}
 
     public ngOnInit(): void {
         this.route.params.subscribe(async (params: Params) => {
