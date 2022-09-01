@@ -1,17 +1,23 @@
-import {ThisReceiver} from '@angular/compiler';
 import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {NewPipeline} from '../models/NewPipeline.interface';
 import {PipelineItemModel} from '../models/pipeline/pipeline-item.model';
 import {PIPELINE_ALL, PIPELINE_CREATE, PIPELINE_DELETE} from '../utils/api.utils';
 import {ApiService} from './api.service';
+import {SnackbarService} from './snackbar.service';
+import {SnackbarObject} from '../components/snackbar/models/snackbar-object.model';
+import {SnackbarTheme} from '../components/snackbar/enums/snackbar-theme';
 
 @Injectable({
     providedIn: 'root',
 })
 export class PipelineService {
     public pipelines: PipelineItemModel[] = [];
-    public constructor(private apiService: ApiService, private router: Router) {
+    public constructor(
+        private apiService: ApiService,
+        private router: Router,
+        private snackbarService: SnackbarService
+    ) {
         this.getAllPiplelines();
         this.subscribeRoute();
     }
@@ -22,7 +28,13 @@ export class PipelineService {
 
         const response = await this.apiService.post<number>(url.toString());
 
-        return response ?? null;
+        if (response)
+            this.snackbarService.showNewId(new SnackbarObject('Pipeline created successfully', SnackbarTheme.SUCCESS));
+        else {
+            // todo snack error
+        }
+
+        return response;
     }
 
     public async getAllPiplelines(): Promise<void> {
@@ -34,7 +46,10 @@ export class PipelineService {
     public async deletePipeline(pipelineId: number): Promise<void> {
         const response = await this.apiService.delete(PIPELINE_DELETE, {pipelineId});
         if (response) {
+            this.snackbarService.showNewId(new SnackbarObject('Pipeline deleted successfully', SnackbarTheme.SUCCESS));
             this.pipelines = this.pipelines.filter((pipeline) => pipeline.id !== pipelineId);
+        } else {
+            // todo snack error
         }
         // TODO: add functionality
     }

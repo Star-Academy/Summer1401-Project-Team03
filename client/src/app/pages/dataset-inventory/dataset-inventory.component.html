@@ -18,7 +18,7 @@
             (click)="navigateWithUrl(item.id)"
         >
             <td>{{ item.name }}</td>
-            <td class="uppercase">{{ item.type }}</td>
+            <td>{{ item.type.toUpperCase() }}</td>
             <td>{{ item.length | size }}</td>
             <td>{{ item.category }}</td>
             <td>{{ item.createTime | convertDate }}</td>

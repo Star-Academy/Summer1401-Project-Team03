@@ -16,8 +16,8 @@ import {
     DELETE_PIPELINE_NODE,
     PIPELINE_NODE_CONFIG,
     PIPELINE_ONE,
-    PIPELINE_RUN_UP_TO,
     PIPELINE_RUN_ALL,
+    PIPELINE_RUN_UP_TO,
     PIPELINE_SET_CONFIG,
     RENAME_PIPELINE_NODE,
 } from '../utils/api.utils';
@@ -26,6 +26,9 @@ import {PROCESS, ProcessSchema} from '../data/Processes.data';
 import {IoType} from '../pages/pipeline/components/bottom-bar/enums/io-type.enum';
 import {TableColumn} from '../components/data-table/models/table-column.model';
 import {ItemType} from '../enums/ItemType.enum';
+import {SnackbarService} from './snackbar.service';
+import {SnackbarObject} from '../components/snackbar/models/snackbar-object.model';
+import {SnackbarTheme} from '../components/snackbar/enums/snackbar-theme';
 
 @Injectable({
     providedIn: 'root',
@@ -37,7 +40,7 @@ export class PipelineBoardService {
     public selectedPipelineBoardId!: number;
     public selectedPipelineBoardTitle!: string;
 
-    public constructor(private apiService: ApiService) {
+    public constructor(private apiService: ApiService, private snackbarService: SnackbarService) {
         this.getNodeData();
     }
 
@@ -86,8 +89,11 @@ export class PipelineBoardService {
             body
         );
         if (response) {
+            this.snackbarService.showNewId(new SnackbarObject('configuration set successfully', SnackbarTheme.SUCCESS));
             this.selectedNodeConfig = config;
             await this.runUpToNode();
+        } else {
+            // todo snack error
         }
     }
 
@@ -100,21 +106,37 @@ export class PipelineBoardService {
         // const response = this.counter;
         if (response) {
             //return node id
+            this.snackbarService.showNewId(new SnackbarObject('process created successfully', SnackbarTheme.SUCCESS));
             this.counter++;
             return response;
+        } else {
+            // todo snack error
         }
         return null;
     }
 
     public async removeNode(removeNodeInfo: RemoveNodeServiceModel): Promise<void> {
-        await this.apiService.delete(DELETE_PIPELINE_NODE, {
+        const response = await this.apiService.delete(DELETE_PIPELINE_NODE, {
             pipelineID: +removeNodeInfo.pipelineID,
             componentID: +removeNodeInfo.componentID,
         });
+        if (response)
+            this.snackbarService.showNewId(new SnackbarObject('process deleted successfully', SnackbarTheme.SUCCESS));
+        else {
+            // todo snack error
+        }
     }
 
     public async renameNode(renameNodeInfo: RenameNodeServiceModel): Promise<boolean> {
-        return !!(await this.apiService.put(RENAME_PIPELINE_NODE, renameNodeInfo));
+        const response = await this.apiService.put(RENAME_PIPELINE_NODE, renameNodeInfo);
+
+        if (response)
+            this.snackbarService.showNewId(new SnackbarObject('process renamed successfully', SnackbarTheme.SUCCESS));
+        else {
+            // todo snack error
+        }
+
+        return !!response;
     }
 
     public async changeComponentPosition(changeNodePositionInfo: ChangeComponentPositionServiceModel): Promise<void> {
@@ -147,15 +169,20 @@ export class PipelineBoardService {
                 });
 
                 if (response) {
+                    this.snackbarService.showNewId(
+                        new SnackbarObject('process output run successfully', SnackbarTheme.SUCCESS)
+                    );
                     for (const item of response) delete item['__'];
 
                     this.nodePreview.outputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
                     this.nodePreview.outputRows = response.map((row) => Object.values(row as string));
+                } else {
+                    // todo snack error
                 }
             }
         }
 
-        if (this.nodePreview.ioType !== IoType.OUTPUT)
+        if (this.nodePreview.ioType !== IoType.OUTPUT) {
             if (
                 this.selectedNode?.processesInfoType === PROCESS.json_extractor.id ||
                 this.selectedNode?.processesInfoType === PROCESS.csv_extractor.id
@@ -168,19 +195,32 @@ export class PipelineBoardService {
                 });
 
                 if (response) {
+                    this.snackbarService.showNewId(
+                        new SnackbarObject('process input run successfully', SnackbarTheme.SUCCESS)
+                    );
                     for (const item of response) delete item['__'];
 
                     this.nodePreview.inputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
                     this.nodePreview.inputRows = response.map((row) => Object.values(row as string));
+                } else {
+                    // todo snack error
                 }
             }
+        }
     }
 
     //    runNode
 
     public async runPipeline(): Promise<boolean> {
-        const result = await this.apiService.get<boolean>(PIPELINE_RUN_ALL, {pipelineId: this.selectedPipelineBoardId});
-        return result || false;
+        const response = await this.apiService.get<boolean>(PIPELINE_RUN_ALL, {
+            pipelineId: this.selectedPipelineBoardId,
+        });
+        if (response) {
+            this.snackbarService.showNewId(new SnackbarObject('pipeline run successfully', SnackbarTheme.SUCCESS));
+        } else {
+            // todo snack error
+        }
+        return !!response;
     }
 
     // UTILITY
