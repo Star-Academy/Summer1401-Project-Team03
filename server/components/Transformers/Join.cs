@@ -55,4 +55,15 @@ public class Join : Transformer
         Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportCSV(rTable, keys, filePath)).Close();
         return Pipeline.QueryBuilder.SelectTable(rTable);
     }
+
+    public override List<string> GetKeys()
+    {
+        var lKeys = PreviousComponents[0].GetKeys();
+        var rPath = FileSearcher.Search(int.Parse(Parameters[FileId][0]), "imports");
+        
+        var rKeys = new StreamReader(rPath).ReadLine().Replace("\\s+", "").Split(",").ToList();
+
+        lKeys.AddRange(rKeys);
+        return lKeys;
+    }
 }
