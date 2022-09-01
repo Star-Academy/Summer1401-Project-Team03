@@ -111,9 +111,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.pipelineNodeDatas = await this.boardService.getAllNode();
         this.changeDetectorRef.detectChanges();
         const leaderLineInit = (): void => {
-            this.pipelineNodeDatas.forEach((node, index) => {
-                if (node.processesInfoType === PROCESS.csv_loader.id) return;
-                this.connectLeaderLineBetweenTwoElementById(node.id, node.afterId);
+            this.pipelineNodeDatas.forEach((node) => {
+                if (node.processesInfoType === PROCESS.csv_extractor.id) return;
+                this.connectLeaderLineBetweenTwoElementById(node.beforeId, node.id);
             });
         };
 
