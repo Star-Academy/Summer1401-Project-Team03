@@ -2,7 +2,6 @@ import {Component, Input} from '@angular/core';
 import {TableColumn} from '../../../../components/data-table/models/table-column.model';
 import {IoType} from './enums/io-type.enum';
 import {DatalistOption} from '../../../../models/DatalistOption.interface';
-import {sampleColumns, sampleRows} from '../../../../data/fake-data/table-sample-data.data';
 import {PipelineBoardService} from '../../../../services/pipeline-board.service';
 import {PROCESS} from 'src/app/data/Processes.data';
 
@@ -12,6 +11,10 @@ import {PROCESS} from 'src/app/data/Processes.data';
     styleUrls: ['./bottom-bar.component.scss'],
 })
 export class BottomBarComponent {
+    public get hasConfigs(): boolean {
+        const conf = this.boardService.selectedNodeConfig;
+        return !!conf && !!Object.keys(conf).length;
+    }
     public get processTitle(): string | undefined {
         return this.boardService.selectedNode?.title;
     }

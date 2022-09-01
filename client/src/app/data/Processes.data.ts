@@ -181,7 +181,7 @@ export const PROCESS: ProcessInfo = {
     field_selector: {
         id: 5,
         title: 'field selector',
-        icon: 'field_selector',
+        icon: 'fieldSelector',
         parameters: {
             fields_to_select: {
                 type: ItemType.TEXT_INPUT,
@@ -304,7 +304,7 @@ export const PROCESS: ProcessInfo = {
     replicate: {
         id: 9,
         title: 'replicate',
-        icon: 'join',
+        icon: 'replicate',
         parameters: {},
     },
     csv_loader: {
@@ -361,7 +361,7 @@ export const PROCESS: ProcessInfo = {
     data_cleanser: {
         id: 15,
         title: 'data cleanser',
-        icon: 'dataCleanser',
+        icon: 'data-cleanser',
         parameters: {
             fields: {
                 type: ItemType.TEXT_INPUT,

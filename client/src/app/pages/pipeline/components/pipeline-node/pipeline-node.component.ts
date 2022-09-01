@@ -34,10 +34,15 @@ export class PipelineNodeComponent implements OnInit {
     }
 
     public configNode(id: number): void {
-        this.pipelineNodeData.openedSettingModal = false;
+        this.toggleShowItemSettingModal();
         this.boardService.selectedNode = this.pipelineNodeData;
         this.boardService.selectedNodeRx.next(this.pipelineNodeData);
         console.log(`configure node ${id}`);
         // TODO Connect to service
+    }
+
+    public removeNode(): void {
+        this.toggleShowItemSettingModal();
+        this.removeNodeEmit.emit();
     }
 }

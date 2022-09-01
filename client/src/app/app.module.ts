@@ -10,6 +10,7 @@ import {PipelineModule} from './pages/pipeline/pipeline.module';
 import {AngularDraggableModule} from 'angular2-draggable';
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
 import {SpinnerModule} from './components/spinner/spinner.module';
+import {SnackbarModule} from './components/snackbar/snackbar.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -23,6 +24,7 @@ import {SpinnerModule} from './components/spinner/spinner.module';
         AngularDraggableModule,
         NgxDraggabillyModule,
         SpinnerModule,
+        SnackbarModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

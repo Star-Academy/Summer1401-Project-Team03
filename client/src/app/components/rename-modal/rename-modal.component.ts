@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ModalComponent} from '../modal/modal.component';
 import {InventoryService} from '../../services/inventory.service';
 import {DatasetRenameModel} from '../../models/dataset/dataset-item.model';

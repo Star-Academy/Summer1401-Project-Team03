@@ -22,12 +22,18 @@
                 [columns]="inputColumns || []"
                 [rows]="inputRows || []"
             ></app-data-table>
-            <app-data-table
-                [hidden]="!(whichSide.toLowerCase() !== 'input' && outputColumns)"
-                title="Output"
-                [columns]="outputColumns || []"
-                [rows]="outputRows || []"
-            ></app-data-table>
+            <ng-container
+                *ngIf="whichSide.toLowerCase() !== 'input' && outputColumns && hasConfigs; else setConfigMessage"
+            >
+                <app-data-table
+                    title="Output"
+                    [columns]="outputColumns || []"
+                    [rows]="outputRows || []"
+                ></app-data-table>
+            </ng-container>
+            <ng-template #setConfigMessage>
+                <div class="message">set process configurations to view output</div>
+            </ng-template>
         </div>
     </div>
 </ng-container>
