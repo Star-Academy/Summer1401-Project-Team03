@@ -30,15 +30,7 @@ export class RunButtonComponent {
 
     public async runClickHandler(): Promise<void> {
         this.runStep = RunStep.PROCESSING;
-        const result = await this.boardService.runPipeline();
-        if (result) {
-            this.snackbarService.showNewId(
-                new SnackbarObject(
-                    `Pipeline "${this.boardService.selectedPipelineBoardTitle}" run successfully`,
-                    SnackbarTheme.SUCCESS
-                )
-            );
-        }
+        await this.boardService.runPipeline();
         this.runStep = RunStep.NOT_STARTED;
     }
 }
