@@ -9,7 +9,6 @@
             <th>Name</th>
             <th>File Type</th>
             <th>Size</th>
-            <th>Category</th>
             <th>Created At</th>
             <th></th>
         </tr>
@@ -20,7 +19,6 @@
             <td>{{ item.name }}</td>
             <td>{{ item.type.toUpperCase() }}</td>
             <td>{{ item.length | size }}</td>
-            <td>{{ item.category }}</td>
             <td>{{ item.createTime | convertDate }}</td>
             <td>
                 <app-svg

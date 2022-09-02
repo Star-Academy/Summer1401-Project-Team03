@@ -7,6 +7,6 @@ export const AVAILABLE_FILE_TYPES: DatalistOption[] = [
     },
     {
         title: 'json',
-        value: 'json',
+        value: 'csv',
     },
 ];

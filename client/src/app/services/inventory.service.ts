@@ -47,7 +47,6 @@ export class InventoryService {
                 length: file.size.toString(),
                 name: file.name,
                 type: file.type,
-                category: 'imports',
                 createTime: new Date(),
                 openedSettingModal: false,
             });
