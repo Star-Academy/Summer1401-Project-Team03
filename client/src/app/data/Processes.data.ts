@@ -44,8 +44,9 @@ export const PROCESS: ProcessInfo = {
         icon: 'filter',
         parameters: {
             fields_to_filter: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'field',
+                options: undefined,
                 value: '',
             },
             operators: {
@@ -98,8 +99,9 @@ export const PROCESS: ProcessInfo = {
         icon: 'aggregate',
         parameters: {
             fields_to_aggregate: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'field',
+                options: undefined,
                 value: '',
             },
             aggregate_functions: {
@@ -167,8 +169,9 @@ export const PROCESS: ProcessInfo = {
         icon: 'fieldRename',
         parameters: {
             fields_to_rename: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'field',
+                options: undefined,
                 value: '',
             },
             new_names: {
@@ -196,8 +199,9 @@ export const PROCESS: ProcessInfo = {
         icon: 'hash',
         parameters: {
             fields_to_hash: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'field',
+                options: undefined,
                 value: '',
             },
         },
@@ -208,8 +212,9 @@ export const PROCESS: ProcessInfo = {
         icon: 'typeConverter',
         parameters: {
             fields: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'field',
+                options: undefined,
                 value: '',
             },
             types: {
@@ -259,13 +264,15 @@ export const PROCESS: ProcessInfo = {
                 value: '',
             },
             l_fields: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'left field',
+                options: undefined,
                 value: '',
             },
             r_fields: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'right field',
+                options: undefined,
                 value: '',
             },
             operators: {
@@ -354,6 +361,7 @@ export const PROCESS: ProcessInfo = {
             operators: {
                 type: ItemType.SELECT,
                 label: 'operator',
+                // fixme doesnt have options
                 value: '',
             },
         },
@@ -387,13 +395,15 @@ export const PROCESS: ProcessInfo = {
         icon: 'concatenate',
         parameters: {
             first_fields: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'first field',
+                options: undefined,
                 value: '',
             },
             second_fields: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'second field',
+                options: undefined,
                 value: '',
             },
             seperator: {

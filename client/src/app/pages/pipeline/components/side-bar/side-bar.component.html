@@ -24,7 +24,7 @@
                     ></app-switch>
                     <app-data-list
                         *ngSwitchCase="itemTypes.SELECT"
-                        [options]="config.value.options!"
+                        [options]="config.value.options || inputColumns"
                         [label]="config.value.label"
                         [(value)]="configs[config.key].value"
                     ></app-data-list>

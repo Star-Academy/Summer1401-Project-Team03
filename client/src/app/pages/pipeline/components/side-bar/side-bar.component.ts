@@ -5,6 +5,7 @@ import {PROCESS} from '../../../../data/Processes.data';
 import {ProcessType} from 'src/app/enums/ProcessType.enum';
 import {Paramether} from '../../../../models/Parameter.interface';
 import {Subscription} from 'rxjs';
+import {DatalistOption} from '../../../../models/DatalistOption.interface';
 
 @Component({
     selector: 'app-side-bar',
@@ -18,6 +19,10 @@ export class SideBarComponent implements OnInit, OnDestroy {
 
     public newName = '';
     public titleEdit = false;
+
+    public get inputColumns(): DatalistOption[] {
+        return this.boardService.nodePreview.inputColumns.map(({title}) => ({title, value: title}));
+    }
 
     public constructor(public boardService: PipelineBoardService) {}
 

@@ -182,29 +182,29 @@ export class PipelineBoardService {
             }
         }
 
-        if (this.nodePreview.ioType !== IoType.OUTPUT) {
-            if (
-                this.selectedNode?.processesInfoType === PROCESS.json_extractor.id ||
-                this.selectedNode?.processesInfoType === PROCESS.csv_extractor.id
-            ) {
-                this.nodePreview.ioType = IoType.OUTPUT;
-            } else {
-                const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
-                    pipelineId: this.selectedPipelineBoardId,
-                    componentId: this.selectedNode?.beforeId,
-                });
+        if (
+            this.selectedNode?.processesInfoType === PROCESS.json_extractor.id ||
+            this.selectedNode?.processesInfoType === PROCESS.csv_extractor.id
+        ) {
+            this.nodePreview.ioType = IoType.OUTPUT;
+        } else {
+            const response = await this.apiService.get<any[]>(PIPELINE_RUN_UP_TO, {
+                pipelineId: this.selectedPipelineBoardId,
+                componentId: this.selectedNode?.beforeId,
+            });
 
-                if (response) {
-                    this.snackbarService.showNewId(
-                        new SnackbarObject('process input ran successfully', SnackbarTheme.SUCCESS)
-                    );
-                    for (const item of response) delete item['__'];
+            if (response) {
+                this.snackbarService.showNewId(
+                    new SnackbarObject('process input ran successfully', SnackbarTheme.SUCCESS)
+                );
+                for (const item of response) delete item['__'];
 
-                    this.nodePreview.inputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
+                this.nodePreview.inputColumns = Object.keys(response[0]).map((col) => new TableColumn(col));
+                if (this.nodePreview.ioType !== IoType.OUTPUT) {
                     this.nodePreview.inputRows = response.map((row) => Object.values(row as string));
-                } else {
-                    // todo snack error
                 }
+            } else {
+                // todo snack error
             }
         }
     }
