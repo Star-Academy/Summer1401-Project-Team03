@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Data.Common;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -64,15 +63,15 @@ public class PipelineController : ControllerBase
         {
             var pipeline = _idToPipeline[pipelineId];
 
-            var component = new ComponentFactory().CreateComponent(type, pipeline, position,title);
+            var component = new ComponentFactory().CreateComponent(type, pipeline, position, title);
 
             if (type == ComponentType.Replicate) component.IsConfigSet = true;
-            
+
             pipeline.AddComponent(component);
             pipeline.Disconnect(previousComponentId, nextComponentId);
             pipeline.Connect(previousComponentId, component.Id);
             pipeline.Connect(component.Id, nextComponentId);
-            
+
             file.FileOperation.Instance.WritePipeline(pipeline);
             return Ok(component.Id);
         }
@@ -84,7 +83,8 @@ public class PipelineController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpPost]
-    public ActionResult<int> AddDestination(int pipelineId, string fileName, string format, int previousComponentId, Position position)
+    public ActionResult<int> AddDestination(int pipelineId, string fileName, string format, int previousComponentId,
+        Position position)
     {
         try
         {
@@ -102,10 +102,10 @@ public class PipelineController : ControllerBase
             };
 
             var loader = new ComponentFactory().CreateComponent(componentType, pipeline, position, fileName);
-            
+
             loader.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
             loader.IsConfigSet = true;
-            
+
             pipeline.AddDestinationId(loader.Id);
             pipeline.AddComponent(loader);
             pipeline.Connect(previousComponentId, loader.Id);
@@ -120,7 +120,7 @@ public class PipelineController : ControllerBase
         }
     }
 
-    
+
     [EnableCors("CorsPolicy")]
     [HttpPut]
     public IActionResult ChangeComponentPosition(int pipelineId, int componentId, Position newPosition)
@@ -190,11 +190,12 @@ public class PipelineController : ControllerBase
         var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
         var fileName = regex.Match(new FileInfo(filePath).Name).Groups[1].Value;
 
-        var extractor = new ComponentFactory().CreateComponent(ComponentType.CsvExtractor, pipeline, position,fileName);
-        
+        var extractor =
+            new ComponentFactory().CreateComponent(ComponentType.CsvExtractor, pipeline, position, fileName);
+
         extractor.Parameters = new Dictionary<string, List<string>> { { "file_path", new List<string> { filePath } } };
         extractor.IsConfigSet = true;
-        
+
         pipeline.AddComponent(extractor);
 
         return extractor.Id;
@@ -289,10 +290,15 @@ public class PipelineController : ControllerBase
         {
             var pipeline = _idToPipeline[pipelineId];
 
-            using var dataReader = pipeline.Execute(componentId);
+            List<Dictionary<string, object>> table;
+            using (var dataReader = pipeline.Execute(componentId))
+            {
+                table = Serialize(dataReader);
+            }
+
             using var typeReader = pipeline.GetTypesForRunUpTo(componentId);
 
-            return Ok(SerializeWithType(dataReader, typeReader));
+            return Ok(SerializeWithType(table, typeReader));
         }
         catch (Exception e)
         {
@@ -316,17 +322,19 @@ public class PipelineController : ControllerBase
 
         return results;
     }
-    
-    private IEnumerable<Dictionary<string, object>> SerializeWithType(DbDataReader setReader, DbDataReader typeReader)
+
+    private IEnumerable<Dictionary<string, object>> SerializeWithType(List<Dictionary<string, object>> table,
+        DbDataReader typeReader)
     {
-        var result = Serialize(setReader);
+        var result = table;
+
         var cols = new List<string>();
         for (var i = 0; i < typeReader.FieldCount; i++)
             cols.Add(typeReader.GetName(i));
 
         typeReader.Read();
         result.Add(cols.ToDictionary(col => col, col => typeReader[col]));
-        
+
         return result;
     }
 

@@ -26,7 +26,6 @@
     <ItemGroup>
         <Folder Include="resources\exports" />
         <Folder Include="resources\imports" />
-        <Folder Include="resources\pipelines" />
     </ItemGroup>
 
 </Project>
