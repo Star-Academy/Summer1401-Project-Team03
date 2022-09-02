@@ -170,7 +170,7 @@ export class PipelineBoardService {
 
                 if (response) {
                     this.snackbarService.showNewId(
-                        new SnackbarObject('process output run successfully', SnackbarTheme.SUCCESS)
+                        new SnackbarObject('process output ran successfully', SnackbarTheme.SUCCESS)
                     );
                     for (const item of response) delete item['__'];
 
@@ -196,7 +196,7 @@ export class PipelineBoardService {
 
                 if (response) {
                     this.snackbarService.showNewId(
-                        new SnackbarObject('process input run successfully', SnackbarTheme.SUCCESS)
+                        new SnackbarObject('process input ran successfully', SnackbarTheme.SUCCESS)
                     );
                     for (const item of response) delete item['__'];
 
@@ -216,7 +216,7 @@ export class PipelineBoardService {
             pipelineId: this.selectedPipelineBoardId,
         });
         if (response) {
-            this.snackbarService.showNewId(new SnackbarObject('pipeline run successfully', SnackbarTheme.SUCCESS));
+            this.snackbarService.showNewId(new SnackbarObject('pipeline ran successfully', SnackbarTheme.SUCCESS));
         } else {
             // todo snack error
         }
