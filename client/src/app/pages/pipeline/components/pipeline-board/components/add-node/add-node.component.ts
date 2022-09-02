@@ -22,6 +22,8 @@ export class addNodeComponent implements OnInit {
     public nodeTitle: string = 'new node';
     public customProcessType: {[key in string]: ProcessSchema} = {};
 
+    public selectedTypeId!: number;
+
     public constructor(private pipelineBoardService: PipelineBoardService) {}
 
     public ngOnInit(): void {
@@ -49,12 +51,12 @@ export class addNodeComponent implements OnInit {
         this.modal.openModal();
     }
 
-    public async addNodeHandle(type: number): Promise<void> {
+    public async addNodeHandle(): Promise<void> {
         this.modal.closeModal();
 
         const title = this.nodeTitle;
         let newPosition = {x: this.nodeData.position.x + ADDITIONAL_LEFT, y: this.nodeData.position.y};
-        if (type === PROCESS.replicate.id) {
+        if (this.selectedTypeId === PROCESS.replicate.id) {
             newPosition = {x: newPosition.x + ADDITIONAL_LEFT, y: this.nodeData.position.y + ADDITIONAL_BOTTOM};
 
             const addNodeDestinationService: AddNodeServiceModel = {
@@ -88,7 +90,7 @@ export class addNodeComponent implements OnInit {
                     previousComponentId: this.nodeData.beforeId,
                     nextComponentId: nodeDestinationId,
                     position: newPosition,
-                    type,
+                    type: this.selectedTypeId,
                     title,
                 };
 
@@ -97,7 +99,7 @@ export class addNodeComponent implements OnInit {
                     const newNodeComponent: PipelineNodeModel = {
                         id: nodeId,
                         title,
-                        processesInfoType: type,
+                        processesInfoType: this.selectedTypeId,
                         position: newPosition,
                         openedSettingModal: false,
                         afterId: nodeDestinationId,
@@ -108,6 +110,8 @@ export class addNodeComponent implements OnInit {
                     console.log(`add new node with ${newNodeComponent.id} id`);
                 }
             }
+            this.selectedTypeId = -1;
+            this.nodeTitle = 'new node';
             return undefined;
         }
 
@@ -119,7 +123,7 @@ export class addNodeComponent implements OnInit {
             previousComponentId: this.nodeData.beforeId,
             nextComponentId: this.nodeData.afterId,
             position: newPosition,
-            type,
+            type: this.selectedTypeId,
             title,
         };
 
@@ -128,7 +132,7 @@ export class addNodeComponent implements OnInit {
             const newNodeComponent: PipelineNodeModel = {
                 id: nodeId,
                 title,
-                processesInfoType: type,
+                processesInfoType: this.selectedTypeId,
                 position: newPosition,
                 openedSettingModal: false,
                 afterId: this.nodeData.afterId,
@@ -138,5 +142,8 @@ export class addNodeComponent implements OnInit {
             this.addNodeEmit.emit(newNodeComponent);
             console.log(`add new node with ${newNodeComponent.id} id`);
         }
+
+        this.selectedTypeId = -1;
+        this.nodeTitle = 'new node';
     }
 }

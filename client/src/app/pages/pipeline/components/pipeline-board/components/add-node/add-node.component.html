@@ -1,14 +1,16 @@
 <app-modal #ProcessAdd title="add processor">
-    <app-text-input label="name" value="new node" (valueChange)="nodeTitle = $event"></app-text-input>
     <div class="list__wrapper">
         <button
             class="list__button"
             *ngFor="let process of customProcessType | keyvalue"
-            (click)="addNodeHandle(process.value.id)"
+            [ngClass]="{selected: process.value.id === selectedTypeId}"
             [title]="process.value.title"
+            (click)="selectedTypeId = process.value.id"
         >
             <app-svg [iconType]="process.value.icon"></app-svg>
             {{ process.value.title }}
         </button>
     </div>
+    <app-text-input label="name" [value]="nodeTitle" (valueChange)="nodeTitle = $event"></app-text-input>
+    <app-button (click)="addNodeHandle()">Create</app-button>
 </app-modal>
