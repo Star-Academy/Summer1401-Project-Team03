@@ -18,8 +18,8 @@ public class Hash : Transformer
         if (!IsConfigSet)
             throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
 
-        var fieldsToHash = Parameters[FieldsToHash];
-        var fieldsToSelect = GetKeys().Except(fieldsToHash).ToList();
+        var fieldsToHash = new List<string>(Parameters[FieldsToHash]);
+        var fieldsToSelect = new List<string>(GetKeys().Except(fieldsToHash).ToList());
         foreach (var t in fieldsToHash)
             fieldsToSelect.Add(
                 Pipeline.QueryBuilder.Alias(Pipeline.QueryBuilder.Function(HashFunction, t),
@@ -29,8 +29,4 @@ public class Hash : Transformer
             Pipeline.QueryBuilder.NewAlias());
     }
 
-    public override List<string> GetKeys()
-    {
-        return PreviousComponents[0].GetKeys();
-    }
 }

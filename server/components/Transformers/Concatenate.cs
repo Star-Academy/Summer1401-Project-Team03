@@ -27,7 +27,7 @@ public class Concatenate : Transformer
     
     private List<string> GetKeysForQuery()
     {
-        var keys = PreviousComponents[0].GetKeys();
+        var keys = new List<string>(PreviousComponents[0].GetKeys());
 
         for (var i = 0; i < Parameters[FirstFields].Count; i++)
         {
@@ -45,7 +45,7 @@ public class Concatenate : Transformer
 
     public override List<string> GetKeys()
     {
-        var tempKeys = PreviousComponents[0].GetKeys();
+        var tempKeys = new List<string>(PreviousComponents[0].GetKeys());
         tempKeys.AddRange(Parameters[NewNames].ToList());
         return tempKeys;
     }

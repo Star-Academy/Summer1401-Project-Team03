@@ -22,6 +22,6 @@ public class FieldRemover : Transformer
 
     public override List<string> GetKeys()
     {
-        return PreviousComponents[0].GetKeys().Except(Parameters[Fields]).ToList();
+        return new List<string>(PreviousComponents[0].GetKeys().Except(Parameters[Fields]).ToList());
     }
 }

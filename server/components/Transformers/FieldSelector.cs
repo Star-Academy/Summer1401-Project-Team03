@@ -22,6 +22,6 @@ public class FieldSelector : Transformer
 
     public override List<string> GetKeys()
     {
-        return Parameters[Fields];
+        return new List<string>(Parameters[Fields]);
     }
 }

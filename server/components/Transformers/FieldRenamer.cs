@@ -25,7 +25,7 @@ public class FieldRenamer : Transformer
 
     public override List<string> GetKeys()
     {
-        return CreateModifiedListForStringsInMap((_, y) => y);
+        return new List<string>(CreateModifiedListForStringsInMap((_, y) => y));
     }
 
     private Dictionary<string, string> GetNameMap()
