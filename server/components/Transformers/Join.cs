@@ -34,11 +34,11 @@ public class Join : Transformer
         var fieldsToSelect = new List<string>();
         foreach (var key in lKeys)
         {
-            fieldsToSelect.Add($"{lTableAlias}.{key} AS l_{key}");    
+            fieldsToSelect.Add($"{lTableAlias}.{key} AS left_{key}");    
         }
         foreach (var key in rKeys)
         {
-            fieldsToSelect.Add($"{rTableAlias}.{key} AS r_{key}");    
+            fieldsToSelect.Add($"{rTableAlias}.{key} AS right_{key}");    
         }
 
         return Pipeline.QueryBuilder.Select(fieldsToSelect,
@@ -63,8 +63,8 @@ public class Join : Transformer
         
         var rKeys = new StreamReader(rPath).ReadLine().Replace("\\s+", "").Split(",").ToList();
 
-        var t = lKeys.Select(x => $"l_{x}").ToList();
-        t.AddRange(rKeys.Select(x => $"r_{x}").ToList());
+        var t = lKeys.Select(x => $"left_{x}").ToList();
+        t.AddRange(rKeys.Select(x => $"right_{x}").ToList());
         
         return t;
     }
