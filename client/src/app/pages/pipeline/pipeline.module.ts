@@ -25,6 +25,7 @@ import {RemoveNodeComponent} from './components/pipeline-board/components/remove
 import {BottomBarComponent} from './components/bottom-bar/bottom-bar.component';
 import {PillMenuInputModule} from '../../components/pill-menu-input/pill-menu-input.module';
 import {DataTableModule} from 'src/app/components/data-table/data-table.module';
+import { AddNodeReplicateComponent } from './components/pipeline-board/components/add-node/components/add-node-replicate/add-node-replicate.component';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import {DataTableModule} from 'src/app/components/data-table/data-table.module';
         RemoveNodeComponent,
         SideBarComponent,
         BottomBarComponent,
+        AddNodeReplicateComponent,
     ],
 
     imports: [

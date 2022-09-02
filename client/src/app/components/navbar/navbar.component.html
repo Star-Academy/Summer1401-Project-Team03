@@ -1,7 +1,9 @@
 <div class="wrapper">
     <span [class.shrink]="isShrink" class="opener">
         <app-svg iconType="navArrow" (click)="toggleShrink()"></app-svg>
-        <p *ngIf="!isShrink">Menu</p>
+        <img *ngIf="!isShrink" src="assets/logo.webp" alt="data sense logo" />
+        <!-- <app-svg *ngIf="!isShrink" iconType="logo"></app-svg> -->
+        <!-- <p *ngIf="!isShrink">Menu</p> -->
     </span>
     <ul>
         <app-navbar-item

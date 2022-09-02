@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {
+    AddDestinationNodeServiceModel,
     AddNodeServiceModel,
     ChangeComponentPositionServiceModel,
     ComponentInformationModel,
@@ -20,6 +21,7 @@ import {
     PIPELINE_RUN_UP_TO,
     PIPELINE_SET_CONFIG,
     RENAME_PIPELINE_NODE,
+    ADD_PIPELINE_DESTINATION,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS, ProcessSchema} from '../data/Processes.data';
@@ -97,17 +99,25 @@ export class PipelineBoardService {
         }
     }
 
-    public counter = 10;
-
     public async addNode(addNodeInfo: AddNodeServiceModel): Promise<number | null> {
         const fakeData = {...addNodeInfo};
         const response =
             (await this.apiService.post<number>(ADD_PIPELINE_NODE, {...fakeData}, fakeData.position)) || undefined;
-        // const response = this.counter;
+        if (response) {
+            this.snackbarService.showNewId(new SnackbarObject('process created successfully', SnackbarTheme.SUCCESS));
+            //return node id
+            return response;
+        }
+        return null;
+    }
+
+    public async addDestinationNode(addNodeInfo: AddDestinationNodeServiceModel): Promise<number | null> {
+        const fakeData = {...addNodeInfo};
+        const response =
+            (await this.apiService.post<number>(ADD_PIPELINE_DESTINATION, {...fakeData}, fakeData.position)) ||
+            undefined;
         if (response) {
             //return node id
-            this.snackbarService.showNewId(new SnackbarObject('process created successfully', SnackbarTheme.SUCCESS));
-            this.counter++;
             return response;
         } else {
             // todo snack error

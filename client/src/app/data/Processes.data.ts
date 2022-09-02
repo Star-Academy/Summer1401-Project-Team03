@@ -132,8 +132,9 @@ export const PROCESS: ProcessInfo = {
                 value: '',
             },
             fields_to_group_by: {
-                type: ItemType.TEXT_INPUT,
+                type: ItemType.SELECT,
                 label: 'group by',
+                options: undefined,
                 value: '',
             },
         },
@@ -270,9 +271,8 @@ export const PROCESS: ProcessInfo = {
                 value: '',
             },
             r_fields: {
-                type: ItemType.SELECT,
+                type: ItemType.TEXT_INPUT,
                 label: 'right field',
-                options: undefined,
                 value: '',
             },
             operators: {

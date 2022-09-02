@@ -14,3 +14,9 @@
     <app-text-input label="name" [value]="nodeTitle" (valueChange)="nodeTitle = $event"></app-text-input>
     <app-button (click)="addNodeHandle()">Create</app-button>
 </app-modal>
+
+<app-add-node-replicate
+    class="absolute"
+    #replicateModal
+    (replicateNodeEmit)="addNodeReplicateHandle($event)"
+></app-add-node-replicate>
