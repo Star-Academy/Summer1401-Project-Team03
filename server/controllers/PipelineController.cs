@@ -91,7 +91,7 @@ public class PipelineController : ControllerBase
             var pipeline = _idToPipeline[pipelineId];
 
             var fileId = IdCounterHandler.LoadFileId();
-            var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "exports");
+            var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId);
 
             IdCounterHandler.SaveFileId(fileId + 1);
 
