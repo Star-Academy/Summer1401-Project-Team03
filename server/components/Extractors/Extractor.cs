@@ -15,7 +15,7 @@ public abstract class Extractor : Component
             throw new System.Configuration.ConfigurationException($"Configuration not set!component Title: {Title}, component type: {Type}, id: {Id}");
 
         Extract();
-        return Pipeline.QueryBuilder.Select(GetKeys(),_tableName,Pipeline.QueryBuilder.NewAlias());
+        return Pipeline.QueryBuilder.Select(GetKeys(),Pipeline.QueryBuilder.SelectTable(_tableName),Pipeline.QueryBuilder.NewAlias());
     }
 
     public abstract void Extract();
