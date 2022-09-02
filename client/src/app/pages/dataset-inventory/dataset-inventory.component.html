@@ -3,81 +3,43 @@
         <app-import-button></app-import-button>
         <app-search-box (searchPhraseChange)="searchPhrase = $event"></app-search-box>
     </div>
-
-<!--<<<<<<< HEAD-->
-<!--    <ng-container *ngIf="inventoryService.dataset.length > 0; else emptyTable">-->
-<!--        <table class="dataset__table">-->
-<!--            <tr>-->
-<!--                <th>Name</th>-->
-<!--                <th>File Type</th>-->
-<!--                <th>Size</th>-->
-<!--                <th>Category</th>-->
-<!--                <th>Created At</th>-->
-<!--                <th></th>-->
-<!--            </tr>-->
-<!--            <tr-->
-<!--                *ngFor="let item of inventoryService.dataset | searchFilter: searchPhrase"-->
-<!--                (click)="navigateWithUrl(item.id)"-->
-<!--            >-->
-<!--                <td>{{ item.name }}</td>-->
-<!--                <td>{{ item.type.toUpperCase() }}</td>-->
-<!--                <td>{{ item.length | size }}</td>-->
-<!--                <td>{{ item.category }}</td>-->
-<!--                <td>{{ item.createTime | convertDate }}</td>-->
-<!--                <td>-->
-<!--                    <app-svg-->
-<!--                        (click)="toggleShowItemSettingModal(item.id); $event.stopPropagation()"-->
-<!--                        class="item-setting"-->
-<!--                        iconType="dots-vertical"-->
-<!--                    ></app-svg>-->
-<!--                    <ng-container *ngIf="item.openedSettingModal">-->
-<!--                        <app-dataset-item-modal-->
-<!--                            [dataset]="item"-->
-<!--                            (deleteEmit)="inventoryService.deleteDataset(item.id, item.category)"-->
-<!--                            (renameEmit)="renameModal.openModal(item.id, item.category, item.name)"-->
-<!--                            (downloadEmit)="downloadItem(item.id, item.category)"-->
-<!--                        ></app-dataset-item-modal>-->
-<!--                    </ng-container>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        </table>-->
-<!--    </ng-container>-->
-<!--    <ng-template #emptyTable>-->
-<!--        <app-empty [texts]="emptyTexts"></app-empty>-->
-<!--    </ng-template>-->
-<!--=======-->
-    <table class="dataset__table">
-        <tr>
-            <th>Name</th>
-            <th>File Type</th>
-            <th>Size</th>
-            <th>Created At</th>
-            <th></th>
-        </tr>
-        <tr
-            *ngFor="let item of inventoryService.dataset | searchFilter: searchPhrase"
-            (click)="navigateWithUrl(item.id)"
-        >
-            <td>{{ item.name }}</td>
-            <td>{{ item.type.toUpperCase() }}</td>
-            <td>{{ item.length | size }}</td>
-            <td>{{ item.createTime | convertDate }}</td>
-            <td>
-                <app-svg
-                    (click)="toggleShowItemSettingModal(item.id); $event.stopPropagation()"
-                    class="item-setting"
-                    iconType="dots-vertical"
-                ></app-svg>
-                <ng-container *ngIf="item.openedSettingModal">
-                    <app-dataset-item-modal
-                        [dataset]="item"
-                        (deleteEmit)="inventoryService.deleteDataset(item.id, item.category)"
-                        (renameEmit)="renameModal.openModal(item.id, item.category, item.name)"
-                        (downloadEmit)="downloadItem(item.id, item.category)"
-                    ></app-dataset-item-modal>
-                </ng-container>
-            </td>
-        </tr>
-    </table>
+    <ng-container *ngIf="inventoryService.dataset.length > 0; else emptyTable">
+        <table class="dataset__table">
+            <tr>
+                <th>Name</th>
+                <th>File Type</th>
+                <th>Size</th>
+                <th>Created At</th>
+                <th></th>
+            </tr>
+            <tr
+                *ngFor="let item of inventoryService.dataset | searchFilter: searchPhrase"
+                (click)="navigateWithUrl(item.id)"
+            >
+                <td>{{ item.name }}</td>
+                <td>{{ item.type.toUpperCase() }}</td>
+                <td>{{ item.length | size }}</td>
+                <td>{{ item.createTime | convertDate }}</td>
+                <td>
+                    <app-svg
+                        (click)="toggleShowItemSettingModal(item.id); $event.stopPropagation()"
+                        class="item-setting"
+                        iconType="dots-vertical"
+                    ></app-svg>
+                    <ng-container *ngIf="item.openedSettingModal">
+                        <app-dataset-item-modal
+                            [dataset]="item"
+                            (deleteEmit)="inventoryService.deleteDataset(item.id, item.category)"
+                            (renameEmit)="renameModal.openModal(item.id, item.category, item.name)"
+                            (downloadEmit)="downloadItem(item.id, item.category)"
+                        ></app-dataset-item-modal>
+                    </ng-container>
+                </td>
+            </tr>
+        </table>
+    </ng-container>
+    <ng-template #emptyTable>
+        <app-empty [texts]="emptyTexts"></app-empty>
+    </ng-template>
     <app-rename-modal #renameModal></app-rename-modal>
 </div>
