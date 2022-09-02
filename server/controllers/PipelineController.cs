@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Data.Common;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -288,9 +289,10 @@ public class PipelineController : ControllerBase
         {
             var pipeline = _idToPipeline[pipelineId];
 
-            using var reader = pipeline.Execute(componentId);
+            using var dataReader = pipeline.Execute(componentId);
+            using var typeReader = pipeline.GetTypesForRunUpTo(componentId);
 
-            return Ok(Serialize(reader));
+            return Ok(SerializeWithType(dataReader, typeReader));
         }
         catch (Exception e)
         {
@@ -298,7 +300,7 @@ public class PipelineController : ControllerBase
         }
     }
 
-    private IEnumerable<Dictionary<string, object>> Serialize(DbDataReader reader)
+    private List<Dictionary<string, object>> Serialize(DbDataReader reader)
     {
         var results = new List<Dictionary<string, object>>();
         var cols = new List<string>();
@@ -313,6 +315,19 @@ public class PipelineController : ControllerBase
         }
 
         return results;
+    }
+    
+    private IEnumerable<Dictionary<string, object>> SerializeWithType(DbDataReader setReader, DbDataReader typeReader)
+    {
+        var result = Serialize(setReader);
+        var cols = new List<string>();
+        for (var i = 0; i < typeReader.FieldCount; i++)
+            cols.Add(typeReader.GetName(i));
+
+        typeReader.Read();
+        result.Add(cols.ToDictionary(col => col, col => typeReader[col]));
+        
+        return result;
     }
 
     [EnableCors("CorsPolicy")]

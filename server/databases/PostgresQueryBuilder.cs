@@ -124,6 +124,15 @@ public class PostgresQueryBuilder : IQueryBuilder
         return $"SELECT * FROM ({table}) AS {alias} ORDER BY random() LIMIT {number}";
     }
 
+    public string getType(List<string> keys, string table)
+    {
+        var query = new StringBuilder($"SELECT pg_typeof({keys[0]})");
+        for (var i = 1; i < keys.Count; i++) query.Append($", pg_typeof({keys[i]})");
+
+        query.Append($" FROM ({table}) limit 1");
+        return query.ToString();
+    }
+
     public string Function(string function, string key)
     {
         return $"{function}({key})";

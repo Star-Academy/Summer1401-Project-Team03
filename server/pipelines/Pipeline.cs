@@ -51,6 +51,11 @@ public class Pipeline
         return Database.Execute(IdToComponent[id].GetQuery());
     }
 
+    public DbDataReader GetTypesForRunUpTo(int id)
+    {
+        return Database.Execute(IdToComponent[id].GetTypesQuery());
+    }
+
     public void Execute()
     {
         foreach (var destination in DestinationIDs) Database.Execute(IdToComponent[destination].GetQuery()).Close();

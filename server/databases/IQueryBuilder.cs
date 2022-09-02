@@ -37,6 +37,8 @@ public interface IQueryBuilder
 
     public string Sample(string table, string alias, int number);
 
+    public string getType(List<string> keys, string table);
+
     public string Function(string function, string key);
 
     public string Join(string lTable, string rTable, string lTableAlias, string rTableAlias, List<string> lFields,

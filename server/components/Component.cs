@@ -1,4 +1,5 @@
-﻿using server.enums;
+﻿using System.Data.Common;
+using server.enums;
 using server.pipelines;
 
 namespace server.components;
@@ -48,6 +49,11 @@ public abstract class Component
         if (PreviousComponents.Remove(component)) return;
 
         throw new Exception("previous component does not exist!");
+    }
+
+    public string GetTypesQuery()
+    {
+        return Pipeline.QueryBuilder.getType(GetKeys(), PreviousComponents[0].GetQuery());
     }
 
     public abstract string GetQuery();
