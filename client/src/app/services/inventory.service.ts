@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
-import {DATASET_RENAME, INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_EXPORT, INVENTORY_IMPORT} from '../utils/api.utils';
+import {DATASET_RENAME, INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_IMPORT} from '../utils/api.utils';
 import {ApiService} from './api.service';
 import {DatasetItemModel, DatasetRenameModel} from 'src/app/models/dataset/dataset-item.model';
 import {BehaviorSubject} from 'rxjs';
-import {PROCESS} from '../data/Processes.data';
 import {NavigationEnd, Router} from '@angular/router';
+import {SnackbarService} from './snackbar.service';
+import {SnackbarObject} from '../components/snackbar/models/snackbar-object.model';
+import {SnackbarTheme} from '../components/snackbar/enums/snackbar-theme';
+import {PROCESS} from '../data/Processes.data';
 
 @Injectable({
     providedIn: 'root',
@@ -14,10 +17,14 @@ export class InventoryService {
 
     public datasetRx = new BehaviorSubject<DatasetItemModel[] | null>(null);
 
-    public constructor(private apiService: ApiService, private router: Router) {
+    public constructor(
+        private apiService: ApiService,
+        private router: Router,
+        private snackbarService: SnackbarService
+    ) {
         this.getAllDataset();
         this.subscribeRoute();
-        // this.subscribeJoinOptions();
+        this.subscribeJoinOptions();
     }
 
     public async getAllDataset(): Promise<void> {
@@ -26,13 +33,15 @@ export class InventoryService {
         this.datasetRx.next(this.dataset);
     }
 
-    public async uploadDataSet(file: File): Promise<void> {
+    public async uploadDataSet(file: File): Promise<boolean> {
         const data = new FormData();
         data.append('file', file);
 
         const response = await this.apiService.formPost<number>(INVENTORY_IMPORT, data);
 
         if (response) {
+            this.snackbarService.showNewId(new SnackbarObject('Dataset imported successfully', SnackbarTheme.SUCCESS));
+
             this.dataset.push({
                 id: response,
                 length: file.size.toString(),
@@ -43,7 +52,10 @@ export class InventoryService {
                 openedSettingModal: false,
             });
             this.datasetRx.next(this.dataset);
+        } else {
+            // todo snack error
         }
+        return !!response;
     }
 
     public async deleteDataset(id: number, category: string): Promise<void> {
@@ -52,26 +64,37 @@ export class InventoryService {
         url.searchParams.append('category', category);
         const response = await this.apiService.delete(url.toString());
         if (response) {
+            this.snackbarService.showNewId(new SnackbarObject('dataset deleted successfully', SnackbarTheme.SUCCESS));
             this.dataset = this.dataset.filter((data) => data.id !== id);
             this.datasetRx.next(this.dataset);
+        } else {
+            // todo snack error
         }
     }
 
     public async renameDataset(renameData: DatasetRenameModel): Promise<void> {
         const currentDatasetIndex = this.dataset.findIndex((data) => data.id === renameData.fileId);
-        await this.apiService.put(DATASET_RENAME, renameData);
-        this.dataset[currentDatasetIndex].name = renameData.newName;
-        this.datasetRx.next(this.dataset);
+        const response = await this.apiService.put(DATASET_RENAME, renameData);
+        if (response) {
+            this.snackbarService.showNewId(new SnackbarObject('dataset renamed successfully', SnackbarTheme.SUCCESS));
+            this.dataset[currentDatasetIndex].name = renameData.newName;
+            this.datasetRx.next(this.dataset);
+        } else {
+            // todo snack error
+        }
     }
 
-    // private subscribeJoinOptions(): void {
-    //     this.datasetRx.subscribe((value) => {
-    //         PROCESS.join.parameters.datasets.options = value?.map((dataset) => ({
-    //             title: dataset.name,
-    //             value: dataset.id,
-    //         }));
-    //     });
-    // }
+    private subscribeJoinOptions(): void {
+        this.datasetRx.subscribe((value) => {
+            if (!value) {
+                return;
+            }
+            PROCESS.join.parameters.file_id.options = value?.map((dataset) => ({
+                title: dataset.name,
+                value: dataset.id.toString(),
+            }));
+        });
+    }
 
     private subscribeRoute(): void {
         this.router.events.subscribe(async (value) => {

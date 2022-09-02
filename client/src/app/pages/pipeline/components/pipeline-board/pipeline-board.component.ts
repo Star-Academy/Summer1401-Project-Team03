@@ -100,6 +100,8 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     public boardEl!: HTMLElement;
     public resizeObserverObj!: ResizeObserver;
 
+    public draggedNodeId: number | null = null;
+
     public constructor(
         private elRef: ElementRef,
         private changeDetectorRef: ChangeDetectorRef,

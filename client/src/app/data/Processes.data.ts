@@ -181,7 +181,7 @@ export const PROCESS: ProcessInfo = {
     field_selector: {
         id: 5,
         title: 'field selector',
-        icon: 'field_selector',
+        icon: 'fieldSelector',
         parameters: {
             fields_to_select: {
                 type: ItemType.TEXT_INPUT,
@@ -225,18 +225,86 @@ export const PROCESS: ProcessInfo = {
         title: 'join',
         icon: 'join',
         parameters: {
-            dataset: {
+            file_id: {
                 label: 'dataset',
                 type: ItemType.SELECT,
                 options: [],
                 value: '',
+            },
+            join_type: {
+                label: 'join type',
+                type: ItemType.SELECT,
+                options: [
+                    {
+                        value: 'join',
+                        title: 'join',
+                    },
+                    {
+                        value: 'inner join',
+                        title: 'inner join',
+                    },
+                    {
+                        value: 'FULL OUTER JOIN',
+                        title: 'outer join',
+                    },
+                    {
+                        value: 'left join',
+                        title: 'left join',
+                    },
+                    {
+                        value: 'right join',
+                        title: 'right join',
+                    },
+                ],
+                value: '',
+            },
+            l_fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'left field',
+                value: '',
+            },
+            r_fields: {
+                type: ItemType.TEXT_INPUT,
+                label: 'right field',
+                value: '',
+            },
+            operators: {
+                type: ItemType.SELECT,
+                label: 'operator',
+                options: [
+                    {
+                        value: '=',
+                        title: '==',
+                    },
+                    {
+                        value: '!=',
+                        title: '!=',
+                    },
+                    {
+                        value: '>',
+                        title: '>',
+                    },
+                    {
+                        value: '<',
+                        title: '<',
+                    },
+                    {
+                        value: '>=',
+                        title: '>=',
+                    },
+                    {
+                        value: '<=',
+                        title: '<=',
+                    },
+                ],
+                value: '==',
             },
         },
     },
     replicate: {
         id: 9,
         title: 'replicate',
-        icon: 'join',
+        icon: 'replicate',
         parameters: {},
     },
     csv_loader: {
@@ -293,7 +361,7 @@ export const PROCESS: ProcessInfo = {
     data_cleanser: {
         id: 15,
         title: 'data cleanser',
-        icon: 'dataCleanser',
+        icon: 'data-cleanser',
         parameters: {
             fields: {
                 type: ItemType.TEXT_INPUT,

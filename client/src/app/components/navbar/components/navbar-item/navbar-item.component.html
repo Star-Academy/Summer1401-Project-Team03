@@ -1,4 +1,9 @@
-<li class="wrapper" [title]="title" (click)="navigateUrl(); $event.stopPropagation()">
+<li
+    class="wrapper"
+    [title]="title"
+    [ngClass]="{active: isCurrentPage}"
+    (click)="navigateUrl(); $event.stopPropagation()"
+>
     <app-svg [iconType]="iconType"></app-svg>
     <h4 *ngIf="!isShrink">{{ title }}</h4>
 </li>
