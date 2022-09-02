@@ -259,6 +259,15 @@ export class PipelineBoardService {
             if (!value) {
                 return;
             }
+            if (
+                ![
+                    PROCESS.csv_extractor.id,
+                    PROCESS.json_extractor.id,
+                    PROCESS.csv_loader.id,
+                    PROCESS.json_loader.id,
+                ].includes(value.processesInfoType)
+            )
+                this.nodePreview.ioType = IoType.BOTH;
             this.getNodeConfig(value.id);
             this.runUpToNode();
         });
