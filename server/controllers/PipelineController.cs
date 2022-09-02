@@ -295,10 +295,8 @@ public class PipelineController : ControllerBase
             {
                 table = Serialize(dataReader);
             }
-
-            using var typeReader = pipeline.GetTypesForRunUpTo(componentId);
-
-            return Ok(SerializeWithType(table, typeReader));
+            
+            return Ok(table);
         }
         catch (Exception e)
         {
@@ -321,21 +319,6 @@ public class PipelineController : ControllerBase
         }
 
         return results;
-    }
-
-    private IEnumerable<Dictionary<string, object>> SerializeWithType(List<Dictionary<string, object>> table,
-        DbDataReader typeReader)
-    {
-        var result = table;
-
-        var cols = new List<string>();
-        for (var i = 0; i < typeReader.FieldCount; i++)
-            cols.Add(typeReader.GetName(i));
-
-        typeReader.Read();
-        result.Add(cols.ToDictionary(col => col, col => typeReader[col]));
-
-        return result;
     }
 
     [EnableCors("CorsPolicy")]
