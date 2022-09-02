@@ -29,4 +29,11 @@ public class Aggregate : Transformer
             $"{Pipeline.QueryBuilder.Select(fieldsToSelect, PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias())} {Pipeline.QueryBuilder.GroupBy(Parameters[FieldsToGroupBy])}";
         return x;
     }
+
+    public override List<string> GetKeys()
+    {
+        var keys = PreviousComponents[0].GetKeys();
+        keys.Add(Parameters[AggregateFunctions][0]);
+        return keys;
+    }
 }
