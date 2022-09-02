@@ -185,7 +185,7 @@ public class PipelineController : ControllerBase
 
     private int AddSource(Pipeline pipeline, int fileId, Position position)
     {
-        var filePath = FileSearcher.Search(fileId, "imports");
+        var filePath = FileSearcher.Search(fileId, "user_files");
 
         var regex = new Regex("(.*)_([0-9]*)\\.(csv|json)");
         var fileName = regex.Match(new FileInfo(filePath).Name).Groups[1].Value;
@@ -205,7 +205,7 @@ public class PipelineController : ControllerBase
     private int AddDestination(Pipeline pipeline, string fileName, string format, Position position)
     {
         var fileId = IdCounterHandler.LoadFileId();
-        var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "exports");
+        var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId);
 
         IdCounterHandler.SaveFileId(fileId + 1);
 

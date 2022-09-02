@@ -28,7 +28,7 @@ public class DataInventoryController : ControllerBase
 
                 var fileId = IdCounterHandler.LoadFileId();
 
-                var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId, "imports");
+                var filePath = PathGenerator.GenerateDataPath(fileName, format, fileId);
 
                 IdCounterHandler.SaveFileId(fileId + 1);
                 await using (var stream = FileOperation.Create(filePath))
@@ -53,7 +53,7 @@ public class DataInventoryController : ControllerBase
     {
         try
         {
-            var filePath = FileSearcher.Search(fileId, category);
+            var filePath = FileSearcher.Search(fileId, "user_file");
             var bytes = await FileOperation.ReadAllBytesAsync(filePath);
             return File(bytes, "text/plain", Path.GetFileName(filePath));
         }
@@ -70,8 +70,7 @@ public class DataInventoryController : ControllerBase
         try
         {
             var informations = new List<FileInformation>();
-            FileInformation.ExtractInformation(informations, "imports");
-            FileInformation.ExtractInformation(informations, "exports");
+            FileInformation.ExtractInformation(informations, "user_files");
 
             return Ok(informations);
         }
@@ -87,7 +86,7 @@ public class DataInventoryController : ControllerBase
     {
         try
         {
-            var filePath = FileSearcher.Search(fileId, category);
+            var filePath = FileSearcher.Search(fileId, "user_files");
             FileOperation.Delete(filePath);
             return Ok();
         }
@@ -103,12 +102,12 @@ public class DataInventoryController : ControllerBase
     {
         try
         {
-            var filePath = FileSearcher.Search(fileId, category);
+            var filePath = FileSearcher.Search(fileId, "user_files");
             var fileInfo = new FileInfo(filePath);
 
             var regex = new Regex(".*_[0-9]*\\.(csv|json)");
             var fileType = regex.Match(fileInfo.Name).Groups[1].Value;
-            var newPath = PathGenerator.GenerateDataPath(newName, fileType, fileId, category);
+            var newPath = PathGenerator.GenerateDataPath(newName, fileType, fileId);
             fileInfo.MoveTo(newPath);
             return Ok();
         }

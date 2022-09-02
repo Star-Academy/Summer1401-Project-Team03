@@ -23,7 +23,7 @@ public class FileInformation
 
     public static void ExtractInformation(List<FileInformation> informations, string category)
     {
-        var directory = new DirectoryInfo(Path.Combine("resources", category));
+        var directory = new DirectoryInfo(Path.Combine("resources", "user_files"));
         var files = directory.GetFiles("*");
 
         foreach (var file in files)

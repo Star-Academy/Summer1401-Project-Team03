@@ -28,7 +28,7 @@ public class Join : Transformer
         var operators = Parameters[Operators];
         var joinType = Parameters[JoinType][0];
         var lKeys = PreviousComponents[0].GetKeys();
-        var rPath = FileSearcher.Search(int.Parse(Parameters[FileId][0]), "imports");
+        var rPath = FileSearcher.Search(int.Parse(Parameters[FileId][0]), "user_files");
         
         var rKeys = new StreamReader(rPath).ReadLine().Replace("\\s+", "").Split(",").ToList();
         var fieldsToSelect = new List<string>();
@@ -48,7 +48,7 @@ public class Join : Transformer
     public string CreateTable()
     {
         var rTable = Pipeline.QueryBuilder.NewAlias();
-        var filePath = FileSearcher.Search(int.Parse(Parameters[FileId][0]), "imports");
+        var filePath = FileSearcher.Search(int.Parse(Parameters[FileId][0]), "user_files");
         var keys = new StreamReader(filePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(rTable)).Close();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(rTable, keys)).Close();

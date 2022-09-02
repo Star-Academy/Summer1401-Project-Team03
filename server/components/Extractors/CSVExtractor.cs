@@ -17,7 +17,7 @@ public class CSVExtractor : Extractor
     public override void Extract()
     {
         var filePath = Parameters[FilePath][0];
-        var keys = new StreamReader(filePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
+        var keys = GetKeys();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.Drop(_tableName)).Close();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.CreateTable(_tableName, keys)).Close();
         Pipeline.Database.Execute(Pipeline.QueryBuilder.ImportCSV(_tableName, keys, filePath)).Close();
