@@ -31,6 +31,10 @@
 
         cursor: pointer;
 
+        p,a{
+            text-transform: capitalize;
+        }
+
         app-svg {
             inline-size: 1.5rem;
             block-size: 1.5rem;
