@@ -1,17 +1,17 @@
 .dataset {
-    --color-hr-border: var(--color-purple-46);
-    --color-hr-bg: hsl(263deg 46% 93%);
-    --color-hr-bg-hover: hsl(263deg 46% 87%);
+    --color-hr-border: var(--color-gray-60);
+    --color-hr-bg: var(--color-white-solid);
+    --color-hr-bg-hover: var(--color-gray-78);
 
-    --color-th-text: var(--color-purple-21);
-    --color-th-bg: hsl(263deg 46% 70%);
+    --color-th-text: var(--color-gray-0);
+    --color-th-bg: var(--color-white-solid);
 
     --color-td-text: hsl(0deg 0% 20%);
     display: flex;
     flex-direction: column;
     gap: 3rem;
 
-    width: 90%;
+    inline-size: 90%;
 
     margin-inline: auto;
     padding-block-start: 7rem;
@@ -19,12 +19,13 @@
     &__header {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         gap: 4rem;
 
         app-svg {
             background-color: var(--color-th-bg);
 
-            height: auto;
+            block-size: auto;
 
             padding: 0.5rem;
 
@@ -36,10 +37,7 @@
 
     &__table {
         border-collapse: collapse;
-
-        // border-radius: var(--border-radius-primary);
-        // overflow: hidden;
-        // BUG SETTING MODAL
+        border-radius: var(--border-radius-minimal);
 
         tr {
             background-color: var(--color-hr-bg);
@@ -55,10 +53,14 @@
             background-color: var(--color-th-bg);
         }
 
+        tr:not(:first-child) {
+            border-top: none;
+        }
+
         th {
             color: var(--color-th-text);
 
-            font-size: 2rem;
+            font-size: var(--font-size-big);
             font-weight: 700;
         }
 
@@ -67,20 +69,21 @@
 
             position: relative;
 
-            font-size: 1.6rem;
+            font-size: var(--font-size-primary);
 
             text-align: center;
+            text-transform: none !important;
         }
 
         td,
         th {
-            padding: 2rem 0.75rem;
+            padding: 1rem 0.75rem;
 
             text-transform: capitalize;
         }
 
         .item-setting {
-            height: 2rem;
+            block-size: 2rem;
 
             cursor: pointer;
         }

@@ -1,10 +1,7 @@
-<div class="modal">
-    <div class="modal__item" (click)="renameEmit.emit()">
-        <app-svg iconType="rename"> </app-svg>
-        <p>rename</p>
+<app-modal #removePipeModal title="remove pipeline" class="modal">
+    are you sure you want to delete this pipeline?
+    <div class="modal__container">
+        <app-button (click)="deleteItem()">Remove</app-button>
+        <app-button styleType="secondary" (click)="modal.closeModal()">Cancel</app-button>
     </div>
-    <div class="modal__item" (click)="deleteEmit.emit()">
-        <app-svg iconType="delete"> </app-svg>
-        <p>delete</p>
-    </div>
-</div>
+</app-modal>

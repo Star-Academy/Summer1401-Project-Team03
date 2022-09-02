@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {pipelineItemData, PipelineItemModel} from '../../models/pipeline/pipeline-item.model';
+import {PipelineService} from '../../services/pipeline.service';
 
 @Component({
     selector: 'app-pipeline-inventory',
@@ -8,17 +8,8 @@ import {pipelineItemData, PipelineItemModel} from '../../models/pipeline/pipelin
 })
 export class PipelineInventoryComponent {
     public searchPhrase: string = '';
-    public pipelineItems: PipelineItemModel[] = pipelineItemData;
 
-    public openItemSettingModal(id: number): void {
-        const item = this.pipelineItems.find((item) => item.id === id);
-        if (item) item.openedSettingModal = true;
-    }
-
-    public closeItemSettingModal(id: number): void {
-        const item = this.pipelineItems.find((item) => item.id === id);
-        if (item) item.openedSettingModal = false;
-    }
+    public constructor(public pipelineService: PipelineService) {}
 
     public renameItem(id: number): void {
         console.log(`Renamed item ${id}`);
@@ -26,6 +17,7 @@ export class PipelineInventoryComponent {
     }
 
     public deleteItem(id: number): void {
+        this.pipelineService.deletePipeline(id);
         console.log(`Removed item ${id}`);
         // Connect to inventory service
     }

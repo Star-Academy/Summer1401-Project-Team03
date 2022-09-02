@@ -1,15 +1,23 @@
 <div
+    #container
     class="container"
     [style]="{
         '--board-w': boardWidth,
         '--board-h': boardHeight,
         '--grid-size': gridSize,
-        '--zoom': zoom
+        '--zoom': zoom,
+        '--grid-size': gridSize + 'px'
     }"
+    [ngStyle]="{cursor: mouseIsDown ? 'grabbing' : 'grab'}"
     tabindex="0"
     (keyup)="onKeyUp($event)"
+    (mousedown)="mouseIsDown = true"
+    (mouseup)="mouseIsDown = false"
+    (mousemove)="mouseMoveHandler($event)"
+    }"
 >
     <div class="board">
+        <ng-content></ng-content>
         <div class="resizer xy" (click)="resizeClickHandler(2, 2)"></div>
         <div class="resizer x" (click)="resizeClickHandler(2, 0)"></div>
         <div class="resizer y" (click)="resizeClickHandler(0, 2)"></div>

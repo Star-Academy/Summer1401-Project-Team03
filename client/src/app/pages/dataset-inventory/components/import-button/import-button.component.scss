@@ -1,7 +1,13 @@
+app-svg {
+    inline-size: 1.7rem;
+}
+
 .upload {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
+    cursor: pointer;
 
     label {
         background-color: var(--color-green-60);

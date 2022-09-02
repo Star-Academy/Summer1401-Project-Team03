@@ -1,0 +1,42 @@
+<ng-container *ngIf="processTitle; else emptyBar">
+    <div class="wrapper">
+        <div class="row">
+            <h2>
+                <pre>Data preview - </pre>
+                <pre class="no-cap">{{ processTitle }}</pre>
+            </h2>
+
+            <app-pill-menu-input
+                label="Display"
+                [options]="ioTypeValues"
+                [value]="whichSide.toUpperCase()"
+                (valueChange)="setWhichSide($event)"
+                [disabled]="isSourceOrDestination"
+            ></app-pill-menu-input>
+        </div>
+
+        <div class="row" [style]="{'--table-min-width': whichSide.toLowerCase() === 'both' ? '50%' : '100%'}">
+            <app-data-table
+                [hidden]="!(whichSide.toLowerCase() !== 'output' && inputColumns)"
+                title="Input"
+                [columns]="inputColumns || []"
+                [rows]="inputRows || []"
+            ></app-data-table>
+            <ng-container
+                *ngIf="whichSide.toLowerCase() !== 'input' && outputColumns && hasConfigs; else setConfigMessage"
+            >
+                <app-data-table
+                    title="Output"
+                    [columns]="outputColumns || []"
+                    [rows]="outputRows || []"
+                ></app-data-table>
+            </ng-container>
+            <ng-template #setConfigMessage>
+                <div class="message">set process configurations to view output</div>
+            </ng-template>
+        </div>
+    </div>
+</ng-container>
+<ng-template #emptyBar>
+    <div class="message">select a node to preview</div>
+</ng-template>

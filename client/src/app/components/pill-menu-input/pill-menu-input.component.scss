@@ -1,0 +1,47 @@
+label {
+    --border-width: 0.15rem;
+    --border-color: var(--color-gray-60);
+    --item-width: 7rem;
+
+    background-color: var(--color-gray-95);
+
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+
+    inline-size: fit-content;
+
+    padding-inline: 0.75rem;
+
+    border: var(--border-width) solid var(--border-color);
+    border-radius: 10rem;
+
+    font-size: var(--font-size-primary);
+
+    .separator {
+        background-color: var(--border-color);
+
+        inline-size: var(--border-width);
+    }
+
+    select {
+        background: transparent;
+
+        border: none;
+
+        outline: none;
+
+        font-weight: bold;
+
+        text-align: end;
+    }
+
+    .label {
+        margin-inline-end: 0.35rem;
+    }
+
+    .label,
+    select {
+        padding-block: 0.15rem;
+    }
+}

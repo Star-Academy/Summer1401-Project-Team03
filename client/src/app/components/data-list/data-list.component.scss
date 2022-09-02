@@ -9,11 +9,22 @@ label {
     select {
         padding: 0.5rem;
 
-        border: var(--border-default) var(--color-purple-21);
+        border: var(--border-default) var(--color-gray-60);
         border-radius: var(--border-radius-minimal);
 
         outline: none;
 
         font-size: var(--font-size-primary);
+
+        &:focus {
+            border-color: var(--color-purple-50);
+        }
+
+        &:disabled {
+            background-color: var(--color-gray-78);
+            color: var(--color-gray-34);
+
+            border-color: var(--color-gray-60);
+        }
     }
 }

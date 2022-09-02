@@ -1,8 +1,23 @@
-<div class="wrapper">
+<div class="wrapper" [title]="pipelineNodeData.title">
+    <app-svg [iconType]="PROCESS[processType].icon"></app-svg>
     <div class="desc">
-        <h3 class="label">{{ pipelineNodeData.title }}</h3>
-        <p>{{ pipelineNodeData.processesInfoType.title }}</p>
+        <h3 class="label">{{ PROCESS[processType].title }}</h3>
+        <p class="no-cap">{{ pipelineNodeData.title }}</p>
     </div>
 
-    <app-svg [iconType]="pipelineNodeData.processesInfoType.icon"></app-svg>
+    <div class="setting" [ngClass]="{opened: pipelineNodeData.openedSettingModal}">
+        <app-svg
+            class="setting__icon"
+            (click)="toggleShowItemSettingModal(); $event.stopPropagation()"
+            iconType="dots-vertical"
+        ></app-svg>
+        <ng-container *ngIf="pipelineNodeData.openedSettingModal">
+            <app-setting-item-modal
+                class="setting__modal"
+                (newNodeEmit)="addNode()"
+                (configNodeEmit)="configNode(pipelineNodeData.id)"
+                (deleteNodeEmit)="removeNode()"
+            ></app-setting-item-modal>
+        </ng-container>
+    </div>
 </div>

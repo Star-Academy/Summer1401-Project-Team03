@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {KeyboardCode} from '../../../../enums/keyboard-code.enum';
 
 @Component({
@@ -10,7 +10,11 @@ export class BoardComponent {
     @Input() public boardWidth: number = 150;
     @Input() public boardHeight: number = 120;
 
-    @Input() public gridSize: string = '20px';
+    @Input() public gridSize: number = 20;
+
+    @ViewChild('container') public container!: ElementRef<HTMLDivElement>;
+
+    public mouseIsDown: boolean = false;
 
     public zoom: number = 1;
     public zoomChangeCount: number = 0;
@@ -41,5 +45,12 @@ export class BoardComponent {
         }
         this.zoomChangeCount++;
         setTimeout(() => this.zoomChangeCount--, 500);
+    }
+
+    public mouseMoveHandler(event: MouseEvent): void {
+        if (this.mouseIsDown) {
+            this.container.nativeElement.scrollTop -= event.movementY;
+            this.container.nativeElement.scrollLeft -= event.movementX;
+        }
     }
 }

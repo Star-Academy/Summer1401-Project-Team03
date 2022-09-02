@@ -1,0 +1,14 @@
+<div class="modal">
+    <div class="modal__item" (click)="newNodeEmit.emit()">
+        <app-svg iconType="new-document"> </app-svg>
+        <p>new</p>
+    </div>
+    <div class="modal__item" (click)="configNodeEmit.emit()">
+        <app-svg iconType="setting"> </app-svg>
+        <p>setting</p>
+    </div>
+    <div class="modal__item" (click)="deleteNodeEmit.emit()">
+        <app-svg iconType="delete"> </app-svg>
+        <p>delete</p>
+    </div>
+</div>

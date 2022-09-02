@@ -2,15 +2,17 @@
     display: grid;
     grid-template-columns: auto 1fr;
 
-    height: 100vh;
+    block-size: 100vh;
 
     .navbar {
-        background-color: var(--color-purple-21);
+        background-color: var(--color-purple-15);
 
-        padding: 1rem;
+        z-index: 10;
     }
 
     .content {
-        background-color: var(--color-content-bg);
+        background-color: var(--color-white-solid);
+
+        font-size: var(--font-size-primary);
     }
 }

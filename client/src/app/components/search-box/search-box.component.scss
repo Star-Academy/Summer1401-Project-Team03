@@ -1,7 +1,7 @@
 .input-box {
     --clr-gray-20: hsl(0deg 0% 20%);
-    --color-search-bg: var(--color-purple-86);
-    --color-icon: var(--color-purple-21);
+    --color-search-bg: var(--color-white-solid);
+    --color-icon: var(--color-purple-15);
 
     position: relative;
 
@@ -16,7 +16,7 @@
         color: var(--color-icon);
 
         position: absolute;
-        inset-block-start: 55%;
+        inset-block-start: 50%;
         inset-inline-start: 1rem;
 
         transform: translate(0, -50%);
@@ -30,14 +30,16 @@
 
         inline-size: 100%;
 
-        padding: 1rem 0.75rem 1rem 4.5rem;
+        padding: 0.5rem 0.75rem 0.5rem 4.5rem;
 
-        border: none;
+        border: 0.2rem solid var(--color-gray-60);
         border-radius: var(--border-radius-minimal);
 
-        outline: none;
+        font-size: var(--font-size-primary);
 
-        font-size: 1.6rem;
+        &:focus {
+            border-color: var(--color-purple-50);
+        }
 
         &::placeholder {
             color: var(--clr-gray-20);

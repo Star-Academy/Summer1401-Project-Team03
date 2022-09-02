@@ -18,8 +18,10 @@
 
         font-size: var(--font-size-primary);
 
+        text-transform: capitalize;
+
         app-svg {
-            color: var(--color-purple-21);
+            color: var(--color-purple-15);
         }
 
         &:hover {

@@ -5,16 +5,23 @@
     background-size: $grid-size $grid-size;
 }
 
+@mixin dot-pattern($bg-color, $dot-color, $dot-space, $dot-size) {
+    background-color: $bg-color;
+    background-image: radial-gradient($dot-color $dot-size, $bg-color $dot-size);
+    background-position: calc(#{$dot-space} / -2) calc(#{$dot-space} / -2);
+    background-size: $dot-space $dot-space;
+}
+
 .container {
     position: relative;
-    overflow: scroll;
+    overflow: auto;
     scrollbar-gutter: stable;
 
     block-size: 100%;
 
     .board {
-        @include grid-pattern(var(--color-white-solid), hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
-
+        // @include grid-pattern(var(--color-white-solid), hsl(237deg 92% 62% / 10%), 1.25px, var(--grid-size));
+        @include dot-pattern(var(--color-gray-95), var(--color-gray-60), var(--grid-size), 1px);
         position: absolute;
 
         block-size: calc(var(--board-h) * var(--grid-size));
@@ -25,7 +32,7 @@
         .resizer {
             --size: calc(0.5 * var(--grid-size));
 
-            background-color: var(--color-purple-46);
+            background-color: var(--color-purple-30);
 
             position: absolute;
 
@@ -63,8 +70,8 @@
             right: -10rem;
             bottom: -10rem;
 
-            width: 10rem;
-            height: 10rem;
+            inline-size: 10rem;
+            block-size: 10rem;
         }
     }
 

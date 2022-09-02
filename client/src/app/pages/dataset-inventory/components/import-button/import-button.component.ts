@@ -1,6 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import {ModalComponent} from 'src/app/components/modal/modal.component';
 import {InventoryService} from 'src/app/services/inventory.service';
+import {SnackbarService} from '../../../../services/snackbar.service';
+import {SnackbarObject} from '../../../../components/snackbar/models/snackbar-object.model';
+import {SnackbarTheme} from '../../../../components/snackbar/enums/snackbar-theme';
 
 @Component({
     selector: 'app-import-button',
@@ -11,7 +14,7 @@ export class ImportButtonComponent {
     @ViewChild('DatasetImport') public modal!: ModalComponent;
     public file: File | null = null;
 
-    public constructor(private inventoryService: InventoryService) {}
+    public constructor(private inventoryService: InventoryService, private snackbarService: SnackbarService) {}
 
     public setFile(event: Event): void {
         const files = (event.target as HTMLInputElement).files;
@@ -25,6 +28,10 @@ export class ImportButtonComponent {
     }
 
     public async uploadFile(): Promise<void> {
-        if (this.file) await this.inventoryService.uploadDataSet(this.file);
+        this.modal.closeModal();
+        if (this.file) {
+            await this.inventoryService.uploadDataSet(this.file);
+        }
+        this.clearFile();
     }
 }

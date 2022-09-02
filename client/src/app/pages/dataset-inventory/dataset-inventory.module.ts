@@ -9,6 +9,8 @@ import {DatasetItemModalComponent} from './components/dataset-item-modal/dataset
 import {ImportButtonComponent} from './components/import-button/import-button.component';
 import {ButtonModule} from '../../components/button/button.module';
 import {ModalModule} from '../../components/modal/modal.module';
+import {SizeModule} from 'src/app/pipes/size/size.module';
+import {RenameModalModule} from '../../components/rename-modal/rename-modal.module';
 
 @NgModule({
     declarations: [DatasetInventoryComponent, DatasetItemModalComponent, ImportButtonComponent],
@@ -21,6 +23,8 @@ import {ModalModule} from '../../components/modal/modal.module';
         ButtonModule,
         ModalModule,
         ButtonModule,
+        SizeModule,
+        RenameModalModule,
     ],
 })
 export class DatasetInventoryModule {}

@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <h5 *ngIf="title" class="title">{{ title }}</h5>
+    <p class="row-count">
+        <b>{{ rowCount }}</b> records
+    </p>
+    <div class="table-wrapper no-cap">
+        <table>
+            <thead>
+                <tr>
+                    <th *ngFor="let col of columns" [ngClass]="{typed: col.type && col.rawType}">
+                        <h2>{{ col.title }}</h2>
+                        <h4 *ngIf="col.type && col.rawType">
+                            <span>{{ col.type }} </span>
+                            <span>({{ col.rawType }})</span>
+                        </h4>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of rows">
+                    <td *ngFor="let cell of row">{{ (cell | jsonIfJson) || '' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

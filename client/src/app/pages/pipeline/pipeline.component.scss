@@ -13,7 +13,7 @@
     .top-bar {
         grid-area: topbar;
 
-        background-color: var(--color-purple-46);
+        background-color: var(--color-purple-30);
         color: var(--color-white-solid);
         box-shadow: 0 0.1rem 1rem 0 rgb(0 0 0 / 30%);
 
@@ -25,7 +25,7 @@
         justify-items: center;
         gap: 1rem;
 
-        block-size: 5rem;
+        block-size: var(--topbar-block-size);
 
         padding-inline: 1rem;
 
@@ -35,6 +35,8 @@
 
         h1 {
             grid-column: 1;
+
+            font-size: var(--font-size-big);
         }
 
         app-run-button {
@@ -51,7 +53,7 @@
 
         .toggle-button {
             background-color: var(--color-purple-75);
-            fill: var(--color-purple-55);
+            fill: var(--color-purple-50);
 
             block-size: 60%;
             aspect-ratio: 1;
@@ -68,32 +70,31 @@
             }
 
             &.true {
-                background-color: var(--color-purple-21);
+                background-color: var(--color-purple-15);
                 fill: var(--color-white-solid);
             }
         }
     }
 
-    .side-bar {
+    app-side-bar {
         grid-area: sidebar;
 
-        background-color: var(--color-gray-90);
         box-shadow: -0.1rem 0 1rem 0 rgb(0 0 0 / 30%);
 
         z-index: 20;
 
-        inline-size: 25rem;
+        inline-size: 30rem;
     }
 
-    .bottom-bar {
+    app-bottom-bar {
         grid-area: bottom;
 
-        background-color: var(--color-gray-78);
+        background-color: var(--color-gray-90);
         box-shadow: 0 -0.1rem 1rem 0 rgb(0 0 0 / 30%);
 
         z-index: 10;
 
-        min-block-size: 20rem;
+        block-size: 25rem;
     }
 
     app-board {

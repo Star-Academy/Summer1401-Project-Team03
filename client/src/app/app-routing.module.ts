@@ -8,7 +8,7 @@ const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: 'dataset-inventory'},
     {path: 'pipeline-inventory', component: PipelineInventoryComponent},
     {path: 'dataset-inventory', component: DatasetInventoryComponent},
-    {path: 'pipeline', component: PipelineComponent},
+    {path: 'pipeline/:id', component: PipelineComponent},
 ];
 
 @NgModule({
