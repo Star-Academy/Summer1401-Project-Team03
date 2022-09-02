@@ -20,6 +20,10 @@
         height: 5rem;
 
         padding-inline: 1rem;
+
+        app-text-input {
+            inline-size: 75%;
+        }
     }
 
     .table-wrapper {

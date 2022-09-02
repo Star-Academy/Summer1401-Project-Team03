@@ -1,8 +1,17 @@
 <div class="container">
     <div class="top-bar">
-        <h2 class="no-cap" (dblclick)="titleEdit = true; newName = datasetTitle">
-            {{ datasetTitle }}
-        </h2>
+        <ng-container *ngIf="titleEdit; else titleStatic">
+            <app-text-input
+                [(value)]="newName"
+                (confirm)="renameDataset()"
+                (cancel)="titleEdit = false"
+            ></app-text-input>
+        </ng-container>
+        <ng-template #titleStatic>
+            <h2 class="no-cap" (dblclick)="titleEdit = true; newName = datasetTitle">
+                {{ datasetTitle }}
+            </h2>
+        </ng-template>
     </div>
 
     <div class="table-wrapper">

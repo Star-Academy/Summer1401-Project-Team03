@@ -74,7 +74,7 @@ export class InventoryService {
         }
     }
 
-    public async renameDataset(renameData: DatasetRenameModel): Promise<void> {
+    public async renameDataset(renameData: DatasetRenameModel): Promise<boolean> {
         const currentDatasetIndex = this.dataset.findIndex((data) => data.id === renameData.fileId);
         const response = await this.apiService.put(DATASET_RENAME, renameData);
         if (response) {
@@ -84,6 +84,7 @@ export class InventoryService {
         } else {
             // todo snack error
         }
+        return !!response;
     }
 
     public async getSample(fileId: number): Promise<Pair<TableColumn[], string[][]> | null> {

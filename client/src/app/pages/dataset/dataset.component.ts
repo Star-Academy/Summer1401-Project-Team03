@@ -41,10 +41,15 @@ export class DatasetComponent implements OnInit {
     }
 
     public async renameDataset(): Promise<void> {
-        await this.inventoryService.renameDataset({
-            fileId: this.datasetId,
-            newName: this.newName,
-            category: this.datasetCategory,
-        });
+        if (
+            await this.inventoryService.renameDataset({
+                fileId: this.datasetId,
+                newName: this.newName,
+                category: this.datasetCategory,
+            })
+        ) {
+            this.titleEdit = false;
+            this.datasetTitle = this.newName;
+        }
     }
 }
