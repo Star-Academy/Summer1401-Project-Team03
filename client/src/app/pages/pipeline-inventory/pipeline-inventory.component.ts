@@ -9,6 +9,10 @@ import {PipelineService} from '../../services/pipeline.service';
 export class PipelineInventoryComponent {
     public searchPhrase: string = '';
 
+    public get emptyTexts(): string[] {
+        return ['there are no pipelines.', "why don't you make one?"];
+    }
+
     public constructor(public pipelineService: PipelineService) {}
 
     public renameItem(id: number): void {

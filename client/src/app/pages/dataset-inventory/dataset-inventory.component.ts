@@ -10,7 +10,7 @@ export class DatasetInventoryComponent {
     public searchPhrase: string = '';
 
     public get emptyTexts(): string[] {
-        return ['there are no datasets.', "why don't you import something?"];
+        return ['there are no datasets.', "why don't you import one?"];
     }
 
     public constructor(public inventoryService: InventoryService) {}

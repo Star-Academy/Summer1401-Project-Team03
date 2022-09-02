@@ -13,6 +13,7 @@ import {TextInputModule} from 'src/app/components/text-input/text-input.module';
 import {DataListModule} from 'src/app/components/data-list/data-list.module';
 import {FileToOptionModule} from '../../pipes/file-to-option/file-to-option.module';
 import {RouterModule} from '@angular/router';
+import {EmptyModule} from '../../components/empty/empty.module';
 
 @NgModule({
     declarations: [PipelineInventoryComponent, PipelineItemModalComponent, PipelineAddButtonComponent],
@@ -28,6 +29,7 @@ import {RouterModule} from '@angular/router';
         DataListModule,
         ModalModule,
         FileToOptionModule,
+        EmptyModule,
     ],
 })
 export class PipelineInventoryModule {}
