@@ -26,7 +26,8 @@ public class DataCleanser : Transformer
     
     private List<string> GetKeysForQuery()
     {
-        var keys = PreviousComponents[0].GetKeys();
+        var keys = new List<string>();
+        keys.AddRange(PreviousComponents[0].GetKeys());
 
         for (var i = 0; i < Parameters[Fields].Count; i++)
         {
