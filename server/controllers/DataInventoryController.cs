@@ -49,7 +49,7 @@ public class DataInventoryController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public async Task<ActionResult> Export(int fileId, string category)
+    public async Task<ActionResult> Export(int fileId)
     {
         try
         {
@@ -82,7 +82,7 @@ public class DataInventoryController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpDelete]
-    public IActionResult Delete(int fileId, string category)
+    public IActionResult Delete(int fileId)
     {
         try
         {
@@ -98,7 +98,7 @@ public class DataInventoryController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpPut]
-    public IActionResult Rename(int fileId, string category, string newName)
+    public IActionResult Rename(int fileId, string newName)
     {
         try
         {
