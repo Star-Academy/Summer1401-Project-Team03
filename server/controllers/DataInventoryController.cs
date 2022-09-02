@@ -1,6 +1,9 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Data.Common;
+using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using server.configurations;
+using server.databases;
 using server.file;
 using server.informatios;
 using FileOperation = System.IO.File;
@@ -115,5 +118,52 @@ public class DataInventoryController : ControllerBase
         {
             return BadRequest(e.Message);
         }
+    }
+
+    [EnableCors("CorsPolicy")]
+    [HttpGet]
+    public IActionResult GetSample(int fileId, int count)
+    {
+        try
+        {
+            var filePath = FileSearcher.Search(fileId, "user_files");
+            var database = new PostgresDatabase(DbConfigLoader.Load());
+            var queryBuilder = new PostgresQueryBuilder();
+            var tableName = queryBuilder.NewAlias();
+            var keys = new StreamReader(filePath).ReadLine().Replace("\\s+", "").Split(",").ToList();
+            database.Execute(queryBuilder.Drop(tableName)).Close();
+            database.Execute(queryBuilder.CreateTable(tableName, keys)).Close();
+            database.Execute(queryBuilder.ImportCSV(tableName, keys, filePath)).Close();
+            var table = queryBuilder.Select(keys,queryBuilder.SelectTable(tableName), queryBuilder.NewAlias());
+            
+            var query = queryBuilder.Sample(table, queryBuilder.NewAlias(), count);
+            using var sampleData = database.Execute(query);
+            var output = Serialize(sampleData);
+            sampleData.Close();
+            database.Execute(queryBuilder.Drop(tableName)).Close();
+            
+            return Ok(output);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+    
+    private List<Dictionary<string, object>> Serialize(DbDataReader reader)
+    {
+        var results = new List<Dictionary<string, object>>();
+        var cols = new List<string>();
+        for (var i = 0; i < reader.FieldCount; i++)
+            cols.Add(reader.GetName(i));
+
+        var j = 0;
+        while (reader.Read())
+        {
+            results.Add(cols.ToDictionary(col => col, col => reader[col]));
+            if (j++ > 50) break;
+        }
+
+        return results;
     }
 }

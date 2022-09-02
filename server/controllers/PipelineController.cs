@@ -315,7 +315,7 @@ public class PipelineController : ControllerBase
         while (reader.Read())
         {
             results.Add(cols.ToDictionary(col => col, col => reader[col]));
-            if (j++ > 50) break;
+            if (j++ > 25) break;
         }
 
         return results;
