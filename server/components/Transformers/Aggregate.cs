@@ -32,7 +32,7 @@ public class Aggregate : Transformer
 
     public override List<string> GetKeys()
     {
-        var keys = PreviousComponents[0].GetKeys();
+        var keys = Parameters[FieldsToGroupBy];
         keys.Add(Parameters[AggregateFunctions][0]);
         return keys;
     }
