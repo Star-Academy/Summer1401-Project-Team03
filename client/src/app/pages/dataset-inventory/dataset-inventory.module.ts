@@ -13,11 +13,13 @@ import {SizeModule} from 'src/app/pipes/size/size.module';
 import {RenameModalModule} from '../../components/rename-modal/rename-modal.module';
 import {EmptyComponent} from '../../components/empty/empty.component';
 import {EmptyModule} from '../../components/empty/empty.module';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
     declarations: [DatasetInventoryComponent, DatasetItemModalComponent, ImportButtonComponent],
     imports: [
         CommonModule,
+        RouterModule,
         SearchFilterModule,
         SearchBoxModule,
         SvgModule,

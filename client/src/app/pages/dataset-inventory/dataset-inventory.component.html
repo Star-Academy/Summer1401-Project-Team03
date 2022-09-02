@@ -18,7 +18,9 @@
                 *ngFor="let item of inventoryService.dataset | searchFilter: searchPhrase"
                 (click)="navigateWithUrl(item.id)"
             >
-                <td>{{ item.name }}</td>
+                <td>
+                    <a [routerLink]="'/dataset/' + item.id">{{ item.name }}</a>
+                </td>
                 <td>{{ item.type.toUpperCase() }}</td>
                 <td>{{ item.length | size }}</td>
                 <td>{{ item.category }}</td>
