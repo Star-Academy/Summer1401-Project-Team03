@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {DATASET_RENAME, INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_IMPORT} from '../utils/api.utils';
+import {DATASET_RENAME, DATASET_Sample, INVENTORY_ALL, INVENTORY_DELETE, INVENTORY_IMPORT} from '../utils/api.utils';
 import {ApiService} from './api.service';
 import {DatasetItemModel, DatasetRenameModel} from 'src/app/models/dataset/dataset-item.model';
 import {BehaviorSubject} from 'rxjs';
@@ -8,6 +8,8 @@ import {SnackbarService} from './snackbar.service';
 import {SnackbarObject} from '../components/snackbar/models/snackbar-object.model';
 import {SnackbarTheme} from '../components/snackbar/enums/snackbar-theme';
 import {PROCESS} from '../data/Processes.data';
+import {Pair} from '../models/pair.model';
+import {TableColumn} from '../components/data-table/models/table-column.model';
 
 @Injectable({
     providedIn: 'root',
@@ -82,6 +84,18 @@ export class InventoryService {
         } else {
             // todo snack error
         }
+    }
+
+    public async getSample(fileId: number): Promise<Pair<TableColumn[], string[][]> | null> {
+        const response = await this.apiService.get<any[]>(DATASET_Sample, {fileId});
+
+        if (response && response.length > 0) {
+            return new Pair<TableColumn[], string[][]>(
+                Object.keys(response[0]).map((col) => new TableColumn(col)),
+                response.map((row) => Object.values(row as string))
+            );
+        }
+        return null;
     }
 
     private subscribeJoinOptions(): void {

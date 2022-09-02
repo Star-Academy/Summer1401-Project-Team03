@@ -51,7 +51,6 @@ import {DataTableModule} from 'src/app/components/data-table/data-table.module';
         ModalModule,
         NgxDraggabillyModule,
         AngularDraggableModule,
-        TextInputModule,
         PillMenuInputModule,
         DataTableModule,
     ],

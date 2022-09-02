@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {InventoryService} from '../../services/inventory.service';
 import {TableColumn} from '../../components/data-table/models/table-column.model';
 
@@ -11,15 +11,40 @@ import {TableColumn} from '../../components/data-table/models/table-column.model
 export class DatasetComponent implements OnInit {
     @Input() public datasetId!: number;
 
+    public datasetTitle!: string;
+    public datasetCategory!: string;
+
     public columns: TableColumn[] = [];
     public cells: string[][] = [];
+
+    public newName = '';
+    public titleEdit = false;
 
     public constructor(private route: ActivatedRoute, private inventoryService: InventoryService) {}
 
     public ngOnInit(): void {
         this.route.params.subscribe(async ({id}) => {
             this.datasetId = id;
-            this.columns;
+
+            await this.inventoryService.getAllDataset();
+
+            const dataset = this.inventoryService.dataset.find(({id}) => id === this.datasetId)!;
+            this.datasetTitle = dataset.name;
+            this.datasetCategory = dataset.category;
+
+            const dataSample = await this.inventoryService.getSample(this.datasetId);
+            if (dataSample) {
+                this.columns = dataSample.first;
+                this.cells = dataSample.second;
+            }
+        });
+    }
+
+    public async renameDataset(): Promise<void> {
+        await this.inventoryService.renameDataset({
+            fileId: this.datasetId,
+            newName: this.newName,
+            category: this.datasetCategory,
         });
     }
 }

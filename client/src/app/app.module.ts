@@ -12,6 +12,7 @@ import {NgxDraggabillyModule} from 'ngx-draggabilly';
 import {SpinnerModule} from './components/spinner/spinner.module';
 import {SnackbarModule} from './components/snackbar/snackbar.module';
 import {EmptyModule} from './components/empty/empty.module';
+import {DatasetModule} from './pages/dataset/dataset.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -22,6 +23,7 @@ import {EmptyModule} from './components/empty/empty.module';
         PipelineInventoryModule,
         DatasetInventoryModule,
         PipelineModule,
+        DatasetModule,
         AngularDraggableModule,
         NgxDraggabillyModule,
         SpinnerModule,
