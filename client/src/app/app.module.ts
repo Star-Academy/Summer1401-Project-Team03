@@ -11,6 +11,7 @@ import {AngularDraggableModule} from 'angular2-draggable';
 import {NgxDraggabillyModule} from 'ngx-draggabilly';
 import {SpinnerModule} from './components/spinner/spinner.module';
 import {SnackbarModule} from './components/snackbar/snackbar.module';
+import {EmptyModule} from './components/empty/empty.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -25,6 +26,7 @@ import {SnackbarModule} from './components/snackbar/snackbar.module';
         NgxDraggabillyModule,
         SpinnerModule,
         SnackbarModule,
+        EmptyModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

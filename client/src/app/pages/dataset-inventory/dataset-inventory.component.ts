@@ -9,6 +9,10 @@ import {InventoryService} from 'src/app/services/inventory.service';
 export class DatasetInventoryComponent {
     public searchPhrase: string = '';
 
+    public get emptyTexts(): string[] {
+        return ['there are no datasets.', "why don't you import something?"];
+    }
+
     public constructor(public inventoryService: InventoryService) {}
 
     public openItemSettingModal(id: number): void {
