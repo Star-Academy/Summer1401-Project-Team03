@@ -185,7 +185,7 @@ export const PROCESS: ProcessInfo = {
         parameters: {
             fields_to_select: {
                 type: ItemType.TEXT_INPUT,
-                label: 'field',
+                label: 'field(s)',
                 value: '',
             },
         },
