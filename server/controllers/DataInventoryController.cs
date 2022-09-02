@@ -122,7 +122,7 @@ public class DataInventoryController : ControllerBase
 
     [EnableCors("CorsPolicy")]
     [HttpGet]
-    public IActionResult GetSample(int fileId, int count)
+    public IActionResult GetSample(int fileId)
     {
         try
         {
@@ -136,7 +136,7 @@ public class DataInventoryController : ControllerBase
             database.Execute(queryBuilder.ImportCSV(tableName, keys, filePath)).Close();
             var table = queryBuilder.Select(keys,queryBuilder.SelectTable(tableName), queryBuilder.NewAlias());
             
-            var query = queryBuilder.Sample(table, queryBuilder.NewAlias(), count);
+            var query = queryBuilder.Sample(table, queryBuilder.NewAlias(), 50);
             using var sampleData = database.Execute(query);
             var output = Serialize(sampleData);
             sampleData.Close();

@@ -310,12 +310,11 @@ public class PipelineController : ControllerBase
         var cols = new List<string>();
         for (var i = 0; i < reader.FieldCount; i++)
             cols.Add(reader.GetName(i));
-
         var j = 0;
         while (reader.Read())
         {
             results.Add(cols.ToDictionary(col => col, col => reader[col]));
-            if (j++ > 25) break;
+            if (j++ > 49) break;
         }
 
         return results;
