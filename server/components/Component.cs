@@ -53,7 +53,7 @@ public abstract class Component
 
     public string GetTypesQuery()
     {
-        return Pipeline.QueryBuilder.getType(GetKeys(), PreviousComponents[0].GetQuery());
+        return Pipeline.QueryBuilder.GetType(GetKeys(), PreviousComponents[0].GetQuery(), Pipeline.QueryBuilder.NewAlias());
     }
 
     public abstract string GetQuery();

@@ -37,7 +37,7 @@ public interface IQueryBuilder
 
     public string Sample(string table, string alias, int number);
 
-    public string getType(List<string> keys, string table);
+    public string GetType(List<string> keys, string table, string alias);
 
     public string Function(string function, string key);
 
