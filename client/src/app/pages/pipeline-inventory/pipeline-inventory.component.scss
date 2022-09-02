@@ -58,12 +58,18 @@
 
             font-size: var(--font-size-primary);
 
-            .name {
+            &.name {
                 cursor: pointer;
+
+                a {
+                    display: block;
+                }
             }
 
             app-svg {
                 opacity: 0.8;
+
+                margin-inline: 1rem;
 
                 cursor: pointer;
 
