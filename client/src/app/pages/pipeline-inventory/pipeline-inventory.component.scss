@@ -49,6 +49,10 @@
 
             font-size: var(--font-size-big);
             font-weight: 700;
+
+            &:not(:first-of-type) {
+                width: 10rem;
+            }
         }
 
         td {
@@ -69,7 +73,7 @@
             app-svg {
                 opacity: 0.8;
 
-                margin-inline: 1rem;
+                display: inline-block;
 
                 cursor: pointer;
 

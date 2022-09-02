@@ -7,7 +7,7 @@
     <ng-container *ngIf="pipelineService.pipelines.length > 0; else emptyTable">
         <table class="inventory__table">
             <tr>
-                <th style="width: auto">Name</th>
+                <th>Name</th>
                 <!-- <th>Created At</th>
                 <th>Modified At</th> -->
                 <th></th>
@@ -16,7 +16,7 @@
                 *ngFor="let item of pipelineService.pipelines | searchFilter: searchPhrase"
                 (click)="navigateWithUrl(item.id)"
             >
-                <td class="name no-cap" style="width: 100%">
+                <td class="name no-cap">
                     <a title="open pipeline" [routerLink]="'/pipeline/' + item.id">{{ item.name }}</a>
                 </td>
                 <!-- <td>{{ item.createAt | convertDate }}</td>
