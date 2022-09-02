@@ -156,7 +156,7 @@ export const PROCESS: ProcessInfo = {
         parameters: {
             fields_to_remove: {
                 type: ItemType.TEXT_INPUT,
-                label: 'field',
+                label: 'field(s)',
                 value: '',
             },
         },
@@ -365,7 +365,7 @@ export const PROCESS: ProcessInfo = {
         parameters: {
             fields: {
                 type: ItemType.TEXT_INPUT,
-                label: 'field',
+                label: 'field(s)',
                 value: '',
             },
             default_values: {
@@ -398,7 +398,7 @@ export const PROCESS: ProcessInfo = {
             },
             seperator: {
                 type: ItemType.TEXT_INPUT,
-                label: 'seperator',
+                label: 'separator',
                 value: '_',
             },
             new_names: {
