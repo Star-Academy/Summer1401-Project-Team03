@@ -270,9 +270,8 @@ export const PROCESS: ProcessInfo = {
                 value: '',
             },
             r_fields: {
-                type: ItemType.SELECT,
+                type: ItemType.TEXT_INPUT,
                 label: 'right field',
-                options: undefined,
                 value: '',
             },
             operators: {
