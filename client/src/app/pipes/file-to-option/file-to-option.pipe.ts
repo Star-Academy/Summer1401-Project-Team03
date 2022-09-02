@@ -7,6 +7,6 @@ import {DatasetItemModel} from 'src/app/models/dataset/dataset-item.model';
 })
 export class FileToOptionPipe implements PipeTransform {
     public transform(datasets: DatasetItemModel[]): DatalistOption[] {
-        return datasets.map((data) => ({title: data.name, value: data.id}));
+        return datasets.map((data) => ({title: data.name, value: data.id.toString()}));
     }
 }

@@ -1,5 +1,9 @@
 import {Component, Input} from '@angular/core';
+import {PipelineBoardService} from 'src/app/services/pipeline-board.service';
 import {RunStep} from './enums/run-step.enum';
+import {SnackbarService} from '../../../../services/snackbar.service';
+import {SnackbarObject} from '../../../../components/snackbar/models/snackbar-object.model';
+import {SnackbarTheme} from '../../../../components/snackbar/enums/snackbar-theme';
 
 @Component({
     selector: 'app-run-button',
@@ -10,6 +14,8 @@ export class RunButtonComponent {
     @Input() public runStep = RunStep.NOT_STARTED;
 
     public RunStep = RunStep;
+
+    public constructor(private boardService: PipelineBoardService, private snackbarService: SnackbarService) {}
 
     public get text(): string {
         switch (this.runStep) {
@@ -22,7 +28,9 @@ export class RunButtonComponent {
         }
     }
 
-    public runClickHandler(): void {
-        this.runStep += 1;
+    public async runClickHandler(): Promise<void> {
+        this.runStep = RunStep.PROCESSING;
+        await this.boardService.runPipeline();
+        this.runStep = RunStep.NOT_STARTED;
     }
 }

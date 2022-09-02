@@ -35,7 +35,7 @@
         border: 0.2rem solid var(--color-gray-60);
         border-radius: var(--border-radius-minimal);
 
-        font-size: 1.6rem;
+        font-size: var(--font-size-primary);
 
         &:focus {
             border-color: var(--color-purple-50);

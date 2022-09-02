@@ -26,7 +26,7 @@
         block-size: var(--topbar-block-size);
         inline-size: 100%;
 
-        padding-inline-start: 1.5rem;
+        // padding-inline-start: 1.5rem;
 
         p {
             color: var(--color-purple-95);
@@ -35,12 +35,16 @@
             font-weight: 600;
         }
 
-        app-svg {
+        app-svg:first-child {
             color: var(--color-purple-95);
 
             transition: transform 0.3s ease;
 
             cursor: pointer;
+        }
+
+        img {
+            width: 5rem;
         }
 
         &.shrink {

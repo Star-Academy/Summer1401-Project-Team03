@@ -9,34 +9,38 @@ import {InventoryService} from 'src/app/services/inventory.service';
 export class DatasetInventoryComponent {
     public searchPhrase: string = '';
 
+    public get emptyTexts(): string[] {
+        return ['there are no datasets.', "why don't you import one?"];
+    }
+
     public constructor(public inventoryService: InventoryService) {}
 
-    public openItemSettingModal(id: string): void {
+    public openItemSettingModal(id: number): void {
         const item = this.inventoryService.dataset.find((item) => item.id === id);
         if (item) item.openedSettingModal = true;
     }
 
-    public closeItemSettingModal(id: string): void {
+    public closeItemSettingModal(id: number): void {
         const item = this.inventoryService.dataset.find((item) => item.id === id);
         if (item) item.openedSettingModal = false;
     }
 
-    public toggleShowItemSettingModal(id: string): void {
+    public toggleShowItemSettingModal(id: number): void {
         const item = this.inventoryService.dataset.find((item) => item.id === id);
         if (item) item.openedSettingModal = !item.openedSettingModal;
     }
 
-    public renameItem(id: string): void {
-        console.log(`Renamed item ${id}`);
+    public renameItem(newTitle: string): void {
+        console.log(`Renamed item ${newTitle}`);
         // Connect to inventory service
     }
 
-    public downloadItem(id: string): void {
+    public async downloadItem(id: number, category: string): Promise<void> {
         console.log(`Downloaded item ${id}`);
         // Connect to inventory service
     }
 
-    public navigateWithUrl(id: string): void {
+    public navigateWithUrl(id: number): void {
         console.log(`Navigate item ${id}`);
         // Complete pipeline page
     }

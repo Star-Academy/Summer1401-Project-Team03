@@ -1,0 +1,99 @@
+ul {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99;
+
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1rem;
+
+    padding: 1.5rem;
+
+    font-size: var(--font-size-primary);
+    font-weight: bold;
+
+    li {
+        background-color: var(--snackbar-bg-col-lighter);
+        color: var(--snackbar-bg-col-darker);
+
+        position: relative;
+
+        padding: 1rem;
+
+        border: 0.2rem solid var(--snackbar-bg-col);
+        border-radius: var(--border-radius-minimal);
+
+        transition: transform 100ms ease-in-out;
+
+        pre {
+            font-family: unset;
+        }
+
+        &.hidden {
+            transform: translateX(calc(100% + 2.5rem));
+        }
+
+        &.gone {
+            display: none;
+        }
+
+        &.primary {
+            --snackbar-bg-col: hsl(210deg 40% 50%);
+            --snackbar-bg-col-lighter: hsl(210deg 30% 95%);
+            --snackbar-bg-col-darker: hsl(210deg 30% 20%);
+        }
+
+        &.danger {
+            --snackbar-bg-col: hsl(0deg 40% 50%);
+            --snackbar-bg-col-lighter: hsl(0deg 30% 95%);
+            --snackbar-bg-col-darker: hsl(0deg 30% 20%);
+        }
+
+        &.warning {
+            --snackbar-bg-col: hsl(36deg 40% 50%);
+            --snackbar-bg-col-lighter: hsl(36deg 30% 95%);
+            --snackbar-bg-col-darker: hsl(36deg 30% 20%);
+        }
+
+        &.success {
+            --snackbar-bg-col: hsl(130deg 40% 50%);
+            --snackbar-bg-col-lighter: hsl(130deg 30% 95%);
+            --snackbar-bg-col-darker: hsl(130deg 30% 20%);
+        }
+
+        .close {
+            background-color: inherit;
+            color: inherit;
+            opacity: 0;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            block-size: 1.75rem;
+            inline-size: 1.75rem;
+
+            padding: 0.5rem;
+
+            border: inherit;
+            border-radius: 50%;
+
+            transform: translate(-50%, -50%);
+
+            font-size: var(--font-size-big);
+
+            cursor: pointer;
+        }
+
+        &:hover {
+            .close {
+                opacity: 1;
+            }
+        }
+    }
+}

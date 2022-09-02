@@ -1,0 +1,22 @@
+<app-modal #ProcessAdd title="add processor">
+    <div class="list__wrapper">
+        <button
+            class="list__button"
+            *ngFor="let process of customProcessType | keyvalue"
+            [ngClass]="{selected: process.value.id === selectedTypeId}"
+            [title]="process.value.title"
+            (click)="selectedTypeId = process.value.id"
+        >
+            <app-svg [iconType]="process.value.icon"></app-svg>
+            {{ process.value.title }}
+        </button>
+    </div>
+    <app-text-input label="name" [value]="nodeTitle" (valueChange)="nodeTitle = $event"></app-text-input>
+    <app-button (click)="addNodeHandle()">Create</app-button>
+</app-modal>
+
+<app-add-node-replicate
+    class="absolute"
+    #replicateModal
+    (replicateNodeEmit)="addNodeReplicateHandle($event)"
+></app-add-node-replicate>

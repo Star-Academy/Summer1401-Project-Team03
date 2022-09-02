@@ -22,19 +22,20 @@
 
     app-button {
         align-self: flex-end;
+
+        margin-block-start: auto;
     }
 
     .message {
         color: var(--color-gray-60);
 
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: grid;
+        place-items: center;
 
         block-size: 100%;
         inline-size: 100%;
 
-        font-size: var(--font-size-big);
+        font-size: var(--font-size-primary);
         font-weight: 700;
 
         text-align: center;

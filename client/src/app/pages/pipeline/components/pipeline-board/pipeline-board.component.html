@@ -1,20 +1,33 @@
-<app-board>
-    <div class="wrapper">
+<app-board [gridSize]="gridSize">
+    <div class="wrapper" (click)="clickOnWrapperHandler($event)">
         <ng-container *ngFor="let pipelineNodeData of pipelineNodeDatas">
             <app-pipeline-node
                 [id]="pipelineNodeData.id"
-                (staticClick)="clickNodeElement(pipelineNodeData.id)"
                 draggabilly
                 [options]="draggabillyOptions"
                 [pipelineNodeData]="pipelineNodeData"
-                (dragStart)="setToUpperLayer(pipelineNodeData.id)"
-                (dragEnd)="savePositionNodeElement(pipelineNodeData.id)"
+                (staticClick)="clickNodeElement($event.event, pipelineNodeData.id)"
+                (dragStart)="setToUpperLayer(pipelineNodeData.id); draggedNodeId = pipelineNodeData.id"
+                (dragEnd)="savePositionNodeElement(pipelineNodeData.id); draggedNodeId = null"
                 (dragMove)="updateLeaderLine(pipelineNodeData.id)"
                 ngDraggable
                 [position]="pipelineNodeData.position"
-                (removeNodeEmit)="removeNodeComponent(pipelineNodeData.id)"
-                (addNodeEmit)="addNodeComponent($event, pipelineNodeData.id)"
+                (removeNodeEmit)="
+                    removeNode.openModal(pipelineNodeData.id, pipelineNodeData.processesInfoType, pipelineBoardId)
+                "
+                (addNodeEmit)="
+                    addNode.openModal(
+                        pipelineNodeData.id,
+                        pipelineNodeData.afterId,
+                        pipelineNodeData.position,
+                        pipelineBoardId
+                    )
+                "
+                [ngStyle]="{cursor: draggedNodeId === pipelineNodeData.id ? 'grabbing' : 'grab'}"
             ></app-pipeline-node>
         </ng-container>
     </div>
+
+    <app-remove-node class="absolute" #removeNode (removeNodeEmit)="removeNodeComponent($event)"></app-remove-node>
+    <app-add-node class="absolute" #addNode (addNodeEmit)="addNodeComponent($event)"></app-add-node>
 </app-board>

@@ -1,0 +1,11 @@
+<ul class="container">
+    <li
+        *ngFor="let snack of snackbars"
+        [id]="snack.id"
+        [class]="snack.theme"
+        [ngClass]="{hidden: snack.hidden, gone: snack.gone}"
+    >
+        <pre>{{ snack.text }}</pre>
+        <button class="close" (click)="snackbarService.hide(snack.id)">&times;</button>
+    </li>
+</ul>

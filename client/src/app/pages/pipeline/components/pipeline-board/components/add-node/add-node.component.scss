@@ -20,12 +20,26 @@
 
         text-transform: capitalize;
 
+        cursor: pointer;
+
         app-svg {
             color: var(--color-purple-15);
         }
 
-        &:hover {
+        &.selected {
             background-color: var(--color-gray-78);
         }
+
+        &:hover {
+            background-color: var(--color-gray-90);
+        }
     }
+}
+
+app-text-input {
+    margin-block: 2rem;
+}
+
+app-button {
+    align-self: end;
 }
