@@ -30,7 +30,6 @@ export class DatasetComponent implements OnInit {
 
             const dataset = this.inventoryService.dataset.find(({id}) => id === this.datasetId)!;
             this.datasetTitle = dataset.name;
-            this.datasetCategory = dataset.category;
 
             const dataSample = await this.inventoryService.getSample(this.datasetId);
             if (dataSample) {
