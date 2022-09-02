@@ -20,7 +20,8 @@ import {
     PIPELINE_RUN_ALL,
     PIPELINE_RUN_UP_TO,
     PIPELINE_SET_CONFIG,
-    RENAME_PIPELINE_NODE, ADD_PIPELINE_DESTINATION,
+    RENAME_PIPELINE_NODE,
+    ADD_PIPELINE_DESTINATION,
 } from '../utils/api.utils';
 import {BehaviorSubject} from 'rxjs';
 import {PROCESS, ProcessSchema} from '../data/Processes.data';
@@ -113,7 +114,8 @@ export class PipelineBoardService {
     public async addDestinationNode(addNodeInfo: AddDestinationNodeServiceModel): Promise<number | null> {
         const fakeData = {...addNodeInfo};
         const response =
-            (await this.apiService.post<number>(ADD_PIPELINE_DESTINATION, {...fakeData}, fakeData.position)) || undefined;
+            (await this.apiService.post<number>(ADD_PIPELINE_DESTINATION, {...fakeData}, fakeData.position)) ||
+            undefined;
         if (response) {
             //return node id
             return response;

@@ -84,7 +84,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-30)',
-        size: 5,
+        size: 2,
         endPlugSize: 0.8,
     };
 
