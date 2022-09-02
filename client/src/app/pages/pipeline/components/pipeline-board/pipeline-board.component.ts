@@ -84,7 +84,7 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
     private mainContainer = this.elRef.nativeElement;
     public leaderLineOptions: object = {
         color: 'var(--color-purple-30)',
-        size: 5,
+        size: 2,
         endPlugSize: 0.8,
     };
 
@@ -113,9 +113,9 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         this.pipelineNodeDatas = await this.boardService.getAllNode();
         this.changeDetectorRef.detectChanges();
         const leaderLineInit = (): void => {
-            this.pipelineNodeDatas.forEach((node, index) => {
-                if (node.processesInfoType === PROCESS.csv_loader.id) return;
-                this.connectLeaderLineBetweenTwoElementById(node.id, node.afterId);
+            this.pipelineNodeDatas.forEach((node) => {
+                if (node.processesInfoType === PROCESS.csv_extractor.id) return;
+                this.connectLeaderLineBetweenTwoElementById(node.beforeId, node.id);
             });
         };
 
@@ -212,10 +212,10 @@ export class PipelineBoardComponent implements AfterViewInit, OnDestroy {
         const beforeId = item.beforeId;
         const afterId = item.afterId;
 
-        // is destination
-
-        if ([PROCESS.csv_loader.id, PROCESS.json_loader.id].some((type: number) => type == item.processesInfoType))
-            return undefined;
+        // // is destination
+        //
+        // if ([PROCESS.csv_loader.id, PROCESS.json_loader.id].some((type: number) => type == item.processesInfoType))
+        //     return undefined;
 
         // Insert to Item to nodeList
         this.addItemToNodeListById(beforeId, item);

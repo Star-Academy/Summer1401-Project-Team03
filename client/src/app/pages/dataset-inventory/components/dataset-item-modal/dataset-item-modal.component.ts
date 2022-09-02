@@ -15,7 +15,6 @@ export class DatasetItemModalComponent implements OnInit {
         openedSettingModal: false,
         type: '',
         length: '',
-        category: 'imports',
     };
     @Output() public renameEmit = new EventEmitter<void>();
     @Output() public downloadEmit = new EventEmitter<void>();
@@ -26,7 +25,6 @@ export class DatasetItemModalComponent implements OnInit {
     public ngOnInit(): void {
         const url = new URL(INVENTORY_EXPORT);
         url.searchParams.append('fileId', this.dataset.id.toString());
-        url.searchParams.append('category', this.dataset.category);
         this.downloadLink = url.toString();
     }
 }

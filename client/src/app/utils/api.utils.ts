@@ -17,6 +17,7 @@ export const PIPELINE_RUN_ALL = PIPELINE_SERVICE + '/Run';
 
 // Pipeline node
 export const ADD_PIPELINE_NODE = PIPELINE_SERVICE + '/AddComponent';
+export const ADD_PIPELINE_DESTINATION = PIPELINE_SERVICE + '/AddDestination';
 export const DELETE_PIPELINE_NODE = PIPELINE_SERVICE + '/DeleteComponent';
 export const RENAME_PIPELINE_NODE = PIPELINE_SERVICE + '/ChangeComponentTitle';
 export const ADD_PIPELINE_CHANGE_POSITION = PIPELINE_SERVICE + '/ChangeComponentPosition';
